@@ -15,7 +15,7 @@ the symmetrized odometer on the fundamental domain; the development works with
 `v_t` on `S_M^{(d)}` throughout, so it is recorded in CORRESPONDENCE.md rather
 than as a second frozen clause.
 -/
-import DimRed.Support.Recursion
+import DimRed.Support.Symmetry
 
 open LatticeProb DimRed
 
@@ -24,4 +24,4 @@ theorem DimRed.Frozen.symmetry_lemma (d N : ℕ) (s₀ : Site d → ℤ) (hsym :
     (t : ℕ) (π : Equiv.Perm (Fin d)) (ε : Fin d → Bool) (x : Site d) :
     odo d N s₀ t (cubeSym d N π ε x) = odo d N s₀ t x
 -- FROZEN-STATEMENT-END
-:= by sorry
+:= odo_cubeSym d N s₀ hsym t π ε x

@@ -173,4 +173,9 @@ def SuperharmonicIn (d M : ℕ) (g : Site d → ℤ) : Prop :=
     (∀ i : Fin d, inSimplex d M (x + unit i) ∧ inSimplex d M (x - unit i)) →
     nbrSum g x ≤ 2 * (d : ℤ) * g x
 
+/-- The neighbour step of `x` that `cubeSym` carries to the step `e_i` of
+`cubeSym x`. -/
+def symStep {d : ℕ} (π : Equiv.Perm (Fin d)) (ε : Fin d → Bool) (i : Fin d) : Site d :=
+  if ε i then unit (π i) else -unit (π i)
+
 end DimRed

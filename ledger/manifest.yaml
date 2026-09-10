@@ -16,39 +16,6 @@ source_pin:
   sha256: 7b47485ebc0b16b08be0ed91b360ec9b1b06f5a9bba6ffca93ededeaa09d9823
 
 nodes:
-  - id: lem-pt-ind
-    version: 1
-    kind: theorem
-    source: dimred.tex:289-294 (label pt_ind_lemma)
-    file: DimRed/Frozen/Prelim/PtInd.lean
-    export: DimRed.Frozen.pt_ind_lemma
-    state: DRAFT_SORRY
-    frozen_sha256: 23d9636b9067d625ab709305e81abe600cea3faf3a7a6205851db85a6041dccb
-    provider: DimRed.Frozen.pt_ind_lemma
-    approved: "2026-09-10"
-
-  - id: lem-parabolic-comparison
-    version: 1
-    kind: theorem
-    source: dimred.tex:311-316 (label parabolic_comparison)
-    file: DimRed/Frozen/Prelim/ParabolicComparison.lean
-    export: DimRed.Frozen.parabolic_comparison
-    state: DRAFT_SORRY
-    frozen_sha256: 549e529ef588fac1ad8f700ce31cef4f03157efc4e9f2eeca239697a34a1d692
-    provider: DimRed.Frozen.parabolic_comparison
-    approved: "2026-09-10"
-
-  - id: lem-symmetry
-    version: 1
-    kind: theorem
-    source: dimred.tex:415-418 (label symmetry_lemma)
-    file: DimRed/Frozen/Prelim/Symmetry.lean
-    export: DimRed.Frozen.symmetry_lemma
-    state: DRAFT_SORRY
-    frozen_sha256: d86cd2519d7fb6613a7fe3a4297cd4a42d9f880e39ab08b6462fb1fc2a317575
-    provider: DimRed.Frozen.symmetry_lemma
-    approved: "2026-09-10"
-
   - id: lem-difference-comparison
     version: 1
     kind: theorem
@@ -91,17 +58,6 @@ nodes:
     state: DRAFT_SORRY
     frozen_sha256: 004fcd0eda4158382820546315a22d5b0f38e7c94b2e0b31cc781f4a36e79d43
     provider: DimRed.Frozen.topple_limit
-    approved: "2026-09-10"
-
-  - id: prop-no-reduction
-    version: 1
-    kind: theorem
-    source: dimred.tex:706-708 (Proposition 3.1)
-    file: DimRed/Frozen/BaseCase/NoReduction.lean
-    export: DimRed.Frozen.no_reduction_at_critical_dimension
-    state: DRAFT_SORRY
-    frozen_sha256: a990c5792ff04650c236520aff8bfbd4ce2721602d2aa703698e1c457fb89984
-    provider: DimRed.Frozen.no_reduction_at_critical_dimension
     approved: "2026-09-10"
 
   - id: lem-radial-laplacian
@@ -234,5 +190,49 @@ nodes:
     state: DRAFT_SORRY
     frozen_sha256: 046f74527cc908725e8da207018a211d5586c6570513b8db86237bd05d36d31d
     provider: DimRed.Frozen.sandpile_self_similarity
+    approved: "2026-09-10"
+
+  - id: lem-pt-ind
+    version: 2
+    kind: theorem
+    source: dimred.tex:289-294 (label pt_ind_lemma)
+    file: DimRed/Frozen/Prelim/PtInd.lean
+    export: DimRed.Frozen.pt_ind_lemma
+    state: SEALED
+    frozen_sha256: 23d9636b9067d625ab709305e81abe600cea3faf3a7a6205851db85a6041dccb
+    provider: DimRed.Frozen.pt_ind_lemma
+    approved: "2026-09-10"
+
+  - id: lem-parabolic-comparison
+    version: 2
+    kind: theorem
+    source: dimred.tex:311-316 (label parabolic_comparison)
+    file: DimRed/Frozen/Prelim/ParabolicComparison.lean
+    export: DimRed.Frozen.parabolic_comparison
+    state: SEALED
+    frozen_sha256: 549e529ef588fac1ad8f700ce31cef4f03157efc4e9f2eeca239697a34a1d692
+    provider: DimRed.Frozen.parabolic_comparison
+    approved: "2026-09-10"
+
+  - id: lem-symmetry
+    version: 2
+    kind: theorem
+    source: dimred.tex:415-418 (label symmetry_lemma)
+    file: DimRed/Frozen/Prelim/Symmetry.lean
+    export: DimRed.Frozen.symmetry_lemma
+    state: SEALED
+    frozen_sha256: d86cd2519d7fb6613a7fe3a4297cd4a42d9f880e39ab08b6462fb1fc2a317575
+    provider: DimRed.Frozen.symmetry_lemma
+    approved: "2026-09-10"
+
+  - id: prop-no-reduction
+    version: 2
+    kind: theorem
+    source: dimred.tex:706-708 (Proposition 3.1)
+    file: DimRed/Frozen/BaseCase/NoReduction.lean
+    export: DimRed.Frozen.no_reduction_at_critical_dimension
+    state: SEALED
+    frozen_sha256: a990c5792ff04650c236520aff8bfbd4ce2721602d2aa703698e1c457fb89984
+    provider: DimRed.Frozen.no_reduction_at_critical_dimension
     approved: "2026-09-10"
 

@@ -14,7 +14,7 @@ hypercube.  A minimum of a set of functions is the pointwise minimum: `v`
 satisfies the constraint, and `v ≤ u` for every `u` that does.  The time index
 is written `t + 1` so that `t ≥ 1` needs no truncated subtraction.
 -/
-import DimRed.Support.Recursion
+import DimRed.Frozen.Prelim.PtInd
 
 open LatticeProb DimRed
 
@@ -29,4 +29,32 @@ theorem DimRed.Frozen.parabolic_comparison (d N : ℕ) (hd : 1 ≤ d) (s₀ : Si
             (-(2 * (d : ℤ)) * u (t + 1) y + nbrSum (u t) y) + s₀ y ≤ 2 * (d : ℤ) - 1) →
         ∀ (t : ℕ) (y : Site d), odo d N s₀ t y ≤ u t y
 -- FROZEN-STATEMENT-END
-:= by sorry
+:= by
+  have hdpos : (0 : ℤ) < 2 * (d : ℤ) := by
+    have : (1 : ℤ) ≤ (d : ℤ) := by exact_mod_cast hd
+    linarith
+  constructor
+  · intro t x hx
+    have h := Frozen.pt_ind_lemma d N hd s₀ hs0 hs1 t x hx
+    set A : ℤ := s₀ x + nbrSum (odo d N s₀ t) x with hA
+    have hmod : A % (2 * (d : ℤ)) = A - 2 * (d : ℤ) * (A / (2 * (d : ℤ))) := Int.emod_def A _
+    have hlt : A % (2 * (d : ℤ)) < 2 * (d : ℤ) := Int.emod_lt_of_pos A hdpos
+    rw [h]
+    linarith
+  · intro u hu0 hu1 hcon t
+    induction t with
+    | zero => intro y; simpa [odo] using hu0 0 y
+    | succ n ih =>
+      intro y
+      by_cases hy : inCube d N y
+      · have h := Frozen.pt_ind_lemma d N hd s₀ hs0 hs1 n y hy
+        have hmono : nbrSum (odo d N s₀ n) y ≤ nbrSum (u n) y := nbrSum_mono ih y
+        have hc := hcon n y hy
+        have hstep : s₀ y + nbrSum (u n) y < (u (n + 1) y + 1) * (2 * (d : ℤ)) := by nlinarith
+        have h1 : (s₀ y + nbrSum (odo d N s₀ n) y) / (2 * (d : ℤ))
+            ≤ (s₀ y + nbrSum (u n) y) / (2 * (d : ℤ)) :=
+          Int.ediv_le_ediv hdpos (by linarith)
+        have h2 : (s₀ y + nbrSum (u n) y) / (2 * (d : ℤ)) < u (n + 1) y + 1 :=
+          (Int.ediv_lt_iff_lt_mul hdpos).2 hstep
+        rw [h]; omega
+      · rw [odo_eq_zero_outside d N s₀ (n + 1) y hy]; exact hu0 (n + 1) y

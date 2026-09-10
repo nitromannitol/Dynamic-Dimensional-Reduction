@@ -1,4 +1,8 @@
 import DimRed.Frozen.BaseCase.ExplicitOdometer
+import DimRed.Support.CubeTwoTerminal
+import DimRed.Support.CubeTwo
+import DimRed.Support.Symmetry
+import DimRed.Support.Stabilize
 import DimRed.Frozen.BaseCase.NoReduction
 import DimRed.Frozen.BaseCase.RadialLaplacian
 import DimRed.Frozen.Main.DimensionalReduction

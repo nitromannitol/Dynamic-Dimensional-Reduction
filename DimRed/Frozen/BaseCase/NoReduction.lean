@@ -10,7 +10,7 @@ defined (`dimred.tex:705`).  In dimension `d` the initial sandpile is
 `2d + (d_0 - 1)` chips at every site, so it is `2 d_0 + (d_0-1)` in dimension
 `d_0` and `2(d_0-1) + (d_0-1)` in dimension `d_0 - 1`.
 -/
-import DimRed.Support.Recursion
+import DimRed.Support.CubeTwoTerminal
 
 open LatticeProb DimRed
 
@@ -21,4 +21,4 @@ theorem DimRed.Frozen.no_reduction_at_critical_dimension (d₀ : ℕ) (hd₀ : 2
       (∀ x : Site (d₀ - 1), inCube (d₀ - 1) 2 x →
         odoInf (d₀ - 1) 2 (fun _ => 2 * ((d₀ - 1 : ℕ) : ℤ) + ((d₀ : ℤ) - 1)) x = 2)
 -- FROZEN-STATEMENT-END
-:= by sorry
+:= ⟨DimRed.odoInf_cube2_critical d₀ hd₀, DimRed.odoInf_cube2_subcritical d₀ hd₀⟩
