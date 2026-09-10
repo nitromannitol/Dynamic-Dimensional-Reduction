@@ -142,4 +142,20 @@ theorem lap_radial (d : ℕ) (c : ℤ) (t k : ℕ) (hk : k ≤ d) :
   rw [lap, nbrSum_radial d c t k hk]
   ring
 
+theorem inCube_radial (d k : ℕ) : inCube d 4 (radial d k) := by
+  intro i
+  rw [loCoord_four, hiCoord_four, radial_apply]
+  split <;> omega
+
+theorem odo_radial_succ (d : ℕ) (c : ℤ) (t k : ℕ) (hk : k ≤ d) :
+    odo d 4 (fun _ => c) (t + 1) (radial d k)
+      = odo d 4 (fun _ => c) t (radial d k)
+        + (if 2 * (d : ℤ) ≤ c
+              + ((-(d : ℤ) - (k : ℤ)) * odo d 4 (fun _ => c) t (radial d k)
+                + ((d : ℤ) - (k : ℤ)) * odo d 4 (fun _ => c) t (radial d (k + 1))
+                + (k : ℤ) * odo d 4 (fun _ => c) t (radial d (k - 1)))
+            then 1 else 0) := by
+  rw [odo_succ_eq d 4 (fun _ => c) t (radial d k) (inCube_radial d k)]
+  simp only [sandp, lap_radial d c t k hk]
+
 end DimRed
