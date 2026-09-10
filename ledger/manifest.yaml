@@ -49,28 +49,6 @@ nodes:
     provider: DimRed.Frozen.derivative_bound
     approved: "2026-09-10"
 
-  - id: lem-topple-limit
-    version: 1
-    kind: theorem
-    source: dimred.tex:669-674 (label topple_limit)
-    file: DimRed/Frozen/Prelim/ToppleLimit.lean
-    export: DimRed.Frozen.topple_limit
-    state: DRAFT_SORRY
-    frozen_sha256: 004fcd0eda4158382820546315a22d5b0f38e7c94b2e0b31cc781f4a36e79d43
-    provider: DimRed.Frozen.topple_limit
-    approved: "2026-09-10"
-
-  - id: lem-radial-laplacian
-    version: 1
-    kind: theorem
-    source: dimred.tex:728-733 (Lemma 3.1)
-    file: DimRed/Frozen/BaseCase/RadialLaplacian.lean
-    export: DimRed.Frozen.radial_laplacian
-    state: DRAFT_SORRY
-    frozen_sha256: f47be9537d444c7e06c4279bf657446596c6da58ed0fd5c1b60acf26c2b8678f
-    provider: DimRed.Frozen.radial_laplacian
-    approved: "2026-09-10"
-
   - id: prop-base-case
     version: 1
     kind: theorem
@@ -234,5 +212,27 @@ nodes:
     state: SEALED
     frozen_sha256: a990c5792ff04650c236520aff8bfbd4ce2721602d2aa703698e1c457fb89984
     provider: DimRed.Frozen.no_reduction_at_critical_dimension
+    approved: "2026-09-10"
+
+  - id: lem-topple-limit
+    version: 2
+    kind: theorem
+    source: dimred.tex:669-674 (label topple_limit)
+    file: DimRed/Frozen/Prelim/ToppleLimit.lean
+    export: DimRed.Frozen.topple_limit
+    state: SEALED
+    frozen_sha256: c087896830c1831bb35304c529e9c9e5dfeabf39865ab1d7a56acee469e2711e
+    provider: DimRed.Frozen.topple_limit
+    approved: "2026-09-10"
+
+  - id: lem-radial-laplacian
+    version: 2
+    kind: theorem
+    source: dimred.tex:728-733 (Lemma 3.1)
+    file: DimRed/Frozen/BaseCase/RadialLaplacian.lean
+    export: DimRed.Frozen.radial_laplacian
+    state: SEALED
+    frozen_sha256: f47be9537d444c7e06c4279bf657446596c6da58ed0fd5c1b60acf26c2b8678f
+    provider: DimRed.Frozen.radial_laplacian
     approved: "2026-09-10"
 

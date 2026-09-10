@@ -12,7 +12,7 @@ needed here: the coefficient of the first is `d - x`, which vanishes at `x = d`,
 and the coefficient of the second is `x`, which vanishes at `x = 0`.  The
 initial sandpile is constant, hence symmetric, which is all the proof uses.
 -/
-import DimRed.Support.Recursion
+import DimRed.Support.Radial
 
 open LatticeProb DimRed
 
@@ -23,4 +23,4 @@ theorem DimRed.Frozen.radial_laplacian (d : ℕ) (c : ℤ) (t k : ℕ) (hk : k �
         + ((d : ℤ) - (k : ℤ)) * odo d 4 (fun _ => c) t (radial d (k + 1))
         + (k : ℤ) * odo d 4 (fun _ => c) t (radial d (k - 1))
 -- FROZEN-STATEMENT-END
-:= by sorry
+:= DimRed.lap_radial d c t k hk

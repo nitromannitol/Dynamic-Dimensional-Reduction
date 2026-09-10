@@ -64,4 +64,5 @@ None so far.  The paper cites Babai-Gorodezky for the attribution of Corollary
 
 | node | added hypothesis | why |
 |---|---|---|
+| `lem-topple-limit` | `IsSymmetricPile d (2M) s₀` | version 2.  The first transcription carried only the bound of `dimred.tex:286-288` and omitted the standing hypothesis of `dimred.tex:400-402`, that the initial sandpile is symmetric, which is in force from Section 2.4 onward and is what makes a maximum over the fundamental domain a maximum over the whole hypercube.  Without it the statement is not the paper's |
 | `lem-pt-ind` | `0 ≤ s₀` | `dimred.tex:286-288` assumes only `s_0 ≤ 2(2d) - 1`; the identity fails for a negative initial sandpile, for instance `s_0 ≡ -1`, where `v_t ≡ 0` but `⌊-1/2d⌋ = -1`.  Nonnegativity is part of what "sandpile" means in the paper (a number of chips) and is recorded in the errata |
