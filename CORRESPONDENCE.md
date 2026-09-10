@@ -55,6 +55,16 @@ symmetrized Laplacian is defined.
 - Integer division `a / b` on `ℤ` is floor division for `b > 0`, so the paper's
   `⌊·/2d⌋` is written directly as `· / (2 * d)`.
 
+## The domain of the regularity statements
+
+From `dimred.tex:428-431` ("Henceforth, we consider `v_t^S` in `S_M^{(d)}` and
+drop all `S` superscripts ... we only consider `N = 2M`") every point named in
+Sections 2.5 onward, in Proposition 4.1 and in Section 5 is a point of the
+sorted fundamental domain.  The frozen statements therefore carry
+`inSimplex d M x` (or `inSimplex (i+1+j) M (facetPoint x 1 j)`) alongside the
+paper's explicit conditions `x > M-j` and `x_i ≥ 2`.  These are not extra
+hypotheses: they say which points the paper is talking about.
+
 ## Hypotheses the development does NOT carry
 
 `lem-symmetry` carries only the symmetry of the initial sandpile
