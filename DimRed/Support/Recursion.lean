@@ -89,11 +89,12 @@ theorem odo_succ_eq (d N : ℕ) (s₀ : Site d → ℤ) (t : ℕ) (x : Site d) (
 /-- The invariant of the parallel toppling process: the blanket hypothesis
 `0 ≤ s_0 ≤ 2(2d) - 1` of `dimred.tex:286-288` propagates in time. -/
 theorem sandp_bounds (d N : ℕ) (s₀ : Site d → ℤ)
-    (h0 : ∀ y, 0 ≤ s₀ y) (h1 : ∀ y, s₀ y ≤ 2 * (2 * (d : ℤ)) - 1)
+    (h0 : ∀ y, inCube d N y → 0 ≤ s₀ y)
+    (h1 : ∀ y, inCube d N y → s₀ y ≤ 2 * (2 * (d : ℤ)) - 1)
     (t : ℕ) (x : Site d) (hx : inCube d N x) :
     0 ≤ sandp d N s₀ t x ∧ sandp d N s₀ t x ≤ 2 * (2 * (d : ℤ)) - 1 := by
   induction t with
-  | zero => rw [sandp_zero]; exact ⟨h0 x, h1 x⟩
+  | zero => rw [sandp_zero]; exact ⟨h0 x hx, h1 x hx⟩
   | succ n ih =>
     have hnb := nbrSum_bounds (fun y => odo d N s₀ (n + 1) y - odo d N s₀ n y)
       (fun y => odo_succ_sub_bounds d N s₀ n y) x

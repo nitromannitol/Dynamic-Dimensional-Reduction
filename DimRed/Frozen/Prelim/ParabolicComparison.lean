@@ -20,7 +20,8 @@ open LatticeProb DimRed
 
 -- FROZEN-STATEMENT-BEGIN
 theorem DimRed.Frozen.parabolic_comparison (d N : ℕ) (hd : 1 ≤ d) (s₀ : Site d → ℤ)
-    (hs0 : ∀ y, 0 ≤ s₀ y) (hs1 : ∀ y, s₀ y ≤ 2 * (2 * (d : ℤ)) - 1) :
+    (hs0 : ∀ y, inCube d N y → 0 ≤ s₀ y)
+    (hs1 : ∀ y, inCube d N y → s₀ y ≤ 2 * (2 * (d : ℤ)) - 1) :
     (∀ (t : ℕ) (x : Site d), inCube d N x →
         (-(2 * (d : ℤ)) * odo d N s₀ (t + 1) x + nbrSum (odo d N s₀ t) x) + s₀ x
           ≤ 2 * (d : ℤ) - 1) ∧

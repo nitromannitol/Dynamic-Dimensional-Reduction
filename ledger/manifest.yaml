@@ -170,28 +170,6 @@ nodes:
     provider: DimRed.Frozen.sandpile_self_similarity
     approved: "2026-09-10"
 
-  - id: lem-pt-ind
-    version: 2
-    kind: theorem
-    source: dimred.tex:289-294 (label pt_ind_lemma)
-    file: DimRed/Frozen/Prelim/PtInd.lean
-    export: DimRed.Frozen.pt_ind_lemma
-    state: SEALED
-    frozen_sha256: 23d9636b9067d625ab709305e81abe600cea3faf3a7a6205851db85a6041dccb
-    provider: DimRed.Frozen.pt_ind_lemma
-    approved: "2026-09-10"
-
-  - id: lem-parabolic-comparison
-    version: 2
-    kind: theorem
-    source: dimred.tex:311-316 (label parabolic_comparison)
-    file: DimRed/Frozen/Prelim/ParabolicComparison.lean
-    export: DimRed.Frozen.parabolic_comparison
-    state: SEALED
-    frozen_sha256: 549e529ef588fac1ad8f700ce31cef4f03157efc4e9f2eeca239697a34a1d692
-    provider: DimRed.Frozen.parabolic_comparison
-    approved: "2026-09-10"
-
   - id: lem-symmetry
     version: 2
     kind: theorem
@@ -214,17 +192,6 @@ nodes:
     provider: DimRed.Frozen.no_reduction_at_critical_dimension
     approved: "2026-09-10"
 
-  - id: lem-topple-limit
-    version: 2
-    kind: theorem
-    source: dimred.tex:669-674 (label topple_limit)
-    file: DimRed/Frozen/Prelim/ToppleLimit.lean
-    export: DimRed.Frozen.topple_limit
-    state: SEALED
-    frozen_sha256: c087896830c1831bb35304c529e9c9e5dfeabf39865ab1d7a56acee469e2711e
-    provider: DimRed.Frozen.topple_limit
-    approved: "2026-09-10"
-
   - id: lem-radial-laplacian
     version: 2
     kind: theorem
@@ -234,5 +201,38 @@ nodes:
     state: SEALED
     frozen_sha256: f47be9537d444c7e06c4279bf657446596c6da58ed0fd5c1b60acf26c2b8678f
     provider: DimRed.Frozen.radial_laplacian
+    approved: "2026-09-10"
+
+  - id: lem-pt-ind
+    version: 3
+    kind: theorem
+    source: dimred.tex:289-294 (label pt_ind_lemma)
+    file: DimRed/Frozen/Prelim/PtInd.lean
+    export: DimRed.Frozen.pt_ind_lemma
+    state: SEALED
+    frozen_sha256: a9fa10f453a9aef3d327706a1c3cefc971924334b653d5e5bf9e6d301d379b72
+    provider: DimRed.Frozen.pt_ind_lemma
+    approved: "2026-09-10"
+
+  - id: lem-parabolic-comparison
+    version: 3
+    kind: theorem
+    source: dimred.tex:311-316 (label parabolic_comparison)
+    file: DimRed/Frozen/Prelim/ParabolicComparison.lean
+    export: DimRed.Frozen.parabolic_comparison
+    state: SEALED
+    frozen_sha256: 1c91f16518f7adfe1e3810d6350945fcf946ec98fbd8dfa7b6d15feb5d1c2824
+    provider: DimRed.Frozen.parabolic_comparison
+    approved: "2026-09-10"
+
+  - id: lem-topple-limit
+    version: 3
+    kind: theorem
+    source: dimred.tex:669-674 (label topple_limit)
+    file: DimRed/Frozen/Prelim/ToppleLimit.lean
+    export: DimRed.Frozen.topple_limit
+    state: SEALED
+    frozen_sha256: 0bbd15507ea50c6417b51f510c9d3397a562a3099100a24bd0913058800c0d00
+    provider: DimRed.Frozen.topple_limit
     approved: "2026-09-10"
 
