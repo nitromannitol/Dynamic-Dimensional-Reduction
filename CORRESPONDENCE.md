@@ -89,6 +89,7 @@ None so far.  The paper cites Babai-Gorodezky for the attribution of Corollary
 | node | change | why |
 |---|---|---|
 | `prop-base-case` | the ripple clause carries `1 ≤ x` | version 2.  `dimred.tex:800-806` (`eq:ripple`) reads "for each `t' < t` and `a_{t'-1} ≥ x > a_{t'}`, `v_t(x) = v_{t-1}(x-1)`" under the convention `v_t(-1) = 0` of `dimred.tex:728`.  Once `t > t_d` the sequence `a_t` decreases by one at every step, so it passes through `0` and then `-1`, and at that step the interval is `{0}`: the clause then asserts `v_t(0) = v_{t-1}(-1) = 0`, which is false, the all-ones point of `S_2^{(d)}` having toppled at the first step.  The clause is meant for `x ≥ 1`, where `x - 1` is a radial coordinate.  Recorded as E5 in the errata |
+| `prop-base-case` | the ripple clause is the front-shifted profile inside its window | version 4.  The clause of `dimred.tex:800-806` (`eq:ripple`) is the paper's Step 2: the ripple front advances one site per step, so at time `t` the profile outside the firing block is the profile at time `t'` shifted outward by `t - t'`.  The literal reading `v_t(x) = v_{t-1}(x-1)` is a consequence of the block formula and cannot feed Step 2's induction, which needs the profile near `x` at times `t > t'`. |
 
 ## The frozen surface
 
