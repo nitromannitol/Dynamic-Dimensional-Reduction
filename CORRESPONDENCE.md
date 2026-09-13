@@ -12,7 +12,6 @@ a Lean statement.
 |---|---|---|---|
 | `cor-axis-monotonicity` | `DimRed.Frozen.axis_monotonicity` | dimred.tex:513-526 (label axis_monotonicity) | DRAFT_SORRY |
 | `cor-derivative-bound` | `DimRed.Frozen.derivative_bound` | dimred.tex:531-539 (label cor-derivative_bound) | DRAFT_SORRY |
-| `prop-base-case` | `DimRed.Frozen.base_case` | dimred.tex:789-810 (label prop-base_case) | DRAFT_SORRY |
 | `prop-base-dimension-consistency` | `DimRed.Frozen.base_dimension_consistency` | dimred.tex:912-921 (label base_dimension) | DRAFT_SORRY |
 | `prop-base-dimension-weak` | `DimRed.Frozen.base_dimension_weak_compatibility` | dimred.tex:922-930 (label base_dimension) | DRAFT_SORRY |
 | `prop-base-dimension-strong-derivative` | `DimRed.Frozen.base_dimension_strong_derivative` | dimred.tex:931-934 (label base_dimension) | DRAFT_SORRY |
@@ -30,6 +29,7 @@ a Lean statement.
 | `lem-parabolic-comparison` | `DimRed.Frozen.parabolic_comparison` | dimred.tex:311-316 (label parabolic_comparison) | SEALED |
 | `lem-topple-limit` | `DimRed.Frozen.topple_limit` | dimred.tex:669-674 (label topple_limit) | SEALED |
 | `lem-difference-comparison` | `DimRed.Frozen.general_difference_comparison` | dimred.tex:473-497 (label general_difference_comparison) | SEALED |
+| `prop-base-case` | `DimRed.Frozen.base_case` | dimred.tex:789-810 (label prop-base_case) | DRAFT_SORRY |
 
 <!-- FROZEN-SURFACE-END -->
 
