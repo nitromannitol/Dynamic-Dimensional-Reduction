@@ -49,17 +49,6 @@ nodes:
     provider: DimRed.Frozen.derivative_bound
     approved: "2026-09-10"
 
-  - id: prop-base-case
-    version: 1
-    kind: theorem
-    source: dimred.tex:789-810 (label prop-base_case)
-    file: DimRed/Frozen/BaseCase/ExplicitOdometer.lean
-    export: DimRed.Frozen.base_case
-    state: DRAFT_SORRY
-    frozen_sha256: 57ac88024fac71cf076ec63c2c0cba46c9296a00aa620fa197dd9e014dadbde0
-    provider: DimRed.Frozen.base_case
-    approved: "2026-09-10"
-
   - id: prop-base-dimension-consistency
     version: 1
     kind: theorem
@@ -235,4 +224,15 @@ nodes:
     frozen_sha256: 0bbd15507ea50c6417b51f510c9d3397a562a3099100a24bd0913058800c0d00
     provider: DimRed.Frozen.topple_limit
     approved: "2026-09-10"
+
+  - id: prop-base-case
+    version: 2
+    kind: theorem
+    source: dimred.tex:789-810 (label prop-base_case)
+    file: DimRed/Frozen/BaseCase/ExplicitOdometer.lean
+    export: DimRed.Frozen.base_case
+    state: DRAFT_SORRY
+    frozen_sha256: 4f0c0c4ab7619e42f310c13177fddf824087fb7d05c77766c8382ec562bfe374
+    provider: DimRed.Frozen.base_case
+    approved: "2026-09-13"
 

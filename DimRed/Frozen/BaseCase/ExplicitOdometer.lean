@@ -30,7 +30,7 @@ theorem DimRed.Frozen.base_case (d : ℕ) (hd : 1 ≤ d) (t : ℕ) :
         (blockEdge d (t + 1) < (x : ℤ) → (x : ℤ) ≤ blockEdge d t →
           odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (t + 1) (radial d x)
             = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x))) ∧
-      ∀ s : ℕ, s + 1 ≤ t → ∀ x : ℕ, x ≤ d →
+      ∀ s : ℕ, s + 1 ≤ t → ∀ x : ℕ, 1 ≤ x → x ≤ d →
         (x : ℤ) ≤ blockEdge d s → blockEdge d (s + 1) < (x : ℤ) →
         odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (t + 1) (radial d x)
           = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x - 1))
