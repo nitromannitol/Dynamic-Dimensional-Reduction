@@ -25,4 +25,6 @@ import DimRed.Frozen.Regularity.StrongFacet
 import DimRed.Frozen.Regularity.StrongTopple
 import DimRed.Frozen.Regularity.WeakFacet
 import DimRed.Support.Basic
+import DimRed.Support.Difference
+import DimRed.Support.DifferenceStep
 import DimRed.Support.Recursion

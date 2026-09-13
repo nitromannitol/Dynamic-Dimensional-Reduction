@@ -19,7 +19,9 @@ most zero is every term being at most zero.  The standing hypothesis of the
 subsection is that the initial sandpile is constant (`dimred.tex:434-436`),
 carried here as the constant `c` with the bound of Section 2.
 -/
-import DimRed.Support.Recursion
+import DimRed.Support.DifferenceStep
+
+set_option maxHeartbeats 1000000
 
 open LatticeProb DimRed
 
@@ -31,7 +33,8 @@ theorem DimRed.Frozen.general_difference_comparison (d M : ℕ) (hd : 1 ≤ d) (
     (hinit : ∀ x, inSimplex d M x → ∀ k,
       odo d (2 * M) (fun _ => c) t₀ x - odo d (2 * M) (fun _ => c) t₀ (x + w k) - g k x ≤ 0)
     (hbdry : ∀ t, t₀ ≤ t → ∀ x, inSimplex d M x → (bdry M 0 x ∨ ∃ k, bdry M (w k) x) →
-      ((∀ k, nbrSum (odo d (2 * M) (fun _ => c) t) x
+      ((∀ k, inCube d (2 * M) (x + w k) ∧
+          nbrSum (odo d (2 * M) (fun _ => c) t) x
           - nbrSum (odo d (2 * M) (fun _ => c) t) (x + w k) - 2 * (d : ℤ) * g k x ≤ 0) ∨
        (∀ k, odo d (2 * M) (fun _ => c) (t + 1) x
           - odo d (2 * M) (fun _ => c) (t + 1) (x + w k) - g k x ≤ 0))) :
@@ -39,4 +42,38 @@ theorem DimRed.Frozen.general_difference_comparison (d M : ℕ) (hd : 1 ≤ d) (
       odo d (2 * M) (fun _ => c) (t + 1) x
         - odo d (2 * M) (fun _ => c) (t + 1) (x + w k) - g k x ≤ 0
 -- FROZEN-STATEMENT-END
-:= by sorry
+:= by
+  have hmain : ∀ t, t₀ ≤ t → ∀ x, inSimplex d M x → ∀ k,
+      odo d (2 * M) (fun _ => c) t x - odo d (2 * M) (fun _ => c) t (x + w k) - g k x ≤ 0 := by
+    intro t ht
+    induction t, ht using Nat.le_induction with
+    | base => intro x hx k; exact hinit x hx k
+    | succ n hn ih =>
+      intro x hx k
+      by_cases hb : bdry M 0 x ∨ ∃ k, bdry M (w k) x
+      · rcases hbdry n hn x hx hb with h1 | h2
+        · exact difference_boundary_step d M hd c hc0 hc1 (w k) (g k) n x hx (h1 k).1 (h1 k).2
+        · exact h2 k
+      · have hstrict : (∀ i : Fin d, x i < (M : ℤ)) ∧ (∀ i : Fin d, 1 < x i) ∧
+            (∀ i j : Fin d, i < j → x j < x i) := by
+          simpa [add_zero] using not_bdry_strict M 0 x (fun h0 => hb (Or.inl h0))
+        have hstrictw : (∀ i : Fin d, (x + w k) i < (M : ℤ)) ∧
+            (∀ i : Fin d, 1 < (x + w k) i) ∧
+            (∀ i j : Fin d, i < j → (x + w k) j < (x + w k) i) :=
+          not_bdry_strict M (w k) x (fun hw => hb (Or.inr ⟨k, hw⟩))
+        have hx0 : ∀ i : Fin d, inSimplex d M (x + unit i) ∧ inSimplex d M (x - unit i) :=
+          fun i => ⟨inSimplex_add_unit d M x hx hstrict.1 hstrict.2.1 hstrict.2.2 i,
+                    inSimplex_sub_unit d M x hx hstrict.1 hstrict.2.1 hstrict.2.2 i⟩
+        have hxwS : inSimplex d M (x + w k) :=
+          inSimplex_of_strict M (x + w k) hstrictw.1 hstrictw.2.1 hstrictw.2.2
+        have hxw : ∀ i : Fin d,
+            inSimplex d M (x + w k + unit i) ∧ inSimplex d M (x + w k - unit i) :=
+          fun i => ⟨inSimplex_add_unit d M (x + w k) hxwS
+                      hstrictw.1 hstrictw.2.1 hstrictw.2.2 i,
+                    inSimplex_sub_unit d M (x + w k) hxwS
+                      hstrictw.1 hstrictw.2.1 hstrictw.2.2 i⟩
+        exact difference_interior_step d M hd c hc0 hc1 (w k) (g k) (hg k) n x hx hx0 hxw
+          (inSimplex_inCube d M (x + w k) hxwS)
+          (fun y hy => ih y hy k)
+  intro t ht x hx k
+  exact hmain (t + 1) (by omega) x hx k

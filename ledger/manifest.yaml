@@ -16,17 +16,6 @@ source_pin:
   sha256: 7b47485ebc0b16b08be0ed91b360ec9b1b06f5a9bba6ffca93ededeaa09d9823
 
 nodes:
-  - id: lem-difference-comparison
-    version: 1
-    kind: theorem
-    source: dimred.tex:473-497 (label general_difference_comparison)
-    file: DimRed/Frozen/Prelim/DifferenceComparison.lean
-    export: DimRed.Frozen.general_difference_comparison
-    state: DRAFT_SORRY
-    frozen_sha256: 752f8a9c06eb56c4e29fae9e3fdf517ffd3691606a5fc245cba2d16ca3fe12b2
-    provider: DimRed.Frozen.general_difference_comparison
-    approved: "2026-09-10"
-
   - id: cor-axis-monotonicity
     version: 1
     kind: theorem
@@ -235,4 +224,15 @@ nodes:
     frozen_sha256: 0bbd15507ea50c6417b51f510c9d3397a562a3099100a24bd0913058800c0d00
     provider: DimRed.Frozen.topple_limit
     approved: "2026-09-10"
+
+  - id: lem-difference-comparison
+    version: 3
+    kind: theorem
+    source: dimred.tex:473-497 (label general_difference_comparison)
+    file: DimRed/Frozen/Prelim/DifferenceComparison.lean
+    export: DimRed.Frozen.general_difference_comparison
+    state: SEALED
+    frozen_sha256: 8df9468a4519b9d37dc904e8e87a53fa46d94ecbc02cec46b87dbb55905c88cc
+    provider: DimRed.Frozen.general_difference_comparison
+    approved: "2026-09-13"
 
