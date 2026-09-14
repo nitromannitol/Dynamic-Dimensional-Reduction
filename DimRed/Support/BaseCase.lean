@@ -200,3 +200,14 @@ theorem blockEdge_mul_le (d t : ℕ) (hd : 1 ≤ d) (ht : 1 ≤ t) :
       have htq : (s : ℤ) ≤ (t : ℤ) := by linarith
       nlinarith [hu, htq, hqle]
     linarith
+
+/-- The sandpile on the block, `dimred.tex:821-826`: if the odometer is `t` at
+the radial sites `x-1`, `x`, `x+1`, then the sandpile at `x` is
+`2d + (d-1) - t x`. -/
+theorem sandp_block (d t : ℕ) (_hd : 1 ≤ d) (_ht : 1 ≤ t) (x : ℕ) (hx : x ≤ d)
+    (h0 : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x) = (t : ℤ))
+    (h1 : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x + 1)) = (t : ℤ))
+    (hm : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x - 1)) = (t : ℤ)) :
+    sandp d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x)
+      = 2 * (d : ℤ) + ((d : ℤ) - 1) - (t : ℤ) * (x : ℤ) := by
+  rw [sandp, lap_radial d (2 * (d:ℤ) + ((d:ℤ) - 1)) t x hx, h0, h1, hm]; ring
