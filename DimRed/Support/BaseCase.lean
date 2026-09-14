@@ -211,3 +211,80 @@ theorem sandp_block (d t : ℕ) (_hd : 1 ≤ d) (_ht : 1 ≤ t) (x : ℕ) (hx : 
     sandp d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x)
       = 2 * (d : ℤ) + ((d : ℤ) - 1) - (t : ℤ) * (x : ℤ) := by
   rw [sandp, lap_radial d (2 * (d:ℤ) + ((d:ℤ) - 1)) t x hx, h0, h1, hm]; ring
+
+/-- Inside the firing block at time `t + 1` the excess `(d-1) - t x` is
+nonnegative, `dimred.tex:830-846`. -/
+theorem blockEdge_window_le (d t x : ℕ) (hd : 1 ≤ d) (ht : 1 ≤ t) (_hx : x ≤ d)
+    (h : (x : ℤ) ≤ blockEdge d (t + 1)) : (x : ℤ) * (t : ℤ) ≤ (d : ℤ) - 1 := by
+  have h1 : (x : ℤ) * (t : ℤ) ≤ blockEdge d (t + 1) * (t : ℤ) :=
+    mul_le_mul_of_nonneg_right h (by positivity)
+  have h2 := blockEdge_mul_le d t hd ht
+  linarith
+
+/-- The strict decrease of `a / m` in `m` when `a ≥ m²`. -/
+theorem ediv_strict_succ (a : ℤ) (t : ℕ) (ht : 1 ≤ t) (h : (t : ℤ) * (t : ℤ) ≤ a) :
+    a / ((t : ℤ) + 1) < a / (t : ℤ) := by
+  have ht_pos : (0 : ℤ) < (t : ℤ) := by omega
+  have ht1_pos : (0 : ℤ) < (t : ℤ) + 1 := by omega
+  have hq : (t : ℤ) ≤ a / (t : ℤ) := by
+    rw [Int.le_ediv_iff_mul_le ht_pos]
+    exact h
+  have hlt : a < (a / (t : ℤ) + 1) * (t : ℤ) := by
+    rw [← Int.ediv_lt_iff_lt_mul ht_pos]
+    omega
+  have key : a < (a / (t : ℤ)) * ((t : ℤ) + 1) := by
+    nlinarith [hq, hlt]
+  rw [Int.ediv_lt_iff_lt_mul ht1_pos]
+  exact key
+
+/-- The block edge strictly decreases, `dimred.tex:784-790`. -/
+theorem blockEdge_strict (d t : ℕ) (hd : 1 ≤ d) (ht : 1 ≤ t) :
+    blockEdge d (t + 1) < blockEdge d t := by
+  obtain ⟨u, rfl⟩ : ∃ u, t = u + 1 := ⟨t - 1, by omega⟩
+  match u with
+  | 0 =>
+    have h1 : blockEdge d 1 = (d : ℤ) := rfl
+    have h2 : blockEdge d 2 = if 2 ≤ tCrit d then ((d : ℤ) - 1) / 1 else blockEdge d 1 - 1 := rfl
+    rw [h1, h2]
+    split_ifs with h
+    · have hd2 : 2 ≤ d := by
+        by_contra hcc
+        have h2 : tCrit d ≤ 1 := tCrit_le_one (by omega : d ≤ 1)
+        omega
+      have hq : ((d : ℤ) - 1) / 1 = (d : ℤ) - 1 := by norm_num
+      rw [hq]; omega
+    · omega
+  | (n + 1) =>
+    by_cases hc : n + 2 + 1 ≤ tCrit d
+    · have htc : n + 2 ≤ tCrit d := by omega
+      rw [blockEdge_of_le d (n + 2 + 1) (by omega) hc, blockEdge_of_le d (n + 2) (by omega) htc]
+      have hcast1 : (((n + 2 + 1 : ℕ) : ℤ) - 1) = ((n : ℤ) + 2) := by push_cast; ring
+      have hcast2 : (((n + 2 : ℕ) : ℤ) - 1) = ((n : ℤ) + 1) := by push_cast; ring
+      rw [hcast1, hcast2]
+      have hd2 : 2 ≤ d := by
+        by_contra hcc
+        have h2 : tCrit d ≤ 1 := tCrit_le_one (by omega : d ≤ 1)
+        omega
+      have hsq : ((n : ℤ) + 1) * ((n : ℤ) + 1) ≤ (d : ℤ) - 1 := by
+        have h3 : tCrit d = (d - 2).sqrt + 2 := tCrit_eq d hd2
+        have h4 : n + 1 ≤ (d - 2).sqrt := by omega
+        have h5 : (n + 1) * (n + 1) ≤ (d - 2).sqrt * (d - 2).sqrt := by
+          nlinarith [h4, Nat.zero_le n]
+        have h6 : (d - 2).sqrt * (d - 2).sqrt ≤ d - 2 := Nat.sqrt_le _
+        have h7 : (n + 1) * (n + 1) ≤ d - 2 := le_trans h5 h6
+        have h8 : (n + 1) * (n + 1) ≤ d - 1 := by omega
+        exact_mod_cast h8
+      have hstep := ediv_strict_succ ((d : ℤ) - 1) (n + 1) (by omega) hsq
+      have hcast3 : ((n + 1 : ℕ) : ℤ) + 1 = ((n : ℤ) + 2) := by push_cast; ring
+      rwa [hcast3] at hstep
+    · have hle : tCrit d ≤ n + 1 + 1 := by omega
+      by_cases hlt : tCrit d < n + 1 + 1
+      · rw [blockEdge_of_gt d (n + 1 + 1 + 1) (by omega), blockEdge_of_gt d (n + 1 + 1) hlt]
+        have hcast : ((n + 1 + 1 + 1 : ℕ) : ℤ) - ((tCrit d : ℕ) : ℤ)
+            = ((n + 1 + 1 : ℕ) : ℤ) - ((tCrit d : ℕ) : ℤ) + 1 := by push_cast; ring
+        rw [hcast]; omega
+      · have heq : tCrit d = n + 1 + 1 := by omega
+        rw [blockEdge_of_gt d (n + 1 + 1 + 1) (by omega)]
+        have hcast : ((n + 1 + 1 + 1 : ℕ) : ℤ) - ((tCrit d : ℕ) : ℤ) = 1 := by
+          rw [heq]; push_cast; ring
+        rw [hcast, heq]; omega
