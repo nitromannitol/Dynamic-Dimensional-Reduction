@@ -325,3 +325,9 @@ theorem base_block_from_inv (d : ℕ) (_hd : 1 ≤ d) (t : ℕ)
       have hA := h4 h1'
       have hB := h3 0 hx h2'
       omega
+
+/-- `a_t` is nonincreasing in `t`. -/
+theorem blockEdge_antitone_le (d : ℕ) {m n : ℕ} (h : m ≤ n) : blockEdge d n ≤ blockEdge d m := by
+  induction h with
+  | refl => exact le_rfl
+  | step hk ih => exact le_trans (blockEdge_antitone d _) ih
