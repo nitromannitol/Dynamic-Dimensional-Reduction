@@ -288,3 +288,40 @@ theorem blockEdge_strict (d t : ℕ) (hd : 1 ≤ d) (ht : 1 ≤ t) :
         have hcast : ((n + 1 + 1 + 1 : ℕ) : ℤ) - ((tCrit d : ℕ) : ℤ) = 1 := by
           rw [heq]; push_cast; ring
         rw [hcast, heq]; omega
+
+/-- The block clause of the base case from the invariant at times `t` and `t+1`. -/
+theorem base_block_from_inv (d : ℕ) (_hd : 1 ≤ d) (t : ℕ)
+    (h1 : ∀ x : ℕ, x ≤ d → (x : ℤ) ≤ blockEdge d (t + 1) →
+        odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (t + 1) (radial d x) = ((t + 1 : ℕ) : ℤ))
+    (h2 : ∀ x : ℕ, 1 ≤ x → x ≤ d → blockEdge d (t + 1) < (x : ℤ) →
+        odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (t + 1) (radial d x)
+          = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x - 1)))
+    (h3 : ∀ x : ℕ, x ≤ d → (x : ℤ) ≤ blockEdge d t →
+        odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x) = (t : ℤ))
+    (h4 : blockEdge d (t + 1) < 0 →
+        odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (t + 1) (radial d 0) = (t : ℤ)) :
+    ∀ x : ℕ, x ≤ d →
+      ((x : ℤ) ≤ blockEdge d (t + 1) →
+        odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (t + 1) (radial d x)
+          = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x) + 1) ∧
+      (blockEdge d (t + 1) < (x : ℤ) → (x : ℤ) ≤ blockEdge d t →
+        odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (t + 1) (radial d x)
+          = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x)) := by
+  intro x hx
+  constructor
+  · intro h
+    have hA := h1 x hx h
+    have hB := h3 x hx (le_trans h (blockEdge_antitone d t))
+    push_cast at hA
+    omega
+  · intro h1' h2'
+    by_cases hx1 : 1 ≤ x
+    · have hA := h2 x hx1 hx h1'
+      have hB := h3 (x - 1) (by omega) (by omega)
+      have hC := h3 x hx h2'
+      omega
+    · have h0 : x = 0 := by omega
+      subst h0
+      have hA := h4 h1'
+      have hB := h3 0 hx h2'
+      omega
