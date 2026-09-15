@@ -370,3 +370,13 @@ theorem sandp_ge_two_d (d t s x : ℕ) (hd : 1 ≤ d) (_hs : s + 1 ≤ t) (_hx :
   have hw : (x : ℤ) * ((s : ℤ) - 1) ≤ (d : ℤ) - 1 :=
     blockEdge_window_le' d s x hd hxd hxs
   nlinarith [hw]
+
+/-- The block edge never exceeds `d`, `dimred.tex:784-790`. -/
+theorem blockEdge_le_self (d m : ℕ) : blockEdge d m ≤ (d : ℤ) := by
+  induction m using Nat.strong_induction_on with
+  | _ m ih =>
+    match m with
+    | 0 => simp only [blockEdge]; exact le_rfl
+    | 1 => simp only [blockEdge]; exact le_rfl
+    | (n + 2) =>
+      exact le_trans (blockEdge_antitone d (n + 1)) (ih (n + 1) (by omega))
