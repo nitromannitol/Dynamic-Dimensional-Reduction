@@ -371,12 +371,54 @@ theorem sandp_ge_two_d (d t s x : ℕ) (hd : 1 ≤ d) (_hs : s + 1 ≤ t) (_hx :
     blockEdge_window_le' d s x hd hxd hxs
   nlinarith [hw]
 
+/-- The sandpile at a site of the firing block is at least `2d`, so the site
+fires, `dimred.tex:821-846`. -/
+theorem sandp_block_ge (d n x : ℕ) (hd : 1 ≤ d) (hn : 1 ≤ n) (hx : x ≤ d)
+    (h1 : (x : ℤ) ≤ blockEdge d (n + 1))
+    (hAn : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) n (radial d x) = (n : ℤ))
+    (hA1 : (x + 1 : ℤ) ≤ blockEdge d n →
+      odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) n (radial d (x + 1)) = (n : ℤ))
+    (hA0 : (x - 1 : ℤ) ≤ blockEdge d n →
+      odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) n (radial d (x - 1)) = (n : ℤ)) :
+    2 * (d : ℤ) ≤ sandp d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) n (radial d x) := by
+  have hlt : blockEdge d (n + 1) < blockEdge d n := blockEdge_strict d n hd hn
+  have hle : blockEdge d (n + 1) ≤ blockEdge d n := le_of_lt hlt
+  rw [sandp, lap_radial d _ n x hx, hAn]
+  have h1' : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) n (radial d (x - 1)) = (n : ℤ) :=
+    hA0 (by omega)
+  rw [h1']
+  by_cases hxd : x = d
+  · rw [hxd]
+    simp only [sub_self, zero_mul, add_zero]
+    have hw := blockEdge_window_le d n x hd hn hx h1
+    nlinarith [hw]
+  · have h0 : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) n (radial d (x + 1)) = (n : ℤ) :=
+      hA1 (by omega)
+    rw [h0]
+    have hw := blockEdge_window_le d n x hd hn hx h1
+    nlinarith [hw]
+
 /-- The block edge never exceeds `d`, `dimred.tex:784-790`. -/
-theorem blockEdge_le_self (d m : ℕ) : blockEdge d m ≤ (d : ℤ) := by
+theorem blockEdge_le_self (d m : ℕ) (hd : 1 ≤ d) : blockEdge d m ≤ (d : ℤ) := by
   induction m using Nat.strong_induction_on with
   | _ m ih =>
     match m with
     | 0 => simp only [blockEdge]; exact le_rfl
     | 1 => simp only [blockEdge]; exact le_rfl
     | (n + 2) =>
-      exact le_trans (blockEdge_antitone d (n + 1)) (ih (n + 1) (by omega))
+      by_cases h : n + 2 ≤ tCrit d
+      · rw [blockEdge_of_le d (n + 2) (by omega) h]
+        have hcast : (((n + 2 : ℕ) : ℤ) - 1) = (n : ℤ) + 1 := by push_cast; ring
+        rw [hcast]
+        have hpos : (0 : ℤ) < (n : ℤ) + 1 := by omega
+        have hle : ((d : ℤ) - 1) / ((n : ℤ) + 1) ≤ (d : ℤ) - 1 :=
+          Int.ediv_le_self _ (by omega)
+        linarith
+      · rw [blockEdge_of_gt d (n + 2) (by omega)]
+        have htc : tCrit d ≤ n + 1 := by omega
+        have hb : blockEdge d (tCrit d) ≤ (d : ℤ) := ih (tCrit d) (by omega)
+        have hcast : (((n + 2 : ℕ) : ℤ) - ((tCrit d : ℕ) : ℤ)) = (n : ℤ) + 2 - (tCrit d : ℤ) := by
+          push_cast; ring
+        rw [hcast]
+        have h1 : (tCrit d : ℤ) ≤ (n : ℤ) + 1 := by omega
+        linarith
