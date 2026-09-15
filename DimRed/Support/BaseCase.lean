@@ -331,3 +331,42 @@ theorem blockEdge_antitone_le (d : ℕ) {m n : ℕ} (h : m ≤ n) : blockEdge d 
   induction h with
   | refl => exact le_rfl
   | step hk ih => exact le_trans (blockEdge_antitone d _) ih
+
+/-- The excess bound read at the front `s`: `x ≤ a_s` gives
+`x (s-1) ≤ d-1`, `dimred.tex:850-866`. -/
+theorem blockEdge_window_le' (d s x : ℕ) (hd : 1 ≤ d) (_hx : x ≤ d)
+    (h : (x : ℤ) ≤ blockEdge d s) : (x : ℤ) * ((s : ℤ) - 1) ≤ (d : ℤ) - 1 := by
+  by_cases hs0 : s = 0
+  · subst hs0
+    simp only [blockEdge] at h
+    push_cast
+    nlinarith [h]
+  · have hs : 1 ≤ s := by omega
+    by_cases hs1 : s = 1
+    · subst hs1
+      simp only [blockEdge] at h
+      push_cast
+      nlinarith [h]
+    · have hs2 : 2 ≤ s := by omega
+      have hm := blockEdge_mul_le d (s - 1) hd (by omega)
+      have hcast : (((s - 1 : ℕ) : ℤ)) = (s : ℤ) - 1 := by push_cast [Nat.cast_sub hs]; ring
+      have hsub : s - 1 + 1 = s := by omega
+      rw [hsub, hcast] at hm
+      nlinarith [h, hm]
+
+/-- The paper's first displayed chain of Step 2, `dimred.tex:850-866`: if the
+odometer at time `t` is `s+1` at `x-1` and `s` at `x` and `x+1`, then the
+sandpile at `x` is at least `2d`. -/
+theorem sandp_ge_two_d (d t s x : ℕ) (hd : 1 ≤ d) (_hs : s + 1 ≤ t) (_hx : t - s ≤ x) (hxd : x ≤ d)
+    (hxs : (x : ℤ) ≤ blockEdge d s)
+    (h0 : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x - 1)) = ((s + 1 : ℕ) : ℤ))
+    (h1 : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x) = (s : ℤ))
+    (h2 : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x + 1)) = (s : ℤ)) :
+    2 * (d : ℤ) ≤ sandp d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x) := by
+  have hcast : ((s + 1 : ℕ) : ℤ) = (s : ℤ) + 1 := by push_cast; ring
+  have h0' : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x - 1)) = (s : ℤ) + 1 := by
+    rw [h0, hcast]
+  rw [sandp, lap_radial d (2 * (d : ℤ) + ((d : ℤ) - 1)) t x hxd, h1, h2, h0']
+  have hw : (x : ℤ) * ((s : ℤ) - 1) ≤ (d : ℤ) - 1 :=
+    blockEdge_window_le' d s x hd hxd hxs
+  nlinarith [hw]
