@@ -422,3 +422,65 @@ theorem blockEdge_le_self (d m : ℕ) (hd : 1 ≤ d) : blockEdge d m ≤ (d : �
         rw [hcast]
         have h1 : (tCrit d : ℤ) ≤ (n : ℤ) + 1 := by omega
         linarith
+
+/-- The ripple step when the site fires: `v_{t+1}(x) = v_t(x-1)` follows from
+`odo_succ_eq` and the hypothesis `v_t(x-1) = v_t(x) + 1`, `dimred.tex:850-866`. -/
+theorem ripple_step_ge (d t x : ℕ) (_hd : 1 ≤ d) (_hx : x ≤ d)
+    (h : 2 * (d : ℤ) ≤ sandp d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x))
+    (hx1 : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x - 1))
+      = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x) + 1) :
+    odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (t + 1) (radial d x)
+      = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x - 1)) := by
+  rw [odo_succ_eq d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x) (inCube_radial d x)]
+  rw [if_pos h]
+  omega
+
+/-- The ripple step when the site does not fire: `v_{t+1}(x) = v_t(x-1)` follows
+from `odo_succ_eq` and the hypothesis `v_t(x-1) = v_t(x)`, `dimred.tex:850-866`. -/
+theorem ripple_step_lt (d t x : ℕ) (_hd : 1 ≤ d) (_hx : x ≤ d)
+    (h : ¬ 2 * (d : ℤ) ≤ sandp d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x))
+    (hx1 : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x - 1))
+      = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x)) :
+    odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (t + 1) (radial d x)
+      = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x - 1)) := by
+  rw [odo_succ_eq d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x) (inCube_radial d x)]
+  rw [if_neg h]
+  omega
+
+/-- The ripple step, split on whether the site fires, `dimred.tex:850-866`. -/
+theorem ripple_window_step (d t x : ℕ) (_hd : 1 ≤ d) (_hx : x ≤ d)
+    (hge : 2 * (d : ℤ) ≤ sandp d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x) →
+      odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x - 1))
+        = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x) + 1)
+    (hlt : ¬ 2 * (d : ℤ) ≤ sandp d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x) →
+      odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x - 1))
+        = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x)) :
+    odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (t + 1) (radial d x)
+      = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x - 1)) := by
+  rw [odo_succ_eq d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x) (inCube_radial d x)]
+  by_cases h : 2 * (d : ℤ) ≤ sandp d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x)
+  · rw [if_pos h]
+    omega
+  · rw [if_neg h]
+    omega
+
+/-- The paper's first displayed chain of Step 2, `dimred.tex:850-866`: if the
+odometer at time `t` is `s` at `x-2` and `x-1` and `s-1` at `x` and `x+1`, and
+`x ≤ a_s`, then the sandpile at `x` is at least `2d`. -/
+theorem sandp_ge_two_d' (d t s x : ℕ) (hd : 1 ≤ d) (hx : x ≤ d) (h2 : 2 ≤ x)
+    (hxs : (x : ℤ) ≤ blockEdge d s)
+    (_h0 : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x - 2)) = (s : ℤ))
+    (h1 : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x - 1)) = (s : ℤ))
+    (h2' : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x) = (s : ℤ) - 1)
+    (h3 : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x + 1)) = (s : ℤ) - 1) :
+    2 * (d : ℤ) ≤ sandp d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x) := by
+  rw [sandp, lap_radial d (2 * (d : ℤ) + ((d : ℤ) - 1)) t x hx, h2', h3, h1]
+  have hw := blockEdge_window_le' d s x hd hx hxs
+  nlinarith [hw]
+
+/-- The cast of the shifted index: `x ≤ a + (t - s)` with `t - s ≤ x` gives
+`x - (t - s) ≤ a` after casting to `ℤ`. -/
+theorem cast_sub_le (d s t x : ℕ) (h : (x : ℤ) ≤ blockEdge d (s + 1) + ((t - s : ℕ) : ℤ))
+    (hx : t - s ≤ x) : ((x - (t - s) : ℕ) : ℤ) ≤ blockEdge d (s + 1) := by
+  push_cast [Nat.cast_sub hx]
+  omega
