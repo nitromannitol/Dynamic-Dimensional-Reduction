@@ -28,3 +28,7 @@ import DimRed.Support.Basic
 import DimRed.Support.Difference
 import DimRed.Support.DifferenceStep
 import DimRed.Support.Recursion
+import DimRed.Support.BaseCase
+import DimRed.Support.BaseStep
+import DimRed.Support.BaseDimension
+import DimRed.Support.BaseInduction
