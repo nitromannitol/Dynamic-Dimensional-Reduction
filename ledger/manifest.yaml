@@ -224,13 +224,13 @@ nodes:
     frozen_sha256: 8df9468a4519b9d37dc904e8e87a53fa46d94ecbc02cec46b87dbb55905c88cc
     provider: DimRed.Frozen.general_difference_comparison
   - id: prop-base-case
-    version: 4
+    version: 5
     kind: theorem
     source: dimred.tex:789-810 (label prop-base_case)
     file: DimRed/Frozen/BaseCase/ExplicitOdometer.lean
     export: DimRed.Frozen.base_case
-    state: DRAFT_SORRY
+    state: SEALED
     frozen_sha256: 14fc3681f7a5134bd0d4ce6f9f3df2996463ef59ff071ba4874c358ae21ca0e8
     provider: DimRed.Frozen.base_case
-    approved: "2026-09-13"
+    approved: "2026-09-16"
 

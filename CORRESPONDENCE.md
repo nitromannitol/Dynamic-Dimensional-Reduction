@@ -29,7 +29,7 @@ a Lean statement.
 | `lem-parabolic-comparison` | `DimRed.Frozen.parabolic_comparison` | dimred.tex:311-316 (label parabolic_comparison) | SEALED |
 | `lem-topple-limit` | `DimRed.Frozen.topple_limit` | dimred.tex:669-674 (label topple_limit) | SEALED |
 | `lem-difference-comparison` | `DimRed.Frozen.general_difference_comparison` | dimred.tex:473-497 (label general_difference_comparison) | SEALED |
-| `prop-base-case` | `DimRed.Frozen.base_case` | dimred.tex:789-810 (label prop-base_case) | DRAFT_SORRY |
+| `prop-base-case` | `DimRed.Frozen.base_case` | dimred.tex:789-810 (label prop-base_case) | SEALED |
 
 <!-- FROZEN-SURFACE-END -->
 

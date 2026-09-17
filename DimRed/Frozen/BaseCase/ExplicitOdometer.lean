@@ -23,6 +23,7 @@ and `dimred.tex:428-431`), and `x` is the radial coordinate of
 for the same reason.
 -/
 import DimRed.Support.Recursion
+import DimRed.Support.BaseInduction
 
 open LatticeProb DimRed
 
@@ -40,4 +41,25 @@ theorem DimRed.Frozen.base_case (d : ℕ) (hd : 1 ≤ d) (t : ℕ) :
         odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (t + 1) (radial d x)
           = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + 1) (radial d (x - (t - s)))
 -- FROZEN-STATEMENT-END
-:= by sorry
+:= by
+  constructor
+  · intro x hx
+    refine ⟨?_, ?_⟩
+    · intro hxle
+      have hT1 : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (t + 1) (radial d x)
+          = ((t + 1 : ℕ) : ℤ) := block_eq d hd (t + 1) x hx hxle
+      have hT : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x) = (t : ℤ) :=
+        block_eq d hd t x hx (le_trans hxle (blockEdge_antitone d t))
+      rw [hT1, hT]; push_cast; ring
+    · intro hgt hle
+      rcases Nat.eq_zero_or_pos t with ht0 | htpos
+      · subst ht0
+        simp only [Nat.zero_add] at hgt
+        have hb1 : blockEdge d 1 = (d : ℤ) := rfl
+        have hb0 : blockEdge d 0 = (d : ℤ) := rfl
+        omega
+      · exact beyond_block_eq d hd t x htpos hx hgt hle
+  · intro s hst x hxb hxd hxs hxs1
+    have hq := ripple_shift d hd (t - s) s x hxb hxd hxs1 hxs
+    have heq : s + (t - s) + 1 = t + 1 := by omega
+    rwa [heq] at hq

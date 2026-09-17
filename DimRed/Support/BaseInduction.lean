@@ -325,4 +325,406 @@ theorem ripple_one_step (d : ℕ) (hd : 1 ≤ d) :
           nlinarith [hbnd]
         have hlt := ripple_step_lt d (s + 1) x hd hxd hnf (by omega)
         simpa using hlt
+
+/-- `blockEdge d 2 = d - 1` unconditionally: both branches of the definition
+agree, `dimred.tex:784-790`. -/
+theorem blockEdge_two (d : ℕ) : blockEdge d 2 = (d : ℤ) - 1 := by
+  have hdef : blockEdge d 2 = if 2 ≤ tCrit d then ((d : ℤ) - 1) / 1 else blockEdge d 1 - 1 := rfl
+  have h1 : blockEdge d 1 = (d : ℤ) := rfl
+  rw [hdef, h1]
+  split_ifs with h
+  · norm_num
+  · rfl
+
+set_option maxHeartbeats 4000000 in
+/-- The general-shift ripple relation, `dimred.tex:850-878` (Ruling 25/E6 form):
+the profile at absolute time `s + k + 1` is the profile at time `s + 1`, shifted
+outward by the whole shift `k`, for every `k`, not only `k = 1`
+(`ripple_one_step`). Proved by strong induction on `k`, using the smaller shift
+`k - 1` at the same front `s` for the window's interior and the smaller shift
+`k - 2` at the next front `s + 1` for its left edge, nested inside a strong
+induction on `s` for the window's right edge (exactly as in `ripple_one_step`,
+which is the case `k = 1`). -/
+theorem ripple_shift (d : ℕ) (hd : 1 ≤ d) :
+    ∀ k s x : ℕ, k ≤ x → x ≤ d →
+      blockEdge d (s + 1) < (x : ℤ) → (x : ℤ) ≤ blockEdge d s →
+      odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + k + 1) (radial d x)
+        = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + 1) (radial d (x - k)) := by
+  intro k
+  induction k using Nat.strong_induction_on with
+  | _ k ihk =>
+    intro s
+    induction s using Nat.strong_induction_on with
+    | _ s ihs =>
+      intro x hkx hxd h1 h2
+      match k with
+      | 0 => simp
+      | 1 => simpa using ripple_one_step d hd s x hkx hxd h1 h2
+      | (n + 2) =>
+        have hs1 : 1 ≤ s := by
+          by_contra hc
+          have hs0 : s = 0 := by omega
+          subst hs0
+          simp only [Nat.zero_add] at h1
+          have hb1 : blockEdge d 1 = (d : ℤ) := rfl
+          have hb0 : blockEdge d 0 = (d : ℤ) := rfl
+          omega
+        -- The value at a position strictly inside window `s`, obtained from the
+        -- shift `n + 1` at the same front `s`.
+        have keyval : ∀ pos : ℕ, n + 1 ≤ pos → pos ≤ d →
+            blockEdge d (s + 1) < (pos : ℤ) → (pos : ℤ) ≤ blockEdge d s →
+            (((pos - (n + 1) : ℕ) : ℤ) ≤ blockEdge d (s + 1) ∧
+                odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) (radial d pos)
+                  = (s : ℤ) + 1) ∨
+            (blockEdge d (s + 1) < ((pos - (n + 1) : ℕ) : ℤ) ∧
+                odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) (radial d pos)
+                  = (s : ℤ)) := by
+          intro pos hpos1 hposd hposgt hposle
+          have hq := ihk (n + 1) (by omega) s pos hpos1 hposd hposgt hposle
+          have heq : s + (n + 1) + 1 = s + (n + 2) := by omega
+          rw [heq] at hq
+          have hwle : ((pos - (n + 1) : ℕ) : ℤ) ≤ blockEdge d s := by
+            have hle : pos - (n + 1) ≤ pos := by omega
+            calc ((pos - (n + 1) : ℕ) : ℤ) ≤ (pos : ℤ) := by exact_mod_cast hle
+              _ ≤ blockEdge d s := hposle
+          rcases shifted_value d hd s hs1 (pos - (n + 1)) (by omega) hwle with ⟨hA, hB⟩ | ⟨hA, hB⟩
+          · exact Or.inl ⟨hA, by rw [hq]; exact hB⟩
+          · exact Or.inr ⟨hA, by rw [hq]; exact hB⟩
+        -- The value just beyond that window, at the edge `x - 1 = blockEdge d (s+1)`,
+        -- obtained from the shift `n` at the next front `s + 1`.
+        have boundaryval : blockEdge d (s + 1) = ((x - 1 : ℕ) : ℤ) →
+            ((((x - 1 - n : ℕ) : ℤ) ≤ blockEdge d (s + 2) ∧
+                odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) (radial d (x - 1))
+                  = (s : ℤ) + 2) ∨
+            (blockEdge d (s + 2) < ((x - 1 - n : ℕ) : ℤ) ∧
+                odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) (radial d (x - 1))
+                  = (s : ℤ) + 1)) := by
+          intro hbeq
+          have hq := ihk n (by omega) (s + 1) (x - 1) (by omega) (by omega)
+            (by
+              have hstrict := blockEdge_strict d (s + 1) hd (by omega)
+              omega)
+            (by omega)
+          have heq1 : s + 1 + n + 1 = s + (n + 2) := by omega
+          have heq2 : s + 1 + 1 = s + 2 := by omega
+          rw [heq1, heq2] at hq
+          have hwle : ((x - 1 - n : ℕ) : ℤ) ≤ blockEdge d (s + 1) := by
+            have hle : x - 1 - n ≤ x - 1 := by omega
+            calc ((x - 1 - n : ℕ) : ℤ) ≤ ((x - 1 : ℕ) : ℤ) := by exact_mod_cast hle
+              _ = blockEdge d (s + 1) := hbeq.symm
+          rcases shifted_value d hd (s + 1) (by omega) (x - 1 - n) (by omega) hwle
+            with ⟨hA, hB⟩ | ⟨hA, hB⟩
+          · refine Or.inl ⟨?_, ?_⟩
+            · have heqb : s + 1 + 1 = s + 2 := by omega
+              rwa [heqb] at hA
+            · rw [hq, hB]; push_cast; ring
+          · refine Or.inr ⟨?_, ?_⟩
+            · have heqb : s + 1 + 1 = s + 2 := by omega
+              rwa [heqb] at hA
+            · rw [hq, hB]; push_cast; ring
+        -- The value one beyond the right edge `x = blockEdge d s`, obtained from
+        -- the same shift `k` at the previous front `s - 1`.
+        have rightval : (x : ℤ) = blockEdge d s → x ≠ d →
+            odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) (radial d (x + 1))
+              = (s : ℤ) := by
+          intro hxeqR hxne
+          have hsne1 : s ≠ 1 := by
+            intro hc
+            subst hc
+            have hb1 : blockEdge d 1 = (d : ℤ) := rfl
+            rw [hb1] at hxeqR
+            exact hxne (by exact_mod_cast hxeqR)
+          have hs2 : 2 ≤ s := by omega
+          have hcond1 : blockEdge d (s - 1 + 1) < ((x + 1 : ℕ) : ℤ) := by
+            have heq : s - 1 + 1 = s := by omega
+            rw [heq, ← hxeqR]
+            push_cast; omega
+          have hcond2 : ((x + 1 : ℕ) : ℤ) ≤ blockEdge d (s - 1) := by
+            have hstrict := blockEdge_strict d (s - 1) hd (by omega)
+            have heq : s - 1 + 1 = s := by omega
+            rw [heq] at hstrict
+            rw [← hxeqR] at hstrict
+            push_cast; omega
+          have hq := ihs (s - 1) (by omega) (x + 1) (by omega) (by omega) hcond1 hcond2
+          have heq1 : s - 1 + (n + 2) + 1 = s + (n + 2) := by omega
+          have heq2 : s - 1 + 1 = s := by omega
+          rw [heq1, heq2] at hq
+          rw [hq]
+          refine block_eq d hd s (x + 1 - (n + 2)) (by omega) ?_
+          have hle : x + 1 - (n + 2) ≤ x := by omega
+          have hcast : ((x + 1 - (n + 2) : ℕ) : ℤ) ≤ (x : ℤ) := by exact_mod_cast hle
+          omega
+        by_cases hxdg : x = d
+        · -- `x = d`: forces `s = 1`, and `blockEdge d 2 = d - 1`, so `x - 1` is
+          -- always the left edge of window `s + 1`.
+          have hs_eq : s = 1 := by
+            have hle : blockEdge d s ≤ (d : ℤ) := blockEdge_le_self d s hd
+            have hxeq : (x : ℤ) = (d : ℤ) := by exact_mod_cast hxdg
+            by_contra hne
+            have hs2 : 2 ≤ s := by omega
+            have hstep : blockEdge d s ≤ blockEdge d 2 := blockEdge_antitone_le d hs2
+            rw [blockEdge_two] at hstep
+            omega
+          have hbeq : blockEdge d (s + 1) = ((x - 1 : ℕ) : ℤ) := by
+            rw [hs_eq]
+            have h22 : (1 : ℕ) + 1 = 2 := rfl
+            rw [h22, blockEdge_two]
+            have : x - 1 = d - 1 := by omega
+            rw [this]
+            have hd1 : 1 ≤ d := hd
+            push_cast [Nat.cast_sub hd1]
+            ring
+          have hB : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) (radial d x)
+              = (s : ℤ) + 1 := by
+            rcases keyval x (by omega) hxd h1 h2 with ⟨_, hv⟩ | ⟨hcon, _⟩
+            · exact hv
+            · exfalso
+              have hle : x - (n + 1) ≤ x - 1 := by omega
+              have hcast : ((x - (n + 1) : ℕ) : ℤ) ≤ ((x - 1 : ℕ) : ℤ) := by exact_mod_cast hle
+              omega
+          have hxz : (x : ℤ) = (d : ℤ) := by exact_mod_cast hxdg
+          have hz : (d : ℤ) - (x : ℤ) = 0 := by omega
+          have hfinal : ∀ Aval : ℤ,
+              odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) (radial d (x - 1)) = Aval →
+              (Aval = (s : ℤ) + 2 ∨ Aval = (s : ℤ) + 1) →
+              odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2) + 1) (radial d x)
+                = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + 1) (radial d (x - (n + 2))) := by
+            intro Aval hAval hcase
+            have hnf : ¬ 2 * (d : ℤ) ≤
+                sandp d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) (radial d x) := by
+              rw [sandp, lap_radial d (2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) x hxd,
+                hz, zero_mul, hAval, hB]
+              rcases hcase with hc | hc <;> rw [hc] <;> nlinarith [hxz, hs1]
+            have h0 : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2) + 1) (radial d x)
+                = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) (radial d x) := by
+              rw [odo_succ_eq d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) (radial d x)
+                (inCube_radial d x), if_neg hnf]
+              ring
+            rw [h0, hB]
+            have hyle : ((x - (n + 2) : ℕ) : ℤ) ≤ blockEdge d (s + 1) := by
+              have hle : x - (n + 2) ≤ x - 1 := by omega
+              calc ((x - (n + 2) : ℕ) : ℤ) ≤ ((x - 1 : ℕ) : ℤ) := by exact_mod_cast hle
+                _ = blockEdge d (s + 1) := hbeq.symm
+            exact (block_eq d hd (s + 1) (x - (n + 2)) (by omega) hyle).symm
+          rcases boundaryval hbeq with ⟨_, hAval⟩ | ⟨_, hAval⟩
+          · exact hfinal _ hAval (Or.inl rfl)
+          · exact hfinal _ hAval (Or.inr rfl)
+        · -- `x ≠ d`
+          have htargetle : ((x - (n + 2) : ℕ) : ℤ) ≤ blockEdge d s := by
+            have hle : x - (n + 2) ≤ x := by omega
+            have hcast : ((x - (n + 2) : ℕ) : ℤ) ≤ (x : ℤ) := by exact_mod_cast hle
+            omega
+          have htarget := shifted_value d hd s hs1 (x - (n + 2)) (by omega) htargetle
+          by_cases hbL : (x : ℤ) - 1 ≤ blockEdge d (s + 1)
+          · -- boundary: `x - 1 = blockEdge d (s + 1)` exactly
+            have hbeq : blockEdge d (s + 1) = ((x - 1 : ℕ) : ℤ) := by
+              have hcast : ((x - 1 : ℕ) : ℤ) = (x : ℤ) - 1 := by
+                have hx1 : 1 ≤ x := by omega
+                push_cast [Nat.cast_sub hx1]; ring
+              omega
+            have hB : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) (radial d x)
+                = (s : ℤ) + 1 := by
+              rcases keyval x (by omega) hxd h1 h2 with ⟨_, hv⟩ | ⟨hcon, _⟩
+              · exact hv
+              · exfalso
+                have hle : x - (n + 1) ≤ x - 1 := by omega
+                have hcast : ((x - (n + 1) : ℕ) : ℤ) ≤ ((x - 1 : ℕ) : ℤ) := by exact_mod_cast hle
+                omega
+            have htarget_boundary :
+                odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + 1) (radial d (x - (n + 2)))
+                  = (s : ℤ) + 1 := by
+              rcases htarget with ⟨_, htv⟩ | ⟨htcon, _⟩
+              · exact htv
+              · exfalso
+                have hle : x - (n + 2) ≤ x - 1 := by omega
+                have hcast : ((x - (n + 2) : ℕ) : ℤ) ≤ ((x - 1 : ℕ) : ℤ) := by exact_mod_cast hle
+                omega
+            have closeBoundary : (¬ 2 * (d : ℤ) ≤
+                sandp d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) (radial d x)) →
+                odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2) + 1) (radial d x)
+                  = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + 1) (radial d (x - (n + 2))) := by
+              intro hnf
+              rw [odo_succ_eq d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) (radial d x)
+                (inCube_radial d x), if_neg hnf, hB, htarget_boundary]
+              ring
+            have hzstrict : blockEdge d (s + 1 + 1) < blockEdge d (s + 1) :=
+              blockEdge_strict d (s + 1) hd (by omega)
+            by_cases hbR : (x : ℤ) < blockEdge d s
+            · -- not the right edge: window length at least `2`
+              have hlen : blockEdge d (s + 1) + 1 < blockEdge d s := by omega
+              rcases boundaryval hbeq with ⟨hAcond, hAval⟩ | ⟨hAcond, hAval⟩
+              · -- `A = s + 2`
+                rcases keyval (x + 1) (by omega) (by omega) (by omega) (by omega)
+                  with ⟨hCcond, hCval⟩ | ⟨hCcond, hCval⟩
+                · -- `C = s + 1`: real, no fire (`window_mul_gt`)
+                  apply closeBoundary
+                  rw [sandp, lap_radial d (2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) x hxd,
+                    hAval, hB, hCval]
+                  have hbnd := window_mul_gt d s x hd hxd h1 h2 hlen
+                  nlinarith [hbnd]
+                · -- `C = s`: impossible (`blockEdge` strictly decreases)
+                  exfalso
+                  have heq : s + 1 + 1 = s + 2 := by omega
+                  rw [heq] at hzstrict
+                  omega
+              · -- `A = s + 1`
+                rcases keyval (x + 1) (by omega) (by omega) (by omega) (by omega)
+                  with ⟨hCcond, hCval⟩ | ⟨hCcond, hCval⟩
+                · -- `C = s + 1`: no fire (`window_mul_gt`)
+                  apply closeBoundary
+                  rw [sandp, lap_radial d (2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) x hxd,
+                    hAval, hB, hCval]
+                  have hbnd := window_mul_gt d s x hd hxd h1 h2 hlen
+                  nlinarith [hbnd, hxd]
+                · -- `C = s`: no fire, trivial
+                  apply closeBoundary
+                  rw [sandp, lap_radial d (2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) x hxd,
+                    hAval, hB, hCval]
+                  nlinarith [hxd, hs1]
+            · -- the right edge: window length exactly `1`
+              have hC := rightval (by omega) hxdg
+              rcases boundaryval hbeq with ⟨hAcond, hAval⟩ | ⟨hAcond, hAval⟩
+              · -- `A = s + 2`: no fire, trivial
+                apply closeBoundary
+                rw [sandp, lap_radial d (2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) x hxd,
+                  hAval, hB, hC]
+                nlinarith [hxd, hs1]
+              · -- `A = s + 1`: no fire, trivial
+                apply closeBoundary
+                rw [sandp, lap_radial d (2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) x hxd,
+                  hAval, hB, hC]
+                nlinarith [hxd, hs1]
+          · -- interior: `blockEdge d (s + 1) < x - 1`
+            have hgt : blockEdge d (s + 1) < ((x - 1 : ℕ) : ℤ) := by omega
+            have hlen : blockEdge d (s + 1) + 1 < blockEdge d s := by omega
+            have closeNoFire : ∀ Bval Tval : ℤ,
+                odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) (radial d x) = Bval →
+                odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + 1) (radial d (x - (n + 2)))
+                  = Tval →
+                Bval = Tval →
+                ¬ 2 * (d : ℤ) ≤
+                    sandp d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) (radial d x) →
+                odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2) + 1) (radial d x)
+                  = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + 1) (radial d (x - (n + 2))) := by
+              intro Bval Tval hBval hTval heq hnf
+              rw [odo_succ_eq d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) (radial d x)
+                (inCube_radial d x), if_neg hnf, hBval, hTval, heq]
+              ring
+            have closeFire : ∀ Bval Tval : ℤ,
+                odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) (radial d x) = Bval →
+                odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + 1) (radial d (x - (n + 2)))
+                  = Tval →
+                Bval + 1 = Tval →
+                2 * (d : ℤ) ≤
+                    sandp d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) (radial d x) →
+                odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2) + 1) (radial d x)
+                  = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + 1) (radial d (x - (n + 2))) := by
+              intro Bval Tval hBval hTval heq hfire
+              rw [odo_succ_eq d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) (radial d x)
+                (inCube_radial d x), if_pos hfire, hBval, hTval]
+              omega
+            rcases keyval (x - 1) (by omega) (by omega) hgt (by omega) with
+              ⟨hAcond, hAval⟩ | ⟨hAcond, hAval⟩
+            · -- `A = s + 1`
+              rcases keyval x (by omega) hxd h1 h2 with ⟨hBcond, hBval⟩ | ⟨hBcond, hBval⟩
+              · -- `B = s + 1`: no fire, target `s + 1`
+                have htarget_final :
+                    odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + 1) (radial d (x - (n + 2)))
+                      = (s : ℤ) + 1 := by
+                  rcases htarget with ⟨_, htv⟩ | ⟨htcon, _⟩
+                  · exact htv
+                  · exfalso
+                    have hle : x - (n + 2) ≤ x - (n + 1) := by omega
+                    have hcast : ((x - (n + 2) : ℕ) : ℤ) ≤ ((x - (n + 1) : ℕ) : ℤ) := by
+                      exact_mod_cast hle
+                    omega
+                by_cases hbR : (x : ℤ) < blockEdge d s
+                · rcases keyval (x + 1) (by omega) (by omega) (by omega) (by omega) with
+                    ⟨hCcond, hCval⟩ | ⟨hCcond, hCval⟩
+                  · -- `C = s + 1`: no fire (`window_mul_gt`)
+                    refine closeNoFire _ _ hBval htarget_final rfl ?_
+                    intro hf
+                    rw [sandp, lap_radial d (2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) x hxd,
+                      hAval, hBval, hCval] at hf
+                    have hbnd := window_mul_gt d s x hd hxd h1 h2 hlen
+                    nlinarith [hbnd, hxd]
+                  · -- `C = s`: no fire, trivial (`++-`)
+                    refine closeNoFire _ _ hBval htarget_final rfl ?_
+                    intro hf
+                    rw [sandp, lap_radial d (2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) x hxd,
+                      hAval, hBval, hCval] at hf
+                    nlinarith [hxd, hs1]
+                · have hC := rightval (by omega) hxdg
+                  refine closeNoFire _ _ hBval htarget_final rfl ?_
+                  intro hf
+                  rw [sandp, lap_radial d (2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) x hxd,
+                    hAval, hBval, hC] at hf
+                  nlinarith [hxd, hs1]
+              · -- `B = s`: fire, target `s + 1 = A`
+                have htarget_final :
+                    odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + 1) (radial d (x - (n + 2)))
+                      = (s : ℤ) + 1 := by
+                  rcases htarget with ⟨_, htv⟩ | ⟨htcon, _⟩
+                  · exact htv
+                  · exfalso; omega
+                by_cases hbR : (x : ℤ) < blockEdge d s
+                · rcases keyval (x + 1) (by omega) (by omega) (by omega) (by omega) with
+                    ⟨hCcond, hCval⟩ | ⟨hCcond, hCval⟩
+                  · -- `C = s + 1`: impossible
+                    exfalso
+                    have hle : x - (n + 1) ≤ x + 1 - (n + 1) := by omega
+                    have hcast : ((x - (n + 1) : ℕ) : ℤ) ≤ ((x + 1 - (n + 1) : ℕ) : ℤ) := by
+                      exact_mod_cast hle
+                    omega
+                  · -- `C = s`: fire, real (`+--`)
+                    refine closeFire _ _ hBval htarget_final (by omega) ?_
+                    rw [sandp, lap_radial d (2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) x hxd,
+                      hAval, hBval, hCval]
+                    have hbnd := blockEdge_window_le' d s x hd hxd h2
+                    nlinarith [hbnd]
+                · have hC := rightval (by omega) hxdg
+                  refine closeFire _ _ hBval htarget_final (by omega) ?_
+                  rw [sandp, lap_radial d (2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) x hxd,
+                    hAval, hBval, hC]
+                  have hbnd := blockEdge_window_le' d s x hd hxd h2
+                  nlinarith [hbnd]
+            · -- `A = s`
+              rcases keyval x (by omega) hxd h1 h2 with ⟨hBcond, hBval⟩ | ⟨hBcond, hBval⟩
+              · -- `B = s + 1`: impossible
+                exfalso
+                have heq : x - (n + 2) + 1 = x - (n + 1) := by omega
+                have hcast : ((x - (n + 2) : ℕ) : ℤ) + 1 = ((x - (n + 1) : ℕ) : ℤ) := by
+                  have := heq
+                  exact_mod_cast this
+                omega
+              · -- `B = s`: no fire, target `s`
+                have htarget_final :
+                    odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + 1) (radial d (x - (n + 2)))
+                      = (s : ℤ) := by
+                  rcases htarget with ⟨htv_le, _⟩ | ⟨_, htv⟩
+                  · exfalso; omega
+                  · exact htv
+                by_cases hbR : (x : ℤ) < blockEdge d s
+                · rcases keyval (x + 1) (by omega) (by omega) (by omega) (by omega) with
+                    ⟨hCcond, hCval⟩ | ⟨hCcond, hCval⟩
+                  · -- `C = s + 1`: impossible
+                    exfalso
+                    have hle : x - (n + 1) ≤ x + 1 - (n + 1) := by omega
+                    have hcast : ((x - (n + 1) : ℕ) : ℤ) ≤ ((x + 1 - (n + 1) : ℕ) : ℤ) := by
+                      exact_mod_cast hle
+                    omega
+                  · -- `C = s`: no fire, real (`---`)
+                    refine closeNoFire _ _ hBval htarget_final rfl ?_
+                    intro hf
+                    rw [sandp, lap_radial d (2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) x hxd,
+                      hAval, hBval, hCval] at hf
+                    have hbnd := window_mul_gt d s x hd hxd h1 h2 hlen
+                    nlinarith [hbnd]
+                · have hC := rightval (by omega) hxdg
+                  refine closeNoFire _ _ hBval htarget_final rfl ?_
+                  intro hf
+                  rw [sandp, lap_radial d (2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) x hxd,
+                    hAval, hBval, hC] at hf
+                  have hbnd := window_mul_gt d s x hd hxd h1 h2 hlen
+                  nlinarith [hbnd]
 end DimRed
