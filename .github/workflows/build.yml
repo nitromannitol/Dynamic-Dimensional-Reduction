@@ -1,0 +1,58 @@
+name: CI
+
+# Manual trigger only: these builds are Mathlib-scale, so they run on request.
+on:
+  workflow_dispatch:
+
+# Cancel superseded runs on the same ref.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      # Lattice-Probability is private: read it with the repository's deploy key.
+      - name: Read access to Lattice-Probability
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.LP_DEPLOY_KEY }}
+      - name: Fetch Lattice-Probability over SSH
+        run: |
+          git config --global url."git@github.com:nitromannitol/Lattice-Probability".insteadOf "https://github.com/nitromannitol/Lattice-Probability"
+
+      - name: Install elan
+        run: |
+          curl https://elan.lean-lang.org/elan-init.sh -sSf | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Get the Mathlib cache
+        run: lake exe cache get
+
+      # This formalization is a work in progress: the build emits one
+      # "declaration uses sorry" warning for each open registered statement.
+      # tools/check_warnings.py (run by tools/verify.py below) fails on any
+      # other warning, and on any sorry warning the manifest does not register.
+      - name: Build
+        run: lake build
+
+      # Build the axiom audit and surface its `#print axioms` output in the log,
+      # confirming the proved results use only the standard Mathlib axioms.
+      - name: Axiom audit
+        shell: bash
+        run: |
+          set -o pipefail
+          lake build DimRed.Meta.AxiomsAudit 2>&1 | tee axioms-audit.log
+          if grep 'depends on axioms' axioms-audit.log | grep -vE 'depends on axioms: \[propext, Classical.choice, Quot.sound\]$'; then
+            echo "A proved result depends on an axiom other than the three standard ones."
+            exit 1
+          fi
+
+      - name: Frozen statements, paper correspondence and axiom closures
+        run: |
+          python3 -m pip install -r tools/requirements.txt
+          python3 tools/verify.py

@@ -1,5 +1,5 @@
 /-
-Lemma 2.3 of `dimred.tex`, frozen.  `dimred.tex:415-418` (label `symmetry_lemma`):
+Lemma 2.3 of `dimred.tex`, frozen.  `dimred.tex:415-417` (label `symmetry_lemma`):
 
   "For each $t \geq 0$ and each $\sigma \in \operatorname{Aut}_{\mathcal{C}_d}$,
    $\sigma v_t = v_t$.  Hence, $v_t = v_t^{\mathcal{S}}$ on

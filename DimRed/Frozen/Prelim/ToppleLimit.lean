@@ -1,5 +1,5 @@
 /-
-Lemma 2.5 of `dimred.tex`, frozen.  `dimred.tex:669-674` (label `topple_limit`):
+Lemma 2.5 of `dimred.tex`, frozen.  `dimred.tex:669-676` (label `topple_limit`):
 
   "For all $t \geq t_0$ and $j \geq 0$,
    $\max_{z \in \mathcal{S}} ( v_{t+j}(z) - v_t(z) ) \leq

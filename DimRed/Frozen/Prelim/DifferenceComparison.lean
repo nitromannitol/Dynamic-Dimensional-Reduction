@@ -1,5 +1,5 @@
 /-
-Lemma 2.4 of `dimred.tex`, frozen.  `dimred.tex:473-497`
+Lemma 2.4 of `dimred.tex`, frozen.  `dimred.tex:473-492`
 (label `general_difference_comparison`):
 
   "Let $\mathbf{w} := \{w_1, \ldots, w_n\}$ be a set of points in $\Z^d$ each
@@ -9,7 +9,7 @@ Lemma 2.4 of `dimred.tex`, frozen.  `dimred.tex:473-497`
    and for all $t \geq t_0$ and $x \in \{\mathcal{B}_0 \cup
    \mathcal{B}_{\mathbf{w}}\} \mathcal{S}$,
    $\sup_j ( \sum_{y \sim x} v_{t}(y) - \sum_{y' \sim (x + w_j)} v_{t}(y')
-   - 2 d g_j(x) ) \leq 0$ or $\sup_j ( D_{w_j} v_{t+1}(x) - g_j(x) ) \leq 0$,
+   - 2 d g_j(x) ) \leq 0$ and $x + w_j \in \mathcal{C}_N$ for all $j$, or $\sup_j ( D_{w_j} v_{t+1}(x) - g_j(x) ) \leq 0$,
    then $\sup_j ( D_{w_j} v_{t+1}(x) - g_j(x) ) \leq 0$ for all $t \geq t_0$ and
    $x \in \mathcal{S}$."
 

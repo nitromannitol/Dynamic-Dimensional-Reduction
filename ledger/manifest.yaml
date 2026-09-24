@@ -13,46 +13,14 @@
 version: 1
 source_pin:
   file: paper/dimred.tex
-  sha256: 7b47485ebc0b16b08be0ed91b360ec9b1b06f5a9bba6ffca93ededeaa09d9823
+  sha256: dcb412f81b22069228a66b128b3aa17e38e2732d572a16eb51b9c52eca93cb2b
 
 nodes:
-  - id: cor-axis-monotonicity
-    version: 1
-    kind: theorem
-    source: dimred.tex:513-526 (label axis_monotonicity)
-    file: DimRed/Frozen/Prelim/AxisMonotonicity.lean
-    export: DimRed.Frozen.axis_monotonicity
-    state: DRAFT_SORRY
-    frozen_sha256: 6e53e97b0468bb669d15da8ec707bdc4079bd59146735ff3e9134c626c676ef7
-    provider: DimRed.Frozen.axis_monotonicity
-    approved: "2026-09-10"
-
-  - id: cor-derivative-bound
-    version: 1
-    kind: theorem
-    source: dimred.tex:531-539 (label cor-derivative_bound)
-    file: DimRed/Frozen/Prelim/DerivativeBound.lean
-    export: DimRed.Frozen.derivative_bound
-    state: DRAFT_SORRY
-    frozen_sha256: 067ced74199b326b11ab228fcbaa5311a086ae4bcbe284cf4b258c0c5b71a680
-    provider: DimRed.Frozen.derivative_bound
-    approved: "2026-09-10"
-
-  - id: prop-base-dimension-consistency
-    version: 1
-    kind: theorem
-    source: dimred.tex:912-921 (label base_dimension)
-    file: DimRed/Frozen/Regularity/Consistency.lean
-    export: DimRed.Frozen.base_dimension_consistency
-    state: DRAFT_SORRY
-    frozen_sha256: 25139976eb1809f86cb7168efaa341b5c2ac54d3e6f9bf035a38ab17aba39b4a
-    provider: DimRed.Frozen.base_dimension_consistency
-    approved: "2026-09-10"
-
   - id: prop-base-dimension-weak
     version: 1
     kind: theorem
-    source: dimred.tex:922-930 (label base_dimension)
+    source: dimred.tex:919-926 (label base_dimension, weak facet compatibility clause,
+      display base_dimension:weak_compatability)
     file: DimRed/Frozen/Regularity/WeakFacet.lean
     export: DimRed.Frozen.base_dimension_weak_compatibility
     state: DRAFT_SORRY
@@ -60,43 +28,10 @@ nodes:
     provider: DimRed.Frozen.base_dimension_weak_compatibility
     approved: "2026-09-10"
 
-  - id: prop-base-dimension-strong-derivative
-    version: 1
-    kind: theorem
-    source: dimred.tex:931-934 (label base_dimension)
-    file: DimRed/Frozen/Regularity/StrongDerivative.lean
-    export: DimRed.Frozen.base_dimension_strong_derivative
-    state: DRAFT_SORRY
-    frozen_sha256: f0338a0534e4d09cd58d1e2fabcca505d5eaebaf61f635ddb34ffe1c943d9f68
-    provider: DimRed.Frozen.base_dimension_strong_derivative
-    approved: "2026-09-10"
-
-  - id: prop-base-dimension-strong-facet
-    version: 1
-    kind: theorem
-    source: dimred.tex:935-943 (label base_dimension)
-    file: DimRed/Frozen/Regularity/StrongFacet.lean
-    export: DimRed.Frozen.base_dimension_strong_compatibility
-    state: DRAFT_SORRY
-    frozen_sha256: 6ae5164e2903adedfa944dd582892a6bf64031eb7cca92f267e852321f13439d
-    provider: DimRed.Frozen.base_dimension_strong_compatibility
-    approved: "2026-09-10"
-
-  - id: prop-base-dimension-strong-topple
-    version: 1
-    kind: theorem
-    source: dimred.tex:946-950 (label base_dimension)
-    file: DimRed/Frozen/Regularity/StrongTopple.lean
-    export: DimRed.Frozen.base_dimension_strong_topple
-    state: DRAFT_SORRY
-    frozen_sha256: eb005193ccb41c5889268c78b53f1bd9de8eb7226bfd63650b7a71fc1719766d
-    provider: DimRed.Frozen.base_dimension_strong_topple
-    approved: "2026-09-10"
-
   - id: thm-dimensional-reduction
     version: 1
     kind: theorem
-    source: dimred.tex:109-141 (label the_theorem)
+    source: dimred.tex:109-140 (label the_theorem)
     file: DimRed/Frozen/Main/DimensionalReduction.lean
     export: DimRed.Frozen.dimensional_reduction
     state: DRAFT_SORRY
@@ -107,23 +42,12 @@ nodes:
   - id: thm-terminal-reduction
     version: 1
     kind: theorem
-    source: dimred.tex:109-141 (label the_theorem)
+    source: dimred.tex:109-140 (label the_theorem)
     file: DimRed/Frozen/Main/TerminalReduction.lean
     export: DimRed.Frozen.terminal_dimensional_reduction
     state: DRAFT_SORRY
     frozen_sha256: 6ef9769b333edd6780d067930cfc94dfd08b31f9a55b5fa4020015cdafe9361d
     provider: DimRed.Frozen.terminal_dimensional_reduction
-    approved: "2026-09-10"
-
-  - id: thm-self-similarity
-    version: 1
-    kind: theorem
-    source: dimred.tex:109-141 (label the_theorem)
-    file: DimRed/Frozen/Main/SelfSimilarity.lean
-    export: DimRed.Frozen.self_similarity
-    state: DRAFT_SORRY
-    frozen_sha256: b72203098094a44d143221e9469b34568bcd06702ba43c624a4cc3b02f9351fa
-    provider: DimRed.Frozen.self_similarity
     approved: "2026-09-10"
 
   - id: cor-sandpile-reduction
@@ -137,21 +61,10 @@ nodes:
     provider: DimRed.Frozen.sandpile_dimensional_reduction
     approved: "2026-09-10"
 
-  - id: cor-sandpile-self-similarity
-    version: 1
-    kind: theorem
-    source: dimred.tex:143-160 (Corollary 1.1)
-    file: DimRed/Frozen/Main/SandpileSelfSimilarity.lean
-    export: DimRed.Frozen.sandpile_self_similarity
-    state: DRAFT_SORRY
-    frozen_sha256: 046f74527cc908725e8da207018a211d5586c6570513b8db86237bd05d36d31d
-    provider: DimRed.Frozen.sandpile_self_similarity
-    approved: "2026-09-10"
-
   - id: lem-symmetry
     version: 2
     kind: theorem
-    source: dimred.tex:415-418 (label symmetry_lemma)
+    source: dimred.tex:415-417 (label symmetry_lemma)
     file: DimRed/Frozen/Prelim/Symmetry.lean
     export: DimRed.Frozen.symmetry_lemma
     state: SEALED
@@ -206,7 +119,7 @@ nodes:
   - id: lem-topple-limit
     version: 3
     kind: theorem
-    source: dimred.tex:669-674 (label topple_limit)
+    source: dimred.tex:669-676 (label topple_limit)
     file: DimRed/Frozen/Prelim/ToppleLimit.lean
     export: DimRed.Frozen.topple_limit
     state: SEALED
@@ -217,7 +130,7 @@ nodes:
   - id: lem-difference-comparison
     version: 3
     kind: theorem
-    source: dimred.tex:473-497 (label general_difference_comparison)
+    source: dimred.tex:473-492 (label general_difference_comparison)
     file: DimRed/Frozen/Prelim/DifferenceComparison.lean
     export: DimRed.Frozen.general_difference_comparison
     state: SEALED
@@ -226,11 +139,99 @@ nodes:
   - id: prop-base-case
     version: 5
     kind: theorem
-    source: dimred.tex:789-810 (label prop-base_case)
+    source: dimred.tex:789-813 (label prop-base_case)
     file: DimRed/Frozen/BaseCase/ExplicitOdometer.lean
     export: DimRed.Frozen.base_case
     state: SEALED
     frozen_sha256: 14fc3681f7a5134bd0d4ce6f9f3df2996463ef59ff071ba4874c358ae21ca0e8
     provider: DimRed.Frozen.base_case
     approved: "2026-09-16"
+
+  - id: prop-base-dimension-consistency
+    version: 2
+    kind: theorem
+    source: dimred.tex:915-918 (label base_dimension, self-similarity clause, display base_dimension:consistency)
+    file: DimRed/Frozen/Regularity/Consistency.lean
+    export: DimRed.Frozen.base_dimension_consistency
+    state: DRAFT_SORRY
+    frozen_sha256: 25139976eb1809f86cb7168efaa341b5c2ac54d3e6f9bf035a38ab17aba39b4a
+    provider: DimRed.Frozen.base_dimension_consistency
+    approved: "2026-09-19"
+
+  - id: prop-base-dimension-strong-derivative
+    version: 2
+    kind: theorem
+    source: dimred.tex:927-931 (label base_dimension, strong facet compatibility clause, display base_dimension:strong_derivative)
+    file: DimRed/Frozen/Regularity/StrongDerivative.lean
+    export: DimRed.Frozen.base_dimension_strong_derivative
+    state: DRAFT_SORRY
+    frozen_sha256: f0338a0534e4d09cd58d1e2fabcca505d5eaebaf61f635ddb34ffe1c943d9f68
+    provider: DimRed.Frozen.base_dimension_strong_derivative
+    approved: "2026-09-19"
+
+  - id: prop-base-dimension-strong-facet
+    version: 2
+    kind: theorem
+    source: dimred.tex:932-940 (label base_dimension, strong facet compatibility clause, display base_dimension:strong_compatability)
+    file: DimRed/Frozen/Regularity/StrongFacet.lean
+    export: DimRed.Frozen.base_dimension_strong_compatibility
+    state: DRAFT_SORRY
+    frozen_sha256: 6ae5164e2903adedfa944dd582892a6bf64031eb7cca92f267e852321f13439d
+    provider: DimRed.Frozen.base_dimension_strong_compatibility
+    approved: "2026-09-19"
+
+  - id: prop-base-dimension-strong-topple
+    version: 2
+    kind: theorem
+    source: dimred.tex:944-948 (label base_dimension, strong topple control clause, display base_dimension:strong_topple)
+    file: DimRed/Frozen/Regularity/StrongTopple.lean
+    export: DimRed.Frozen.base_dimension_strong_topple
+    state: DRAFT_SORRY
+    frozen_sha256: eb005193ccb41c5889268c78b53f1bd9de8eb7226bfd63650b7a71fc1719766d
+    provider: DimRed.Frozen.base_dimension_strong_topple
+    approved: "2026-09-19"
+
+  - id: thm-self-similarity
+    version: 2
+    kind: theorem
+    source: dimred.tex:109-140 (label the_theorem)
+    file: DimRed/Frozen/Main/SelfSimilarity.lean
+    export: DimRed.Frozen.self_similarity
+    state: DRAFT_SORRY
+    frozen_sha256: b72203098094a44d143221e9469b34568bcd06702ba43c624a4cc3b02f9351fa
+    provider: DimRed.Frozen.self_similarity
+    approved: "2026-09-19"
+
+  - id: cor-sandpile-self-similarity
+    version: 2
+    kind: theorem
+    source: dimred.tex:143-160 (Corollary 1.1)
+    file: DimRed/Frozen/Main/SandpileSelfSimilarity.lean
+    export: DimRed.Frozen.sandpile_self_similarity
+    state: DRAFT_SORRY
+    frozen_sha256: 046f74527cc908725e8da207018a211d5586c6570513b8db86237bd05d36d31d
+    provider: DimRed.Frozen.sandpile_self_similarity
+    approved: "2026-09-19"
+
+  - id: cor-axis-monotonicity
+    version: 3
+    kind: theorem
+    source: dimred.tex:513-527 (label axis_monotonicity)
+    file: DimRed/Frozen/Prelim/AxisMonotonicity.lean
+    export: DimRed.Frozen.axis_monotonicity
+    state: SEALED
+    frozen_sha256: cfa95855f853634cbdb7dd0985a093eaa665661f0aae5a6348180b168ae8450d
+    provider: DimRed.Frozen.axis_monotonicity
+    approved: "2026-09-19"
+
+  - id: cor-derivative-bound
+    version: 2
+    kind: theorem
+    source: dimred.tex:531-538 (label cor-derivative_bound)
+    file: DimRed/Frozen/Prelim/DerivativeBound.lean
+    export: DimRed.Frozen.derivative_bound
+    state: SEALED
+    frozen_sha256: 067ced74199b326b11ab228fcbaa5311a086ae4bcbe284cf4b258c0c5b71a680
+    provider: DimRed.Frozen.derivative_bound
+    approved: "2026-09-19"
 

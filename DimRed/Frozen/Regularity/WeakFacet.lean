@@ -1,6 +1,6 @@
 /-
 The weak facet compatibility clause of Proposition 4.1 of `dimred.tex`, frozen.
-`dimred.tex:922-930` (display `base_dimension:weak_compatability`):
+`dimred.tex:919-926` (display `base_dimension:weak_compatability`):
 
   "[Weak facet compatibility] For all $\mathbf{x}_i \geq 2$, $t \geq 1$,
    $i \geq 0$, $j \geq 0$ and $i+j+1=d$,
@@ -8,16 +8,13 @@ The weak facet compatibility clause of Proposition 4.1 of `dimred.tex`, frozen.
     v_t^{(M)}(\mathbf{x}_i, 2, \mathbf{1}_j)+ 1$
    $\implies$
    $v_{t+1}^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j) =
-    v_{t+1}^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j)$."
+    v_{t}^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j)$."
 
-The conclusion as printed is a tautology.  The intended conclusion, which the
-paper's own proofs give and its own applications use, is
-`v_{t+1}(x_i, 1, 1_j) = v_t(x_i, 1, 1_j)`, that is, the site does not topple at
-this step: `dimred.tex:1022-1024` ("If $v_t(1) = v_t(2) + 1$, then
-$\Delta v_t(1) = -1$ and so $v_{t+1}(1) = v_{t}(1)$"), `dimred.tex:1416-1424`
-(the same computation for `d ≥ 2`), and `dimred.tex:1186-1190`, which reads
-`v_{t-1}^{(d)}(x_i, 1_{d-i}) = v_t^{(d)}(x_i, 1_{d-i})` off it.  The
-discrepancy is recorded in the errata.
+That is, the site does not topple at this step, as the paper's proofs derive
+and its applications use: `dimred.tex:1005` ("If $v_t(1) = v_t(2) + 1$, then
+$\Delta v_t(1) = -1$ and so $v_{t+1}(1) = v_{t}(1)$"), `dimred.tex:1436-1445`
+(the same computation for `d ≥ 2`), and `dimred.tex:1154-1158`, which reads
+`v_{t-1}^{(d)}(x_i, 1_{d-i}) = v_t^{(d)}(x_i, 1_{d-i})` off it.
 
 `(x_i, c, 1_j)` is `facetPoint`, and the dimension is `d = i + 1 + j`.
 -/

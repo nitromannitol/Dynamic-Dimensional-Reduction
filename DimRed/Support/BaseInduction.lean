@@ -337,7 +337,7 @@ theorem blockEdge_two (d : ℕ) : blockEdge d 2 = (d : ℤ) - 1 := by
   · rfl
 
 set_option maxHeartbeats 4000000 in
-/-- The general-shift ripple relation, `dimred.tex:850-878` (Ruling 25/E6 form):
+/-- The general-shift ripple relation, `dimred.tex:850-878`:
 the profile at absolute time `s + k + 1` is the profile at time `s + 1`, shifted
 outward by the whole shift `k`, for every `k`, not only `k = 1`
 (`ripple_one_step`). Proved by strong induction on `k`, using the smaller shift

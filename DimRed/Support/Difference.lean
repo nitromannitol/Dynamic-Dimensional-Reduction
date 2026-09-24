@@ -1,5 +1,5 @@
 /-
-Elementary lemmas for the difference comparison of `dimred.tex:473-497`: the
+Elementary lemmas for the difference comparison of `dimred.tex:473-492`: the
 shift and subtraction identities for the neighbour sum, the fact that a point
 of the sorted fundamental domain lies in the hypercube, and the floor-division
 bounds that turn a bound on a neighbour sum into a bound on the odometer.

@@ -1,5 +1,5 @@
 /-
-Corollary 2.2 of `dimred.tex`, frozen.  `dimred.tex:531-539`
+Corollary 2.2 of `dimred.tex`, frozen.  `dimred.tex:531-538`
 (label `cor:derivative_bound`, "Derivative bound"):
 
   "Suppose $v_{\infty}(M, \mathbf{1}_{d-1}) \leq k M$ for integer $k \geq 1$.
@@ -11,7 +11,7 @@ Corollary 2.2 of `dimred.tex`, frozen.  `dimred.tex:531-539`
 there.  The standing hypothesis of the subsection is that the initial sandpile
 is constant (`dimred.tex:434-436`), carried here as `c`.
 -/
-import DimRed.Support.Recursion
+import DimRed.Support.DerivBound
 
 open LatticeProb DimRed
 
@@ -24,4 +24,19 @@ theorem DimRed.Frozen.derivative_bound (d M : ℕ) (hd : 1 ≤ d) (c : ℤ)
     odo d (2 * M) (fun _ => c) t x - odo d (2 * M) (fun _ => c) t (x + unit j)
       ≤ (k : ℤ) * x j
 -- FROZEN-STATEMENT-END
-:= by sorry
+:= by
+  have hcor : ∀ s : ℕ,
+      odo d (2 * M) (fun _ => c) s (cornerPoint d M) ≤ (k : ℤ) * (M : ℤ) := by
+    intro s
+    simp only [odoInf] at hcorner
+    have hle : ((odo d (2 * M) (fun _ => c) s (cornerPoint d M)).toNat : ℕ∞)
+        ≤ ((k * M : ℕ) : ℕ∞) :=
+      le_trans (le_iSup
+        (fun n : ℕ => ((odo d (2 * M) (fun _ => c) n (cornerPoint d M)).toNat : ℕ∞)) s)
+        hcorner
+    have hle' : (odo d (2 * M) (fun _ => c) s (cornerPoint d M)).toNat ≤ k * M := by
+      exact_mod_cast hle
+    have hz := Int.toNat_le.mp hle'
+    push_cast at hz
+    exact hz
+  exact odo_deriv_bound d M hd c hc0 hc1 k hk hcor t j x (hx.1 j).1

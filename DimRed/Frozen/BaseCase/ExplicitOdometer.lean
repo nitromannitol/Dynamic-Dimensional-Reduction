@@ -1,5 +1,5 @@
 /-
-Proposition 3.2 of `dimred.tex`, frozen.  `dimred.tex:789-810`
+Proposition 3.2 of `dimred.tex`, frozen.  `dimred.tex:789-813`
 (label `prop:base_case`):
 
   "For all $d \geq 1$, when $s_0^{(d)} = 2 d + (d-1)$, the radially
@@ -7,8 +7,8 @@ Proposition 3.2 of `dimred.tex`, frozen.  `dimred.tex:789-810`
    $t \geq 1$,
    $v_t(x) = v_{t-1}(x)+1$ for $x \leq a_{t}$ and $v_t(x) = v_{t-1}(x)$ for
    $a_{t} < x \leq a_{t-1}$.
-   And for each $t' < t$ and $a_{t'-1} \geq x > a_{t'}$,
-   $v_{t}(x) = v_{t-1}(x-1)$."
+   And for each $t' < t \leq t' + x$ and $a_{t'-1} \geq x > a_{t'}$,
+   $v_{t}(x) = v_{t'}(x - (t - t'))$."
 
 Outside the firing block the profile at time `t` is the profile at time `t'`
 shifted outward by `t - t'`: for `t' = s + 1` and `t' < t ≤ t' + x`, the

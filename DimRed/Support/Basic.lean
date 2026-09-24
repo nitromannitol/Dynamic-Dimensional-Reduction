@@ -107,12 +107,13 @@ noncomputable def sandpInfUnif (d N : ℕ) (x : Site d) : ℤ :=
 noncomputable def simplexMax (d M : ℕ) (f : Site d → ℤ) : ℤ :=
   if h : (simplex d M).Nonempty then (simplex d M).sup' h f else 0
 
-/-- `τ_j = min{t ≥ 1 : v_t^{(d,2j)}(x) ≥ j for all x ∈ ∂C_{2j}^{(d)}}`,
+/-- `τ_j = min{t ≥ 1 : v_t^{(d,2j)}(x) ≥ j for some x ∈ ∂C_{2j}^{(d)}}`,
 `dimred.tex:130-133`, valued in `ℕ∞` so that `⊤` records that no such time
-exists. -/
+exists.  By `toppleTime_eq_corner` it is the first time `v_t(j, 1_{d-1}) ≥ j`,
+since the maximum of `v_t` over the inner boundary is attained there. -/
 noncomputable def toppleTime (d j : ℕ) : ℕ∞ :=
   sInf ((fun n : ℕ => (n : ℕ∞)) ''
-    {n : ℕ | 1 ≤ n ∧ ∀ x ∈ innerBoundary d (2 * j), (j : ℤ) ≤ odoUnif d (2 * j) n x})
+    {n : ℕ | 1 ≤ n ∧ ∃ x ∈ innerBoundary d (2 * j), (j : ℤ) ≤ odoUnif d (2 * j) n x})
 
 /-- The action on `ℤ^d` of a symmetry of the hypercube of side `N`: a permutation
 of the coordinates followed by the reflections `x_i ↦ (lo + hi) - x_i`.  This is

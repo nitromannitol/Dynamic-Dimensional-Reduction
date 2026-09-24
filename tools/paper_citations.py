@@ -34,7 +34,7 @@ _spec = importlib.util.spec_from_file_location("pa", ROOT / "tools" / "paper_anc
 _pa = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(_pa)
 
-CITE_RE = re.compile(r"rotor\.tex:(\d+)(?:-(\d+))?")
+CITE_RE = re.compile(re.escape(PAPER.name) + r":(\d+)(?:-(\d+))?")
 # A frozen file opens with a header docstring naming the paper statement it
 # transcribes: its LaTeX label and its line range.  Three wordings are in use
 # (citation before the label, after it, or with another backticked token

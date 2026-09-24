@@ -1,20 +1,16 @@
 /-
 The strong facet compatibility clause of Proposition 4.1 of `dimred.tex`,
-frozen.  `dimred.tex:935-943` (display `base_dimension:strong_compatability`):
+frozen.  `dimred.tex:932-940` (display `base_dimension:strong_compatability`):
 
   "For all $\mathbf{x}_i \geq 2$, $j \geq 0$, $i < d$, ($t < \tau_M$ and
    $i \geq 0$) or ($i \geq 1$ and $t \geq \tau_M$),
    $v_t^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j) =
-    v_t^{(M)}(\mathbf{x}_i, 2, \mathbf{1})+ 1$
+    v_t^{(M)}(\mathbf{x}_i, 2, \mathbf{1}_j)+ 1$
    $\implies$
    $v_{t+1}^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j) =
     v_{t}^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j)$ and
    $v_{t+1}^{(M)}(\mathbf{x}_i, 2, \mathbf{1}_j) =
     v_{t}^{(M)}(\mathbf{x}_i, 2, \mathbf{1}_j)+1$."
-
-The second argument list of the hypothesis is `(x_i, 2, 1_j)`, as everywhere
-else in the display and in the proof; the printed `(x_i, 2, 1)` drops the
-subscript.  The discrepancy is recorded in the errata.
 -/
 import DimRed.Support.Recursion
 

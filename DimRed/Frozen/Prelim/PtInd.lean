@@ -5,10 +5,8 @@ Lemma 2.1 of `dimred.tex`, frozen.  `dimred.tex:289-294` (label `pt_ind_lemma`):
    $v_{t+1}(x) = \lfloor \frac{ s_0(x) + \sum_{y \sim x} v_{t}(y) }{2 d} \rfloor$."
 
 The standing hypothesis of the subsection, `dimred.tex:286-288`, is
-"let $s_0 \leq 2 (2 d) - 1$ be an arbitrary initial sandpile on $\mathcal{C}$
-and $v_t$ its odometer".  That a sandpile is a nonnegative number of chips is
-implicit there and is carried as `hs0`; without it the identity is false, as
-`s_0 ≡ -1` shows.  Integer division on `ℤ` is floor division for a positive
+"let $0 \leq s_0 \leq 2 (2 d) - 1$ be an arbitrary initial sandpile on
+$\mathcal{C}$ and $v_t$ its odometer", carried as `hs0` and `hs1`.  Integer division on `ℤ` is floor division for a positive
 divisor, so `/ (2 * d)` is the paper's `⌊·/2d⌋`.
 -/
 import DimRed.Support.Recursion

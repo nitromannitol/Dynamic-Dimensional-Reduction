@@ -38,20 +38,44 @@ def _paper_path() -> Path:
 
 PAPER = _paper_path()
 
-SOURCE_RE = re.compile(r"^rotor\.tex:(?P<a>\d+)-(?P<b>\d+)\s*(?P<rest>.*)$")
+SOURCE_RE = re.compile(r"^" + re.escape(PAPER.name) + r":(?P<a>\d+)-(?P<b>\d+)\s*(?P<rest>.*)$")
 LABEL_RE = re.compile(r"label\s+([A-Za-z][A-Za-z0-9:_-]*)")
 BEGIN_RE = re.compile(r"\\begin\{([A-Za-z*]+)\}")
 END_RE = re.compile(r"\\end\{([A-Za-z*]+)\}")
 
 # Environments that carry a statement we would ever anchor to.
 ANCHORABLE = {
-    "theorem", "lemma", "proposition", "corollary", "definition", "problem",
+    "theorem", "lemma", "proposition", "prop", "corollary", "definition",
+    "problem", "conj",
     "equation", "equation*", "align", "align*", "gather", "gather*",
 }
+
+# A node that formalizes one clause of a multi-clause statement records the
+# lines of its own clause, which sit inside the environment the label anchors.
+# Its source says so, and such a node is checked for containment, not equality.
+PART_RE = re.compile(r"\bpart\b|\bclause\b|\bcontext\b")
+
+
+def label_variants(label: str) -> list[str]:
+    """The spellings a recorded label may have in the paper.
+
+    A node id is written with hyphens because a colon reads badly in an id, so
+    a source line may carry `cor-derivative_bound` where the paper writes
+    `\\label{cor:derivative_bound}`.  The two name the same statement.
+    """
+    out = [label]
+    if "-" in label and ":" not in label:
+        out.append(label.replace("-", ":", 1))
+    return out
 
 
 def span_of_label(lines: list[str], label: str) -> tuple[int, int]:
     """1-indexed inclusive span of the environment containing \\label{label}."""
+    text = "\n".join(lines)
+    for cand in label_variants(label):
+        if text.count(f"\\label{{{cand}}}") == 1:
+            label = cand
+            break
     marker = f"\\label{{{label}}}"
     hits = [i for i, line in enumerate(lines) if marker in line]
     if len(hits) != 1:
@@ -118,8 +142,13 @@ def main() -> int:
         checked += 1
         want = f"dimred.tex:{a}-{b}"
         got = SOURCE_RE.match(source)
-        if got and (int(got.group("a")), int(got.group("b"))) == (a, b):
-            continue
+        if got:
+            ga, gb = int(got.group("a")), int(got.group("b"))
+            if (ga, gb) == (a, b):
+                continue
+            # A clause node records its own lines inside the anchored span.
+            if PART_RE.search(source) and a <= ga <= gb <= b:
+                continue
         rest = got.group("rest") if got else source[source.find("("):]
         drift.append((nid, source, f"{want} {rest}".strip()))
 

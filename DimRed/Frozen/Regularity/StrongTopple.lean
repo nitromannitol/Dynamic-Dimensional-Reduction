@@ -1,6 +1,6 @@
 /-
 The strong topple control clause of Proposition 4.1 of `dimred.tex`, frozen.
-`dimred.tex:946-950` (display `base_dimension:strong_topple`):
+`dimred.tex:944-948` (display `base_dimension:strong_topple`):
 
   "[Strong topple control] For all $t \geq \tau_{M-1}$,
    $\sup_{\mathbf{x} \in \mathcal{S}_M} (v_{t+2}(\mathbf{x}) -

@@ -1,5 +1,5 @@
 /-
-The first step of the base case of `dimred.tex:789-810`: at `t = 1` every
+The first step of the base case of `dimred.tex:789-813`: at `t = 1` every
 radial site of `S_2^{(d)}` topples, because the initial sandpile
 `s_0 = 2d + (d-1)` is at least `2d` and the odometer starts at zero.
 -/

@@ -125,7 +125,7 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 			\end{equation*}
 			where 
 			\begin{equation*}
-			\tau_{j} := \min\{ t \geq 1: v_t^{(d,2 j)}(\mathbf{x}) \geq  j  \mbox{ for $\mathbf{x} \in \partial \mathcal{C}^{(d)}_{2 j}$} \},
+			\tau_{j} := \min\{ t \geq 1: v_t^{(d,2 j)}(\mathbf{x}) \geq  j  \mbox{ for some $\mathbf{x} \in \partial \mathcal{C}^{(d)}_{2 j}$} \},
 			\end{equation*}
 			and $\partial \mathcal{C}^{(d)}_i := \{ \mathbf{x} \in \mathcal{C}^{(d)}_i : \mbox{there is $\mathbf{y} \not \in \mathcal{C}^{(d)}_i$ with $|\mathbf{y}-\mathbf{x|} = 1$}\}$ denotes the inner boundary of the cube.
 			%Moreover, the growing boundaries reflect: for $\mathbf{x}_{d-1} > M-j$, 
@@ -285,7 +285,7 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 	
 	
 	\subsection{Babai-Gorodezky technique} 
-	In this subsection and the next, let $s_0 \leq 2 (2 d) - 1$ be an arbitrary initial sandpile on $\mathcal{C}$ and $v_t$ its odometer. A straightforward induction argument and the definition of the graph Laplacian yields the following lemma. 
+	In this subsection and the next, let $0 \leq s_0 \leq 2 (2 d) - 1$ be an arbitrary initial sandpile on $\mathcal{C}$ and $v_t$ its odometer. A straightforward induction argument and the definition of the graph Laplacian yields the following lemma. 
 	\begin{lemma}[] \label{pt_ind_lemma}
 		For each $x \in \mathcal{C}$ and all $t \geq 0$, 
 		\begin{equation}
@@ -478,7 +478,7 @@ M = x_{l_0} = x_{r_0} <   \cdots < x_{l_k} = x_{r_k} < \cdots < x_{l_n} = x_{r_n
 		and for all $t \geq t_0$ and $x \in \{\mathcal{B}_0 \cup \mathcal{B}_{\mathbf{w}}\} \mathcal{S}$,
 		\begin{equation} \label{eq:boundaries_ref}
 		\begin{aligned}
-		\sup_{j} &( \sum_{y \sim x} v_{t}(y) - \sum_{y' \sim (x + w_j)} v_{t}(y') -  2 d g_j(x) ) \leq 0 \\
+		\sup_{j} &( \sum_{y \sim x} v_{t}(y) - \sum_{y' \sim (x + w_j)} v_{t}(y') -  2 d g_j(x) ) \leq 0 \mbox{ \quad and $x + w_j \in \mathcal{C}_N$ for all $j$} \\
 		&\mbox{  \qquad or } \\
 		\sup_{j}  &( D_{w_j} v_{t+1}(x) - g_j(x) ) \leq 0
 		 \end{aligned}
@@ -511,19 +511,19 @@ M = x_{l_0} = x_{r_0} <   \cdots < x_{l_k} = x_{r_k} < \cdots < x_{l_n} = x_{r_n
 	for axis monotonic initial sandpiles on $\Z^2$.  (Note that Aleksanyan and Shahgholian, using a discrete analogue of the method of moving planes, proved axis monotonicity
 	of $v_{\infty}$ in \cite{aleksanyan2019discrete}.)
 	\begin{corollary}[Axis monotonicity \cite{babai2007sandpile}] \label{axis_monotonicity}
-		For all $t \geq 1$, $x \in \mathcal{S}$, and all sets of indices 
-		\[
-		\mathcal{I} = \{ i_1, \ldots, i_n : 1 \leq i_1  < \cdots < i_{n} \leq d \}
-		\]
-		and
-		\[
-		\mathcal{J} = \{ j_1, \ldots, j_m : i_n < j_1 < \cdots < j_{m} \leq d \} 
-		\]
-		where $n \geq 1$ and $m \geq 0$ we have 
+		For all $t \geq 1$,
+		$x \in \mathcal{S}$,
+		every index
+		$1 \leq i \leq d$,
+		and every set of indices
+		$\mathcal{J}$
+		that is either empty or equal to $\{ j \}$
+		for an index $i < j \leq d$,
+		we have
 		\[
 		v_t(x) \geq v_t(x + e_{\mathcal{I}} - e_{\mathcal{J}}) \quad \mbox{for $(x + e_{\mathcal{I}} - e_{\mathcal{J}}) \in \mathcal{S}$}
 		\]
-		where $e_{\mathcal{I}} = \sum_{i \in \mathcal{I}} e_i$ denotes a sum over standard basis vectors indexed by $\mathcal{I}$.  
+		where $\mathcal{I} = \{ i \}$ and $e_{\mathcal{I}} = \sum_{k \in \mathcal{I}} e_k$ denotes a sum over standard basis vectors indexed by $\mathcal{I}$.
 	\end{corollary}
 
 	We also have control on the derivative given an odometer upper bound
@@ -795,9 +795,9 @@ M = x_{l_0} = x_{r_0} <   \cdots < x_{l_k} = x_{r_k} < \cdots < x_{l_n} = x_{r_n
 		v_{t-1}(x)  &\mbox{ for $a_{t} < x \leq a_{t-1}$}.
 		\end{cases} 
 		\end{equation}
-		And for each $t' < t$ and $a_{t'-1} \geq x > a_{t'}$
+		And for each $t' < t \leq t' + x$ and $a_{t'-1} \geq x > a_{t'}$
 		\begin{equation} \label{eq:ripple}
-		v_{t}(x) = v_{t-1}(x-1).
+		v_{t}(x) = v_{t'}(x - (t - t')).
 		%v_{t}(x) = v_{t-1}(x) + (v_{t-1}(x-1)-v_{t-1}(x))
 		\end{equation}
 		
@@ -850,42 +850,42 @@ M = x_{l_0} = x_{r_0} <   \cdots < x_{l_k} = x_{r_k} < \cdots < x_{l_n} = x_{r_n
 		
 		{\bf Step 2: \eqref{eq:ripple}}
 		
-		Now, take  $a_{t'-1} \geq x > a_{t'}$ for  $1 \leq t' \leq (t-1)$. If $v_{t}(x-1) = v_{t}(x) + 1$, then by strong induction for $t'\leq t$,
-		\eqref{eq:ripple} and \eqref{eq:continuous_block} imply that  $v_{t}(x-2) = v_{t}(x-1) = t'$ and $v_{t}(x) = t'-1 = v_{t}(x+1)$.  Thus, 
-		\begin{align*}
-		s_t(x) &\geq 2d + (d-1) - (t' - 2) x  \\
-		&\geq  2d + (d-1) - (t'-2) a_{t'-1} \\
-		&\geq 2d + (d-1) - (d-1)  \\
-		&= 2d.
-		\end{align*}
-		However,  
-		\begin{align*}
-		s_t(x-1) &= 2 d + (d-1) - t'x - d + x \\
-		&= 2 d -1 - (t'-1) x \\
-		&\leq 2 d -1,
-		\end{align*}
-		as $t' \geq 1$.
-		%which in turn implies
-		%,  which implies
-		%\[
-		%v_{t+1}(x) = v_t(x) + 1 = v_{t}(x-1) = v_{t+1}(x-1).
-		%\]
-		If $v_{t}(x-1) = v_{t}(x) = v_{t}(x+1) = (t'-1)$, then
-		\begin{align*}
-		s_t(x) &\leq 2 d + (d-1) - (t'-1) x  \\
-		&< 2 d + (d-1) - (t'-1) (a_{t'}) \\
-		&\leq 2d.
-		\end{align*} 
-		%if $v_{t}(x) = v_{t+1}$
+		Let $W_{t'} := \{ y : a_{t'} < y \leq a_{t'-1} \}$ with $a_0 := d$. Take $x \in W_{t'}$ and $t' \leq t < t' + x$, and set $k := t - t'$. We prove \eqref{eq:ripple} at time $t+1$. As $W_1$ is empty, $t' \geq 2$.
+		By \eqref{eq:continuous_block}, $v_{t'}(y) = t'$ for $y \leq a_{t'}$ and $v_{t'}(y) = t'-1$ for $a_{t'} < y \leq a_{t'-1}$. Hence the claim is that $v_{t+1}(x) = t'$ if $x - k - 1 \leq a_{t'}$ and $v_{t+1}(x) = t'-1$ otherwise.
+		Write $A := v_t(x-1)$, $B := v_t(x)$ and $C := v_t(x+1)$. By the radial Laplacian,
+		\begin{equation*}
+		s_t(x) - 2d = (d-1) + x (A - B) + (d-x)(C - B) - x B.
+		\end{equation*}
+		By the induction hypothesis at time $t$, $B = v_{t'}(x-k)$. If $x - 1 > a_{t'}$, likewise $A = v_{t'}(x-1-k)$, so $A \in \{B, B+1\}$ with $A \leq t'$.
+		If $x - 1 = a_{t'}$, then $x-1 \in W_{t'+1}$, and \eqref{eq:ripple} for $W_{t'+1}$, or \eqref{eq:continuous_block} when $k \leq 1$, gives $A \in \{t', t'+1\}$.
+		If $x < a_{t'-1}$, then $C = v_{t'}(x+1-k) \in \{B-1, B\}$ with $C \geq t'-1$.
+		If $x = a_{t'-1} < d$, then $x + 1 \in W_{t'-1}$, and \eqref{eq:ripple} for $W_{t'-1}$ at time $t = (t'-1) + (k+1)$ gives $C = v_{t'-1}(x-k) = t'-1$.
+		When $x = d$ the term with $C$ vanishes. If $W_{t'}$ has at least two elements, then $t' \leq t_d$, so $a_{t'} = \lfloor \frac{d-1}{t'-1} \rfloor$ and every $x$ in it satisfies $(t'-1) x > d-1$.
+		Also $(t'-2) x \leq (t'-2) a_{t'-1} \leq d-1$ by Step 1. There are three cases.
 		
-		%When $x = a_t$,  $(d-1) - (t-1) x \geq 0$. 
-		%Thus for $x = a_t + 1$, 
-		%\begin{align*}
-		%(d-1) - (t-2) x &= (d-1) - (t-1) x + x \\
-		%&= (d-1) - (t-1) (a_t + 1) + (a_t + 1) \\
-		%&= (d-1) - (t-1) a_t - (t-1) + a_t + 1 \\
-		%&\geq a_t + 1 - (t-1)
-		%\end{align*}
+		If $x - k \leq a_{t'}$, then $B = t'$, the claim is $v_{t+1}(x) = t'$, and we check that $x$ does not topple. Here $A - B \leq 1$ and $C \leq B$.
+		If $W_{t'}$ has at least two elements,
+		\begin{align*}
+		s_t(x) - 2d &\leq (d-1) + x - t' x = (d-1) - (t'-1) x < 0.
+		\end{align*}
+		Otherwise $x = a_{t'-1}$, so $C = B - 1$ or $x = d$, and
+		\begin{align*}
+		s_t(x) - 2d &\leq (d-1) + x - (d-x) - t' x = -(t'-2) x - 1 < 0.
+		\end{align*}
+		
+		If $x - k - 1 \leq a_{t'} < x - k$, then $B = t'-1$ and the claim is $v_{t+1}(x) = t'$, so $x$ must topple.
+		If $x - 1 > a_{t'}$, then $A = v_{t'}(x-1-k) = t'$. If $x - 1 = a_{t'}$, then $k = 0$ and $A = t'$ by \eqref{eq:continuous_block}. In both cases $C = t'-1$ or $x = d$. Thus,
+		\begin{align*}
+		s_t(x) - 2d &= (d-1) + x - (t'-1) x = (d-1) - (t'-2) x \geq 0.
+		\end{align*}
+		
+		If $x - k - 1 > a_{t'}$, then $A = B = t'-1$ and the claim is $v_{t+1}(x) = t'-1$. As $x - 1, x \in W_{t'}$, the set $W_{t'}$ has at least two elements. Moreover $C = t'-1$ or $x = d$, so
+		\begin{align*}
+		s_t(x) - 2d &= (d-1) - (t'-1) x < 0.
+		\end{align*}
+		In each case $v_{t+1}(x) = v_{t'}(x - (t+1-t'))$, which is \eqref{eq:ripple} at time $t+1$.
+		
+		
 		
 		
 		
@@ -921,7 +921,7 @@ M = x_{l_0} = x_{r_0} <   \cdots < x_{l_k} = x_{r_k} < \cdots < x_{l_n} = x_{r_n
 			\begin{aligned}
 			v_t^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j) &= v_t^{(M)}(\mathbf{x}_i, 2, \mathbf{1}_j)+ 1  \\
 			& \implies \\
-			v_{t+1}^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j) &= v_{t+1}^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j).
+			v_{t+1}^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j) &= v_{t}^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j).
 			\end{aligned} 
 			\end{equation}
 			\item[Strong facet compatibility] For all $\mathbf{x}_i \geq 2$, $j \geq 0$, $i < d$, 
@@ -932,7 +932,7 @@ M = x_{l_0} = x_{r_0} <   \cdots < x_{l_k} = x_{r_k} < \cdots < x_{l_n} = x_{r_n
 			and
 			\begin{equation} \label{base_dimension:strong_compatability}
 			\begin{aligned} 
-			v_t^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j) &= v_t^{(M)}(\mathbf{x}_i, 2, \mathbf{1})+ 1 \\
+			v_t^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j) &= v_t^{(M)}(\mathbf{x}_i, 2, \mathbf{1}_j)+ 1 \\
 			& \implies \\
 			v_{t+1}^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j) &= v_{t}^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j) \\
 			v_{t+1}^{(M)}(\mathbf{x}_i, 2, \mathbf{1}_j) &= v_{t}^{(M)}(\mathbf{x}_i, 2, \mathbf{1}_j)+1.
@@ -1318,48 +1318,116 @@ Suppose $v_t(\mathbf{x}_{i-1}, 1, \mathbf{1}_j) = v_{t}(\mathbf{x}_{i-1},2,\math
 
 {\bf Case 1: $t < \tau_M$, $i \geq 1$} \\
 We use Lemma \ref{general_difference_comparison} as in the proof for $d=1$
-to show that 
+to show that
 \[
 v_t(\mathbf{x}) - v_t(\mathbf{x} + 2 e_i) \leq 2 x_i
 \]
-for all $d \leq i \leq 1$ and $\mathbf{x} \in \mathcal{S}_M$.  Indeed as $t < \tau_M$
+for all $1 \leq i \leq d$ and $\mathbf{x} \in \mathcal{S}_M$.  By Lemma \ref{symmetry_lemma}, $v_t$ is invariant under permutations of the coordinates. Since the displayed bound holds for every index $i$, this carries it from one index to another, so the rotating boundary needs no separate check.
+Indeed as $t < \tau_M$
 \begin{equation} \label{eq:derivative_bound}
 v_{t}(\mathbf{x}) - v_{t}(\mathbf{x} + e_j) \leq x_j
 \end{equation}
-for all $\mathbf{x} \in \mathcal{S}_M$ and $1 \leq j \leq d$. Hence, 
+for all $\mathbf{x} \in \mathcal{S}_M$ and $1 \leq j \leq d$, and $v_t(\mathbf{x}) \leq M-1$ on the inner boundary of the cube.
+At $x_j = M-1$, \eqref{eq:derivative_bound} bounds $v_t(\mathbf{x}) - v_t(\mathbf{x} + e_j)$ by $M-1$, and $\mathbf{x} + e_j$ lies on the inner boundary, so
 $v_t(\mathbf{x}) - v_t(\mathbf{x} + 2 e_j) \leq 2 (M-1)$ on $\partial_{2 e_j} \mathcal{S}_M$ for all $1 \leq j \leq d$.
 The reflecting boundary is checked in the same way as $d=1$, using weak facet compatibility in higher dimensions.
 
 
-{\bf Case 2: $t \geq \tau_M$, $i \geq 2$} \\ 
-Here we show that
-\[
-v_t(\mathbf{x}) - v_t(\mathbf{x} + 2 e_i) \leq 2 x_i
-\]
-for all $d \geq i \geq 2$ and $x_1 \geq 2$. We again use Lemma \ref{general_difference_comparison}
-except the region in which we have the derivative bound shrinks and therefore our boundaries change. 
-The dissipating boundary gets smaller,  $\mathcal{B}^{(disp)} := \{x \in \mathcal{S}_M : x_j = M-1 \mbox{ for some $2 \leq j \leq d$}\}$
-and the reflecting boundary remains the same except for the removal of a single point, $\mathbf{1}$. 
-By axis monotonicity, $\sup_{x \in \mathcal{B}^{(disp)}} v_t(x) \leq v_t(M, \mathbf{1}) \leq M$.
-Checking the reflective boundary is as in $d=1$ except for the point $(2,\mathbf{1}_{d-1})$.
-We show directly that 
-\begin{equation} \label{eq:reflecting_point}
-v_t(2,\mathbf{1}_{d-1}) \leq v_t(3,2,\mathbf{1}_{d-2}) + 2.
+{\bf Case 2: $t \geq \tau_M$, $i \geq 2$} \\
+We prove \eqref{eq:two_derivative_bound} for all $\mathbf{x}_{i-1} \geq 2$ and $i \geq 2$. The argument does not use $t \geq \tau_M$.
+Let $\mathcal{P}_M = \{1, \ldots, M\}^d$ and regard $v_s$ as a function on $\Z^d$ which vanishes off $\mathcal{C}_{2M}$.
+By Lemma \ref{symmetry_lemma}, $v_s$ is invariant under permutations of the coordinates and under each reflection $x_l \mapsto 1 - x_l$.
+Hence if $\mathbf{x} \in \mathcal{P}_M$ and $\mathbf{y} \sim \mathbf{x}$, then $\mathbf{y} \in \mathcal{P}_M$,
+or $\mathbf{y} = \mathbf{x} - e_l$ with $x_l = 1$ and $v_s(\mathbf{y}) = v_s(\mathbf{x})$, or $\mathbf{y} \not \in \mathcal{C}_{2M}$ and $v_s(\mathbf{y}) = 0$.
+If $\mathbf{x} \in \mathcal{P}_M$ and $x_k = 1$, a permutation of the coordinates sends $\mathbf{x}$ to a point $(\mathbf{z}_r, 1, \mathbf{1}_q) \in \mathcal{S}_M$ with $\mathbf{z}_r \geq 2$
+and sends $\mathbf{x} + e_k$ to $(\mathbf{z}_r, 2, \mathbf{1}_q)$.
+Thus \eqref{base_dimension:weak_compatability} applies to $\mathbf{x}$ and $\mathbf{x} + e_k$, and so does \eqref{base_dimension:strong_compatability} when $r \geq 1$.
+We use both only at times $s < t$, where they hold by induction.
+
+By Lemma \ref{pt_ind_lemma} and the inequality $\lfloor a/(2d) \rfloor - \lfloor b/(2d) \rfloor \leq \lfloor (a - b + 2d - 1)/(2d) \rfloor$,
+for $\mathbf{x}, \mathbf{x} + w \in \mathcal{C}_{2M}$, times $s, s' \geq 0$ and an integer $g$,
+\begin{equation} \label{eq:floor_step}
+\sum_{\mathbf{y} \sim \mathbf{x}} \left( v_{s}(\mathbf{y}) - v_{s'}(\mathbf{y} + w) \right) \leq 2 d g
+\quad \mbox{implies} \quad
+v_{s+1}(\mathbf{x}) - v_{s'+1}(\mathbf{x} + w) \leq g.
 \end{equation}
-Suppose for sake of contradiction that $v_t(2,\mathbf{1}_{d-1}) = v_t(3,2,\mathbf{1}_{d-2}) + 2$
-and $\Delta v_t(2,\mathbf{1}_{d-1}) \geq 0$ but $\Delta v_t(3,2,\mathbf{1}_{d-1}) < 0$. 
-As \eqref{base_dimension:strong_derivative} has been verified for all $x \in \mathcal{S}_M$ other than $(2, \mathbf{1}_{d-1})$, 
-\eqref{base_dimension:strong_compatability} holds for $(3,2,\mathbf{1}_{d-1})$ and so %hence by \ref{eq:reflecting_boundaries}
-$v_t(3,2,\mathbf{1}_{d-2}) = v_{t}(3,\mathbf{1}_{d-1})$. 
-Then, by definition of the symmetric Laplacian, weak facet compatibility, and axis monotonicity, 
-\begin{align*}
-\Delta v_t(2,\mathbf{1}_{d-1}) &=  -2d v_t(2, \mathbf{1}_{d-1}) \\
-&+ v_t(3, \mathbf{1}_{d-1}) + v_t(1, \mathbf{1}_{d-1}) \\
-&+ (d-1) \left( v_t(2,\mathbf{1}_{d-1}) + v_t(2,2,\mathbf{1}_{d-2}) \right) \\
-&\leq -2 v_t(2, \mathbf{1}_{d-1}) + v_t(3, \mathbf{1}_{d-1}) + v_t(1, \mathbf{1}_{d-1}) \\
-&\leq -1,
-\end{align*}
-which is a contradiction. 
+Each $g$ below is an affine function of $\mathbf{x}$, so $\sum_{\mathbf{y} \sim \mathbf{x}} g(\mathbf{y}) = 2 d g(\mathbf{x})$
+and it suffices to bound each term $v_{s}(\mathbf{y}) - v_{s'}(\mathbf{y} + w)$ by $g(\mathbf{y})$.
+A term with $\mathbf{y} \not \in \mathcal{C}_{2M}$ is at most $0$, which is at most $g(\mathbf{y})$ in the cases below.
+A term with $\mathbf{y} = \mathbf{x} - e_l$, $x_l = 1$ and $w_l = 0$ equals the term with $\mathbf{y} = \mathbf{x}$, and $g(\mathbf{y}) = g(\mathbf{x})$ in the cases below.
+
+{\it Step 1.}
+Let $v^{(1)}_s$ be the odometer on $\mathcal{C}^{(1)}_{2M}$, fix $1 \leq l \leq d$, and let $u(s, \mathbf{x}) = v^{(1)}_s(x_l)$ for $\mathbf{x} \in \mathcal{C}_{2M}$ and $u(s, \mathbf{x}) = 0$ otherwise.
+By Lemma \ref{pt_ind_lemma} in dimension one, $v^{(1)}_s(x_l + 1) + v^{(1)}_s(x_l - 1) \leq 2 v^{(1)}_{s+1}(x_l) - 1$.
+A neighbor of $\mathbf{x}$ in a direction other than $e_l$ contributes $v^{(1)}_s(x_l)$ or $0$ to $\Delta^{\mathcal{G}} u(s+1, \mathbf{x})$, and $v^{(1)}_s \leq v^{(1)}_{s+1}$, so for $\mathbf{x} \in \mathcal{C}_{2M}$,
+\[
+\Delta^{\mathcal{G}} u(s+1, \mathbf{x}) + 2d \leq 2d - 1 - (2d - 2) \left( v^{(1)}_{s+1}(x_l) - v^{(1)}_s(x_l) \right) \leq 2d - 1.
+\]
+Lemma \ref{parabolic_comparison} gives $v_s(\mathbf{x}) \leq v^{(1)}_s(x_l)$.
+The formula for $v_{\infty}$ at the end of Section \ref{sec:base_regularity} gives $v^{(1)}_{\infty}(M) = M$, so $v_s(M, \mathbf{1}_{d-1}) \leq M$ for all $s$.
+Thus $v_{\infty}(M, \mathbf{1}_{d-1}) \leq M$, and Corollary \ref{cor:derivative_bound} with the constant $1$ and symmetry give, for all $s \geq 0$, $\mathbf{x} \in \mathcal{P}_M$ and $1 \leq k \leq d$,
+\begin{equation} \label{eq:first_difference}
+v_s(\mathbf{x}) - v_s(\mathbf{x} + e_k) \leq x_k.
+\end{equation}
+
+{\it Step 2.}
+We show that for $1 \leq s \leq t$, $\mathbf{x} \in \mathcal{P}_M$ and $1 \leq k \leq d$,
+\begin{equation} \label{eq:time_difference}
+v_s(\mathbf{x}) - v_{s-1}(\mathbf{x} + e_k) \leq x_k.
+\end{equation}
+As $v_1 \equiv 1$ on $\mathcal{C}_{2M}$ and $v_0 \equiv 0$, this holds when $s = 1$. Suppose it holds at $s < t$.
+If $x_k = M$, then $v_s(\mathbf{x} + e_k) = 0$ and \eqref{eq:first_difference} gives $v_{s+1}(\mathbf{x}) \leq M$.
+If $x_k = 1$, then $v_{s+1}(\mathbf{x}) - v_s(\mathbf{x})$ is $0$ or $1$ by Lemma \ref{topple_limit}.
+If it is $0$, the claim is \eqref{eq:first_difference}.
+If it is $1$, then \eqref{base_dimension:weak_compatability} and \eqref{eq:first_difference} give $v_s(\mathbf{x}) \leq v_s(\mathbf{x} + e_k)$, and the claim follows.
+If $2 \leq x_k \leq M-1$, we apply \eqref{eq:floor_step} with $w = e_k$, the times $s$ and $s-1$, and $g(\mathbf{x}) = x_k$.
+Every term with $\mathbf{y} \in \mathcal{P}_M$ is bounded by induction, and a neighbor $\mathbf{x} - e_l$ with $x_l = 1$ has $l \neq k$.
+
+{\it Step 3.}
+We show that for $1 \leq s \leq t$ and $\mathbf{x} \in \mathcal{P}_M$ with $x_k = 1$ and $\max_l x_l \geq 2$,
+\begin{equation} \label{eq:facet_lag}
+v_s(\mathbf{x} + e_k) \geq v_{s-1}(\mathbf{x}).
+\end{equation}
+By \eqref{eq:first_difference}, $v_{s-1}(\mathbf{x}) \leq v_{s-1}(\mathbf{x} + e_k) + 1$.
+If equality holds, then \eqref{base_dimension:strong_compatability} at time $s-1$, which applies as $\max_l x_l \geq 2$, gives $v_s(\mathbf{x} + e_k) = v_{s-1}(\mathbf{x} + e_k) + 1 = v_{s-1}(\mathbf{x})$.
+Otherwise $v_{s-1}(\mathbf{x}) \leq v_{s-1}(\mathbf{x} + e_k) \leq v_s(\mathbf{x} + e_k)$.
+
+{\it Step 4.}
+We show that for $0 \leq s \leq t$, $\mathbf{x} \in \mathcal{P}_M$ and $k \neq l$,
+\begin{equation} \label{eq:mixed_difference}
+v_s(\mathbf{x}) - v_s(\mathbf{x} + e_k + e_l) \leq x_k + x_l - 1.
+\end{equation}
+This is clear when $s = 0$, so let $s \geq 1$.
+If $x_k = M$ or $x_l = M$, then $\mathbf{x} + e_k + e_l \not \in \mathcal{C}_{2M}$ and \eqref{eq:first_difference} gives $v_s(\mathbf{x}) \leq M$.
+If $x_k = 1$ and $x_l \leq M-1$, then \eqref{eq:facet_lag} at $\mathbf{x} + e_l$ and \eqref{eq:time_difference} give
+\[
+v_s(\mathbf{x}) - v_s(\mathbf{x} + e_k + e_l) \leq v_s(\mathbf{x}) - v_{s-1}(\mathbf{x} + e_l) \leq x_l.
+\]
+The case $x_l = 1$ is symmetric.
+If $2 \leq x_k, x_l \leq M-1$, we apply \eqref{eq:floor_step} with $w = e_k + e_l$, the times $s-1$ and $s-1$, and $g(\mathbf{x}) = x_k + x_l - 1$.
+Every term with $\mathbf{y} \in \mathcal{P}_M$ is bounded by \eqref{eq:mixed_difference} at time $s-1$.
+
+{\it Step 5.}
+We show that for $0 \leq s \leq t$, $\mathbf{x} \in \mathcal{P}_M$ and $k$ with $x_k < \max_l x_l$,
+\begin{equation} \label{eq:pure_difference}
+v_s(\mathbf{x}) - v_s(\mathbf{x} + 2 e_k) \leq 2 x_k.
+\end{equation}
+This is clear when $s = 0$, so let $s \geq 1$ and $a = x_k$.
+If $x_l = a + 1$ for some $l$, then $\mathbf{x} + 2 e_k$ is a permutation of $\mathbf{x} + e_k + e_l$, and \eqref{eq:mixed_difference} gives \eqref{eq:pure_difference}.
+Otherwise $\max_l x_l \geq a + 2$, so $\mathbf{x} + 2 e_k \in \mathcal{P}_M$.
+Every $\mathbf{y} \in \mathcal{P}_M$ with $\mathbf{y} \sim \mathbf{x}$ satisfies $y_k < \max_l y_l$, as $y_k \leq a + 1$, $\max_l y_l \geq a + 1$, and $\max_l y_l \geq a + 2$ when $y_k = a + 1$.
+We apply \eqref{eq:floor_step} with $w = 2 e_k$, the times $s-1$ and $s-1$, and $g(\mathbf{x}) = 2 x_k$.
+Every term with $\mathbf{y} \in \mathcal{P}_M$ is bounded by \eqref{eq:pure_difference} at time $s-1$.
+If $a \geq 2$, this bounds every term.
+If $a = 1$, the remaining term is the one with $\mathbf{y} = \mathbf{x} - e_k$, which equals $v_{s-1}(\mathbf{x}) - v_{s-1}(\mathbf{x} + e_k)$ while $g(\mathbf{x} - e_k) = 0$.
+If $v_{s-1}(\mathbf{x}) = v_{s-1}(\mathbf{x} + e_k) + 1$, then \eqref{base_dimension:weak_compatability} gives $v_s(\mathbf{x}) = v_{s-1}(\mathbf{x})$, and as $v_{s-1} \leq v_s$,
+\[
+v_s(\mathbf{x}) - v_s(\mathbf{x} + 2 e_k) \leq v_{s-1}(\mathbf{x}) - v_{s-1}(\mathbf{x} + 2 e_k) \leq 2.
+\]
+Otherwise \eqref{eq:first_difference} shows that this term is at most $0$.
+
+Finally, let $\mathbf{x} = (\mathbf{x}_{i-1}, 1, \mathbf{1}_j)$ with $\mathbf{x}_{i-1} \geq 2$ and $i \geq 2$.
+Then $x_i = 1 < x_1$, and \eqref{eq:pure_difference} with $k = i$ and $s = t$ is \eqref{eq:two_derivative_bound}.
 
 
 

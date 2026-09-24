@@ -2,7 +2,8 @@
 
 `paper/dimred.tex` is the contract.  This file records, for every choice that a
 reader might otherwise have to reconstruct, how a statement of the paper became
-a Lean statement.
+a Lean statement.  `paper/dimred.tex` is the arXiv version with the corrections
+listed in [`paper/CHANGES_FROM_ARXIV.md`](paper/CHANGES_FROM_ARXIV.md).
 
 ## The frozen surface
 
@@ -10,26 +11,26 @@ a Lean statement.
 
 | id | Lean | paper | state |
 |---|---|---|---|
-| `cor-axis-monotonicity` | `DimRed.Frozen.axis_monotonicity` | dimred.tex:513-526 (label axis_monotonicity) | DRAFT_SORRY |
-| `cor-derivative-bound` | `DimRed.Frozen.derivative_bound` | dimred.tex:531-539 (label cor-derivative_bound) | DRAFT_SORRY |
-| `prop-base-dimension-consistency` | `DimRed.Frozen.base_dimension_consistency` | dimred.tex:912-921 (label base_dimension) | DRAFT_SORRY |
-| `prop-base-dimension-weak` | `DimRed.Frozen.base_dimension_weak_compatibility` | dimred.tex:922-930 (label base_dimension) | DRAFT_SORRY |
-| `prop-base-dimension-strong-derivative` | `DimRed.Frozen.base_dimension_strong_derivative` | dimred.tex:931-934 (label base_dimension) | DRAFT_SORRY |
-| `prop-base-dimension-strong-facet` | `DimRed.Frozen.base_dimension_strong_compatibility` | dimred.tex:935-943 (label base_dimension) | DRAFT_SORRY |
-| `prop-base-dimension-strong-topple` | `DimRed.Frozen.base_dimension_strong_topple` | dimred.tex:946-950 (label base_dimension) | DRAFT_SORRY |
-| `thm-dimensional-reduction` | `DimRed.Frozen.dimensional_reduction` | dimred.tex:109-141 (label the_theorem) | DRAFT_SORRY |
-| `thm-terminal-reduction` | `DimRed.Frozen.terminal_dimensional_reduction` | dimred.tex:109-141 (label the_theorem) | DRAFT_SORRY |
-| `thm-self-similarity` | `DimRed.Frozen.self_similarity` | dimred.tex:109-141 (label the_theorem) | DRAFT_SORRY |
-| `cor-sandpile-reduction` | `DimRed.Frozen.sandpile_dimensional_reduction` | dimred.tex:143-160 (Corollary 1.1) | DRAFT_SORRY |
-| `cor-sandpile-self-similarity` | `DimRed.Frozen.sandpile_self_similarity` | dimred.tex:143-160 (Corollary 1.1) | DRAFT_SORRY |
-| `lem-symmetry` | `DimRed.Frozen.symmetry_lemma` | dimred.tex:415-418 (label symmetry_lemma) | SEALED |
-| `prop-no-reduction` | `DimRed.Frozen.no_reduction_at_critical_dimension` | dimred.tex:706-708 (Proposition 3.1) | SEALED |
-| `lem-radial-laplacian` | `DimRed.Frozen.radial_laplacian` | dimred.tex:728-733 (Lemma 3.1) | SEALED |
-| `lem-pt-ind` | `DimRed.Frozen.pt_ind_lemma` | dimred.tex:289-294 (label pt_ind_lemma) | SEALED |
-| `lem-parabolic-comparison` | `DimRed.Frozen.parabolic_comparison` | dimred.tex:311-316 (label parabolic_comparison) | SEALED |
-| `lem-topple-limit` | `DimRed.Frozen.topple_limit` | dimred.tex:669-674 (label topple_limit) | SEALED |
-| `lem-difference-comparison` | `DimRed.Frozen.general_difference_comparison` | dimred.tex:473-497 (label general_difference_comparison) | SEALED |
-| `prop-base-case` | `DimRed.Frozen.base_case` | dimred.tex:789-810 (label prop-base_case) | SEALED |
+| `prop-base-dimension-weak` | [DimRed.Frozen.base_dimension_weak_compatibility](DimRed/Frozen/Regularity/WeakFacet.lean#L26) | dimred.tex:919-926 (label base_dimension, weak facet compatibility clause, display base_dimension:weak_compatability) | DRAFT_SORRY |
+| `thm-dimensional-reduction` | [DimRed.Frozen.dimensional_reduction](DimRed/Frozen/Main/DimensionalReduction.lean#L24) | dimred.tex:109-140 (label the_theorem) | DRAFT_SORRY |
+| `thm-terminal-reduction` | [DimRed.Frozen.terminal_dimensional_reduction](DimRed/Frozen/Main/TerminalReduction.lean#L18) | dimred.tex:109-140 (label the_theorem) | DRAFT_SORRY |
+| `cor-sandpile-reduction` | [DimRed.Frozen.sandpile_dimensional_reduction](DimRed/Frozen/Main/SandpileReduction.lean#L20) | dimred.tex:143-160 (Corollary 1.1) | DRAFT_SORRY |
+| `lem-symmetry` | [DimRed.Frozen.symmetry_lemma](DimRed/Frozen/Prelim/Symmetry.lean#L23) | dimred.tex:415-417 (label symmetry_lemma) | SEALED |
+| `prop-no-reduction` | [DimRed.Frozen.no_reduction_at_critical_dimension](DimRed/Frozen/BaseCase/NoReduction.lean#L18) | dimred.tex:706-708 (Proposition 3.1) | SEALED |
+| `lem-radial-laplacian` | [DimRed.Frozen.radial_laplacian](DimRed/Frozen/BaseCase/RadialLaplacian.lean#L20) | dimred.tex:728-733 (Lemma 3.1) | SEALED |
+| `lem-pt-ind` | [DimRed.Frozen.pt_ind_lemma](DimRed/Frozen/Prelim/PtInd.lean#L17) | dimred.tex:289-294 (label pt_ind_lemma) | SEALED |
+| `lem-parabolic-comparison` | [DimRed.Frozen.parabolic_comparison](DimRed/Frozen/Prelim/ParabolicComparison.lean#L22) | dimred.tex:311-316 (label parabolic_comparison) | SEALED |
+| `lem-topple-limit` | [DimRed.Frozen.topple_limit](DimRed/Frozen/Prelim/ToppleLimit.lean#L23) | dimred.tex:669-676 (label topple_limit) | SEALED |
+| `lem-difference-comparison` | [DimRed.Frozen.general_difference_comparison](DimRed/Frozen/Prelim/DifferenceComparison.lean#L29) | dimred.tex:473-492 (label general_difference_comparison) | SEALED |
+| `prop-base-case` | [DimRed.Frozen.base_case](DimRed/Frozen/BaseCase/ExplicitOdometer.lean#L31) | dimred.tex:789-813 (label prop-base_case) | SEALED |
+| `prop-base-dimension-consistency` | [DimRed.Frozen.base_dimension_consistency](DimRed/Frozen/Regularity/Consistency.lean#L23) | dimred.tex:915-918 (label base_dimension, self-similarity clause, display base_dimension:consistency) | DRAFT_SORRY |
+| `prop-base-dimension-strong-derivative` | [DimRed.Frozen.base_dimension_strong_derivative](DimRed/Frozen/Regularity/StrongDerivative.lean#L19) | dimred.tex:927-931 (label base_dimension, strong facet compatibility clause, display base_dimension:strong_derivative) | DRAFT_SORRY |
+| `prop-base-dimension-strong-facet` | [DimRed.Frozen.base_dimension_strong_compatibility](DimRed/Frozen/Regularity/StrongFacet.lean#L20) | dimred.tex:932-940 (label base_dimension, strong facet compatibility clause, display base_dimension:strong_compatability) | DRAFT_SORRY |
+| `prop-base-dimension-strong-topple` | [DimRed.Frozen.base_dimension_strong_topple](DimRed/Frozen/Regularity/StrongTopple.lean#L17) | dimred.tex:944-948 (label base_dimension, strong topple control clause, display base_dimension:strong_topple) | DRAFT_SORRY |
+| `thm-self-similarity` | [DimRed.Frozen.self_similarity](DimRed/Frozen/Main/SelfSimilarity.lean#L24) | dimred.tex:109-140 (label the_theorem) | DRAFT_SORRY |
+| `cor-sandpile-self-similarity` | [DimRed.Frozen.sandpile_self_similarity](DimRed/Frozen/Main/SandpileSelfSimilarity.lean#L17) | dimred.tex:143-160 (Corollary 1.1) | DRAFT_SORRY |
+| `cor-axis-monotonicity` | [DimRed.Frozen.axis_monotonicity](DimRed/Frozen/Prelim/AxisMonotonicity.lean#L33) | dimred.tex:513-527 (label axis_monotonicity) | SEALED |
+| `cor-derivative-bound` | [DimRed.Frozen.derivative_bound](DimRed/Frozen/Prelim/DerivativeBound.lean#L19) | dimred.tex:531-538 (label cor-derivative_bound) | SEALED |
 
 <!-- FROZEN-SURFACE-END -->
 
@@ -76,9 +77,10 @@ symmetrized Laplacian is defined.
 - `v_∞` is `⨆ t, (v_t x).toNat` in `ℕ∞`.  A site that never stops toppling has
   the value `⊤`, not a junk integer.  That the value is finite is a theorem of
   the development, not an assumption.
-- `τ_j` is an `sInf` in `ℕ∞`, so a `j` for which no such time exists gives `⊤`
-  and the hypothesis `t ≤ τ_j` of Theorem 1.1(ii) is then vacuously satisfied
-  for every `t`, that is, the statement is strengthened rather than trivialized.
+- `τ_j` is an `sInf` in `ℕ∞`, so a `j` for which no such time exists would give
+  `⊤`.  As in the paper, the time asks for some inner boundary site to reach
+  height `j`; `toppleTime_eq_corner` shows it is the first time the corner
+  `(j, 1_{d-1})` does.
 - `simplexMax d M f` is `0` on an empty domain; `simplex_nonempty` shows the
   domain is nonempty when `1 ≤ M`.
 - Integer division `a / b` on `ℤ` is floor division for `b > 0`, so the paper's
@@ -105,11 +107,33 @@ does not use.  The statement is therefore stronger than the paper's.
 None so far.  The paper cites Babai-Gorodezky for the attribution of Corollary
 2.1 but proves it, and cites the comparison principle only in a remark.
 
-## Hypotheses the paper leaves implicit
+## Hypotheses written out from the paper's standing assumptions
 
 | node | added hypothesis | why |
 |---|---|---|
 | `lem-topple-limit` | `IsSymmetricPile d (2M) s₀` | version 2.  The first transcription carried only the bound of `dimred.tex:286-288` and omitted the standing hypothesis of `dimred.tex:400-402`, that the initial sandpile is symmetric, which is in force from Section 2.4 onward and is what makes a maximum over the fundamental domain a maximum over the whole hypercube.  Without it the statement is not the paper's |
-| `lem-pt-ind`, `lem-parabolic-comparison`, `lem-topple-limit` | the bounds on `s₀` are hypotheses only ON the hypercube | version 3.  `dimred.tex:286-288` constrains the initial sandpile on `C`, not on all of `ℤ^d`; the odometer never reads `s₀` off the cube, so the restricted hypothesis is the paper's and gives the stronger statement |
-| `lem-pt-ind` | `0 ≤ s₀` | `dimred.tex:286-288` assumes only `s_0 ≤ 2(2d) - 1`; the identity fails for a negative initial sandpile, for instance `s_0 ≡ -1`, where `v_t ≡ 0` but `⌊-1/2d⌋ = -1`.  Nonnegativity is part of what "sandpile" means in the paper (a number of chips) and is recorded in the errata |
-| `lem-difference-comparison` | `x + w_j ∈ C_{2M}^{(d)}` in the first branch of `eq:boundaries_ref` | version 2.  The first branch of the boundary alternative bounds `∑_{y ∼ x} v_t(y) - ∑_{y' ∼ (x+w_j)} v_t(y') - 2d g_j(x)`, and it is the recursion at `x + w_j` that turns that bound into a bound on `v_{t+1}(x) - v_{t+1}(x+w_j)`; off the cube `v_{t+1}` is the padded value `0` while the neighbour sum is not.  The membership is what the argument uses, and every use of the lemma in the paper satisfies it: the interior, reflecting and rotating boundaries keep `x + w_j` inside the cube, and the dissipating boundary is handled by the second branch (`dimred.tex:551-558`).  Recorded in the errata |
+| `lem-pt-ind`, `lem-parabolic-comparison`, `lem-topple-limit` | the bounds `0 ≤ s₀ ≤ 2(2d) - 1` are hypotheses only ON the hypercube | version 3.  `dimred.tex:286-288` constrains the initial sandpile on `C`, not on all of `ℤ^d`; the odometer never reads `s₀` off the cube, so the restricted hypothesis is the paper's and gives the stronger statement |
+
+The statements whose text differs from the arXiv version (Lemma 2.1, Lemma 2.4,
+Corollary 2.1, Proposition 3.2, the definition of `τ_j` in Theorem 1.1 and two
+displays of Proposition 4.1) are frozen as `paper/dimred.tex` now states them;
+[`paper/CHANGES_FROM_ARXIV.md`](paper/CHANGES_FROM_ARXIV.md) lists each change and
+the reason for it.
+
+## Main results
+
+None of the paper's main results is proved yet.  Their frozen statements are registered and
+open, and [`DimRed/MainTheorems.lean`](DimRed/MainTheorems.lean) names them in its docstring
+without restating them; it states in full only the ten results that are proved.
+
+| Source | Frozen statement | State |
+|---|---|---|
+| Theorem 1.1(i), first display | `DimRed.Frozen.dimensional_reduction` | open |
+| Theorem 1.1(i), second display | `DimRed.Frozen.terminal_dimensional_reduction` | open |
+| Theorem 1.1(ii) | `DimRed.Frozen.self_similarity` | open |
+| Corollary 1.1(i) | `DimRed.Frozen.sandpile_dimensional_reduction` | open |
+| Corollary 1.1(ii) | `DimRed.Frozen.sandpile_self_similarity` | open |
+
+The paper proves them together with the five clauses of Proposition 4.1 by one induction
+over dimension, side length and time.  No comparator challenge exists yet; see
+[`Audit/README.md`](Audit/README.md).

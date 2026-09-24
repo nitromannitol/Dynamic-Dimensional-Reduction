@@ -33,10 +33,25 @@ def _paper_path() -> Path:
 
 PAPER = _paper_path()
 
-STATEMENT_ENVS = ("theorem", "lemma", "proposition", "corollary")
+STATEMENT_ENVS = ("theorem", "lemma", "proposition", "prop", "corollary")
 LABEL_IN_STATEMENT = re.compile(
     r"\\begin\{(" + "|".join(STATEMENT_ENVS) + r")\}(?:\[[^\]]*\])?[^\\]*\\label\{([^}]+)\}")
-LABEL_TOKEN = re.compile(r"\b((?:thm|lem|prop|cor|eq):[A-Za-z0-9:_-]+)")
+# A node names the paper statement it transcribes as `(label <name>)`.  The
+# paper's own labels are bare words (`the_theorem`), so a prefix cannot be
+# required; the word `label` is what marks the name.
+LABEL_TOKEN = re.compile(r"label\s+([A-Za-z][A-Za-z0-9:_-]*)")
+# A statement the paper leaves unlabelled cannot be claimed by name, so a node
+# claims it by line: the `source:` range must contain the line it opens on.
+BEGIN_STATEMENT = re.compile(r"\\begin\{(" + "|".join(STATEMENT_ENVS) + r")\}")
+SOURCE_RANGE = re.compile(re.escape(PAPER.name) + r":(\d+)-(\d+)")
+
+
+def label_variants(label: str) -> list[str]:
+    """A source may write `cor-derivative_bound` for `\\label{cor:derivative_bound}`."""
+    out = [label]
+    if "-" in label and ":" not in label:
+        out.append(label.replace("-", ":", 1))
+    return out
 
 
 def main() -> int:
@@ -47,8 +62,13 @@ def main() -> int:
     manifest = yaml.safe_load(MANIFEST.read_text(encoding="utf-8"))
 
     claimed: set[str] = set()
+    ranges: list[tuple[int, int]] = []
     for node in manifest.get("nodes") or []:
-        claimed |= set(LABEL_TOKEN.findall(node["source"]))
+        for label in LABEL_TOKEN.findall(node["source"]):
+            claimed.update(label_variants(label))
+        span = SOURCE_RANGE.search(node["source"])
+        if span:
+            ranges.append((int(span.group(1)), int(span.group(2))))
 
     statements = []
     seen = set()
@@ -58,6 +78,19 @@ def main() -> int:
             statements.append((m.group(1), m.group(2), text[:m.start()].count("\n") + 1))
 
     uncovered = [(k, lab, ln) for k, lab, ln in statements if lab not in claimed]
+
+    # Unlabelled statements, claimed by line rather than by name.
+    labelled_lines = {ln for _, _, ln in statements}
+    for m in BEGIN_STATEMENT.finditer(text):
+        ln = text[:m.start()].count("\n") + 1
+        if ln in labelled_lines:
+            continue
+        statements.append((m.group(1), f"(unlabelled, line {ln})", ln))
+        if not any(a <= ln <= b for a, b in ranges):
+            uncovered.append((m.group(1), f"(unlabelled, line {ln})", ln))
+
+    statements.sort(key=lambda s: s[2])
+    uncovered.sort(key=lambda s: s[2])
 
     print(f"check_coverage: {len(statements)} statements in the paper, "
           f"{len(statements) - len(uncovered)} formalized")

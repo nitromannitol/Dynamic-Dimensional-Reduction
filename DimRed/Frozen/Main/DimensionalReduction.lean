@@ -1,6 +1,6 @@
 /-
 The first display of Theorem 1.1(i) of `dimred.tex`, frozen.
-`dimred.tex:109-141` (label `the_theorem`), clause 1:
+`dimred.tex:109-140` (label `the_theorem`), clause 1:
 
   "Let $N \geq 1$, $d \geq 2$, and $M = \lceil N/2 \rceil$.  Denote the
    fundamental domain of $\mathcal{C}_N^{(d)}$ consisting of sorted coordinates

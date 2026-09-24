@@ -3,11 +3,16 @@
  "packagesDir": ".lake/packages",
  "packages": [
   {
-   "type": "path",
+   "url": "https://github.com/nitromannitol/Lattice-Probability.git",
+   "type": "git",
+   "subDir": null,
+   "scope": "",
+   "rev": "bbe0b90a7cf0517db0578139aaab7f152edbc45e",
    "name": "\u00ablattice-probability\u00bb",
    "manifestFile": "lake-manifest.json",
+   "inputRev": "bbe0b90a7cf0517db0578139aaab7f152edbc45e",
    "inherited": false,
-   "dir": "../Lattice-Probability"
+   "configFile": "lakefile.lean"
   },
   {
    "url": "https://github.com/leanprover-community/mathlib4",

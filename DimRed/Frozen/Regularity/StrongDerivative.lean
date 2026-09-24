@@ -1,6 +1,6 @@
 /-
 The strong derivative clause of Proposition 4.1 of `dimred.tex`, frozen.
-`dimred.tex:931-934` (display `base_dimension:strong_derivative`):
+`dimred.tex:927-931` (display `base_dimension:strong_derivative`):
 
   "[Strong facet compatibility] For all $\mathbf{x}_i \geq 2$, $j \geq 0$,
    $i < d$, ($t < \tau_M$ and $i \geq 0$) or ($i \geq 1$ and $t \geq \tau_M$),
@@ -8,7 +8,7 @@ The strong derivative clause of Proposition 4.1 of `dimred.tex`, frozen.
 
 `x` is the point `(x_i, 1, 1_j)` of the display that follows it, so
 `x + 2 e_{i+1}` is `(x_i, 3, 1_j)`; this is how the paper uses it at
-`dimred.tex:1256-1258`, `eq:two_derivative_bound`.  `i < d` is automatic once
+`dimred.tex:1263-1265`, `eq:two_derivative_bound`.  `i < d` is automatic once
 `d = i + 1 + j`.  `τ_M` is `toppleTime d M`, valued in `ℕ∞`.
 -/
 import DimRed.Support.Recursion

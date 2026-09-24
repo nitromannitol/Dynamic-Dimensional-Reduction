@@ -1,6 +1,6 @@
 /-
 The second display of Theorem 1.1(i) of `dimred.tex`, frozen.
-`dimred.tex:109-141` (label `the_theorem`), clause 1:
+`dimred.tex:109-140` (label `the_theorem`), clause 1:
 
   "and for $\mathbf{x}_{d-1} \geq 2$,
    $v_{\infty}^{(d,N)}(\mathbf{x}_{d-1}, 2) = v_{\infty}^{(d-1,N)}
