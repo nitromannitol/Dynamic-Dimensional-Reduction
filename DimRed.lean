@@ -70,5 +70,6 @@ import DimRed.Support.StrongDerivEarly
 import DimRed.Support.StrongDerivStep
 import DimRed.Support.RegBridges
 import DimRed.Support.RegSteps
+import DimRed.Support.RegFacetTime
 import DimRed.Support.SimplexFold
 import DimRed.MainTheorems
