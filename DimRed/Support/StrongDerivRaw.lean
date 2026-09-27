@@ -253,4 +253,149 @@ theorem mixed_reflect (d M T : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M)
   rw [hcomm]
   linarith
 
+/-- A point of the positive orthant whose two named coordinates are at most
+`M - 1` stays in the cube after a step in both directions. -/
+theorem mixed_hxw (d M : ℕ) (k l : Fin d) (hkl : k ≠ l) (x : Site d) (hx : inPos d M x)
+    (hkM : x k ≤ (M : ℤ) - 1) (hlM : x l ≤ (M : ℤ) - 1) :
+    inCube d (2 * M) (x + (unit k + unit l)) := by
+  intro i
+  rw [loCoord_two_mul, hiCoord_two_mul]
+  have h := hx i
+  simp only [Pi.add_apply, unit, Pi.single_apply]
+  by_cases hik : i = k
+  · subst hik
+    simp only [if_neg hkl, add_zero]
+    omega
+  · simp only [if_neg hik]
+    by_cases hil : i = l
+    · subst hil
+      omega
+    · simp only [if_neg hil, add_zero]
+      omega
+
+/-- The mixed second difference `eq:mixed_difference`, `dimred.tex:1381-1394`. -/
+theorem odo_mixed_diff (d M T : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M)
+    (hW : ∀ s, 1 ≤ s → s < T → RegWeak d M s) (hS : ∀ s, s < T → RegStrongFacet d M s) :
+    ∀ s, s ≤ T → ∀ (k l : Fin d), k ≠ l → ∀ x : Site d, inPos d M x →
+      odoUnif d (2 * M) s x - odoUnif d (2 * M) s (x + unit k + unit l) ≤ x k + x l - 1 := by
+  intro s
+  induction s with
+  | zero =>
+    intro _ k l _ x hx
+    have h1 : odoUnif d (2 * M) 0 x = 0 := rfl
+    have h2 : odoUnif d (2 * M) 0 (x + unit k + unit l) = 0 := rfl
+    rw [h1, h2]
+    have hk := (hx k).1
+    have hl := (hx l).1
+    omega
+  | succ n ih =>
+    intro hs k l hkl x hx
+    by_cases hkM : x k = (M : ℤ)
+    · exact mixed_top d M hd hM n k l hkl x hx hkM
+    by_cases hlM : x l = (M : ℤ)
+    · have hkl' : l ≠ k := Ne.symm hkl
+      have hcomm : x + unit k + unit l = x + unit l + unit k := by abel
+      rw [hcomm]
+      have h := mixed_top d M hd hM n l k hkl' x hx hlM
+      linarith
+    by_cases hk1 : x k = 1
+    · have hlM' : x l ≤ (M : ℤ) - 1 := by
+        have h := (hx l).2
+        omega
+      exact mixed_reflect d M T hd hM hW hS n (by omega) k l hkl x hx hk1 hlM'
+    by_cases hl1 : x l = 1
+    · have hkl' : l ≠ k := Ne.symm hkl
+      have hcomm : x + unit k + unit l = x + unit l + unit k := by abel
+      rw [hcomm]
+      have hkM' : x k ≤ (M : ℤ) - 1 := by
+        have h := (hx k).2
+        omega
+      have h := mixed_reflect d M T hd hM hW hS n (by omega) l k hkl' x hx hl1 hkM'
+      linarith
+    have hk2 : 2 ≤ x k := by have := (hx k).1; omega
+    have hl2 : 2 ≤ x l := by have := (hx l).1; omega
+    have hkM' : x k ≤ (M : ℤ) - 1 := by have := (hx k).2; omega
+    have hlM' : x l ≤ (M : ℤ) - 1 := by have := (hx l).2; omega
+    have hx' : inCube d (2 * M) x := inPos_inCube hx
+    have hxw : inCube d (2 * M) (x + (unit k + unit l)) := mixed_hxw d M k l hkl x hx hkM' hlM'
+    have hG : nbrSum (fun y : Site d => y k + y l - 1) x = 2 * (d : ℤ) * (x k + x l - 1) := by
+      have hk := nbrSum_affine (fun m : Fin d => if m = k then (1:ℤ) else 0) 0 x
+      have hl := nbrSum_affine (fun m : Fin d => if m = l then (1:ℤ) else 0) 0 x
+      have h1 : (fun y : Site d => ∑ m : Fin d, (if m = k then (1:ℤ) else 0) * y m + 0)
+          = fun y => y k := by
+        funext y
+        rw [Finset.sum_eq_single k]
+        · simp
+        · intro b _ hb; simp [hb]
+        · intro hb; exact absurd (Finset.mem_univ k) hb
+      have h2 : (fun y : Site d => ∑ m : Fin d, (if m = l then (1:ℤ) else 0) * y m + 0)
+          = fun y => y l := by
+        funext y
+        rw [Finset.sum_eq_single l]
+        · simp
+        · intro b _ hb; simp [hb]
+        · intro hb; exact absurd (Finset.mem_univ l) hb
+      rw [h1] at hk
+      rw [h2] at hl
+      have h3 : (∑ m : Fin d, (if m = k then (1:ℤ) else 0) * x m + 0) = x k := by
+        rw [Finset.sum_eq_single k]
+        · simp
+        · intro b _ hb; simp [hb]
+        · intro hb; exact absurd (Finset.mem_univ k) hb
+      have h4 : (∑ m : Fin d, (if m = l then (1:ℤ) else 0) * x m + 0) = x l := by
+        rw [Finset.sum_eq_single l]
+        · simp
+        · intro b _ hb; simp [hb]
+        · intro hb; exact absurd (Finset.mem_univ l) hb
+      rw [h3] at hk
+      rw [h4] at hl
+      have hsum : nbrSum (fun y : Site d => y k + y l - 1) x
+          = nbrSum (fun y : Site d => y k) x + nbrSum (fun y : Site d => y l) x
+            - nbrSum (fun _ : Site d => (1:ℤ)) x := by
+        simp only [nbrSum, ← Finset.sum_add_distrib, ← Finset.sum_sub_distrib]
+        refine Finset.sum_congr rfl fun m _ => ?_
+        ring
+      have hone : nbrSum (fun _ : Site d => (1:ℤ)) x = 2 * (d : ℤ) := by
+        simp only [nbrSum, Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+        ring
+      rw [hsum, hk, hl, hone]
+      ring
+    have hfloor := floor_step d M hd n n x (unit k + unit l) hx' hxw (x k + x l - 1) ?_
+    · have hcomm : x + unit k + unit l = x + (unit k + unit l) := by abel
+      rw [hcomm]
+      simpa [Nat.add_assoc] using hfloor
+    · refine nbrSum_sub_le_of_terms (odoUnif d (2 * M) n) (odoUnif d (2 * M) n)
+        x (unit k + unit l) (fun y => y k + y l - 1) hG ?_ ?_
+      · intro m
+        rcases inPos_add_unit_or hx m with h | h
+        · have hc : x + unit m + (unit k + unit l) = (x + unit m) + unit k + unit l := by abel
+          rw [hc]
+          exact ih (by omega) k l hkl (x + unit m) h
+        · have hmk : m ≠ k := by rintro rfl; omega
+          have hml : m ≠ l := by rintro rfl; omega
+          have hterm := term_outside d M n n (x + unit m) (unit k + unit l)
+            (not_inCube_add_unit_of_eq m h)
+          have hvk : (x + unit m) k = x k := add_unit_other d x m k (Ne.symm hmk)
+          have hvl : (x + unit m) l = x l := add_unit_other d x m l (Ne.symm hml)
+          rw [hvk, hvl]
+          have h1 := (hx k).1
+          have h2 := (hx l).1
+          linarith [hterm]
+      · intro m
+        rcases inPos_sub_unit_or hx m with h | h
+        · have hc : x - unit m + (unit k + unit l) = (x - unit m) + unit k + unit l := by abel
+          rw [hc]
+          exact ih (by omega) k l hkl (x - unit m) h
+        · have hmk : m ≠ k := by rintro rfl; omega
+          have hml : m ≠ l := by rintro rfl; omega
+          have hwl : (unit k + unit l : Site d) m = 0 := by
+            simp only [Pi.add_apply, unit_apply_ne hmk, unit_apply_ne hml, add_zero]
+          have hterm := term_reflect d M n n x (unit k + unit l) m h hwl
+          have hvk : (x - unit m) k = x k := sub_unit_other d x m k (Ne.symm hmk)
+          have hvl : (x - unit m) l = x l := sub_unit_other d x m l (Ne.symm hml)
+          rw [hterm, hvk, hvl]
+          have hc : x + (unit k + unit l) = x + unit k + unit l := by abel
+          rw [hc]
+          exact ih (by omega) k l hkl x hx
+
 end DimRed
