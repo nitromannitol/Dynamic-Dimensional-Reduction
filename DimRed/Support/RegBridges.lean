@@ -79,4 +79,38 @@ theorem self_similarity_step_of_reg (d M : ℕ) (hC : ∀ q, RegConsist d M q) :
     self_similarity_step d M :=
   fun j hj1 hj2 s hs z hz hzgt => hC s j hj1 hj2 hs z hz hzgt
 
+/-- The toppling at the previous time, from the facet gap at the current time and
+the toppling form of the clause one step back. -/
+theorem odo_jump_of_gap {d M t : ℕ} (hd : 1 ≤ d) (hM : 2 ≤ M) (ht : 2 ≤ t)
+    (hS : RegStrongFacet d M (t - 2))
+    (x : Site d) (hx : inSimplex d M x) (k : Fin d) (hk : x k = 1)
+    (h2 : ∃ l, 2 ≤ x l)
+    (hgap : odoUnif d (2 * M) (t - 1) x = odoUnif d (2 * M) (t - 1) (x + unit k) + 1) :
+    odoUnif d (2 * M) (t - 1) x = odoUnif d (2 * M) (t - 2) x + 1 := by
+  have hstep : odoUnif d (2 * M) (t - 1) x ≤ odoUnif d (2 * M) (t - 2) x + 1 := by
+    have hsub := (odo_succ_sub_bounds d (2 * M) (fun _ => 2 * (d : ℤ)) (t - 2) x).2
+    have ht1 : t - 2 + 1 = t - 1 := by omega
+    have hsub' : odoUnif d (2 * M) (t - 1) x - odoUnif d (2 * M) (t - 2) x ≤ 1 := by
+      rw [← ht1]
+      exact hsub
+    omega
+  have hmono : odoUnif d (2 * M) (t - 2) x ≤ odoUnif d (2 * M) (t - 1) x :=
+    odo_mono d (2 * M) (fun _ => 2 * (d : ℤ)) (by omega : t - 2 ≤ t - 1) x
+  have hmono' : odoUnif d (2 * M) (t - 2) (x + unit k) ≤ odoUnif d (2 * M) (t - 1) (x + unit k) :=
+    odo_mono d (2 * M) (fun _ => 2 * (d : ℤ)) (by omega : t - 2 ≤ t - 1) (x + unit k)
+  have hfirst : odoUnif d (2 * M) (t - 2) x - odoUnif d (2 * M) (t - 2) (x + unit k) ≤ 1 := by
+    have h := odo_first_diff d M hd (by omega) (t - 2) k x (by rw [hk])
+    rw [hk] at h
+    exact h
+  by_contra hne
+  have heq : odoUnif d (2 * M) (t - 1) x = odoUnif d (2 * M) (t - 2) x := by
+    by_contra hne2
+    exact hne (by omega)
+  have hgap2 : odoUnif d (2 * M) (t - 2) x = odoUnif d (2 * M) (t - 2) (x + unit k) + 1 := by
+    omega
+  have htopple := strong_raw d M (t - 2) hS x hx.1 k hk h2 hgap2
+  have ht1 : t - 2 + 1 = t - 1 := by omega
+  rw [ht1] at htopple
+  omega
+
 end DimRed
