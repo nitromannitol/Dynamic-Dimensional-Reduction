@@ -212,4 +212,39 @@ theorem inSimplex_snoc_two_local {d M : ℕ} (x : Site d) (hx : inSimplex d M x)
         rw [Fin.snoc_castSucc, Fin.snoc_castSucc]
         exact hx.2 i' j' (Fin.le_def.mpr (Fin.le_def.mp hij))
 
+/-- At time one the odometer is one at every site of the cube. -/
+theorem odoUnif_one_eq_one (d M : ℕ) (z : Site d) (hz : inCube d (2 * M) z) :
+    odoUnif d (2 * M) 1 z = 1 := by
+  have hlap : lap (fun _ : Site d => (0 : ℤ)) z = 0 := by
+    simp [lap, nbrSum]
+  simp only [odoUnif, odo]
+  simp only [hlap]
+  rw [if_pos hz]
+  norm_num
+
+/-- Every point of the cube of side two folds to the all-ones point of the
+smallest simplex. -/
+theorem toSimplexPoint_one (d : ℕ) (z : Site d) (hz : inCube d 2 z) :
+    toSimplexPoint d 1 z = fun _ : Fin d => (1 : ℤ) := by
+  have hfold : foldPoint d 2 z = fun _ : Fin d => (1 : ℤ) := by
+    funext i
+    simp only [foldPoint, cubeSym]
+    have h := hz i
+    rw [loCoord_two, hiCoord_two] at h
+    by_cases h1 : 1 ≤ z i
+    · have hz1 : z i = 1 := by omega
+      simp [hz1]
+    · have hz0 : z i = 0 := by omega
+      simp [hz0, loCoord_two, hiCoord_two]
+  unfold toSimplexPoint
+  rw [hfold]
+
+/-- At scale one the odometer is the same at every point of the cube. -/
+theorem odoUnif_two_eq_of_inCube (d s : ℕ) (z : Site d) (hz : inCube d 2 z) :
+    odoUnif d 2 s z = odoUnif d 2 s (fun _ : Fin d => (1 : ℤ)) := by
+  have h := odo_toSimplexPoint d 1 (fun _ => 2 * (d : ℤ))
+    (isSymmetricPile_const' d 2 _) s z
+  rw [toSimplexPoint_one d z hz] at h
+  exact h.symm
+
 end DimRed
