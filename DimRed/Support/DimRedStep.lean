@@ -179,31 +179,43 @@ theorem lap_snoc_eq_of_reduction {d M q : ℕ} (x : Site d)
 
 theorem odo_dimred_step
     (d M t : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M) (x : Site d) (hx : inSimplex d M x)
-    (hprev : ∀ i : ℕ, 1 ≤ i → i ≤ d → ∀ m : ℕ, 1 ≤ m → m ≤ M →
-      ∀ z : Site i,
-        odoUnif (i + 1) (2 * m) (t - 1) (Fin.snoc z 1) =
-          odoUnif i (2 * m) (t - 1) z)
+    (hprev : ∀ i : ℕ, 1 ≤ i → i ≤ d → ∀ z : Site i,
+        odoUnif (i + 1) (2 * M) (t - 1) (Fin.snoc z 1) =
+          odoUnif i (2 * M) (t - 1) z)
     (hweak : weak_facet_step (d + 1) M (t - 1) ∧
       ∀ i : ℕ, 1 ≤ i → i ≤ d → weak_facet_step i M (t - 1))
     (hfacet : strong_facet_step (d + 1) M (t - 1) ∧
       ∀ i : ℕ, 1 ≤ i → i ≤ d → strong_facet_step i M (t - 1))
-    (htopple : ∀ i : ℕ, 1 ≤ i → i ≤ d + 1 → strong_topple_control_step i M)
-    (hconsist : ∀ i : ℕ, 1 ≤ i → i ≤ d + 1 → self_similarity_step i M)
+    (htopple : ∀ i : ℕ, 1 ≤ i → i ≤ d + 1 →
+      (toppleTime i (M - 1) ≤ ((t - 2 : ℕ) : ℕ∞) →
+        simplexMax i M (fun w => odoUnif i (2 * M) t w
+          - odoUnif i (2 * M) (t - 2) w) ≤ 1))
+    (hconsist : ∀ (j : ℕ), 1 ≤ j → j ≤ M → ((t - 1 : ℕ) : ℕ∞) ≤ toppleTime (d + 1) j →
+        ∀ z : Site (d + 1), inSimplex (d + 1) M z →
+          (∀ i : Fin (d + 1), (M : ℤ) - (j : ℤ) < z i) →
+          odoUnif (d + 1) (2 * M) (t - 1) z =
+            odoUnif (d + 1) (2 * j) (t - 1) (fun i => z i - ((M : ℤ) - (j : ℤ))))
     (hcritical : ∀ (z : Site d), inSimplex d M z →
       (∀ k : Fin d, 1 < z k) →
       odoUnif (d + 1) (2 * M) (t - 1) (Fin.snoc z 1) =
         odoUnif (d + 1) (2 * M) (t - 1)
           (Fin.snoc z 1 + unit (Fin.last d)) + 1 →
-      (∀ i : ℕ, 1 ≤ i → i ≤ d → ∀ m : ℕ, 1 ≤ m → m ≤ M →
-        ∀ w : Site i,
-          odoUnif (i + 1) (2 * m) (t - 1) (Fin.snoc w 1) =
-            odoUnif i (2 * m) (t - 1) w) →
+      (∀ i : ℕ, 1 ≤ i → i ≤ d → ∀ w : Site i,
+          odoUnif (i + 1) (2 * M) (t - 1) (Fin.snoc w 1) =
+            odoUnif i (2 * M) (t - 1) w) →
       (weak_facet_step (d + 1) M (t - 1) ∧
         ∀ i : ℕ, 1 ≤ i → i ≤ d → weak_facet_step i M (t - 1)) →
       (strong_facet_step (d + 1) M (t - 1) ∧
         ∀ i : ℕ, 1 ≤ i → i ≤ d → strong_facet_step i M (t - 1)) →
-      (∀ i : ℕ, 1 ≤ i → i ≤ d + 1 → strong_topple_control_step i M) →
-      (∀ i : ℕ, 1 ≤ i → i ≤ d + 1 → self_similarity_step i M) →
+      (∀ i : ℕ, 1 ≤ i → i ≤ d + 1 →
+        (toppleTime i (M - 1) ≤ ((t - 2 : ℕ) : ℕ∞) →
+          simplexMax i M (fun w => odoUnif i (2 * M) t w
+            - odoUnif i (2 * M) (t - 2) w) ≤ 1)) →
+      (∀ (j : ℕ), 1 ≤ j → j ≤ M → ((t - 1 : ℕ) : ℕ∞) ≤ toppleTime (d + 1) j →
+        ∀ z : Site (d + 1), inSimplex (d + 1) M z →
+          (∀ i : Fin (d + 1), (M : ℤ) - (j : ℤ) < z i) →
+          odoUnif (d + 1) (2 * M) (t - 1) z =
+            odoUnif (d + 1) (2 * j) (t - 1) (fun i => z i - ((M : ℤ) - (j : ℤ)))) →
       odoUnif (d + 1) (2 * M) t (Fin.snoc z 1) =
         odoUnif d (2 * M) t z) :
     odoUnif (d + 1) (2 * M) t (Fin.snoc x 1) = odoUnif d (2 * M) t x := by
@@ -211,7 +223,7 @@ theorem odo_dimred_step
   | zero => simp [odoUnif, odo]
   | succ q =>
     simp only [Nat.succ_sub_one] at hprev hweak hfacet hcritical
-    have hprev_x := hprev d (by omega) (by omega) M (by omega) (by omega) x
+    have hprev_x := hprev d (by omega) (by omega) x
     have hcube_x := inSimplex_inCube d M x hx
     have hcube_X : inCube (d + 1) (2 * M) (Fin.snoc x 1) := by
       exact inSimplex_inCube (d + 1) M (Fin.snoc x 1)
@@ -279,8 +291,7 @@ theorem odo_dimred_step
                   (Fin.snoc x 1 + unit (Fin.last d)) + 1 := hgap'.symm
             _ = odoUnif (d + 1) (2 * M) q
                   (Fin.snoc x 1 + unit (Fin.castSucc k)) + 1 := by rw [hswap']
-        have hprev_step := hprev d (by omega) (by omega) M (by omega) (by omega)
-          (x + unit k)
+        have hprev_step := hprev d (by omega) (by omega) (x + unit k)
         have hsnoc_step : Fin.snoc (x + unit k) 1 =
             Fin.snoc x 1 + unit (Fin.castSucc k) := fin_snoc_add_unit x 1 k
         rw [hsnoc_step] at hprev_step
@@ -299,7 +310,7 @@ theorem odo_dimred_step
           (Fin.snoc x 1 + unit (Fin.last d)) =
           odoUnif (d + 1) (2 * M) q (Fin.snoc x 1) := by linarith
       have hlap := lap_snoc_eq_of_reduction x
-        (fun z => hprev d (by omega) (by omega) M (by omega) (by omega) z) hzero
+        (fun z => hprev d (by omega) (by omega) z) hzero
       have hfull : (2 * ((d + 1 : ℕ) : ℤ) ≤
           sandp (d + 1) (2 * M) (fun _ => 2 * ((d + 1 : ℕ) : ℤ)) q
             (Fin.snoc x 1)) ↔

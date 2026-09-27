@@ -64,4 +64,33 @@ theorem odoUnif_snoc_toSimplexPoint (d M t : ℕ) (z : Site d) :
   rw [← hfold]
   simpa [odoUnif] using h
 
+/-- A point of `ℤ^i` outside the hypercube has its extension by a trailing one
+outside the hypercube of one higher dimension. -/
+theorem not_inCube_snoc_one {i M : ℕ} {z : Site i} (hz : ¬ inCube i (2 * M) z) :
+    ¬ inCube (i + 1) (2 * M) (Fin.snoc z 1) := by
+  intro hc
+  apply hz
+  intro l
+  have h := hc l.castSucc
+  rwa [Fin.snoc_castSucc] at h
+
+/-- The reduction identity at scale `M` for an arbitrary point of `ℤ^i`, from the
+identity on the sorted domain. -/
+theorem odoUnif_snoc_of_reduction (i M q : ℕ)
+    (hred : ∀ w : Site i, inSimplex i M w →
+      odoUnif (i + 1) (2 * M) q (Fin.snoc w 1) = odoUnif i (2 * M) q w) :
+    ∀ z : Site i,
+      odoUnif (i + 1) (2 * M) q (Fin.snoc z 1) = odoUnif i (2 * M) q z := by
+  intro z
+  by_cases hz : inCube i (2 * M) z
+  · have h := hred (toSimplexPoint i M z) (inSimplex_toSimplexPoint i M z hz)
+    rw [odoUnif_snoc_toSimplexPoint i M q z, odoUnif_toSimplexPoint i M q z] at h
+    exact h
+  · have h1 : odoUnif i (2 * M) q z = 0 :=
+      odo_eq_zero_outside i (2 * M) (fun _ => 2 * (i : ℤ)) q z hz
+    have h2 : odoUnif (i + 1) (2 * M) q (Fin.snoc z 1) = 0 :=
+      odo_eq_zero_outside (i + 1) (2 * M) (fun _ => 2 * ((i + 1 : ℕ) : ℤ)) q _
+        (not_inCube_snoc_one hz)
+    rw [h1, h2]
+
 end DimRed

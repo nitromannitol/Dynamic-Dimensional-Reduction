@@ -80,7 +80,7 @@ statement out of reach of the induction: proving the reduction from `d + 1` down
 regularity in dimension `d + 1` at earlier times, and `d + 1` is not earlier than `d` in the
 order of `dimred.tex:1120-1126`. -/
 def DimRedAt (d M t : ℕ) : Prop :=
-  ∀ e : ℕ, d = e + 1 → ∀ x : Site e, inSimplex e M x →
+  ∀ e : ℕ, 1 ≤ e → d = e + 1 → ∀ x : Site e, inSimplex e M x →
     odoUnif (e + 1) (2 * M) t (Fin.snoc x 1) = odoUnif e (2 * M) t x
 
 /-- The five regularity clauses at one dimension, side, and time. -/

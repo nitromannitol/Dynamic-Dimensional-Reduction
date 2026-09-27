@@ -111,7 +111,7 @@ lemma aux_facet_reduce (M i j : ℕ) (hM : 2 ≤ M)
         _ = odoUnif ((i + 1 + k) + 1) (2 * M) s (Fin.snoc (facetPoint x 1 k) 1) := by
           congr 1
         _ = odoUnif (i + 1 + k) (2 * M) s (facetPoint x 1 k) := by
-          rw [hred s (i + 1 + k) (by omega) (facetPoint x 1 k) hxs1]
+          rw [hred s (i + 1 + k) (by omega) (by omega) (facetPoint x 1 k) hxs1]
         _ = odoUnif (i + 1) (2 * M) s (facetPoint x 1 0) := ih1 s
     · intro s
       calc
@@ -121,7 +121,7 @@ lemma aux_facet_reduce (M i j : ℕ) (hM : 2 ≤ M)
         _ = odoUnif ((i + 1 + k) + 1) (2 * M) s (Fin.snoc (facetPoint x 2 k) 1) := by
           congr 1
         _ = odoUnif (i + 1 + k) (2 * M) s (facetPoint x 2 k) := by
-          rw [hred s (i + 1 + k) (by omega) (facetPoint x 2 k) hxs2]
+          rw [hred s (i + 1 + k) (by omega) (by omega) (facetPoint x 2 k) hxs2]
         _ = odoUnif (i + 1) (2 * M) s (facetPoint x 2 0) := ih2 s
 
 /-- The weak facet step of the joint induction: `RegWeak` at one triple from strong facet
