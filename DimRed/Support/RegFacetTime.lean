@@ -114,4 +114,48 @@ theorem odo_facet_two_ge_prev_one {j M t : ℕ} (ht : 1 ≤ t) (hM : 2 ≤ M)
       exact hgap (by linarith [hfirst])
     linarith [hle, hmono]
 
+/-- The swap identity behind the `a = 1` case of Step 5: when the head coordinate
+is two, the point one layer in at the reflected head is the image of the facet
+point under the coordinate swap of the head and mid indices. -/
+theorem facetPoint_one_two_swap (j M t : ℕ) (c : ℤ) (hc : c = 2) :
+    odoUnif (1 + 1 + j) (2 * M) t (facetPoint (fun _ : Fin 1 => c - 1) 2 j)
+      = odoUnif (1 + 1 + j) (2 * M) t (facetPoint (fun _ : Fin 1 => c) 1 j) := by
+  have h1 : facetPoint (fun _ : Fin 1 => c - 1) 2 j
+      = fun k => facetPoint (fun _ : Fin 1 => c) 1 j
+          (Equiv.swap 0 (Fin.castAdd j (Fin.last 1)) k) := by
+    funext k
+    rw [facetPoint, facetPoint]
+    refine Fin.addCases ?_ (fun b => ?_) k
+    · intro a
+      refine Fin.lastCases ?_ (fun a' => ?_) a
+      · rw [Fin.append_left, Fin.snoc_last]
+        simp only [Equiv.swap_apply_def]
+        rw [if_neg (by simp [Fin.ext_iff])]
+        simp only [ite_true]
+        rw [show (0 : Fin (1 + 1 + j)) = Fin.castAdd j (0 : Fin (1 + 1)) from rfl]
+        rw [Fin.append_left]
+        rw [show (0 : Fin (1 + 1)) = Fin.castSucc (0 : Fin 1) from rfl]
+        rw [Fin.snoc_castSucc]
+        omega
+      · rw [Fin.append_left, Fin.snoc_castSucc]
+        simp only [Equiv.swap_apply_def]
+        rw [if_pos (by simp [Fin.ext_iff])]
+        rw [Fin.append_left, Fin.snoc_last]
+        omega
+    · have hswap : (Equiv.swap 0 (Fin.castAdd j (Fin.last 1)))
+          (Fin.natAdd (1 + 1) b) = Fin.natAdd (1 + 1) b := by
+        rw [Equiv.swap_apply_def]
+        rw [if_neg (by simp [Fin.ext_iff])]
+        rw [if_neg (by
+          intro h
+          have h2 : ((Fin.natAdd (1 + 1) b : Fin (1 + 1 + j)) : ℕ)
+              = ((Fin.castAdd j (Fin.last 1) : Fin (1 + 1 + j)) : ℕ) := by rw [h]
+          simp at h2
+          omega)]
+      rw [hswap, Fin.append_right, Fin.append_right]
+  rw [h1]
+  exact odo_swap_coord (1 + 1 + j) M (2 * ((1 + 1 + j : ℕ) : ℤ)) t
+    (facetPoint (fun _ : Fin 1 => c) 1 j) 0 (Fin.castAdd j (Fin.last 1))
+
+
 end DimRed
