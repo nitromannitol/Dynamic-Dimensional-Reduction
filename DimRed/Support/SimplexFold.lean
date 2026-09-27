@@ -178,4 +178,36 @@ theorem odoUnif_one_scale (d t : ℕ) (hd : 1 ≤ d) :
       simp only [add_zero]
       exact ih'
 
+/-- Appending a coordinate equal to two to a point of the sorted domain all of
+whose coordinates exceed one keeps it in the sorted domain. -/
+theorem inSimplex_snoc_two_local {d M : ℕ} (x : Site d) (hx : inSimplex d M x)
+    (hx2 : ∀ i, 2 ≤ x i) (hM : 2 ≤ M) :
+    inSimplex (d + 1) M (Fin.snoc x 2) := by
+  constructor
+  · intro i
+    refine Fin.lastCases ?_ (fun j => ?_) i
+    · rw [Fin.snoc_last]
+      exact ⟨by norm_num, by exact_mod_cast hM⟩
+    · rw [Fin.snoc_castSucc]
+      exact hx.1 j
+  · intro i j hij
+    revert hij
+    refine Fin.lastCases ?_ (fun j' => ?_) j
+    · refine Fin.lastCases ?_ (fun i' => ?_) i
+      · intro _
+        rfl
+      · intro _
+        rw [Fin.snoc_castSucc, Fin.snoc_last]
+        have h1 := hx2 i'
+        omega
+    · refine Fin.lastCases ?_ (fun i' => ?_) i
+      · intro hij
+        exfalso
+        have hle : d ≤ (j' : ℕ) := by
+          simpa [Fin.le_def] using hij
+        omega
+      · intro hij
+        rw [Fin.snoc_castSucc, Fin.snoc_castSucc]
+        exact hx.2 i' j' (Fin.le_def.mpr (Fin.le_def.mp hij))
+
 end DimRed
