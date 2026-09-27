@@ -1,10 +1,12 @@
-/-
+import DimRed.Support.StrongDerivPure
+
+/-!
+# Down-sets of `Fin d`
+
 A down-set of `Fin d` of cardinality `i` is the initial segment of length `i`.
 Used to identify the positions of the coordinates `≥ 2` in the sorting normal
 form of a facet point.
 -/
-import DimRed.Support.StrongDerivPure
-
 namespace DimRed
 
 open LatticeProb

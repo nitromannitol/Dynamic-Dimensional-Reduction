@@ -1,15 +1,17 @@
-/-
+import DimRed.Support.StrongDerivPure
+import DimRed.Support.Downset
+import DimRed.Support.FacetNbr
+import DimRed.Support.Symmetry
+
+/-!
+# The sorting normal form of a facet point
+
 The sorting normal form of a point of the positive orthant with a coordinate
 equal to `1`: after sorting the coordinates with that coordinate first among the
 ones, the point is `facetPoint z 1 j` and its neighbour in that direction is
 `facetPoint z 2 j`.  This is the normal form that weak and strong facet
 compatibility are stated for.
 -/
-import DimRed.Support.StrongDerivPure
-import DimRed.Support.Downset
-import DimRed.Support.FacetNbr
-import DimRed.Support.Symmetry
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -18,7 +20,9 @@ namespace DimRed
 open LatticeProb
 
 
-theorem facetPoint_antitone (i j : ℕ) (z : Fin i → ℤ) (hanti : Antitone z) (hz : ∀ a, 2 ≤ z a) :
+/-- A facet point with a sorted head is antitone. -/
+theorem facetPoint_antitone (i j : ℕ) (z : Fin i → ℤ) (hanti : Antitone z)
+    (hz : ∀ a, 2 ≤ z a) :
     ∀ l m : Fin (i + 1 + j), l ≤ m → facetPoint z 1 j m ≤ facetPoint z 1 j l := by
   intro l m hlm
   have hle : (l : ℕ) ≤ (m : ℕ) := hlm
@@ -173,7 +177,8 @@ theorem facet_normal_form (d M : ℕ) (x : Site d) (hx : inPos d M x) (k : Fin d
     have hκi : κ (π (Fin.cast hij (Fin.castAdd j (Fin.last i)))) = -1 := by
       rcases hκone _ hmid1 with h | h
       · exfalso
-        have hz : (if π (Fin.cast hij (Fin.castAdd j (Fin.last i))) = k then (0:ℤ) else 1) = 0 := by
+        have hz : (if π (Fin.cast hij (Fin.castAdd j (Fin.last i))) = k
+            then (0:ℤ) else 1) = 0 := by
           have hdef : κ (π (Fin.cast hij (Fin.castAdd j (Fin.last i))))
               = -(2 * x (π (Fin.cast hij (Fin.castAdd j (Fin.last i)))))
                 + (if π (Fin.cast hij (Fin.castAdd j (Fin.last i))) = k then 0 else 1) := rfl
@@ -218,7 +223,8 @@ theorem facet_normal_form (d M : ℕ) (x : Site d) (hx : inPos d M x) (k : Fin d
       have := (hx (π (Fin.cast hij (Fin.natAdd (i + 1) b)))).1; omega
     have h3 := hκbig _ h2
     omega
-  have hanti : Antitone (fun a : Fin i => x (π (Fin.cast hij (Fin.castAdd j (Fin.castSucc a))))) := by
+  have hanti : Antitone (fun a : Fin i => x (π (Fin.cast hij (Fin.castAdd j
+      (Fin.castSucc a))))) := by
     intro a b hab
     have hle : (Fin.cast hij (Fin.castAdd j (Fin.castSucc a)) : Fin d)
         ≤ Fin.cast hij (Fin.castAdd j (Fin.castSucc b)) := by
@@ -229,12 +235,14 @@ theorem facet_normal_form (d M : ℕ) (x : Site d) (hx : inPos d M x) (k : Fin d
         ≤ κ (π (Fin.cast hij (Fin.castAdd j (Fin.castSucc b)))) := hmono hle
     have h2 : 2 ≤ x (π (Fin.cast hij (Fin.castAdd j (Fin.castSucc a)))) :=
       hfirst _ (by
-        have hidx : ((Fin.cast hij (Fin.castAdd j (Fin.castSucc a)) : Fin d) : ℕ) = (a : ℕ) := by
+        have hidx : ((Fin.cast hij (Fin.castAdd j (Fin.castSucc a)) : Fin d) : ℕ)
+            = (a : ℕ) := by
           simp [Fin.cast, Fin.castAdd]
         rw [hidx]; exact a.isLt)
     have h3 : 2 ≤ x (π (Fin.cast hij (Fin.castAdd j (Fin.castSucc b)))) :=
       hfirst _ (by
-        have hidx : ((Fin.cast hij (Fin.castAdd j (Fin.castSucc b)) : Fin d) : ℕ) = (b : ℕ) := by
+        have hidx : ((Fin.cast hij (Fin.castAdd j (Fin.castSucc b)) : Fin d) : ℕ)
+            = (b : ℕ) := by
           simp [Fin.cast, Fin.castAdd]
         rw [hidx]; exact b.isLt)
     have h4 := hκbig _ h2
@@ -258,7 +266,8 @@ theorem facet_normal_form (d M : ℕ) (x : Site d) (hx : inPos d M x) (k : Fin d
     have h1 : (1 : ℤ) ≤ x k := (hx k).1
     have h2 : x k ≤ (M : ℤ) := (hx k).2
     omega
-  refine ⟨i, j, hij, fun a => x (π (Fin.cast hij (Fin.castAdd j (Fin.castSucc a)))), ?_, ?_, ?_, ?_⟩
+  refine ⟨i, j, hij, fun a => x (π (Fin.cast hij (Fin.castAdd j (Fin.castSucc a)))),
+    ?_, ?_, ?_, ?_⟩
   · intro a
     have hidx : ((Fin.cast hij (Fin.castAdd j (Fin.castSucc a)) : Fin d) : ℕ) = (a : ℕ) := by
       simp [Fin.cast, Fin.castAdd]
@@ -271,7 +280,8 @@ theorem facet_normal_form (d M : ℕ) (x : Site d) (hx : inPos d M x) (k : Fin d
         · rw [facetPoint_mid]
           exact ⟨le_refl 1, hM1⟩
         · rw [facetPoint_head]
-          have hidx : ((Fin.cast hij (Fin.castAdd j (Fin.castSucc a)) : Fin d) : ℕ) = (a : ℕ) := by
+          have hidx : ((Fin.cast hij (Fin.castAdd j (Fin.castSucc a)) : Fin d) : ℕ)
+            = (a : ℕ) := by
             simp [Fin.cast, Fin.castAdd]
           have h2 : 2 ≤ x (π (Fin.cast hij (Fin.castAdd j (Fin.castSucc a)))) :=
             hfirst _ (by rw [hidx]; exact a.isLt)
@@ -280,7 +290,8 @@ theorem facet_normal_form (d M : ℕ) (x : Site d) (hx : inPos d M x) (k : Fin d
         rw [facetPoint_tail]
         exact ⟨le_refl 1, hM1⟩
     · exact facetPoint_antitone i j _ hanti (fun a => hfirst _ (by
-        have hidx : ((Fin.cast hij (Fin.castAdd j (Fin.castSucc a)) : Fin d) : ℕ) = (a : ℕ) := by
+        have hidx : ((Fin.cast hij (Fin.castAdd j (Fin.castSucc a)) : Fin d) : ℕ)
+            = (a : ℕ) := by
           simp [Fin.cast, Fin.castAdd]
         rw [hidx]; exact a.isLt))
   · intro ⟨l, hl⟩
@@ -291,7 +302,8 @@ theorem facet_normal_form (d M : ℕ) (x : Site d) (hx : inPos d M x) (k : Fin d
   · intro t
     constructor
     · have hperm : (fun a : Fin d => x (π a))
-          = fun a : Fin d => facetPoint (fun a => x (π (Fin.cast hij (Fin.castAdd j (Fin.castSucc a))))) 1 j
+          = fun a : Fin d => facetPoint (fun a => x (π (Fin.cast hij (Fin.castAdd j
+              (Fin.castSucc a))))) 1 j
               (Fin.cast hij.symm a) := by
         funext l
         have hl : Fin.cast hij (Fin.cast hij.symm l) = l := by
@@ -313,7 +325,8 @@ theorem facet_normal_form (d M : ℕ) (x : Site d) (hx : inPos d M x) (k : Fin d
       exact hsym.symm.trans (odoUnif_cast hij.symm M t
         (facetPoint (fun a => x (π (Fin.cast hij (Fin.castAdd j (Fin.castSucc a))))) 1 j))
     · have hperm : (fun a : Fin d => (x + unit k) (π a))
-          = fun a : Fin d => facetPoint (fun a => x (π (Fin.cast hij (Fin.castAdd j (Fin.castSucc a))))) 2 j
+          = fun a : Fin d => facetPoint (fun a => x (π (Fin.cast hij (Fin.castAdd j
+              (Fin.castSucc a))))) 2 j
               (Fin.cast hij.symm a) := by
         funext l
         have hl : Fin.cast hij (Fin.cast hij.symm l) = l := by
@@ -347,7 +360,8 @@ theorem facet_normal_form (d M : ℕ) (x : Site d) (hx : inPos d M x) (k : Fin d
           rw [unit_apply_ne hne2, add_zero]
       have hsym := odo_cubeSym d (2 * M) (fun _ => 2 * (d : ℤ))
         (isSymmetricPile_const' d (2 * M) (2 * (d : ℤ))) t π (fun _ => true) (x + unit k)
-      have he : cubeSym d (2 * M) π (fun _ => true) (x + unit k) = fun a => (x + unit k) (π a) := by
+      have he : cubeSym d (2 * M) π (fun _ => true) (x + unit k)
+          = fun a => (x + unit k) (π a) := by
         funext a; simp [cubeSym]
       rw [he] at hsym
       rw [hperm] at hsym

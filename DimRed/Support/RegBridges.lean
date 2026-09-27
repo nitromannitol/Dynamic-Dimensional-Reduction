@@ -1,4 +1,14 @@
-/-
+import DimRed.Support.StrongDerivStep
+import DimRed.Support.DimRedCritical
+import DimRed.Support.ToppleGeneral
+import DimRed.Support.OneDimConsistAll
+import DimRed.Support.SelfSimilarityMain
+import DimRed.Support.CornerReaches
+import DimRed.Support.WeakStep
+
+/-!
+# Bridges from the regularity clauses to the step predicates
+
 The bridges from the time-slice clauses of Proposition 4.1 to the step predicates
 of `DimRed.Support.DimRedStep`.
 
@@ -8,14 +18,6 @@ normal form `facet_normal_form` carries one to the other, which is what
 `weak_raw` and `strong_raw` do.  The first conjunct of `strong_facet_step` is the
 first-difference bound at a coordinate equal to one, which is Corollary 2.2.
 -/
-import DimRed.Support.StrongDerivStep
-import DimRed.Support.DimRedCritical
-import DimRed.Support.ToppleGeneral
-import DimRed.Support.OneDimConsistAll
-import DimRed.Support.SelfSimilarityMain
-import DimRed.Support.CornerReaches
-import DimRed.Support.WeakStep
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 

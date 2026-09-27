@@ -1,4 +1,8 @@
-/-
+import DimRed.Support.RegBridges
+
+/-!
+# The time comparison at a facet point
+
 The time comparison at a facet point that the paper's strong facet argument
 uses (`dimred.tex:1293-1296`): if strong facet compatibility holds at time `t-1`,
 then at a facet point `(y, 1, 1_j)` with a nonempty head the odometer one layer
@@ -9,8 +13,6 @@ time `t-1`, in which case the toppling form gives equality, or it is not, in
 which case the first-difference bound and monotonicity in time give the
 inequality.
 -/
-import DimRed.Support.RegBridges
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 

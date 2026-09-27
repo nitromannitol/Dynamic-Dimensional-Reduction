@@ -1,4 +1,9 @@
-/-
+import DimRed.Support.RegBridges
+import DimRed.Support.SimplexFold
+
+/-!
+# Dimensional reduction at one triple
+
 Dimensional reduction at one triple, `dimred.tex:1129-1182`.
 
 The step is `odo_dimred_step`, whose remaining input is the unit-gap interior
@@ -12,11 +17,10 @@ the facet steps at time `t - 1` come from the clauses at the earlier time
 at dimension `i < d`.  A raw point of the cube is carried into the sorted domain
 by `toSimplexPoint` without changing the odometer (`DimRed.Support.SimplexFold`).
 -/
-import DimRed.Support.RegBridges
-import DimRed.Support.SimplexFold
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+-- the induction over the earlier instances unfolds the whole regularity tuple
+-- at each step, which needs the extra budget
 set_option maxHeartbeats 800000
 
 namespace DimRed
@@ -59,7 +63,8 @@ theorem dimred_step_of_earlier (d M t : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
     intro s hs
     exact hprior (e + 1) M s (Or.inr (Or.inr ⟨rfl, rfl, hs⟩)) (by omega) hM
   -- the earlier instances at lower dimensions, every time
-  have hprev_dim : ∀ i : ℕ, 1 ≤ i → i < e + 1 → ∀ s : ℕ, Reg i M s ∧ DimRedAt i M s := by
+  have hprev_dim : ∀ i : ℕ, 1 ≤ i → i < e + 1 →
+      ∀ s : ℕ, Reg i M s ∧ DimRedAt i M s := by
     intro i hi hid s
     exact hprior i M s (Or.inl hid) hi hM
   cases t with
@@ -180,6 +185,7 @@ theorem dimred_step_of_earlier (d M t : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
           odoUnif e (2 * M) (q + 1) z := by
       intro z hz hz1 hgap hprev' hweak' hfacet' htopple' hconsist'
       exact hcritical e q z hz hz1 hgap hprev' hweak' hfacet' htopple' hconsist'
-    exact odo_dimred_step e M (q + 1) (by omega) hM x hx hprev hweak hfacet htopple hconsist hcritical
+    exact odo_dimred_step e M (q + 1) (by omega) hM x hx hprev hweak hfacet htopple
+      hconsist hcritical
 
 end DimRed

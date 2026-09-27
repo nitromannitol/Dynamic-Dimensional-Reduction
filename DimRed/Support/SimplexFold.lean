@@ -1,4 +1,12 @@
-/-
+import DimRed.Support.Fundamental
+import DimRed.Support.SandpileFromOdo
+import DimRed.Support.StrongDerivPure
+import DimRed.Support.FacetNormal
+import DimRed.Support.CubeTwo
+
+/-!
+# Folding a point into the sorted fundamental domain
+
 The odometer is invariant under the canonical folding of a point of the
 hypercube into the sorted fundamental domain, in the form needed by the
 dimensional-reduction step: the reduction identity is stated for points of the
@@ -10,12 +18,6 @@ into `[1, M]` followed by the sorting permutation, so the invariance is the
 symmetry lemma `odo_cubeSym` at the symmetry `snocPerm`/`snocEps` of the
 appended coordinate.
 -/
-import DimRed.Support.Fundamental
-import DimRed.Support.SandpileFromOdo
-import DimRed.Support.StrongDerivPure
-import DimRed.Support.FacetNormal
-import DimRed.Support.CubeTwo
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 

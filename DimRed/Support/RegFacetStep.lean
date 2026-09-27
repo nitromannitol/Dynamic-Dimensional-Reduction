@@ -1,4 +1,8 @@
-/-
+import DimRed.Support.RegFacetTime
+
+/-!
+# Strong facet compatibility at one triple
+
 Strong facet compatibility at one triple, `dimred.tex:1261-1320`, by strong
 induction on the time.
 
@@ -11,10 +15,10 @@ triple.
 
 The first-difference part of the clause is Corollary 2.2 at the mid coordinate.
 -/
-import DimRed.Support.RegFacetTime
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+-- the Laplacian comparison expands two `Finset.sum`s over `Fin i` and the
+-- `nlinarith` call needs the extra budget
 set_option maxHeartbeats 800000
 
 namespace DimRed

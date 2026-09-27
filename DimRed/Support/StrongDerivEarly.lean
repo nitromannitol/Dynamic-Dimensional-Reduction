@@ -1,4 +1,9 @@
-/-
+import DimRed.Support.StrongDerivRaw
+import DimRed.Support.CornerBound
+
+/-!
+# The strong derivative clause below the topple time
+
 Case 1 of the strong derivative clause, `dimred.tex:1322-1332`: below the topple
 time `τ_M` the two-step difference `v_t(x) - v_t(x + 2 e_k)` is at most `2 x_k`
 at every point of the positive orthant, for every direction `k`.
@@ -15,9 +20,6 @@ enters, exactly as in the paper's one-dimensional argument.
 The bound is used at the centre point `1_d`, which is the `i = 0` branch of the
 frozen clause; the branch `i ≥ 1` is `strong_deriv_pos_head`.
 -/
-import DimRed.Support.StrongDerivRaw
-import DimRed.Support.CornerBound
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 

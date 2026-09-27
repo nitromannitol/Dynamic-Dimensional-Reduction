@@ -1,4 +1,10 @@
-/-
+import DimRed.Support.StrongDerivRaw
+import DimRed.Support.StrongDerivEarly
+import DimRed.Support.SnocSimplex
+
+/-!
+# The strong derivative clause at one triple
+
 The strong derivative clause of Proposition 4.1 at one triple, from the two
 branches of the paper's Section 5 argument.
 
@@ -9,10 +15,6 @@ and the clause is `strong_deriv_zero_head`, which is the early-time Case 1 of
 `dimred.tex:1322-1332`; the regime hypothesis `hreg` then forces `t < τ_M`,
 because the second disjunct requires `1 ≤ i`.
 -/
-import DimRed.Support.StrongDerivRaw
-import DimRed.Support.StrongDerivEarly
-import DimRed.Support.SnocSimplex
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -38,12 +40,14 @@ theorem facetPoint_zero_head (c : ℤ) (j : ℕ) :
     have ha : a = (Fin.last 0 : Fin 1) := Fin.eq_zero a
     subst ha
     rw [Fin.append_left]
-    have hcast : (Fin.castAdd j (Fin.last 0) : Fin (0 + 1 + j)) = (⟨0, by omega⟩ : Fin (0 + 1 + j)) := by
+    have hcast : (Fin.castAdd j (Fin.last 0) : Fin (0 + 1 + j))
+        = (⟨0, by omega⟩ : Fin (0 + 1 + j)) := by
       ext
       rfl
     rw [hcast, if_pos rfl]
   · rw [Fin.append_right]
-    have hne : (Fin.natAdd (0 + 1) b : Fin (0 + 1 + j)) ≠ (⟨0, by omega⟩ : Fin (0 + 1 + j)) := by
+    have hne : (Fin.natAdd (0 + 1) b : Fin (0 + 1 + j))
+        ≠ (⟨0, by omega⟩ : Fin (0 + 1 + j)) := by
       intro h
       have h1 : (Fin.natAdd (0 + 1) b : Fin (0 + 1 + j)).val = 0 + 1 + b.val := rfl
       have h2 : ((⟨0, by omega⟩ : Fin (0 + 1 + j))).val = 0 := rfl
@@ -82,7 +86,8 @@ theorem deriv_step_of_earlier (d M t : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
       · rw [if_pos hk]
       · rw [if_neg hk]
     have h3 : facetPoint x 3 j
-        = fun k : Fin (0 + 1 + j) => if k = (⟨0, by omega⟩ : Fin (0 + 1 + j)) then 3 else 1 := by
+        = fun k : Fin (0 + 1 + j) =>
+            if k = (⟨0, by omega⟩ : Fin (0 + 1 + j)) then 3 else 1 := by
       rw [hx0, facetPoint_zero_head]
     rw [h1, h3]
     exact h

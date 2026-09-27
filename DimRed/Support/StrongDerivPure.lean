@@ -1,4 +1,13 @@
-/-
+import DimRed.Support.RegInduction
+import DimRed.Support.DerivBound
+import DimRed.Support.AxisStep
+import DimRed.Support.FacetNbr
+import DimRed.Support.OneDimTerminal
+import DimRed.Support.CornerBound
+
+/-!
+# The strong derivative clause for a nonempty head
+
 The strong derivative clause of Proposition 4.1 for a nonempty head, at every
 time.  The paper's Case 2 (`dimred.tex:1334-1362`) proves the bound
 `v_t(x) - v_t(x + 2 e_k) ≤ 2 x_k` for every point of the positive orthant whose
@@ -11,13 +20,6 @@ four families of differences (first differences, first differences with a
 one-step time shift, mixed second differences, and pure second differences off
 the top coordinate), each by induction on time.
 -/
-import DimRed.Support.RegInduction
-import DimRed.Support.DerivBound
-import DimRed.Support.AxisStep
-import DimRed.Support.FacetNbr
-import DimRed.Support.OneDimTerminal
-import DimRed.Support.CornerBound
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -28,12 +30,15 @@ open LatticeProb
 /-- The positive orthant `{1, …, M}^d`, unsorted. -/
 def inPos (d M : ℕ) (x : Site d) : Prop := ∀ l : Fin d, 1 ≤ x l ∧ x l ≤ (M : ℤ)
 
+/-- A point of the positive orthant lies in the hypercube. -/
 theorem inPos_inCube {d M : ℕ} {x : Site d} (hx : inPos d M x) : inCube d (2 * M) x := by
   intro l
   obtain ⟨h1, h2⟩ := hx l
   rw [loCoord_two_mul, hiCoord_two_mul]
   exact ⟨by omega, h2⟩
 
+/-- A neighbour of a point of the positive orthant in a positive direction is
+again in the orthant, unless the coordinate is at the top. -/
 theorem inPos_add_unit_or {d M : ℕ} {x : Site d} (hx : inPos d M x) (l : Fin d) :
     inPos d M (x + unit l) ∨ x l = (M : ℤ) := by
   by_cases h : x l = (M : ℤ)
@@ -48,6 +53,8 @@ theorem inPos_add_unit_or {d M : ℕ} {x : Site d} (hx : inPos d M x) (l : Fin d
     · simp only [if_neg hkl, add_zero]
       exact hk
 
+/-- A neighbour of a point of the positive orthant in a negative direction is
+again in the orthant, unless the coordinate is at the bottom. -/
 theorem inPos_sub_unit_or {d M : ℕ} {x : Site d} (hx : inPos d M x) (l : Fin d) :
     inPos d M (x - unit l) ∨ x l = 1 := by
   by_cases h : x l = 1
@@ -62,6 +69,7 @@ theorem inPos_sub_unit_or {d M : ℕ} {x : Site d} (hx : inPos d M x) (l : Fin d
     · simp only [if_neg hkl, sub_zero]
       exact hk
 
+/-- A step above the top coordinate leaves the hypercube. -/
 theorem not_inCube_add_unit_of_eq {d M : ℕ} {x : Site d} (l : Fin d) (hxl : x l = (M : ℤ)) :
     ¬ inCube d (2 * M) (x + unit l) := by
   intro hc
@@ -344,7 +352,8 @@ theorem odo_corner_le_M (d M : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M) (t : ℕ) :
     rw [odoInf_one_eq M hM (fun _ => (M : ℤ)) hy1 hyM] at hle
     have hnat := ENat.coe_le_coe.mp hle
     have hval : (((M : ℤ) * ((M : ℤ) + 1) - (M : ℤ) * ((M : ℤ) - 1)) / 2).toNat = M := by
-      have hz : ((M : ℤ) * ((M : ℤ) + 1) - (M : ℤ) * ((M : ℤ) - 1)) = 2 * (M : ℤ) := by ring
+      have hz : ((M : ℤ) * ((M : ℤ) + 1) - (M : ℤ) * ((M : ℤ) - 1))
+          = 2 * (M : ℤ) := by ring
       rw [hz, Int.mul_ediv_cancel_left _ (by norm_num : (2:ℤ) ≠ 0)]
       simp
     rw [hval] at hnat
