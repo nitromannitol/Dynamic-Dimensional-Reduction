@@ -398,4 +398,206 @@ theorem odo_mixed_diff (d M T : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M)
           rw [hc]
           exact ih (by omega) k l hkl x hx
 
+/-- Swapping the two coordinates `k` and `l` of `x + e_k + e_l` gives
+`x + e_k + e_k` when `x l = x k + 1`. -/
+theorem swap_add_eq_add_add (d : ℕ) (k l : Fin d) (hkl : k ≠ l) (x : Site d)
+    (heq : x l = x k + 1) :
+    (fun m : Fin d => (x + unit k + unit l) (Equiv.swap k l m)) = x + unit k + unit k := by
+  funext m
+  rw [add_unit_apply, add_unit_apply, add_unit_apply]
+  by_cases hmk : m = k
+  · subst hmk
+    rw [Equiv.swap_apply_left]
+    rw [add_unit_self]
+    omega
+  · rw [if_neg hmk]
+    by_cases hml : m = l
+    · subst hml
+      rw [Equiv.swap_apply_right]
+      rw [add_unit_other d x k m hmk]
+      omega
+    · rw [Equiv.swap_apply_def]
+      simp only [hmk, hml, if_false]
+      rw [add_unit_other d x k m hmk]
+      ring
+
+/-- A neighbour of a point whose `k`-th coordinate is not the largest keeps that
+property, when no coordinate equals `x k + 1`. -/
+theorem pure_nbr_add (d : ℕ) (k m : Fin d) (x : Site d)
+    (hmax : ∃ l, x k < x l) (hne : ¬ ∃ l, x l = x k + 1) :
+    ∃ l, (x + unit m) k < (x + unit m) l := by
+  obtain ⟨l, hl⟩ := hmax
+  have h2 : x k + 2 ≤ x l := by by_contra h; exact hne ⟨l, by omega⟩
+  refine ⟨l, ?_⟩
+  rw [add_unit_apply, add_unit_apply]
+  split_ifs <;> omega
+
+/-- The same for the neighbour in the negative direction. -/
+theorem pure_nbr_sub (d : ℕ) (k m : Fin d) (x : Site d)
+    (hmax : ∃ l, x k < x l) (hne : ¬ ∃ l, x l = x k + 1) :
+    ∃ l, (x - unit m) k < (x - unit m) l := by
+  obtain ⟨l, hl⟩ := hmax
+  have h2 : x k + 2 ≤ x l := by by_contra h; exact hne ⟨l, by omega⟩
+  refine ⟨l, ?_⟩
+  rw [sub_unit_apply, sub_unit_apply]
+  split_ifs <;> omega
+
+/-- The reflected neighbour of the pure second difference at a coordinate equal
+to one: the term equals the first difference at the point itself. -/
+theorem term_reflect_pure (d M : ℕ) (s s' : ℕ) (x : Site d) (k : Fin d) (hk : x k = 1) :
+    odoUnif d (2 * M) s (x - unit k) - odoUnif d (2 * M) s' (x - unit k + unit k + unit k)
+      = odoUnif d (2 * M) s x - odoUnif d (2 * M) s' (x + unit k) := by
+  have h1 : odoUnif d (2 * M) s (x - unit k) = odoUnif d (2 * M) s x :=
+    odo_sub_unit_of_one d M (2 * (d : ℤ)) s x k hk
+  have h2 : x - unit k + unit k + unit k = x + unit k := by
+    funext i
+    simp only [Pi.add_apply, Pi.sub_apply, unit, Pi.single_apply]
+    by_cases hi : i = k
+    · subst hi; ring
+    · simp [hi]
+  rw [h1, h2]
+
+/-- The floor step of the pure second difference: the neighbour sums at time `n`
+are bounded term by term, so the difference at time `n + 1` obeys the same bound. -/
+theorem pure_floor_step (d M n : ℕ) (hd : 1 ≤ d) (k : Fin d) (x : Site d)
+    (hx : inPos d M x) (hmax : ∃ l, x k < x l) (hne : ¬ ∃ l, x l = x k + 1)
+    (ih : ∀ (k : Fin d) (x : Site d), inPos d M x → (∃ l, x k < x l) →
+      odoUnif d (2 * M) n x - odoUnif d (2 * M) n (x + unit k + unit k) ≤ 2 * x k)
+    (hrefl : x k = 1 → odoUnif d (2 * M) n x ≤ odoUnif d (2 * M) n (x + unit k)) :
+    odoUnif d (2 * M) (n + 1) x - odoUnif d (2 * M) (n + 1) (x + unit k + unit k)
+      ≤ 2 * x k := by
+  have hkM : x k + 2 ≤ (M : ℤ) := by
+    obtain ⟨l, hl⟩ := hmax
+    have h1 := (hx l).2
+    have h2 : x l ≠ x k + 1 := fun h => hne ⟨l, h⟩
+    omega
+  have hx' : inCube d (2 * M) x := inPos_inCube hx
+  have hxw : inCube d (2 * M) (x + (unit k + unit k)) := by
+    intro i
+    rw [loCoord_two_mul, hiCoord_two_mul]
+    have h := hx i
+    simp only [Pi.add_apply, unit, Pi.single_apply]
+    by_cases hik : i = k
+    · subst hik
+      simp only [if_true]
+      omega
+    · simp only [if_neg hik, add_zero]
+      omega
+  have hG : nbrSum (fun y : Site d => 2 * y k) x = 2 * (d : ℤ) * (2 * x k) := by
+    have h := nbrSum_affine (fun m : Fin d => if m = k then (2:ℤ) else 0) 0 x
+    have h1 : (fun y : Site d => ∑ m : Fin d, (if m = k then (2:ℤ) else 0) * y m + 0)
+        = fun y => 2 * y k := by
+      funext y
+      rw [Finset.sum_eq_single k]
+      · simp
+      · intro b _ hb; simp [hb]
+      · intro hb; exact absurd (Finset.mem_univ k) hb
+    have h3 : (∑ m : Fin d, (if m = k then (2:ℤ) else 0) * x m + 0) = 2 * x k := by
+      rw [Finset.sum_eq_single k]
+      · simp
+      · intro b _ hb; simp [hb]
+      · intro hb; exact absurd (Finset.mem_univ k) hb
+    rw [h1, h3] at h
+    exact h
+  have hfloor := floor_step d M hd n n x (unit k + unit k) hx' hxw (2 * x k) ?_
+  · have hcomm : x + unit k + unit k = x + (unit k + unit k) := by abel
+    rw [hcomm]
+    simpa [Nat.add_assoc] using hfloor
+  · refine nbrSum_sub_le_of_terms (odoUnif d (2 * M) n) (odoUnif d (2 * M) n)
+      x (unit k + unit k) (fun y => 2 * y k) hG ?_ ?_
+    · intro m
+      rcases inPos_add_unit_or hx m with h | h
+      · have hc : x + unit m + (unit k + unit k) = (x + unit m) + unit k + unit k := by abel
+        rw [hc]
+        exact ih k (x + unit m) h (pure_nbr_add d k m x hmax hne)
+      · have hmk : m ≠ k := by rintro rfl; omega
+        have hterm := term_outside d M n n (x + unit m) (unit k + unit k)
+          (not_inCube_add_unit_of_eq m h)
+        have hvk : (x + unit m) k = x k := add_unit_other d x m k (Ne.symm hmk)
+        rw [hvk]
+        have h1 := (hx k).1
+        linarith [hterm]
+    · intro m
+      rcases inPos_sub_unit_or hx m with h | h
+      · have hc : x - unit m + (unit k + unit k) = (x - unit m) + unit k + unit k := by abel
+        rw [hc]
+        exact ih k (x - unit m) h (pure_nbr_sub d k m x hmax hne)
+      · by_cases hmk : m = k
+        · subst hmk
+          have hc : x - unit m + (unit m + unit m) = x - unit m + unit m + unit m := by abel
+          rw [hc, term_reflect_pure d M n n x m h]
+          have hg0 : (2 * (x - unit m) m : ℤ) = 0 := by rw [sub_unit_self, h]; ring
+          rw [hg0]
+          linarith [hrefl h]
+        · have hwl : (unit k + unit k : Site d) m = 0 := by
+            simp only [Pi.add_apply, unit_apply_ne hmk, add_zero]
+          have hterm := term_reflect d M n n x (unit k + unit k) m h hwl
+          have hvk : (x - unit m) k = x k := sub_unit_other d x m k (Ne.symm hmk)
+          rw [hterm, hvk]
+          have hc : x + (unit k + unit k) = x + unit k + unit k := by abel
+          rw [hc]
+          exact ih k x hx hmax
+
+/-- The pure second difference off the top coordinate `eq:pure_difference`,
+`dimred.tex:1396-1424`. -/
+theorem odo_pure_diff (d M T : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M)
+    (hW : ∀ s, 1 ≤ s → s < T → RegWeak d M s) (hS : ∀ s, s < T → RegStrongFacet d M s) :
+    ∀ s, s ≤ T → ∀ (k : Fin d) (x : Site d), inPos d M x → (∃ l, x k < x l) →
+      odoUnif d (2 * M) s x - odoUnif d (2 * M) s (x + unit k + unit k) ≤ 2 * x k := by
+  intro s
+  induction s with
+  | zero =>
+    intro _ k x hx _
+    have h1 : odoUnif d (2 * M) 0 x = 0 := rfl
+    have h2 : odoUnif d (2 * M) 0 (x + unit k + unit k) = 0 := rfl
+    rw [h1, h2]
+    have hk := (hx k).1
+    omega
+  | succ n ih =>
+    intro hs k x hx hmax
+    by_cases hswap : ∃ l : Fin d, l ≠ k ∧ x l = x k + 1
+    · obtain ⟨l, hlk, heq⟩ := hswap
+      have hperm := swap_add_eq_add_add d k l (Ne.symm hlk) x heq
+      have hsw := odo_swap_coord d M (2 * (d : ℤ)) (n + 1) (x + unit k + unit l) k l
+      rw [hperm] at hsw
+      have hmix := odo_mixed_diff d M T hd hM hW hS (n + 1) (by omega) k l (Ne.symm hlk) x hx
+      rw [heq] at hmix
+      have hsw' : odoUnif d (2 * M) (n + 1) (x + unit k + unit k)
+          = odoUnif d (2 * M) (n + 1) (x + unit k + unit l) := hsw
+      rw [hsw']
+      linarith
+    · push Not at hswap
+      have hne : ¬ ∃ l, x l = x k + 1 := by
+        rintro ⟨l, hl⟩
+        by_cases hlk : l = k
+        · rw [hlk] at hl; omega
+        · exact hswap l hlk hl
+      have hih : ∀ (k : Fin d) (x : Site d), inPos d M x → (∃ l, x k < x l) →
+          odoUnif d (2 * M) n x - odoUnif d (2 * M) n (x + unit k + unit k) ≤ 2 * x k :=
+        fun k x hx hmax => ih (by omega) k x hx hmax
+      by_cases hk1 : x k = 1
+      · by_cases htopple : odoUnif d (2 * M) n x = odoUnif d (2 * M) n (x + unit k) + 1
+        · have hn1 : 1 ≤ n := by
+            rcases Nat.eq_zero_or_pos n with h0 | h
+            · subst h0
+              simp only [odoUnif, odo] at htopple
+              omega
+            · exact h
+          have hstay := weak_raw d M n hn1 (hW n hn1 (by omega)) x hx k hk1 htopple
+          have hfar : odoUnif d (2 * M) n (x + unit k + unit k)
+              ≤ odoUnif d (2 * M) (n + 1) (x + unit k + unit k) :=
+            odo_mono d (2 * M) (fun _ => 2 * (d : ℤ)) (Nat.le_succ n) (x + unit k + unit k)
+          have hih' := hih k x hx hmax
+          linarith
+        · have hfirst := odo_first_diff d M hd hM n k x (by rw [hk1])
+          have hrefl : x k = 1 → odoUnif d (2 * M) n x ≤ odoUnif d (2 * M) n (x + unit k) := by
+            intro _
+            by_contra hc
+            push Not at hc
+            exact htopple (by omega)
+          exact pure_floor_step d M n hd k x hx hmax hne hih hrefl
+      · have hk2 : 2 ≤ x k := by have h1 := (hx k).1; omega
+        exact pure_floor_step d M n hd k x hx hmax hne hih
+          (fun h => absurd h (by omega))
+
 end DimRed
