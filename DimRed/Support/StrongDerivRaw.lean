@@ -222,4 +222,35 @@ theorem mixed_top (d M : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M) (s : ℕ) (k l : Fin
   have := (hx l).1
   linarith
 
+/-- The reflecting-boundary case of the mixed second difference: a coordinate
+equal to `1` is handled by the facet lag bound and the time-shifted first
+difference. -/
+theorem mixed_reflect (d M T : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M)
+    (hW : ∀ s, 1 ≤ s → s < T → RegWeak d M s) (hS : ∀ s, s < T → RegStrongFacet d M s)
+    (s : ℕ) (hs : s + 1 ≤ T) (k l : Fin d) (hkl : k ≠ l) (x : Site d) (hx : inPos d M x)
+    (hk1 : x k = 1) (hlM : x l ≤ (M : ℤ) - 1) :
+    odoUnif d (2 * M) (s + 1) x - odoUnif d (2 * M) (s + 1) (x + unit k + unit l)
+      ≤ x k + x l - 1 := by
+  have hpos : inPos d M (x + unit l) := by
+    intro m
+    have hm := hx m
+    rw [add_unit_apply]
+    by_cases hml : m = l
+    · subst hml
+      rw [if_pos rfl]
+      constructor <;> omega
+    · rw [if_neg hml, add_zero]; exact hm
+  have h2 : ∃ m, 2 ≤ (x + unit l) m := ⟨l, by
+    rw [add_unit_self]
+    have := (hx l).1
+    omega⟩
+  have hk1' : (x + unit l) k = 1 := by
+    rw [add_unit_apply]
+    rw [if_neg hkl, add_zero, hk1]
+  have hlag := odo_facet_lag d M T hd hM hS s (by omega) (x + unit l) hpos k hk1' h2
+  have htd := odo_time_diff d M T hd hM hW s (by omega) l x hx
+  have hcomm : x + unit k + unit l = (x + unit l) + unit k := by abel
+  rw [hcomm]
+  linarith
+
 end DimRed
