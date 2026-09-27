@@ -68,4 +68,5 @@ import DimRed.Support.WeakFacetLower
 import DimRed.Support.WeakStep
 import DimRed.Support.StrongDerivEarly
 import DimRed.Support.StrongDerivStep
+import DimRed.Support.RegBridges
 import DimRed.MainTheorems

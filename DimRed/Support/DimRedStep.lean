@@ -17,11 +17,18 @@ def weak_facet_step (d M q : ℕ) : Prop :=
 
 def strong_facet_step (d M q : ℕ) : Prop :=
   ∀ (z : Site d) (k : Fin d), inSimplex d M z → z k = 1 →
-    odoUnif d (2 * M) q z - odoUnif d (2 * M) q (z + unit k) ≤ 1 ∧
-      (odoUnif d (2 * M) q z = odoUnif d (2 * M) q (z + unit k) + 1 →
-        odoUnif d (2 * M) (q + 1) z = odoUnif d (2 * M) q z ∧
-          odoUnif d (2 * M) (q + 1) (z + unit k) =
-            odoUnif d (2 * M) q (z + unit k) + 1)
+    odoUnif d (2 * M) q z - odoUnif d (2 * M) q (z + unit k) ≤ 1
+
+/-- The second conjunct of strong facet compatibility at a raw point: a site with
+a coordinate equal to one that has just fired does not fire again, and its
+neighbour in that direction does.  The clause of Proposition 4.1 carries this
+only in the regime `t < τ_M ∨ 1 ≤ i`, which is why it is a separate predicate. -/
+def strong_facet_step_topple (d M q : ℕ) : Prop :=
+  ∀ (z : Site d) (k : Fin d), inSimplex d M z → z k = 1 → (∃ l, 2 ≤ z l) →
+    odoUnif d (2 * M) q z = odoUnif d (2 * M) q (z + unit k) + 1 →
+      odoUnif d (2 * M) (q + 1) z = odoUnif d (2 * M) q z ∧
+        odoUnif d (2 * M) (q + 1) (z + unit k) =
+          odoUnif d (2 * M) q (z + unit k) + 1
 
 def strong_topple_control_step (d M : ℕ) : Prop :=
   ∀ (q : ℕ), toppleTime d (M - 1) ≤ (q : ℕ∞) →
@@ -238,7 +245,7 @@ theorem odo_dimred_step
       (by simp [Fin.snoc])
     have hdiff : odoUnif (d + 1) (2 * M) q (Fin.snoc x 1) -
         odoUnif (d + 1) (2 * M) q
-          (Fin.snoc x 1 + unit (Fin.last d)) ≤ 1 := hfacet_full.1
+          (Fin.snoc x 1 + unit (Fin.last d)) ≤ 1 := hfacet_full
     have hnonneg : 0 ≤ odoUnif (d + 1) (2 * M) q (Fin.snoc x 1) -
         odoUnif (d + 1) (2 * M) q (Fin.snoc x 1 + unit (Fin.last d)) := by
       linarith [haxis']
