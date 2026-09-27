@@ -12,6 +12,8 @@ appended coordinate.
 -/
 import DimRed.Support.Fundamental
 import DimRed.Support.SandpileFromOdo
+import DimRed.Support.StrongDerivPure
+import DimRed.Support.FacetNormal
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -92,5 +94,36 @@ theorem odoUnif_snoc_of_reduction (i M q : ℕ)
       odo_eq_zero_outside (i + 1) (2 * M) (fun _ => 2 * ((i + 1 : ℕ) : ℤ)) q _
         (not_inCube_snoc_one hz)
     rw [h1, h2]
+
+/-- At a point of the sorted domain all of whose coordinates exceed one, the
+facet normal form of its extension by a trailing one has a nonempty head: the
+head is the number of coordinates at least two, which is all of them. -/
+theorem facet_normal_form_snoc_one (e M : ℕ) (he1 : 1 ≤ e) (z : Site e)
+    (hz : inSimplex e M z) (hz1 : ∀ k, 1 < z k) :
+    ∃ (i j : ℕ) (_ : i + 1 + j = e + 1) (w : Fin i → ℤ), (∀ a, 2 ≤ w a) ∧
+      inSimplex (i + 1 + j) M (facetPoint w 1 j) ∧ (1 ≤ i) ∧
+      ∀ t, odoUnif (e + 1) (2 * M) t (Fin.snoc z 1)
+          = odoUnif (i + 1 + j) (2 * M) t (facetPoint w 1 j) ∧
+        odoUnif (e + 1) (2 * M) t (Fin.snoc z 1 + unit (Fin.last e))
+          = odoUnif (i + 1 + j) (2 * M) t (facetPoint w 2 j) := by
+  have hM1 : (1 : ℤ) ≤ (M : ℤ) := by
+    have h := (hz.1 ⟨e - 1, by omega⟩).2
+    have h2 := hz1 ⟨e - 1, by omega⟩
+    omega
+  have hpos : inPos (e + 1) M (Fin.snoc z 1) := by
+    intro l
+    refine Fin.lastCases ?_ (fun a => ?_) l
+    · rw [Fin.snoc_last]
+      exact ⟨by norm_num, hM1⟩
+    · rw [Fin.snoc_castSucc]
+      exact hz.1 a
+  have hk : (Fin.snoc z 1 : Site (e + 1)) (Fin.last e) = 1 := by rw [Fin.snoc_last]
+  obtain ⟨i, j, hij, w, hw2, hws, hi, hodo⟩ :=
+    facet_normal_form (e + 1) M (Fin.snoc z 1) hpos (Fin.last e) hk
+  refine ⟨i, j, hij, w, hw2, hws, ?_, hodo⟩
+  exact hi ⟨Fin.castSucc ⟨e - 1, by omega⟩, by
+    rw [Fin.snoc_castSucc]
+    have h := hz1 ⟨e - 1, by omega⟩
+    omega⟩
 
 end DimRed
