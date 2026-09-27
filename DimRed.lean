@@ -66,4 +66,5 @@ import DimRed.Support.CornerReaches
 import DimRed.Support.FacetLapUncond
 import DimRed.Support.WeakFacetLower
 import DimRed.Support.WeakStep
+import DimRed.Support.StrongDerivEarly
 import DimRed.MainTheorems
