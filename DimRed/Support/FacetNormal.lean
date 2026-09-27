@@ -84,4 +84,11 @@ theorem facetPoint_antitone (i j : ℕ) (z : Fin i → ℤ) (hanti : Antitone z)
       rw [e1, e2]
   exact key l m hle
 
+/-- The odometer is unchanged when the index type is transported along an
+equality of dimensions. -/
+theorem odoUnif_cast {d d' : ℕ} (h : d = d') (M t : ℕ) (f : Site d') :
+    odoUnif d (2 * M) t (fun a => f (Fin.cast h a)) = odoUnif d' (2 * M) t f := by
+  subst h
+  rfl
+
 end DimRed
