@@ -55,6 +55,7 @@ import DimRed.Support.RegInduction
 import DimRed.Support.StrongDerivPure
 import DimRed.Support.Downset
 import DimRed.Support.FacetNormal
+import DimRed.Support.StrongDerivRaw
 import DimRed.Support.SecondDiff
 import DimRed.Support.SelfSimilarityMain
 import DimRed.Support.TerminalReduction
