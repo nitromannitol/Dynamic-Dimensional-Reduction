@@ -14,6 +14,7 @@ import DimRed.Support.Fundamental
 import DimRed.Support.SandpileFromOdo
 import DimRed.Support.StrongDerivPure
 import DimRed.Support.FacetNormal
+import DimRed.Support.CubeTwo
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -125,5 +126,56 @@ theorem facet_normal_form_snoc_one (e M : ℕ) (he1 : 1 ≤ e) (z : Site e)
     rw [Fin.snoc_castSucc]
     have h := hz1 ⟨e - 1, by omega⟩
     omega⟩
+
+/-- At the smallest scale `M = 1` the odometer of the constant initial sandpile is
+`1` at every site of the cube from the first step on, in every dimension. -/
+theorem odoUnif_one_scale (d t : ℕ) (hd : 1 ≤ d) :
+    odoUnif d 2 t (fun _ : Fin d => (1 : ℤ)) = if t = 0 then 0 else 1 := by
+  induction t with
+  | zero => rfl
+  | succ n ih =>
+    have hcube : inCube d 2 (fun _ : Fin d => (1 : ℤ)) := by
+      intro i
+      rw [loCoord_two, hiCoord_two]
+      norm_num
+    change odo d 2 (fun _ => 2 * (d : ℤ)) (n + 1) (fun _ : Fin d => (1 : ℤ)) = _
+    rw [odo_succ_eq d 2 (fun _ => 2 * (d : ℤ)) n _ hcube]
+    have hlap : lap (odoUnif d 2 n) (fun _ : Fin d => (1 : ℤ))
+        = -(d : ℤ) * odoUnif d 2 n (fun _ : Fin d => (1 : ℤ)) := by
+      have hzero : ∀ i : Fin d, odoUnif d 2 n ((fun _ : Fin d => (1 : ℤ)) + unit i) = 0 := by
+        intro i
+        apply odo_eq_zero_outside
+        intro hc
+        have h := hc i
+        rw [add_unit_self, loCoord_two, hiCoord_two] at h
+        norm_num at h
+      have hrefl : ∀ i : Fin d,
+          odoUnif d 2 n ((fun _ : Fin d => (1 : ℤ)) - unit i)
+            = odoUnif d 2 n (fun _ : Fin d => (1 : ℤ)) := by
+        intro i
+        exact odo_sub_unit_of_one d 1 (2 * (d : ℤ)) n (fun _ : Fin d => (1 : ℤ)) i rfl
+      simp only [lap, nbrSum]
+      rw [Finset.sum_congr rfl (fun i _ => by rw [hzero i, hrefl i, zero_add]),
+        Finset.sum_const, Finset.card_univ, Fintype.card_fin]
+      simp
+      ring
+    have hdZ : (1 : ℤ) ≤ (d : ℤ) := by exact_mod_cast hd
+    have hsand : sandp d 2 (fun _ => 2 * (d : ℤ)) n (fun _ : Fin d => (1 : ℤ))
+        = 2 * (d : ℤ) + lap (odoUnif d 2 n) (fun _ : Fin d => (1 : ℤ)) := rfl
+    rw [hsand, hlap]
+    rcases Nat.eq_zero_or_pos n with h0 | hpos
+    · subst h0
+      change odo d 2 (fun _ => 2 * (d : ℤ)) 0 (fun _ : Fin d => (1 : ℤ))
+        + (if 2 * (d : ℤ) ≤ 2 * (d : ℤ) + -(d : ℤ) * 0 then 1 else 0) = 1
+      rw [if_pos (by linarith : 2 * (d : ℤ) ≤ 2 * (d : ℤ) + -(d : ℤ) * 0)]
+      norm_num
+      rfl
+    · have ih' : odoUnif d 2 n (fun _ : Fin d => (1 : ℤ)) = 1 := by
+        rw [ih]; simp [Nat.pos_iff_ne_zero.mp hpos]
+      rw [ih']
+      have hcond : ¬ (2 * (d : ℤ) ≤ 2 * (d : ℤ) + -(d : ℤ) * 1) := by linarith
+      rw [if_neg hcond]
+      simp only [add_zero]
+      exact ih'
 
 end DimRed
