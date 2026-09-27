@@ -179,13 +179,7 @@ theorem dimred_step_of_earlier (d M t : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
         odoUnif (e + 1) (2 * M) (q + 1) (Fin.snoc z 1) =
           odoUnif e (2 * M) (q + 1) z := by
       intro z hz hz1 hgap hprev' hweak' hfacet' htopple' hconsist'
-      exact hcritical e q z hz hz1 (by simpa using hgap) hprev' hweak' hfacet'
-        (fun i hi hie hs => by
-          have h := htopple' i hi hie hs
-          have hq2 : q + 1 - 2 = q - 1 := by omega
-          rw [hq2] at h
-          exact h)
-        (fun j hj1 hj2 hs w hw hwgt => hconsist' j hj1 hj2 (by simpa using hs) w hw hwgt)
+      exact hcritical e q z hz hz1 hgap hprev' hweak' hfacet' htopple' hconsist'
     exact odo_dimred_step e M (q + 1) (by omega) hM x hx hprev hweak hfacet htopple hconsist hcritical
 
 end DimRed

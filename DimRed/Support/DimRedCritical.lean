@@ -64,13 +64,19 @@ time `t-1` is exactly one.  The paper splits on whether `t-2` has reached the to
 the smaller cube. -/
 theorem odo_dimred_critical (d M t : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M) (ht : 2 ≤ t)
     (z : Site d) (hz : inSimplex d M z) (hz1 : ∀ k, 1 < z k)
+    -- dimensional reduction at the two previous times, both scales
+    (hprev : ∀ (s : ℕ) (m : ℕ), s < t → 2 ≤ m → m ≤ M → ∀ y : Site d, inSimplex d m y →
+      odoUnif (d + 1) (2 * m) s (Fin.snoc y 1) = odoUnif d (2 * m) s y)
+    -- the smallest scale, where both odometers are `1` from the first step
+    (hprev_one : ∀ (s : ℕ), s < t → ∀ y : Site d, inSimplex d 1 y →
+      odoUnif (d + 1) 2 s (Fin.snoc y 1) = odoUnif d 2 s y)
+    -- strong facet compatibility in dimension d+1 from (t-2) to (t-1), in the
+    -- form the clause of Proposition 4.1 supplies: the point `Fin.snoc z 1` has
+    -- a coordinate equal to one, and its neighbour in that direction is
+    -- `Fin.snoc z 2`
     (hgap : odoUnif (d + 1) (2 * M) (t - 1) (Fin.snoc z 1)
         = odoUnif (d + 1) (2 * M) (t - 1) (Fin.snoc z 2) + 1)
-    -- dimensional reduction at the two previous times, both scales
-    (hprev : ∀ (s : ℕ) (m : ℕ), s < t → 1 ≤ m → m ≤ M → ∀ y : Site d, inSimplex d m y →
-      odoUnif (d + 1) (2 * m) s (Fin.snoc y 1) = odoUnif d (2 * m) s y)
-    -- strong facet compatibility in dimension d+1 from (t-2) to (t-1)
-    (hfacet : odoUnif (d + 1) (2 * M) (t - 1) (Fin.snoc z 1)
+    (hjump : odoUnif (d + 1) (2 * M) (t - 1) (Fin.snoc z 1)
         = odoUnif (d + 1) (2 * M) (t - 2) (Fin.snoc z 1) + 1)
     -- strong topple control in both dimensions, valid once (t-2) has reached the topple time
     (htopple_up : toppleTime (d + 1) (M - 1) ≤ ((t - 2 : ℕ) : ℕ∞) →
@@ -95,7 +101,7 @@ theorem odo_dimred_critical (d M t : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M) (ht : 2 
     have hX : inSimplex (d + 1) M (Fin.snoc z 1) :=
       inSimplex_snoc_one_local z hz (by omega)
     have hjump_up : odoUnif (d + 1) (2 * M) (t - 1) (Fin.snoc z 1) =
-        odoUnif (d + 1) (2 * M) (t - 2) (Fin.snoc z 1) + 1 := hfacet
+        odoUnif (d + 1) (2 * M) (t - 2) (Fin.snoc z 1) + 1 := hjump
     have hfreeze_up : odoUnif (d + 1) (2 * M) t (Fin.snoc z 1) =
         odoUnif (d + 1) (2 * M) (t - 1) (Fin.snoc z 1) :=
       odo_frozen_of_topple (d + 1) M t (by omega) hM ht (Fin.snoc z 1) hX hjump_up hlate_up
@@ -158,7 +164,13 @@ theorem odo_dimred_critical (d M t : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M) (ht : 2 
       hprev (t - 1) M (by omega) (by omega) (by omega) z hz
     have hredM1 : odoUnif (d + 1) (2 * (M - 1)) (t - 1) (Fin.snoc (fun k => z k - 1) 1) =
         odoUnif d (2 * (M - 1)) (t - 1) (fun k => z k - 1) :=
-      hprev (t - 1) (M - 1) (by omega) (by omega) (by omega) (fun k => z k - 1) hz_sub
+      (by
+        by_cases hM3 : 3 ≤ M
+        · exact hprev (t - 1) (M - 1) (by omega) (by omega) (by omega)
+            (fun k => z k - 1) hz_sub
+        · have hM2 : M = 2 := by omega
+          subst hM2
+          exact hprev_one (t - 1) (by omega) (fun k => z k - 1) hz_sub)
     have h_eq : odoUnif (d + 1) (2 * M) (t - 1) (Fin.snoc z 2) =
         odoUnif (d + 1) (2 * M) (t - 1) (Fin.snoc z 1) := by
       calc
