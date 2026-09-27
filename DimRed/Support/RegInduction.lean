@@ -93,27 +93,27 @@ theorem reg_induction
       ∀ d M t : ℕ, 1 ≤ d → 2 ≤ M →
         (∀ d' M' t' : ℕ, regEarlier d M t d' M' t' →
           1 ≤ d' → 2 ≤ M' → Reg d' M' t' ∧ DimRedAt d' M' t') →
-        RegConsist d M t)
+        DimRedAt d M t → RegStrongFacet d M t → RegConsist d M t)
     (hweak_step :
       ∀ d M t : ℕ, 1 ≤ d → 2 ≤ M →
         (∀ d' M' t' : ℕ, regEarlier d M t d' M' t' →
           1 ≤ d' → 2 ≤ M' → Reg d' M' t' ∧ DimRedAt d' M' t') →
-        RegWeak d M t)
+        DimRedAt d M t → RegStrongFacet d M t → RegWeak d M t)
     (hderiv_step :
       ∀ d M t : ℕ, 1 ≤ d → 2 ≤ M →
         (∀ d' M' t' : ℕ, regEarlier d M t d' M' t' →
           1 ≤ d' → 2 ≤ M' → Reg d' M' t' ∧ DimRedAt d' M' t') →
-        RegStrongDeriv d M t)
+        DimRedAt d M t → RegStrongDeriv d M t)
     (hfacet_step :
       ∀ d M t : ℕ, 1 ≤ d → 2 ≤ M →
         (∀ d' M' t' : ℕ, regEarlier d M t d' M' t' →
           1 ≤ d' → 2 ≤ M' → Reg d' M' t' ∧ DimRedAt d' M' t') →
-        RegStrongFacet d M t)
+        DimRedAt d M t → RegStrongDeriv d M t → RegStrongFacet d M t)
     (htopple_step :
       ∀ d M t : ℕ, 1 ≤ d → 2 ≤ M →
         (∀ d' M' t' : ℕ, regEarlier d M t d' M' t' →
           1 ≤ d' → 2 ≤ M' → Reg d' M' t' ∧ DimRedAt d' M' t') →
-        RegTopple d M t)
+        DimRedAt d M t → RegStrongFacet d M t → RegTopple d M t)
     (hdimred_step :
       ∀ d M t : ℕ, 1 ≤ d → 2 ≤ M →
         (∀ d' M' t' : ℕ, regEarlier d M t d' M' t' →
@@ -136,18 +136,18 @@ theorem reg_induction
           rcases he with hdlt | hside | htime
           · exact ihd d' hdlt M' t' hd' hM'
           · rcases hside with ⟨hdeq, hMlt⟩
-            subst d'
+            subst hdeq
             exact ihM M' hMlt t' hd hM'
           · rcases htime with ⟨hdeq, hMeq, htlt⟩
-            subst d'
-            subst M'
+            subst hdeq
+            subst hMeq
             exact iht t' htlt hd hM
-        have hconsist := hconsist_step d M t hd hM hprior
-        have hweak := hweak_step d M t hd hM hprior
-        have hderiv := hderiv_step d M t hd hM hprior
-        have hfacet := hfacet_step d M t hd hM hprior
-        have htopple := htopple_step d M t hd hM hprior
         have hdimred := hdimred_step d M t hd hM hprior
+        have hderiv := hderiv_step d M t hd hM hprior hdimred
+        have hfacet := hfacet_step d M t hd hM hprior hdimred hderiv
+        have hweak := hweak_step d M t hd hM hprior hdimred hfacet
+        have hconsist := hconsist_step d M t hd hM hprior hdimred hfacet
+        have htopple := htopple_step d M t hd hM hprior hdimred hfacet
         exact ⟨⟨hconsist, hweak, hderiv, hfacet, htopple⟩, hdimred⟩
 
 end DimRed
