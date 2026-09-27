@@ -72,7 +72,7 @@ reflected neighbour is the point itself, so the first-difference bound and
 monotonicity in time give the inequality. -/
 theorem odo_facet_two_ge_prev_one {j M t : ℕ} (ht : 1 ≤ t) (hM : 2 ≤ M)
     (hS : RegStrongFacet (1 + 1 + j) M (t - 1))
-    (c : ℤ) (hc : c = 2)
+    (c : ℤ) (hc : 2 ≤ c)
     (hys : inSimplex (1 + 1 + j) M (facetPoint (fun _ : Fin 1 => c) 1 j)) :
     odoUnif (1 + 1 + j) (2 * M) (t - 1) (facetPoint (fun _ : Fin 1 => c) 1 j)
       ≤ odoUnif (1 + 1 + j) (2 * M) t (facetPoint (fun _ : Fin 1 => c) 2 j) := by
@@ -99,7 +99,7 @@ theorem odo_facet_two_ge_prev_one {j M t : ℕ} (ht : 1 ≤ t) (hM : 2 ≤ M)
       hys.1 (Fin.castAdd j (Fin.last 1)) hmid
       (Exists.intro (Fin.castAdd j (Fin.castSucc 0)) (by
         rw [facetPoint_head]
-        omega)) h'
+        exact hc)) h'
     have ht1 : t - 1 + 1 = t := by omega
     rw [ht1] at htopple
     -- `htopple : v_t(x+e_k) = v_{t-1}(x+e_k) + 1` and
@@ -157,5 +157,45 @@ theorem facetPoint_one_two_swap (j M t : ℕ) (c : ℤ) (hc : c = 2) :
   exact odo_swap_coord (1 + 1 + j) M (2 * ((1 + 1 + j : ℕ) : ℤ)) t
     (facetPoint (fun _ : Fin 1 => c) 1 j) 0 (Fin.castAdd j (Fin.last 1))
 
+
+/-- The reflection identity of the one-coordinate case: the point one layer in
+at the head is the reflection of the facet point with the head coordinate two. -/
+theorem facetPoint_one_two_refl (j M t : ℕ) :
+    odoUnif (1 + 1 + j) (2 * M) t (facetPoint (fun _ : Fin 1 => (1 : ℤ)) 2 j)
+      = odoUnif (1 + 1 + j) (2 * M) t (facetPoint (fun _ : Fin 1 => (2 : ℤ)) 1 j) := by
+  have h1 : facetPoint (fun _ : Fin 1 => (1 : ℤ)) 2 j
+      = fun k => facetPoint (fun _ : Fin 1 => (2 : ℤ)) 1 j
+          (Equiv.swap 0 (Fin.castAdd j (Fin.last 1)) k) := by
+    funext k
+    rw [facetPoint, facetPoint]
+    refine Fin.addCases ?_ (fun b => ?_) k
+    · intro a
+      refine Fin.lastCases ?_ (fun a' => ?_) a
+      · rw [Fin.append_left, Fin.snoc_last]
+        simp only [Equiv.swap_apply_def]
+        rw [if_neg (by simp [Fin.ext_iff])]
+        simp only [ite_true]
+        rw [show (0 : Fin (1 + 1 + j)) = Fin.castAdd j (0 : Fin (1 + 1)) from rfl]
+        rw [Fin.append_left]
+        rw [show (0 : Fin (1 + 1)) = Fin.castSucc (0 : Fin 1) from rfl]
+        rw [Fin.snoc_castSucc]
+      · rw [Fin.append_left, Fin.snoc_castSucc]
+        simp only [Equiv.swap_apply_def]
+        rw [if_pos (by simp [Fin.ext_iff])]
+        rw [Fin.append_left, Fin.snoc_last]
+    · have hswap : (Equiv.swap 0 (Fin.castAdd j (Fin.last 1)))
+          (Fin.natAdd (1 + 1) b) = Fin.natAdd (1 + 1) b := by
+        rw [Equiv.swap_apply_def]
+        rw [if_neg (by simp [Fin.ext_iff])]
+        rw [if_neg (by
+          intro h
+          have h2 : ((Fin.natAdd (1 + 1) b : Fin (1 + 1 + j)) : ℕ)
+              = ((Fin.castAdd j (Fin.last 1) : Fin (1 + 1 + j)) : ℕ) := by rw [h]
+          simp at h2
+          omega)]
+      rw [hswap, Fin.append_right, Fin.append_right]
+  rw [h1]
+  exact odo_swap_coord (1 + 1 + j) M (2 * ((1 + 1 + j : ℕ) : ℤ)) t
+    (facetPoint (fun _ : Fin 1 => (2 : ℤ)) 1 j) 0 (Fin.castAdd j (Fin.last 1))
 
 end DimRed
