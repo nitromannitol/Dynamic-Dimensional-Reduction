@@ -191,4 +191,35 @@ theorem strong_deriv_pos_head (M i j t : ℕ) (_hM : 2 ≤ M) (hi : 1 ≤ i)
   rw [hmid] at h
   linarith
 
+/-- The dissipating-boundary case of the mixed second difference: a coordinate
+equal to `M` puts the far point off the cube. -/
+theorem mixed_top (d M : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M) (s : ℕ) (k l : Fin d) (_hkl : k ≠ l)
+    (x : Site d) (hx : inPos d M x) (hk : x k = (M : ℤ)) :
+    odoUnif d (2 * M) (s + 1) x - odoUnif d (2 * M) (s + 1) (x + unit k + unit l)
+      ≤ x k + x l - 1 := by
+  have hout : ¬ inCube d (2 * M) (x + unit k + unit l) := by
+    intro hc
+    have h := hc k
+    rw [hiCoord_two_mul] at h
+    have hk' : (x + unit k + unit l) k = x k + 1 + (if k = l then 1 else 0) := by
+      rw [add_unit_apply, add_unit_apply]
+      rw [if_pos rfl]
+    rw [hk', hk] at h
+    split_ifs at h <;> linarith [h.2]
+  have hzero : odoUnif d (2 * M) (s + 1) (x + unit k + unit l) = 0 :=
+    odo_eq_zero_outside d (2 * M) (fun _ => 2 * (d : ℤ)) (s + 1) _ hout
+  have hle : odoUnif d (2 * M) (s + 1) x ≤ (M : ℤ) := by
+    by_cases hx' : inCube d (2 * M) x
+    · have hdZ : (1 : ℤ) ≤ (d : ℤ) := by exact_mod_cast hd
+      have hc := odo_le_corner d M hd (2 * (d : ℤ)) (by positivity) (by linarith)
+        (s + 1) x hx' k hk
+      have hM' := odo_corner_le_M d M hd hM (s + 1)
+      simp only [odoUnif] at hc hM' ⊢
+      linarith
+    · simp only [odoUnif, odo_eq_zero_outside d (2 * M) (fun _ => 2 * (d : ℤ)) (s + 1) x hx']
+      exact Int.natCast_nonneg M
+  rw [hzero, hk]
+  have := (hx l).1
+  linarith
+
 end DimRed
