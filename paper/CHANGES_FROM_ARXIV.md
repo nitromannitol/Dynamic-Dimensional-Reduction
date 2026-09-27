@@ -241,3 +241,27 @@ definition of `τ_M`, no point of the inner boundary of the cube reaches `M`
 before time `τ_M`, which gives `v_t(x) ≤ M - 1` there; at `x_j = M - 1`, the
 one-step bound `v_t(x) - v_t(x + e_j) ≤ x_j` and this boundary value together
 give `v_t(x) - v_t(x + 2e_j) ≤ (M-1) + (M-1)`.
+
+## The strong-facet comparison in Section 5
+
+`dimred.tex:1288-1296` (the paragraph between the displays
+`eq:laplace_21`-`eq:laplace_23` and `eq:laplace_12`).
+
+As written, the paragraph closes the comparison `eq:laplace_11 ≥ eq:laplace_21`
+by observing that `v_t(x_i - e_{j'}, 2, 1_j) = v_t(x_i, 1, 1_j) ≥ v_{t-1}(x_i, 1, 1_j)`
+when `x_i - e_{j'} ≱ 2`.  The term on the right of `eq:laplace_21` is
+`v_{t-1}(x_i - e_{j'}, 1, 1_j)`, not `v_{t-1}(x_i, 1, 1_j)`, so the comparison
+needs `v_{t-1}(x_i, 1, 1_j) ≥ v_{t-1}(x_i - e_{j'}, 1, 1_j)`, which is the
+opposite of axis monotonicity (Corollary 2.1) and is false.  Measured on the
+dynamics of Section 1 for `j ≤ 2`, `M ≤ 6` and every `t`: 145 failures of that
+inequality, and 40 failures of `eq:laplace_11 ≥ eq:laplace_21` itself; the
+smallest is `j = 0`, `M = 2`, `t = 3`, where `v_{t-1}(2,1) = 1 < 2 = v_{t-1}(1,1)`.
+
+Corrected: the comparison is not used.  The gap one step back in time, which is
+what the unit-gap branch of Section 5 needs, follows from the gap at the current
+time together with the first-difference bound of Corollary 2.2; and the
+strong-facet clause itself is that same first-difference bound at a coordinate
+equal to one.  Both are formalized as `DimRed.odo_jump_of_gap` and
+`DimRed.strong_facet_step_of_reg` in `DimRed/Support/RegBridges.lean`, and the
+joint induction of Section 5 is carried out with them.  The ruling and the
+evidence are recorded in `ledger/decisions.md`.
