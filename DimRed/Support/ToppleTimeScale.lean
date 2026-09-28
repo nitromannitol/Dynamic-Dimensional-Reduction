@@ -444,4 +444,75 @@ theorem toppleTime_mono_scale_dim (d a b : ℕ) (_hd : 1 ≤ d) (ha : 1 ≤ a) (
     omega
   exact_mod_cast h2
 
+/-- The corner odometer of the side-`b` cube is at most the corner odometer of
+the side-`a` cube plus `b - a`, for `a ≤ b` and `n ≤ τ_a`, in every dimension. -/
+theorem odo_corner_dominate_dim (d a b n : ℕ) (_hd : 1 ≤ d) (hab : a ≤ b) (_ha : 1 ≤ a)
+    (htau : (n : ℕ∞) ≤ toppleTime d a)
+    (hmono : ∀ {c e : ℕ}, a ≤ c → c ≤ e → toppleTime d c ≤ toppleTime d e)
+    (hconsist : ∀ K : ℕ, a < K → K ≤ b → (n : ℕ∞) ≤ toppleTime d (K - 1) →
+      odoUnif d (2 * K) n (cornerPoint d K) ≤
+        odoUnif d (2 * (K - 1)) n (cornerPoint d (K - 1)) + 1) :
+    odoUnif d (2 * b) n (cornerPoint d b) ≤
+      odoUnif d (2 * a) n (cornerPoint d a) + ((b - a : ℕ) : ℤ) := by
+  induction b, hab using Nat.le_induction with
+  | base => simp
+  | succ b hb ih =>
+    have h1 := hconsist (b + 1) (by omega) (by omega)
+      (le_trans htau (hmono (by omega) (by omega)))
+    rw [show b + 1 - 1 = b by omega] at h1
+    have h2 : odoUnif d (2 * b) n (cornerPoint d b) ≤
+        odoUnif d (2 * a) n (cornerPoint d a) + ((b - a : ℕ) : ℤ) :=
+      ih (fun K hK hKb => hconsist K hK (by omega))
+    have h3 : ((b + 1 - a : ℕ) : ℤ) = ((b - a : ℕ) : ℤ) + 1 := by
+      have : b + 1 - a = (b - a) + 1 := by omega
+      rw [this, Nat.cast_add, Nat.cast_one]
+    rw [h3]
+    linarith
+
+/-- The topple time is monotone in the side length at a fixed dimension `d ≥ 1`:
+`τ_d a ≤ τ_d b` for `a ≤ b`.  From the corner domination and the consistency
+clause at the larger scale. -/
+theorem toppleTime_mono_scale_dim2 (d a b : ℕ) (hd : 1 ≤ d) (ha : 1 ≤ a) (hab : a ≤ b)
+    (hmono : ∀ {c e : ℕ}, a ≤ c → c ≤ e → toppleTime d c ≤ toppleTime d e)
+    (hconsist : ∀ K : ℕ, a < K → K ≤ b → (n : ℕ) → (n : ℕ∞) ≤ toppleTime d (K - 1) →
+      odoUnif d (2 * K) n (cornerPoint d K) ≤
+        odoUnif d (2 * (K - 1)) n (cornerPoint d (K - 1)) + 1)
+    (hhitb : ∃ n : ℕ, 1 ≤ n ∧ (b : ℤ) ≤ odoUnif d (2 * b) n (cornerPoint d b))
+    (hhita : ∃ n : ℕ, 1 ≤ n ∧ (a : ℤ) ≤ odoUnif d (2 * a) n (cornerPoint d a)) :
+    toppleTime d a ≤ toppleTime d b := by
+  by_contra hcon
+  push Not at hcon
+  have hb1 : 1 ≤ b := le_trans ha hab
+  have hne : toppleTime d b ≠ ⊤ := toppleTime_ne_top d b hd hb1 hhitb
+  obtain ⟨T, hT⟩ := WithTop.ne_top_iff_exists.mp hne
+  have hTle : toppleTime d b ≤ (T : ℕ∞) := le_of_eq hT.symm
+  have hTge : (T : ℕ∞) ≤ toppleTime d b := le_of_eq hT
+  have hTlt : (T : ℕ∞) < toppleTime d a := lt_of_le_of_lt hTge hcon
+  have hbT : (b : ℤ) ≤ odoUnif d (2 * b) T (cornerPoint d b) := by
+    have h := (toppleTime_le_iff d b hd hb1 hhitb (T : ℕ∞)).mp hTle
+    obtain ⟨n, hn, hn1, hnval⟩ := h
+    have hnT : n ≤ T := ENat.coe_le_coe.mp hn
+    have hmono' : odoUnif d (2 * b) n (cornerPoint d b)
+        ≤ odoUnif d (2 * b) T (cornerPoint d b) :=
+      odo_mono d (2 * b) (fun _ => 2 * (d : ℤ)) hnT _
+    linarith
+  have hdom := odo_corner_dominate_dim d a b T hd hab ha hTlt.le
+    (fun hc he => hmono hc he)
+    (fun K hK hKb hn => hconsist K hK hKb T hn)
+  have haT : (a : ℤ) ≤ odoUnif d (2 * a) T (cornerPoint d a) := by
+    have hbT' : (b : ℤ) ≤ odoUnif d (2 * a) T (cornerPoint d a) + ((b - a : ℕ) : ℤ) :=
+      le_trans hbT hdom
+    have hcast : ((b - a : ℕ) : ℤ) = (b : ℤ) - (a : ℤ) := by
+      rw [Nat.cast_sub hab]
+    have hbT'' : (b : ℤ) ≤ odoUnif d (2 * a) T (cornerPoint d a) + ((b : ℤ) - (a : ℤ)) := by
+      rw [← hcast]
+      exact hbT'
+    linarith
+  have hT1 : 1 ≤ T := by
+    have h1 : (1 : ℕ∞) ≤ toppleTime d b := one_le_toppleTime d b
+    have h2 : (1 : ℕ∞) ≤ (T : ℕ∞) := le_trans h1 hTle
+    exact ENat.coe_le_coe.mp h2
+  have hle := (toppleTime_le_iff d a hd ha hhita (T : ℕ∞)).mpr
+  exact absurd (hle ⟨T, le_rfl, ⟨hT1, haT⟩⟩) (not_le.mpr hTlt)
+
 end DimRed
