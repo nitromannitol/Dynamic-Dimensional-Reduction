@@ -261,4 +261,27 @@ theorem gt_one_add_unit_of_gt_two (d : ℕ) (y : Site d) (i : Fin d)
     omega
 
 
+
+
+/-- The sorted representative of a point with all coordinates above two also has
+all coordinates above two. -/
+theorem gt_one_toSimplexPoint_of_gt_one (d m : ℕ) (z : Site d)
+    (hz : ∀ k : Fin d, (1 : ℤ) < z k) :
+    ∀ k : Fin d, (1 : ℤ) < toSimplexPoint d m z k := by
+  intro k
+  -- the sorted point's coordinates are a permutation of the original's
+  have hperm : ∀ j : Fin d, ∃ i : Fin d, toSimplexPoint d m z j = foldPoint d (2 * m) z i := by
+    intro j
+    refine ⟨(Tuple.sort (fun i => -(foldPoint d (2 * m) z i))) j, ?_⟩
+    rfl
+  obtain ⟨i, hi⟩ := hperm k
+  rw [hi]
+  -- `foldPoint` of a point above two is the point itself
+  rw [foldPoint_apply]
+  have hzi : (1 : ℤ) ≤ z i := by have := hz i; omega
+  rw [if_pos hzi]
+  have := hz i
+  omega
+
+
 end DimRed
