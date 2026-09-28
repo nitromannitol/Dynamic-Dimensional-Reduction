@@ -159,4 +159,18 @@ theorem sub_one_sub_unit (d : ℕ) (y : Site d) (i : Fin d) :
   · simp [hk]
 
 
+
+
+/-- Folding commutes with shifting down by one, for points with all coordinates
+above one. -/
+theorem foldPoint_sub_one (d m : ℕ) (z : Site d) (hz : ∀ k : Fin d, 1 < z k) :
+    foldPoint d (2 * (m - 1)) (fun k => z k - 1) = fun k => foldPoint d (2 * m) z k - 1 := by
+  funext k
+  rw [foldPoint_apply, foldPoint_apply]
+  have hz1 : 1 ≤ z k := by have := hz k; omega
+  rw [if_pos hz1]
+  have hz1' : 1 ≤ z k - 1 := by have := hz k; omega
+  rw [if_pos hz1']
+
+
 end DimRed
