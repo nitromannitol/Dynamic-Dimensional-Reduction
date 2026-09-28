@@ -8,6 +8,7 @@ that makes the topple time `τ_j = j² - j + 1` exact.
 import DimRed.Support.ToppleTimeScale
 import DimRed.Support.CornerBound
 import DimRed.Support.OneDimTerminal
+import DimRed.Support.FacetLapUncond
 
 namespace DimRed
 
@@ -144,5 +145,28 @@ theorem corner_eq_facetPoint (d M : ℕ) :
         simp only [Fin.val_natAdd]
         omega)]
       rw [facetPoint_tail]
+
+/-- The `lap_facetPoint_of` formula at the corner, with the `odoUnif` form. -/
+theorem lap_corner_facet' (d M q : ℕ) (_hM : 3 ≤ M) :
+    lap (odoUnif (1 + 1 + d) (2 * (M - 1)) q) (cornerPoint (1 + 1 + d) (M - 1))
+      = (∑ a : Fin 1,
+          (odoUnif (1 + 1 + d) (2 * (M - 1)) q
+              (facetPoint ((fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ)) + unit a) 1 d)
+            + odoUnif (1 + 1 + d) (2 * (M - 1)) q
+              (facetPoint ((fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ)) - unit a) 1 d)))
+        - 2 * (1 : ℤ) * odoUnif (1 + 1 + d) (2 * (M - 1)) q
+            (cornerPoint (1 + 1 + d) (M - 1))
+        + ((d : ℤ) + 1) *
+          (odoUnif (1 + 1 + d) (2 * (M - 1)) q
+              (facetPoint (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ)) 2 d)
+            - odoUnif (1 + 1 + d) (2 * (M - 1)) q
+              (cornerPoint (1 + 1 + d) (M - 1))) := by
+  rw [corner_eq_facetPoint d M]
+  have h := lap_facetPoint_of (i := 1) (j := d) (M := M - 1)
+    (2 * ((1 + 1 + d : ℕ) : ℤ)) (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ)) q
+  rw [show odoUnif (1 + 1 + d) (2 * (M - 1)) q
+      = fun x => odo (1 + 1 + d) (2 * (M - 1)) (fun _ => 2 * ((1 + 1 + d : ℕ) : ℤ)) q x
+      from rfl]
+  exact h
 
 end DimRed
