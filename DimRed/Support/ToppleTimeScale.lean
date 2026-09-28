@@ -83,4 +83,54 @@ theorem cornerPoint_gt_sub (d a b : ℕ) (hd : 1 ≤ d) (ha : 1 ≤ a) (hab : a 
   linarith
 
 
+
+
+/-- The neighbour sum of the smaller cube's odometer, extended by zero off the
+smaller cube, is at most the neighbour sum of the smaller odometer itself. -/
+theorem nbrSum_extend_le (d m t : ℕ) (y : Site d) :
+    nbrSum (fun z => if inCube d (2 * m) z then odoUnif d (2 * m) t z else 0) y
+      ≤ nbrSum (odo d (2 * m) (fun _ => 2 * (d : ℤ)) t) y := by
+  simp only [nbrSum]
+  refine Finset.sum_le_sum ?_
+  intro i _
+  have h1 : (if inCube d (2 * m) (y + unit i) then odoUnif d (2 * m) t (y + unit i) else 0)
+      ≤ odo d (2 * m) (fun _ => 2 * (d : ℤ)) t (y + unit i) := by
+    by_cases hh : inCube d (2 * m) (y + unit i)
+    · simp only [hh, if_true, odoUnif, le_refl]
+    · simp only [hh, if_false]
+      have hnn := odo_nonneg d (2 * m) (fun _ => 2 * (d : ℤ)) t (y + unit i)
+      simpa [odoUnif] using hnn
+  have h2 : (if inCube d (2 * m) (y - unit i) then odoUnif d (2 * m) t (y - unit i) else 0)
+      ≤ odo d (2 * m) (fun _ => 2 * (d : ℤ)) t (y - unit i) := by
+    by_cases hh : inCube d (2 * m) (y - unit i)
+    · simp only [hh, if_true, odoUnif, le_refl]
+    · simp only [hh, if_false]
+      have hnn := odo_nonneg d (2 * m) (fun _ => 2 * (d : ℤ)) t (y - unit i)
+      simpa [odoUnif] using hnn
+  linarith
+
+
+
+/-- The neighbour sum of the smaller cube's odometer, extended by zero off the
+smaller cube, is nonnegative. -/
+theorem nbrSum_extend_nonneg (d m t : ℕ) (y : Site d) :
+    (0 : ℤ) ≤ nbrSum (fun z => if inCube d (2 * m) z then odoUnif d (2 * m) t z else 0) y := by
+  simp only [nbrSum]
+  refine Finset.sum_nonneg ?_
+  intro i _
+  have h1 : (0 : ℤ) ≤ (if inCube d (2 * m) (y + unit i) then odoUnif d (2 * m) t (y + unit i) else 0) := by
+    by_cases hh : inCube d (2 * m) (y + unit i)
+    · simp only [hh, if_true]
+      have hnn := odo_nonneg d (2 * m) (fun _ => 2 * (d : ℤ)) t (y + unit i)
+      simpa [odoUnif] using hnn
+    · simp only [hh, if_false, le_refl]
+  have h2 : (0 : ℤ) ≤ (if inCube d (2 * m) (y - unit i) then odoUnif d (2 * m) t (y - unit i) else 0) := by
+    by_cases hh : inCube d (2 * m) (y - unit i)
+    · simp only [hh, if_true]
+      have hnn := odo_nonneg d (2 * m) (fun _ => 2 * (d : ℤ)) t (y - unit i)
+      simpa [odoUnif] using hnn
+    · simp only [hh, if_false, le_refl]
+  linarith
+
+
 end DimRed
