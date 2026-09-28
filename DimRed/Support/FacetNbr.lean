@@ -328,4 +328,23 @@ theorem sum_head_facetPoint_two {i j M : ℕ} (t : ℕ) (x : Fin i → ℤ) :
     rw [facetPoint_add_head' x 2 a, facetPoint_sub_head' x 2 a]
   · ring
 
+/-- Splitting a sum over `Fin (i + 1 + j)` into the head, the mid coordinate and
+the tail. -/
+theorem sum_univ_head_mid_tail (i j : ℕ) (f : Fin (i + 1 + j) → ℤ) :
+    (∑ k : Fin (i + 1 + j), f k)
+      = (∑ a : Fin i, f (Fin.castAdd j (Fin.castSucc a)))
+        + f (Fin.castAdd j (Fin.last i))
+        + (∑ b : Fin j, f (Fin.natAdd (i + 1) b)) := by
+  have hcast : (i + 1) + j = i + 1 + j := by omega
+  have h1 : (∑ k : Fin (i + 1 + j), f k)
+      = ∑ k : Fin ((i + 1) + j), f (Fin.cast hcast k) := by
+    exact Fintype.sum_equiv (finCongr hcast) _ _ (fun _ => rfl)
+  rw [h1, Fin.sum_univ_add, Fin.sum_univ_castSucc]
+  have e1 : ∀ a : Fin i, Fin.cast hcast (Fin.castAdd j a.castSucc)
+      = Fin.castAdd j (Fin.castSucc a) := fun a => Fin.ext rfl
+  have e2 : Fin.cast hcast (Fin.castAdd j (Fin.last i)) = Fin.castAdd j (Fin.last i) := Fin.ext rfl
+  have e3 : ∀ b : Fin j, Fin.cast hcast (Fin.natAdd (i + 1) b) = Fin.natAdd (i + 1) b :=
+    fun b => Fin.ext rfl
+  simp only [e1, e2, e3]
+
 end DimRed
