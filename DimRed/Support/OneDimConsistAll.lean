@@ -25,18 +25,18 @@ theorem odo_one_consist_all
     (ht : (t : ℕ∞) ≤ toppleTime 1 j)
     (hmono : ∀ {a b : ℕ}, j ≤ a → a ≤ b → b < M →
       toppleTime 1 a ≤ toppleTime 1 b)
-    (hprev : ∀ K : ℕ, j < K → ∀ t' : ℕ, t' < t → ∀ z : Site 1,
+    (hprev : ∀ K : ℕ, j < K → K ≤ M → ∀ t' : ℕ, t' < t → ∀ z : Site 1,
       2 ≤ z 0 → z 0 ≤ (K : ℤ) →
       odoUnif 1 (2 * K) t' z =
         odoUnif 1 (2 * (K - 1)) t' (fun _ => z 0 - 1))
-    (hfacet : ∀ K : ℕ, j < K → ∀ s : ℕ, s + 2 = t →
-      ((s + 1 : ℕ) : ℕ∞) < toppleTime 1 (K - 1) → ∀ z : Site 1,
-        odoUnif 1 (2 * (K - 1)) s z =
-            odoUnif 1 (2 * (K - 1)) s (z + unit 0) + 1 →
-          odoUnif 1 (2 * (K - 1)) (s + 1) z =
-            odoUnif 1 (2 * (K - 1)) s z ∧
-          odoUnif 1 (2 * (K - 1)) (s + 1) (z + unit 0) =
-            odoUnif 1 (2 * (K - 1)) s (z + unit 0) + 1)
+    (hfacet : ∀ K : ℕ, j < K → K ≤ M → ∀ s : ℕ, s + 2 = t →
+      ((s + 1 : ℕ) : ℕ∞) < toppleTime 1 (K - 1) →
+        odoUnif 1 (2 * (K - 1)) s (fun _ => (1 : ℤ)) =
+            odoUnif 1 (2 * (K - 1)) s (fun _ => (2 : ℤ)) + 1 →
+          odoUnif 1 (2 * (K - 1)) (s + 1) (fun _ => (1 : ℤ)) =
+            odoUnif 1 (2 * (K - 1)) s (fun _ => (1 : ℤ)) ∧
+          odoUnif 1 (2 * (K - 1)) (s + 1) (fun _ => (2 : ℤ)) =
+            odoUnif 1 (2 * (K - 1)) s (fun _ => (2 : ℤ)) + 1)
     (x : Site 1) (hx : inSimplex 1 M x)
     (hxgt : (M : ℤ) - (j : ℤ) < x 0) :
     odoUnif 1 (2 * M) t x =
@@ -60,7 +60,7 @@ theorem odo_one_consist_all
           have htK : (t : ℕ∞) ≤ toppleTime 1 (K - 1) := by
             exact le_trans ht (hmono (a := j) (b := K - 1) (by omega) hKm1 (by omega))
           have hstep := odo_one_consist_step K t hK2 htK
-            (hprev K hKj') (hfacet K hKj') (fun _ => y) (by omega) hyK
+            (hprev K hKj' hKM) (hfacet K hKj' hKM) (fun _ => y) (by omega) hyK
           have hprevK : 1 ≤ y - 1 := by omega
           have hprevK' : y - 1 ≤ (K - 1 : ℕ) := by omega
           have hprevKgt : ((K - 1 : ℕ) : ℤ) - (j : ℤ) < y - 1 := by omega

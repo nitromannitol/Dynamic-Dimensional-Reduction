@@ -129,13 +129,12 @@ theorem odo_one_consist_step
         odoUnif 1 (2 * (M - 1)) t' (fun _ => z 0 - 1))
     (hfacet : ∀ s : ℕ, s + 2 = t →
       ((s + 1 : ℕ) : ℕ∞) < toppleTime 1 (M - 1) →
-      ∀ z : Site 1,
-        odoUnif 1 (2 * (M - 1)) s z =
-            odoUnif 1 (2 * (M - 1)) s (z + unit 0) + 1 →
-          odoUnif 1 (2 * (M - 1)) (s + 1) z =
-            odoUnif 1 (2 * (M - 1)) s z ∧
-          odoUnif 1 (2 * (M - 1)) (s + 1) (z + unit 0) =
-            odoUnif 1 (2 * (M - 1)) s (z + unit 0) + 1)
+        odoUnif 1 (2 * (M - 1)) s (fun _ => (1 : ℤ)) =
+            odoUnif 1 (2 * (M - 1)) s (fun _ => (2 : ℤ)) + 1 →
+          odoUnif 1 (2 * (M - 1)) (s + 1) (fun _ => (1 : ℤ)) =
+            odoUnif 1 (2 * (M - 1)) s (fun _ => (1 : ℤ)) ∧
+          odoUnif 1 (2 * (M - 1)) (s + 1) (fun _ => (2 : ℤ)) =
+            odoUnif 1 (2 * (M - 1)) s (fun _ => (2 : ℤ)) + 1)
     (y : Site 1) (hy2 : 2 ≤ y 0) (hyM : y 0 ≤ (M : ℤ)) :
     odoUnif 1 (2 * M) t y =
       odoUnif 1 (2 * (M - 1)) t (fun _ => y 0 - 1) := by
@@ -302,7 +301,7 @@ theorem odo_one_consist_step
                   odo 1 (2 * (M - 1)) (fun _ => (2 : ℤ)) s (fun _ => (2 : ℤ)) + 1 := by
               have hmono := hcenterSmall.1
               omega
-            have hfacet' := hfacet r hrt htime' (fun _ => (1 : ℤ))
+            have hfacet' := hfacet r hrt htime'
             have hsmallr := hprev r hrlt (fun _ => (2 : ℤ)) (by omega) (by omega)
             have hsmallr2 :
                 odoUnif 1 (2 * (M - 1)) r (fun _ => (2 : ℤ)) =
@@ -321,8 +320,6 @@ theorem odo_one_consist_step
                   simpa [odoUnif] using
                     odo_eq_zero_outside 1 (2 * (M - 1)) (fun _ => (2 : ℤ)) r _ houtsmall
                 rw [hzeroBig, hzeroSmall]
-            simp only [site_one_add_unit] at hfacet'
-            norm_num at hfacet'
             have hsmallr_diff_raw :
                 odo 1 (2 * (M - 1)) (fun _ => (2 : ℤ)) r (fun _ => (1 : ℤ)) =
                   odo 1 (2 * (M - 1)) (fun _ => (2 : ℤ)) r (fun _ => (2 : ℤ)) + 1 := by
