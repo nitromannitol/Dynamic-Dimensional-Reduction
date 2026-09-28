@@ -358,4 +358,16 @@ theorem odoInfUnif_snoc_eq (e M : ℕ) (y : Site e)
   exact congrArg (fun f : ℕ → ℤ => ⨆ t : ℕ, ((f t).toNat : ℕ∞)) (funext hall)
 
 
+
+
+/-- `Fin.snoc` is `Fin.lastCases` up to the dimension cast. -/
+theorem snoc_eq_lastCases {n : ℕ} (x : Fin n → ℤ) (c : ℤ) :
+    (Fin.snoc x c : Fin (n + 1) → ℤ)
+      = fun k : Fin (n + 1) => Fin.lastCases c x k := by
+  funext k
+  refine Fin.lastCases ?_ (fun a => ?_) k
+  · rw [Fin.snoc_last, Fin.lastCases_last]
+  · rw [Fin.snoc_castSucc, Fin.lastCases_castSucc]
+
+
 end DimRed
