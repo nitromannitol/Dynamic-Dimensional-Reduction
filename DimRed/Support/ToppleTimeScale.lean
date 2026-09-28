@@ -569,4 +569,19 @@ theorem toppleTime_mono_scale_dim' (d a b M : ℕ) (hd : 1 ≤ d) (ha : 1 ≤ a)
         (hconsist c (le_trans ha hac) (by omega)) (hhit c (le_trans ha hac) (by omega))
         (hhit (c + 1) (by omega) hbM))
 
+/-- The one-step corner domination: at any time `n ≤ τ_c` the corner of the
+`(c+1)`-cube is at most one above the corner of the `c`-cube.  This is
+`odo_corner_dominate_dim` at `a = c`, `b = c + 1`, where `b - a = 1`. -/
+theorem corner_dominate_succ (d c n : ℕ) (_hd : 1 ≤ d) (hc : 1 ≤ c)
+    (hn : (n : ℕ∞) ≤ toppleTime d c)
+    (hconsist : ∀ K : ℕ, c < K → K ≤ c + 1 → (n : ℕ∞) ≤ toppleTime d (K - 1) →
+      odoUnif d (2 * K) n (cornerPoint d K) ≤
+        odoUnif d (2 * (K - 1)) n (cornerPoint d (K - 1)) + 1) :
+    odoUnif d (2 * (c + 1)) n (cornerPoint d (c + 1)) ≤
+      odoUnif d (2 * c) n (cornerPoint d c) + 1 := by
+  have h := hconsist (c + 1) (by omega) (by omega) (by
+    rw [show c + 1 - 1 = c from by omega]
+    exact hn)
+  rwa [show c + 1 - 1 = c from by omega] at h
+
 end DimRed
