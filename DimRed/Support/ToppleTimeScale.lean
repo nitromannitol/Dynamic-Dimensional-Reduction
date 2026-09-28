@@ -72,4 +72,15 @@ theorem cornerPoint_apply_zero (d M : ℕ) (hd : 1 ≤ d) :
   rw [cornerPoint_apply]
   simp
 
+
+
+/-- The corner of the side-`b` cube exceeds `b - a` in its first coordinate, for
+`a < b`. -/
+theorem cornerPoint_gt_sub (d a b : ℕ) (hd : 1 ≤ d) (ha : 1 ≤ a) (hab : a < b) :
+    (b : ℤ) - (a : ℤ) < cornerPoint d b ⟨0, hd⟩ := by
+  rw [cornerPoint_apply_zero d b hd]
+  have hab' : (a : ℤ) < (b : ℤ) := by exact_mod_cast hab
+  linarith
+
+
 end DimRed
