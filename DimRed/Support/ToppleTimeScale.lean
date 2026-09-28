@@ -57,4 +57,19 @@ theorem facetPoint_zero_head' (c c' : ℤ) (j : ℕ) :
     exact absurd a.2 (by omega)
   rw [h, facetPoint_zero_head]
 
+/-- The half-side of the even box of side `2 * M` is `M`. -/
+theorem sideHalf_two_mul (M : ℕ) : sideHalf (2 * M) = M := by
+  rw [sideHalf]
+  omega
+
+/-- The corner point's coordinates: `M` at the first index, `1` elsewhere. -/
+theorem cornerPoint_apply (d M : ℕ) (i : Fin d) :
+    cornerPoint d M i = if (i : ℕ) = 0 then (M : ℤ) else 1 := rfl
+
+/-- The corner point's first coordinate is `M`. -/
+theorem cornerPoint_apply_zero (d M : ℕ) (hd : 1 ≤ d) :
+    cornerPoint d M ⟨0, hd⟩ = (M : ℤ) := by
+  rw [cornerPoint_apply]
+  simp
+
 end DimRed
