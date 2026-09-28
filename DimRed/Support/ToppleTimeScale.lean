@@ -341,4 +341,21 @@ theorem one_le_castSucc (d M : ℕ) (hd : 1 ≤ d) (x : Site d)
   exact (hx.1 (Fin.cast (by omega : d - 1 + 1 = d) k.castSucc)).1
 
 
+
+
+/-- The terminal odometer is invariant under the dimensional reduction at every
+time, lifted to the `iSup`. -/
+theorem odoInfUnif_snoc_eq (e M : ℕ) (y : Site e)
+    (hred : ∀ t : ℕ, odoUnif (e + 1) (2 * M) t (Fin.snoc y 1) = odoUnif e (2 * M) t y) :
+    odoInfUnif (e + 1) (2 * M) (Fin.snoc y 1) = odoInfUnif e (2 * M) y := by
+  have hall : ∀ t : ℕ,
+      odo (e + 1) (2 * M) (fun _ => 2 * ((e + 1 : ℕ) : ℤ)) t (Fin.snoc y 1)
+      = odo e (2 * M) (fun _ => 2 * (e : ℤ)) t y := by
+    intro t
+    have h := hred t
+    simpa [odoUnif] using h
+  simp only [odoInfUnif, odoInf]
+  exact congrArg (fun f : ℕ → ℤ => ⨆ t : ℕ, ((f t).toNat : ℕ∞)) (funext hall)
+
+
 end DimRed
