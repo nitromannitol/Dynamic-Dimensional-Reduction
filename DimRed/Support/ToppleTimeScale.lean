@@ -284,4 +284,39 @@ theorem gt_one_toSimplexPoint_of_gt_one (d m : ℕ) (z : Site d)
   omega
 
 
+
+
+/-- Shifting a point of the sorted domain with all coordinates above one down by
+one keeps it in the cube of side `2(m-1)`. -/
+theorem inCube_sub_one_of_gt_one (d m : ℕ) (y : Site d) (hm : 2 ≤ m)
+    (h1 : ∀ k : Fin d, (1 : ℤ) ≤ y k) (h2 : ∀ k : Fin d, y k ≤ (m : ℤ))
+    (h3 : ∀ k : Fin d, (1 : ℤ) < y k) :
+    inCube d (2 * (m - 1)) (fun k => y k - 1) := by
+  intro k
+  rw [loCoord_two_mul, hiCoord_two_mul]
+  have h1k : (1 : ℤ) ≤ y k := h1 k
+  have h2k : y k ≤ (m : ℤ) := h2 k
+  have h3k : (1 : ℤ) < y k := h3 k
+  have hcast : ((m - 1 : ℕ) : ℤ) = (m : ℤ) - 1 := by
+    rw [Nat.cast_sub (by omega : 1 ≤ m)]
+    norm_num
+  rw [hcast]
+  show (1 : ℤ) - ((m : ℤ) - 1) ≤ y k - 1 ∧ y k - 1 ≤ (m : ℤ) - 1
+  constructor <;> omega
+
+
+
+/-- A point of the sorted domain with all coordinates above one lies in the cube
+of side `2m`. -/
+theorem inCube_of_inSimplex_gt_one (d m : ℕ) (y : Site d) (hm : 2 ≤ m)
+    (hy : inSimplex d m y) (h3 : ∀ k : Fin d, (1 : ℤ) < y k) :
+    inCube d (2 * m) y := by
+  intro k
+  rw [loCoord_two_mul, hiCoord_two_mul]
+  have h1k : (1 : ℤ) ≤ y k := (hy.1 k).1
+  have h2k : y k ≤ (m : ℤ) := (hy.1 k).2
+  have h3k : (1 : ℤ) < y k := h3 k
+  constructor <;> omega
+
+
 end DimRed
