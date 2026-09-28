@@ -931,4 +931,99 @@ theorem one_dim_tau_gap (M t : ℕ) (hM : 3 ≤ M) (ht : toppleTime 1 (M - 1) �
           = odo 1 4 (fun _ => 2) 2 (fun _ : Fin 1 => (2 : ℤ)) from rfl] at hdbl'
       rw [h2v] at hdbl'
       norm_num at hdbl'
+/-- The corner odometer of the side-`b` cube is at most the corner odometer of
+the side-`a` cube plus `b - a`, for `a ≤ b` and `n ≤ τ_a`. -/
+theorem odo_corner_dominate (a b n : ℕ) (hab : a ≤ b) (_ha : 1 ≤ a)
+    (htau : (n : ℕ∞) ≤ toppleTime 1 a)
+    (hmono : ∀ {c d : ℕ}, a ≤ c → c ≤ d → toppleTime 1 c ≤ toppleTime 1 d)
+    (hconsist : ∀ K : ℕ, a < K → K ≤ b → (n : ℕ∞) ≤ toppleTime 1 (K - 1) →
+      odoUnif 1 (2 * K) n (cornerPoint 1 K) ≤
+        odoUnif 1 (2 * (K - 1)) n (cornerPoint 1 (K - 1)) + 1) :
+    odoUnif 1 (2 * b) n (cornerPoint 1 b) ≤
+      odoUnif 1 (2 * a) n (cornerPoint 1 a) + ((b - a : ℕ) : ℤ) := by
+  induction b, hab using Nat.le_induction with
+  | base => simp
+  | succ b hb ih =>
+    have h1 := hconsist (b + 1) (by omega) (by omega)
+      (le_trans htau (hmono (by omega) (by omega)))
+    rw [show b + 1 - 1 = b by omega] at h1
+    have h2 : odoUnif 1 (2 * b) n (cornerPoint 1 b) ≤
+        odoUnif 1 (2 * a) n (cornerPoint 1 a) + ((b - a : ℕ) : ℤ) :=
+      ih (fun K hK hKb => hconsist K hK (by omega))
+    have h3 : ((b + 1 - a : ℕ) : ℤ) = ((b - a : ℕ) : ℤ) + 1 := by
+      have : b + 1 - a = (b - a) + 1 := by omega
+      rw [this, Nat.cast_add, Nat.cast_one]
+    rw [h3]
+    linarith
+/-- The topple time is monotone in the scale, from the consistency clause at
+the larger scale. -/
+theorem toppleTime_mono_scale (a b : ℕ) (ha : 1 ≤ a) (hab : a ≤ b)
+    (hconsist : ∀ n : ℕ, (n : ℕ∞) ≤ toppleTime 1 a →
+      odoUnif 1 (2 * b) n (cornerPoint 1 b) =
+        odoUnif 1 (2 * a) n (cornerPoint 1 a))
+    (hhitb : ∃ n : ℕ, 1 ≤ n ∧ (b : ℤ) ≤ odoUnif 1 (2 * b) n (cornerPoint 1 b))
+    (hprior : ∀ d' M' t' : ℕ, regEarlier 1 b (toppleTime 1 b).toNat d' M' t' →
+      1 ≤ d' → 2 ≤ M' → Reg d' M' t' ∧ DimRedAt d' M' t') :
+    toppleTime 1 a ≤ toppleTime 1 b := by
+  by_contra hcon
+  push Not at hcon
+  -- `τ_b < τ_a`
+  have hb1 : 1 ≤ b := le_trans ha hab
+  have hne : toppleTime 1 b ≠ ⊤ := toppleTime_ne_top 1 b (by norm_num) hb1 hhitb
+  obtain ⟨T, hT⟩ := WithTop.ne_top_iff_exists.mp hne
+  have hTle : toppleTime 1 b ≤ (T : ℕ∞) := le_of_eq hT.symm
+  have hTge : (T : ℕ∞) ≤ toppleTime 1 b := le_of_eq hT
+  have hTlt : (T : ℕ∞) < toppleTime 1 a := lt_of_le_of_lt hTge hcon
+  -- the corner of the side-`b` cube reaches `b` at time `T`
+  have hbT : (b : ℤ) ≤ odoUnif 1 (2 * b) T (cornerPoint 1 b) := by
+    have h := (toppleTime_le_iff 1 b (by norm_num) hb1 hhitb (T : ℕ∞)).mp hTle
+    obtain ⟨n, hn, hn1, hnval⟩ := h
+    have hnT : n ≤ T := ENat.coe_le_coe.mp hn
+    have hmono' : odoUnif 1 (2 * b) n (cornerPoint 1 b)
+        ≤ odoUnif 1 (2 * b) T (cornerPoint 1 b) :=
+      odo_mono 1 (2 * b) (fun _ => 2) hnT _
+    linarith
+  -- the consistency clause at scale `b` at time `T`
+  have hcons := hconsist T (le_of_lt hTlt)
+  have hcorner : cornerPoint 1 b = (fun _ : Fin 1 => (b : ℤ)) := by
+    funext i
+    have hi : i = (0 : Fin 1) := Fin.eq_zero i
+    subst hi
+    rw [cornerPoint]
+    simp
+  have hcornera : cornerPoint 1 a = (fun _ : Fin 1 => (a : ℤ)) := by
+    funext i
+    have hi : i = (0 : Fin 1) := Fin.eq_zero i
+    subst hi
+    rw [cornerPoint]
+    simp
+  rw [hcorner] at hbT
+  rw [hcorner, hcornera] at hcons
+  -- so the corner of the side-`a` cube exceeds `a` at time `T < τ_a`
+  have haT : (a : ℤ) < odoUnif 1 (2 * a) T (fun _ : Fin 1 => (a : ℤ)) := by
+    rw [← hcons]
+    have : (a : ℤ) < (b : ℤ) := by
+      have hne : a ≠ b := by
+        intro heq
+        rw [heq] at hcon
+        exact absurd hcon (lt_irrefl _)
+      exact_mod_cast (lt_of_le_of_ne hab hne)
+    linarith
+  -- contradicting `T < τ_a`
+  have hiff := (toppleTime_le_iff 1 a (by norm_num) ha
+    (corner_reaches 1 a (by norm_num) ha
+      (fun e he hel t y hy => by
+        have he0 : e = 0 := by omega
+        subst he0
+        exact (hprior 1 a t (Or.inr (Or.inl ⟨rfl, by omega⟩))
+          (by omega) (by omega)).2 0 (by omega) rfl y hy))
+    (T : ℕ∞)).mpr
+  have hle : toppleTime 1 a ≤ (T : ℕ∞) :=
+    hiff ⟨T, le_rfl, by
+      have h1 : (1 : ℕ∞) ≤ (T : ℕ∞) := by
+        have h2 : (1 : ℕ∞) ≤ toppleTime 1 b := one_le_toppleTime 1 b
+        exact le_trans h2 hTle
+      exact ENat.coe_le_coe.mp h1, by
+      rw [hcornera]; exact le_of_lt haT⟩
+  exact absurd hle (not_le.mpr hTlt)
 end DimRed
