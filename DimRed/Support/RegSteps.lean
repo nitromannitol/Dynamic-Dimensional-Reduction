@@ -32,7 +32,7 @@ induction. -/
 theorem dimred_step_of_earlier (d M t : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
     (hprior : ∀ d' M' t' : ℕ, regEarlier d M t d' M' t' →
       1 ≤ d' → 2 ≤ M' → Reg d' M' t' ∧ DimRedAt d' M' t')
-    (hcritical : ∀ (e q : ℕ) (z : Site e), inSimplex e M z →
+    (hcritical : ∀ (e q : ℕ), 1 ≤ e → e + 1 = d → q = t - 1 → ∀ (z : Site e), inSimplex e M z →
         (∀ k : Fin e, 1 < z k) →
         odoUnif (e + 1) (2 * M) q (Fin.snoc z 1) =
           odoUnif (e + 1) (2 * M) q
@@ -158,7 +158,7 @@ theorem dimred_step_of_earlier (d M t : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
           subst hieq
           exact (hprev_time q hq).2
       exact odoUnif_snoc_of_reduction i M q (fun w hw => hred_i i hi rfl w hw)
-    have hcritical : 1 ≤ q → ∀ (z : Site e), inSimplex e M z →
+    have hcrit_local : 1 ≤ q → ∀ (z : Site e), inSimplex e M z →
         (∀ k : Fin e, 1 < z k) →
         odoUnif (e + 1) (2 * M) (q + 1 - 1) (Fin.snoc z 1) =
           odoUnif (e + 1) (2 * M) (q + 1 - 1)
@@ -426,7 +426,7 @@ theorem dimred_step_of_earlier (d M t : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
         have h2 : odoUnif e (2 * M) 1 z = 1 :=
           odoUnif_one e (2 * M) (by omega) _ (inSimplex_inCube e M z hz)
         rw [h1, h2]
-      · exact hcritical hqpos
+      · exact hcrit_local hqpos
     exact odo_dimred_step e M (q + 1) (by omega) hM x hx hprev hweak hfacet htopple
       hconsist hcrit
 
