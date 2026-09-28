@@ -515,4 +515,40 @@ theorem toppleTime_mono_scale_dim2 (d a b : ℕ) (hd : 1 ≤ d) (ha : 1 ≤ a) (
   have hle := (toppleTime_le_iff d a hd ha hhita (T : ℕ∞)).mpr
   exact absurd (hle ⟨T, le_rfl, ⟨hT1, haT⟩⟩) (not_le.mpr hTlt)
 
+/-- One step of the scale monotonicity of the topple time: `τ_d c ≤ τ_d (c+1)`.
+The domination at `b = a + 1` is exactly the consistency clause, so no
+monotonicity is assumed. -/
+theorem toppleTime_mono_scale_succ (d c : ℕ) (hd : 1 ≤ d) (hc : 1 ≤ c)
+    (hconsist : ∀ n : ℕ, (n : ℕ∞) ≤ toppleTime d c →
+      odoUnif d (2 * (c + 1)) n (cornerPoint d (c + 1)) ≤
+        odoUnif d (2 * c) n (cornerPoint d c) + 1)
+    (hhitc : ∃ n : ℕ, 1 ≤ n ∧ (c : ℤ) ≤ odoUnif d (2 * c) n (cornerPoint d c))
+    (hhitc1 : ∃ n : ℕ, 1 ≤ n ∧
+      ((c + 1 : ℕ) : ℤ) ≤ odoUnif d (2 * (c + 1)) n (cornerPoint d (c + 1))) :
+    toppleTime d c ≤ toppleTime d (c + 1) := by
+  by_contra hcon
+  push Not at hcon
+  have hne : toppleTime d (c + 1) ≠ ⊤ := toppleTime_ne_top d (c + 1) hd (by omega) hhitc1
+  obtain ⟨T, hT⟩ := WithTop.ne_top_iff_exists.mp hne
+  have hTle : toppleTime d (c + 1) ≤ (T : ℕ∞) := le_of_eq hT.symm
+  have hTge : (T : ℕ∞) ≤ toppleTime d (c + 1) := le_of_eq hT
+  have hTlt : (T : ℕ∞) < toppleTime d c := lt_of_le_of_lt hTge hcon
+  have hbT : ((c + 1 : ℕ) : ℤ) ≤ odoUnif d (2 * (c + 1)) T (cornerPoint d (c + 1)) := by
+    have h := (toppleTime_le_iff d (c + 1) hd (by omega) hhitc1 (T : ℕ∞)).mp hTle
+    obtain ⟨n, hn, hn1, hnval⟩ := h
+    have hnT : n ≤ T := ENat.coe_le_coe.mp hn
+    have hmono' := odo_mono d (2 * (c + 1)) (fun _ => 2 * (d : ℤ)) hnT (cornerPoint d (c + 1))
+    simp only [odoUnif] at hmono' hnval ⊢
+    linarith
+  have hdom := hconsist T hTlt.le
+  have hcT : (c : ℤ) ≤ odoUnif d (2 * c) T (cornerPoint d c) := by
+    have hcast : ((c + 1 : ℕ) : ℤ) = (c : ℤ) + 1 := by push_cast; ring
+    rw [hcast] at hbT
+    linarith
+  have hT1 : 1 ≤ T := by
+    have h1 : (1 : ℕ∞) ≤ toppleTime d (c + 1) := one_le_toppleTime d (c + 1)
+    exact ENat.coe_le_coe.mp (le_trans h1 hTle)
+  have hle := (toppleTime_le_iff d c hd hc hhitc (T : ℕ∞)).mpr
+  exact absurd (hle ⟨T, le_rfl, ⟨hT1, hcT⟩⟩) (not_le.mpr hTlt)
+
 end DimRed
