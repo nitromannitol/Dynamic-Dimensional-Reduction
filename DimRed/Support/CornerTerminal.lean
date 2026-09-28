@@ -92,4 +92,20 @@ theorem corner_sub_head_apply_zero (d M : ℕ) (hM : 3 ≤ M) :
   push_cast
   ring
 
+/-- The head neighbour `-e_0` of the corner is the `(M-2)`-corner, in the
+componentwise form. -/
+theorem corner_sub_head_eq' (d M : ℕ) (hM : 3 ≤ M) :
+    (fun i : Fin (d + 1) => cornerPoint (d + 1) (M - 1) i - unit (0 : Fin (d + 1)) i)
+      = cornerPoint (d + 1) (M - 2) := by
+  funext i
+  by_cases hi : (i : ℕ) = 0
+  · have hi0 : i = (0 : Fin (d + 1)) := Fin.ext hi
+    subst hi0
+    have h := corner_sub_head_apply_zero d M hM
+    show cornerPoint (d + 1) (M - 1) 0 - unit (0 : Fin (d + 1)) 0 = ((M - 2 : ℕ) : ℤ)
+    exact h
+  · convert corner_sub_head_apply_ne d M i hi using 1
+    · simp only [Pi.sub_apply]
+    · rw [cornerPoint_apply, if_neg hi]
+
 end DimRed
