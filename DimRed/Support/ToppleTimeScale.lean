@@ -554,18 +554,19 @@ theorem toppleTime_mono_scale_succ (d c : ℕ) (hd : 1 ≤ d) (hc : 1 ≤ c)
 /-- The topple time is monotone in the side length at a fixed dimension `d ≥ 1`,
 with NO circularity: the one-step case is `toppleTime_mono_scale_succ` and the
 chain is `Nat.le_induction`. -/
-theorem toppleTime_mono_scale_dim' (d a b : ℕ) (hd : 1 ≤ d) (ha : 1 ≤ a) (hab : a ≤ b)
-    (hconsist : ∀ c : ℕ, 1 ≤ c → ∀ n : ℕ, (n : ℕ∞) ≤ toppleTime d c →
+theorem toppleTime_mono_scale_dim' (d a b M : ℕ) (hd : 1 ≤ d) (ha : 1 ≤ a) (hab : a ≤ b)
+    (hbM : b < M)
+    (hconsist : ∀ c : ℕ, 1 ≤ c → c < M → ∀ n : ℕ, (n : ℕ∞) ≤ toppleTime d c →
       odoUnif d (2 * (c + 1)) n (cornerPoint d (c + 1)) ≤
         odoUnif d (2 * c) n (cornerPoint d c) + 1)
-    (hhit : ∀ c : ℕ, 1 ≤ c →
+    (hhit : ∀ c : ℕ, 1 ≤ c → c < M →
       ∃ n : ℕ, 1 ≤ n ∧ (c : ℤ) ≤ odoUnif d (2 * c) n (cornerPoint d c)) :
     toppleTime d a ≤ toppleTime d b := by
   induction b, hab using Nat.le_induction with
   | base => exact le_refl _
-  | succ b hab ih =>
-      exact le_trans ih (toppleTime_mono_scale_succ d b hd (le_trans ha hab)
-        (hconsist b (le_trans ha hab)) (hhit b (le_trans ha hab))
-        (hhit (b + 1) (by omega)))
+  | succ c hac ih =>
+      exact le_trans (ih (by omega)) (toppleTime_mono_scale_succ d c hd (le_trans ha hac)
+        (hconsist c (le_trans ha hac) (by omega)) (hhit c (le_trans ha hac) (by omega))
+        (hhit (c + 1) (by omega) hbM))
 
 end DimRed
