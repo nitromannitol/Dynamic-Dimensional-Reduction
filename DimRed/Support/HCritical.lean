@@ -86,7 +86,15 @@ theorem hcritical_from_prior (d M t : ℕ) (_hd : 1 ≤ d) (hM : 2 ≤ M) (ht2 :
     have hS : RegStrongFacet (e + 1) M (t - 2) :=
       (hprior (e + 1) M (t - 2) (Or.inr (Or.inr ⟨hde, rfl, by omega⟩))
         (by omega) hM).1.2.2.2.1
-    exact odo_topple_of_gap e M (t - 1) (by omega) hM (by omega) hS z hz hz1 hgap
+    have hlast : (Fin.snoc z 1 : Site (e + 1)) (Fin.last e) = 1 := by
+      simp [Fin.snoc]
+    have h2 : ∃ l, 2 ≤ (Fin.snoc z 1 : Site (e + 1)) l :=
+      ⟨Fin.castSucc ⟨0, by omega⟩, by
+        simp only [Fin.snoc_castSucc]
+        have := hz1 ⟨0, by omega⟩
+        omega⟩
+    exact odo_topple_of_gap (e + 1) M (t - 1) (by omega) hM (by omega) hS
+      (Fin.snoc z 1) hX (Fin.last e) hlast h2 hgap
   · -- strong topple control in dimension `e+1`
     intro hle
     exact htopple (e + 1) (by omega) (by omega) (by omega)

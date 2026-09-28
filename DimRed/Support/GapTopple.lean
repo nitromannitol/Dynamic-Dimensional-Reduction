@@ -18,69 +18,52 @@ gap at `q`.  So `v_{q-1}(head) ≤ v_{q-1}(mid)`.  Monotonicity in time gives
 `v_q(head) = v_q(mid) + 1 ≥ v_{q-1}(head) + 1`; the one-step bound gives the
 reverse inequality. -/
 theorem odo_topple_of_gap (d M q : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M) (hq : 1 ≤ q)
-    (hS : RegStrongFacet (d + 1) M (q - 1))
-    (z : Site d) (hz : inSimplex d M z) (hz1 : ∀ k, 1 < z k)
-    (hgap : odoUnif (d + 1) (2 * M) q (Fin.snoc z 1) =
-      odoUnif (d + 1) (2 * M) q (Fin.snoc z 1 + unit (Fin.last d)) + 1) :
-    odoUnif (d + 1) (2 * M) q (Fin.snoc z 1) =
-      odoUnif (d + 1) (2 * M) (q - 1) (Fin.snoc z 1) + 1 := by
-  have hX : inSimplex (d + 1) M (Fin.snoc z 1) :=
-    inSimplex_snoc_one_local z hz (by omega)
-  have hlast : (Fin.snoc z 1 : Site (d + 1)) (Fin.last d) = 1 := by
-    simp [Fin.snoc]
-  have h2 : ∃ l, 2 ≤ (Fin.snoc z 1 : Site (d + 1)) l :=
-    ⟨Fin.castSucc ⟨0, by omega⟩, by
-      simp only [Fin.snoc_castSucc]
-      have := hz1 ⟨0, by omega⟩
-      omega⟩
-  have hpt : Fin.snoc z 1 + unit (Fin.last d) = Fin.snoc z 2 := by
-    rw [← fin_snoc_add_last z 1]
-    norm_num
+    (hS : RegStrongFacet d M (q - 1))
+    (z : Site d) (hz : inSimplex d M z) (k : Fin d) (hk : z k = 1)
+    (h2 : ∃ l, 2 ≤ z l)
+    (hgap : odoUnif d (2 * M) q z = odoUnif d (2 * M) q (z + unit k) + 1) :
+    odoUnif d (2 * M) q z = odoUnif d (2 * M) (q - 1) z + 1 := by
   -- the first-difference bound at `q - 1`
-  have hfd := odo_first_diff (d + 1) M (by omega) (by omega) (q - 1) (Fin.last d)
-    (Fin.snoc z 1) (by simp [hlast])
+  have hfd := odo_first_diff d M (by omega) (by omega) (q - 1) k z (by rw [hk])
   -- the one-step bound at `q`
-  have hstep := (odo_succ_sub_bounds (d + 1) (2 * M)
-    (fun _ => 2 * ((d + 1 : ℕ) : ℤ)) (q - 1) (Fin.snoc z 1)).2
+  have hstep := (odo_succ_sub_bounds d (2 * M)
+    (fun _ => 2 * (d : ℤ)) (q - 1) z).2
   rw [show q - 1 + 1 = q by omega] at hstep
   -- the head is at most the neighbour at `q - 1`
-  have hprev_le : odoUnif (d + 1) (2 * M) (q - 1) (Fin.snoc z 1) ≤
-      odoUnif (d + 1) (2 * M) (q - 1) (Fin.snoc z 1 + unit (Fin.last d)) := by
-    by_cases hg : odoUnif (d + 1) (2 * M) (q - 1) (Fin.snoc z 1) =
-        odoUnif (d + 1) (2 * M) (q - 1)
-          (Fin.snoc z 1 + unit (Fin.last d)) + 1
+  have hprev_le : odoUnif d (2 * M) (q - 1) z ≤
+      odoUnif d (2 * M) (q - 1) (z + unit k) := by
+    by_cases hg : odoUnif d (2 * M) (q - 1) z =
+        odoUnif d (2 * M) (q - 1) (z + unit k) + 1
     · -- the gap at `q - 1` would force the head to stay and the neighbour to
       -- rise at `q`, contradicting the gap at `q`
-      have htopple := strong_facet_step_topple_of_reg (d + 1) M (q - 1) hS
-      have hres := (htopple (Fin.snoc z 1) (Fin.last d) hX hlast h2 hg).1
+      have htopple := strong_facet_step_topple_of_reg d M (q - 1) hS
+      have hres := (htopple z k hz hk h2 hg).1
       rw [show q - 1 + 1 = q by omega] at hres
-      have hmid := (htopple (Fin.snoc z 1) (Fin.last d) hX hlast h2 hg).2
+      have hmid := (htopple z k hz hk h2 hg).2
       rw [show q - 1 + 1 = q by omega] at hmid
       omega
     · -- otherwise the first-difference bound gives it
-      have h := hfd
-      rw [hlast] at h
       omega
   -- monotonicity in time at the neighbour
-  have hmono := odo_mono (d + 1) (2 * M) (fun _ => 2 * ((d + 1 : ℕ) : ℤ))
-    (show q - 1 ≤ q by omega) (Fin.snoc z 1 + unit (Fin.last d))
+  have hmono := odo_mono d (2 * M) (fun _ => 2 * (d : ℤ))
+    (show q - 1 ≤ q by omega) (z + unit k)
   -- the gap at `q` and the one-step bound at `q`
-  have hstep' : odoUnif (d + 1) (2 * M) q (Fin.snoc z 1) ≤
-      odoUnif (d + 1) (2 * M) (q - 1) (Fin.snoc z 1) + 1 := by
+  have hstep' : odoUnif d (2 * M) q z ≤
+      odoUnif d (2 * M) (q - 1) z + 1 := by
     have h := hstep
     simp only [odoUnif] at h ⊢
     omega
-  -- `v_q(head) = v_q(mid) + 1 ≥ v_{q-1}(mid) + 1 ≥ v_{q-1}(head) + 1`
-  have hchain : odoUnif (d + 1) (2 * M) (q - 1) (Fin.snoc z 1) + 1 ≤
-      odoUnif (d + 1) (2 * M) q (Fin.snoc z 1) := by
-    have h1 : odoUnif (d + 1) (2 * M) (q - 1) (Fin.snoc z 1) + 1 ≤
-        odoUnif (d + 1) (2 * M) (q - 1) (Fin.snoc z 1 + unit (Fin.last d)) + 1 := by
-      omega
-    have h2 : odoUnif (d + 1) (2 * M) (q - 1) (Fin.snoc z 1 + unit (Fin.last d)) + 1 ≤
-        odoUnif (d + 1) (2 * M) q (Fin.snoc z 1 + unit (Fin.last d)) + 1 := by
-      have hm : odoUnif (d + 1) (2 * M) (q - 1) (Fin.snoc z 1 + unit (Fin.last d)) ≤
-          odoUnif (d + 1) (2 * M) q (Fin.snoc z 1 + unit (Fin.last d)) := hmono
-      linarith [hm]
+  have hchain : odoUnif d (2 * M) (q - 1) z + 1 ≤
+      odoUnif d (2 * M) q z := by
+    have h1 : odoUnif d (2 * M) (q - 1) z + 1 ≤
+        odoUnif d (2 * M) (q - 1) (z + unit k) + 1 := by omega
+    have h2 : odoUnif d (2 * M) (q - 1) (z + unit k) + 1 ≤
+        odoUnif d (2 * M) q (z + unit k) + 1 := by
+      have hm : odoUnif d (2 * M) (q - 1) (z + unit k) ≤
+          odoUnif d (2 * M) q (z + unit k) := hmono
+      linarith
     rw [hgap]
     omega
   omega
+
+end DimRed
