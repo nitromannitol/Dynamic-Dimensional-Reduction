@@ -120,4 +120,29 @@ theorem corner_add_head_off (d M : ℕ) (_hM : 3 ≤ M) :
   have h3 : ((M - 1 : ℕ) : ℤ) + 1 ≤ ((M - 1 : ℕ) : ℤ) := h2
   omega
 
+/-- The corner `(M-1, 1_d)` is the facet point `facetPoint (fun _ : Fin 1 => M-1) 1 d`. -/
+theorem corner_eq_facetPoint (d M : ℕ) :
+    cornerPoint (1 + 1 + d) (M - 1)
+      = facetPoint (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ)) 1 d := by
+  funext i
+  rw [cornerPoint_apply]
+  by_cases hi : (i : ℕ) = 0
+  · rw [if_pos hi]
+    rw [show i = Fin.castAdd d (Fin.castSucc (0 : Fin 1)) from Fin.ext (by
+      rw [hi]
+      rfl)]
+    rw [facetPoint_head]
+  · rw [if_neg hi]
+    by_cases hi1 : (i : ℕ) = 1
+    · rw [show i = Fin.castAdd d (Fin.last 1) from Fin.ext (by
+        rw [hi1]
+        rfl)]
+      rw [facetPoint_mid]
+    · have hilt : (i : ℕ) < 1 + 1 + d := i.isLt
+      have hsub : (i : ℕ) - 2 < d := by omega
+      rw [show i = Fin.natAdd 2 ⟨(i : ℕ) - 2, hsub⟩ from Fin.ext (by
+        simp only [Fin.val_natAdd]
+        omega)]
+      rw [facetPoint_tail]
+
 end DimRed
