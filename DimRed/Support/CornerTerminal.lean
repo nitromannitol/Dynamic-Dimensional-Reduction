@@ -48,13 +48,14 @@ and the parabolic least action principle, which is the paper's route
 (`dimred.tex:1449-1470`). -/
 theorem corner_dominate_step_dimred (d c n : ℕ) (hd : 1 ≤ d) (_hc : 1 ≤ c)
     (_hn : (n : ℕ∞) ≤ toppleTime d c)
-    (hred : ∀ (t : ℕ) (y : Site d),
+    (hred : ∀ (t : ℕ) (y : Site d), inSimplex d (c + 1) y →
       odoUnif (d + 1) (2 * (c + 1)) t (Fin.snoc y 1) = odoUnif d (2 * (c + 1)) t y) :
     odoUnif (d + 1) (2 * (c + 1)) n (cornerPoint (d + 1) (c + 1)) ≤
       odoUnif d (2 * (c + 1)) n (cornerPoint d (c + 1)) := by
   -- the corner of the `(d+1)`-cube is the `Fin.snoc` of the `d`-dimensional
   -- corner with `1`, so dimensional reduction identifies the two
   rw [← cornerPoint_snoc d (c + 1) hd]
-  exact le_of_eq (hred n (cornerPoint d (c + 1)))
+  exact le_of_eq (hred n (cornerPoint d (c + 1))
+    (cornerPoint_mem_inSimplex d (c + 1) (by omega)))
 
 end DimRed
