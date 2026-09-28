@@ -63,6 +63,7 @@ import DimRed.Support.ToppleGeneral
 import DimRed.Support.WeakFacetGeneral
 import DimRed.Support.CornerBound
 import DimRed.Support.CornerReaches
+import DimRed.Support.CornerTerminal
 import DimRed.Support.FacetLapUncond
 import DimRed.Support.WeakFacetLower
 import DimRed.Support.WeakStep
