@@ -179,4 +179,16 @@ theorem corner_sandp_facet' (d M q : ℕ) (_hM : 3 ≤ M) :
   simp only [sandp]
   rfl
 
+/-- The corner's sandpile at the topple time, in the form the toppling argument
+consumes. -/
+theorem corner_sandp_topple' (d M q : ℕ) (hM : 3 ≤ M)
+    (h : 2 * ((1 + 1 + d : ℕ) : ℤ) ≤
+      sandp (1 + 1 + d) (2 * (M - 1)) (fun _ => 2 * ((1 + 1 + d : ℕ) : ℤ)) q
+        (cornerPoint (1 + 1 + d) (M - 1))) :
+    0 ≤ lap (odoUnif (1 + 1 + d) (2 * (M - 1)) q)
+      (cornerPoint (1 + 1 + d) (M - 1)) := by
+  have hfac := corner_sandp_facet' d M q hM
+  rw [hfac] at h
+  linarith
+
 end DimRed
