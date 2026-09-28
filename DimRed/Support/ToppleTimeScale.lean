@@ -1,5 +1,6 @@
 import DimRed.Support.OneDimConsistAll
 import DimRed.Support.StrongDerivStep
+import DimRed.Frozen.Prelim.AxisMonotonicity
 
 open LatticeProb DimRed
 
