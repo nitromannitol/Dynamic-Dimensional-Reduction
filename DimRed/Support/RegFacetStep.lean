@@ -107,4 +107,139 @@ theorem lap_facet_le_of_prev {i j M t : ℕ} (_ht : 1 ≤ t) (_hi : 1 ≤ i) (_h
   have hi0 : (0 : ℤ) ≤ (i : ℤ) := by positivity
   nlinarith [hb.head, hb.mid, hb.tail, hmid1, hmid2, hj1, hi0]
 
+/-- The head term of the facet comparison at `y + unit a`, from the time
+comparison at the facet normal form of the head neighbour. -/
+theorem head_term_add (i j M t : ℕ) (ht : 1 ≤ t) (_hi : 1 ≤ i) (hM : 2 ≤ M)
+    (hS : ∀ (i' j' : ℕ), i' + 1 + j' = i + 1 + j → 1 ≤ i' →
+      RegStrongFacet (i' + 1 + j') M (t - 1))
+    (y : Fin i → ℤ) (hy2 : ∀ a, 2 ≤ y a)
+    (hys : inSimplex (i + 1 + j) M (facetPoint y 1 j)) (a : Fin i) :
+    odoUnif (i + 1 + j) (2 * M) (t - 1) (facetPoint (y + unit a) 1 j)
+      ≤ odoUnif (i + 1 + j) (2 * M) t (facetPoint (y + unit a) 2 j) := by
+  have hshift : facetPoint (y + unit a) 1 j
+      = facetPoint y 1 j + unit (Fin.castAdd j (Fin.castSucc a)) := by
+    rw [facetPoint_add_head']
+  have hshift2 : facetPoint (y + unit a) 2 j
+      = facetPoint y 2 j + unit (Fin.castAdd j (Fin.castSucc a)) := by
+    rw [facetPoint_add_head']
+  rw [hshift, hshift2]
+  by_cases haM : y a = (M : ℤ)
+  · -- the point is off the cube: both odometers vanish
+    have hoff : ¬ inCube (i + 1 + j) (2 * M)
+        (facetPoint y 1 j + unit (Fin.castAdd j (Fin.castSucc a))) := by
+      intro hc
+      have h := hc (Fin.castAdd j (Fin.castSucc a))
+      rw [Pi.add_apply, facetPoint_head, unit_apply_self] at h
+      rw [loCoord_two_mul, hiCoord_two_mul] at h
+      omega
+    have hoff2 : ¬ inCube (i + 1 + j) (2 * M)
+        (facetPoint y 2 j + unit (Fin.castAdd j (Fin.castSucc a))) := by
+      intro hc
+      have h := hc (Fin.castAdd j (Fin.castSucc a))
+      rw [Pi.add_apply, facetPoint_head, unit_apply_self] at h
+      rw [loCoord_two_mul, hiCoord_two_mul] at h
+      omega
+    simp only [odoUnif]
+    rw [odo_eq_zero_outside _ _ _ _ _ hoff, odo_eq_zero_outside _ _ _ _ _ hoff2]
+  -- the head neighbour has its mid coordinate equal to one, so the facet normal
+  -- form applies
+  have hmid : (facetPoint y 1 j + unit (Fin.castAdd j (Fin.castSucc a)))
+      (Fin.castAdd j (Fin.last i)) = 1 := by
+    rw [Pi.add_apply, facetPoint_mid]
+    have hzero : (unit (Fin.castAdd j (Fin.castSucc a)) : Site (i + 1 + j))
+        (Fin.castAdd j (Fin.last i)) = 0 := by
+      rw [unit_apply_ne]
+      intro hh
+      have hv := congrArg Fin.val hh
+      simp only [Fin.val_castAdd, Fin.val_castSucc, Fin.val_last] at hv
+      have hlt := a.isLt
+      omega
+    rw [hzero, add_zero]
+  have hpos : inPos (i + 1 + j) M
+      (facetPoint y 1 j + unit (Fin.castAdd j (Fin.castSucc a))) := by
+    intro l
+    refine Fin.addCases ?_ ?_ l
+    · intro h
+      refine Fin.lastCases ?_ (fun b => ?_) h
+      · rw [Pi.add_apply, facetPoint_mid]
+        have hzero : (unit (Fin.castAdd j (Fin.castSucc a)) : Site (i + 1 + j))
+            (Fin.castAdd j (Fin.last i)) = 0 := by
+          rw [unit_apply_ne]
+          intro hh
+          have hv := congrArg Fin.val hh
+          simp only [Fin.val_castAdd, Fin.val_castSucc, Fin.val_last] at hv
+          have hlt := a.isLt
+          omega
+        rw [hzero, add_zero]
+        exact ⟨by norm_num, by omega⟩
+      · rw [Pi.add_apply, facetPoint_head]
+        by_cases hba : b = a
+        · subst hba
+          rw [unit_apply_self]
+          refine ⟨by have := hy2 b; omega, ?_⟩
+          have h := (hys.1 (Fin.castAdd j (Fin.castSucc b))).2
+          rw [facetPoint_head] at h
+          omega
+        · have hzero : (unit (Fin.castAdd j (Fin.castSucc a)) : Site (i + 1 + j))
+              (Fin.castAdd j (Fin.castSucc b)) = 0 := by
+            rw [unit_apply_ne]
+            intro hh
+            exact hba (Fin.ext (by
+              have hv := congrArg Fin.val hh
+              simp only [Fin.val_castAdd, Fin.val_castSucc] at hv
+              omega))
+          rw [hzero, add_zero]
+          have h := hys.1 (Fin.castAdd j (Fin.castSucc b))
+          rw [facetPoint_head] at h
+          exact h
+    · intro b
+      rw [Pi.add_apply, facetPoint_tail]
+      have hzero : (unit (Fin.castAdd j (Fin.castSucc a)) : Site (i + 1 + j))
+          (Fin.natAdd (i + 1) b) = 0 := by
+        rw [unit_apply_ne]
+        intro hh
+        have hv := congrArg Fin.val hh
+        simp [Fin.castAdd, Fin.natAdd] at hv
+        omega
+      rw [hzero, add_zero]
+      exact ⟨by norm_num, by omega⟩
+  obtain ⟨i', j', hij, z, hz2, hzs, hi', hodo⟩ :=
+    facet_normal_form (i + 1 + j) M _ hpos (Fin.castAdd j (Fin.last i)) hmid
+  -- the time comparison at the sorted point
+  have h := odo_facet_two_ge_prev (i := i') (j := j') (M := M) (t := t) ht
+    (hi' ⟨Fin.castAdd j (Fin.castSucc a), by
+      rw [Pi.add_apply, facetPoint_head, unit_apply_self]
+      have := hy2 a
+      omega⟩) hM (hS i' j' hij (hi' ⟨Fin.castAdd j (Fin.castSucc a), by
+      rw [Pi.add_apply, facetPoint_head, unit_apply_self]
+      have := hy2 a
+      omega⟩)) z ⟨⟨0, by
+        have h := hi' ⟨Fin.castAdd j (Fin.castSucc a), by
+          rw [Pi.add_apply, facetPoint_head, unit_apply_self]
+          have := hy2 a
+          omega⟩
+        omega⟩, hz2 ⟨0, by
+        have h := hi' ⟨Fin.castAdd j (Fin.castSucc a), by
+          rw [Pi.add_apply, facetPoint_head, unit_apply_self]
+          have := hy2 a
+          omega⟩
+        omega⟩⟩ hzs
+  -- transport back: `hodo` identifies the raw and sorted odometers at every time
+  rw [← (hodo (t - 1)).1] at h
+  rw [← (hodo t).2] at h
+  -- the right side is `facetPoint y 2 j + unit (head a)`
+  have hpt : facetPoint y 1 j + unit (Fin.castAdd j (Fin.castSucc a))
+      + unit (Fin.castAdd j (Fin.last i))
+      = facetPoint y 2 j + unit (Fin.castAdd j (Fin.castSucc a)) := by
+    have h1 : facetPoint y 1 j + unit (Fin.castAdd j (Fin.last i)) = facetPoint y 2 j := by
+      rw [facetPoint_add_mid_point y 1]
+      norm_num
+    calc facetPoint y 1 j + unit (Fin.castAdd j (Fin.castSucc a))
+          + unit (Fin.castAdd j (Fin.last i))
+        = facetPoint y 1 j + unit (Fin.castAdd j (Fin.last i))
+          + unit (Fin.castAdd j (Fin.castSucc a)) := by abel
+      _ = facetPoint y 2 j + unit (Fin.castAdd j (Fin.castSucc a)) := by rw [h1]
+  rw [hpt] at h
+  exact h
+
 end DimRed
