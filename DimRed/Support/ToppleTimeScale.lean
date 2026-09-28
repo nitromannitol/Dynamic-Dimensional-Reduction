@@ -388,4 +388,19 @@ theorem odoInfUnif_lastCases_eq_snoc (n M : ℕ) (x : Fin n → ℤ) (c : ℤ) :
   rw [lastCases_eq_snoc]
 
 
+
+
+/-- The `Fin.lastCases` at the last index is the value. -/
+theorem lastCases_at_last {n : ℕ} (c : ℤ) (x : Fin n → ℤ) :
+    (fun k : Fin (n + 1) => Fin.lastCases c x k) (Fin.last n) = c := by
+  simp only [Fin.lastCases_last]
+
+
+
+/-- The `Fin.lastCases` at a head index is the head value. -/
+theorem lastCases_at_castSucc {n : ℕ} (c : ℤ) (x : Fin n → ℤ) (a : Fin n) :
+    (fun k : Fin (n + 1) => Fin.lastCases c x k) a.castSucc = x a := by
+  simp only [Fin.lastCases_castSucc]
+
+
 end DimRed
