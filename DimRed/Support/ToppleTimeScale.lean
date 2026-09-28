@@ -551,4 +551,21 @@ theorem toppleTime_mono_scale_succ (d c : ℕ) (hd : 1 ≤ d) (hc : 1 ≤ c)
   have hle := (toppleTime_le_iff d c hd hc hhitc (T : ℕ∞)).mpr
   exact absurd (hle ⟨T, le_rfl, ⟨hT1, hcT⟩⟩) (not_le.mpr hTlt)
 
+/-- The topple time is monotone in the side length at a fixed dimension `d ≥ 1`,
+with NO circularity: the one-step case is `toppleTime_mono_scale_succ` and the
+chain is `Nat.le_induction`. -/
+theorem toppleTime_mono_scale_dim' (d a b : ℕ) (hd : 1 ≤ d) (ha : 1 ≤ a) (hab : a ≤ b)
+    (hconsist : ∀ c : ℕ, 1 ≤ c → ∀ n : ℕ, (n : ℕ∞) ≤ toppleTime d c →
+      odoUnif d (2 * (c + 1)) n (cornerPoint d (c + 1)) ≤
+        odoUnif d (2 * c) n (cornerPoint d c) + 1)
+    (hhit : ∀ c : ℕ, 1 ≤ c →
+      ∃ n : ℕ, 1 ≤ n ∧ (c : ℤ) ≤ odoUnif d (2 * c) n (cornerPoint d c)) :
+    toppleTime d a ≤ toppleTime d b := by
+  induction b, hab using Nat.le_induction with
+  | base => exact le_refl _
+  | succ b hab ih =>
+      exact le_trans ih (toppleTime_mono_scale_succ d b hd (le_trans ha hab)
+        (hconsist b (le_trans ha hab)) (hhit b (le_trans ha hab))
+        (hhit (b + 1) (by omega)))
+
 end DimRed
