@@ -420,4 +420,28 @@ theorem odoInfUnif_fin_one_eq (M : ℕ) (a b : Fin 1) :
   rw [fin_one_subsingleton a b]
 
 
+
+/-- The topple time is monotone in the side length at a fixed dimension `d ≥ 1`:
+`τ_d a ≤ τ_d b` for `a ≤ b`.  Immediate from `τ_j = j² - j + 1`. -/
+theorem toppleTime_mono_scale_dim (d a b : ℕ) (_hd : 1 ≤ d) (ha : 1 ≤ a) (hab : a ≤ b)
+    (hsq : ∀ j : ℕ, 1 ≤ j → toppleTime d j = ((j * j - j + 1 : ℕ) : ℕ∞)) :
+    toppleTime d a ≤ toppleTime d b := by
+  have hb : 1 ≤ b := le_trans ha hab
+  rw [hsq a ha, hsq b hb]
+  have h1 : a * a ≤ b * b := Nat.mul_le_mul hab hab
+  have h2 : a * a - a + 1 ≤ b * b - b + 1 := by
+    have h3 : a * a - a = a * (a - 1) := by
+      rcases Nat.eq_zero_or_pos a with ha0 | hapos
+      · subst ha0; simp
+      · rw [Nat.mul_sub_left_distrib, Nat.mul_one]
+    have h4 : b * b - b = b * (b - 1) := by
+      rcases Nat.eq_zero_or_pos b with hb0 | hbpos
+      · subst hb0; simp
+      · rw [Nat.mul_sub_left_distrib, Nat.mul_one]
+    rw [h3, h4]
+    have h5 : a - 1 ≤ b - 1 := by omega
+    have h6 : a * (a - 1) ≤ b * (b - 1) := Nat.mul_le_mul hab h5
+    omega
+  exact_mod_cast h2
+
 end DimRed
