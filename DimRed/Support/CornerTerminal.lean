@@ -224,4 +224,57 @@ theorem corner_sub_head_eq'' (_d M : ℕ) (hM : 3 ≤ M) :
   rw [hcast, hcast2]
   ring
 
+
+
+/-- Axis monotonicity at the corner: the `(M-2)`-corner is at most the
+`(M-1)`-corner. -/
+theorem corner_le_corner (d M t : ℕ) (hM : 4 ≤ M) :
+    odoUnif (1 + 1 + d) (2 * (M - 1)) t (cornerPoint (1 + 1 + d) (M - 1))
+      ≤ odoUnif (1 + 1 + d) (2 * (M - 1)) t (cornerPoint (1 + 1 + d) (M - 2)) := by
+  have h := odo_le_of_le (d := 1 + 1 + d) (M := M - 1) (by omega)
+    (2 * ((1 + 1 + d : ℕ) : ℤ)) (by positivity)
+    (by have h0 : (0 : ℤ) ≤ ((1 + 1 + d : ℕ) : ℤ) := by positivity
+        have h2 : (2 : ℤ) * ((1 + 1 + d : ℕ) : ℤ) = 2 * (2 + (d : ℤ)) := by push_cast; ring
+        rw [h2]
+        linarith) t
+    1 (cornerPoint (1 + 1 + d) (M - 1)) (cornerPoint (1 + 1 + d) (M - 2))
+    (cornerPoint_mem_inSimplex (1 + 1 + d) (M - 1) (by omega))
+    (by
+      obtain ⟨h1, h2⟩ := cornerPoint_mem_inSimplex (1 + 1 + d) (M - 2) (by omega)
+      exact ⟨fun i => ⟨(h1 i).1, le_trans (h1 i).2 (by omega)⟩, h2⟩)
+    (by
+      intro i
+      rw [cornerPoint_apply, cornerPoint_apply]
+      by_cases hi : (i : ℕ) = 0
+      · simp only [hi, if_true]
+        have h : M - 2 ≤ M - 1 := by omega
+        exact show ((M - 2 : ℕ) : ℤ) ≤ ((M - 1 : ℕ) : ℤ) from Int.ofNat_le.mpr h
+      · simp only [hi, if_false]
+        omega)
+    (by
+      rw [show (∑ i, (cornerPoint (1 + 1 + d) (M - 1) i
+          - cornerPoint (1 + 1 + d) (M - 2) i)).toNat = 1 from by
+        have h1 : ∀ i : Fin (1 + 1 + d), cornerPoint (1 + 1 + d) (M - 1) i
+            - cornerPoint (1 + 1 + d) (M - 2) i
+            = if (i : ℕ) = 0 then 1 else 0 := by
+          intro i
+          rw [cornerPoint_apply, cornerPoint_apply]
+          by_cases hi : (i : ℕ) = 0
+          · rw [if_pos hi, if_pos hi]
+            omega
+          · rw [if_neg hi, if_neg hi]
+            omega
+        simp only [h1]
+        rw [show (∑ x : Fin (1 + 1 + d), (if (x : ℕ) = 0 then (1 : ℤ) else 0))
+            = 1 from by
+          rw [Finset.sum_eq_single (0 : Fin (1 + 1 + d))]
+          · exact if_pos rfl
+          · intro b _ hb
+            exact if_neg (by intro h; exact hb (Fin.ext (by simpa using h)))
+          · intro h
+            exact absurd (Finset.mem_univ _) h]
+        simp])
+  exact h
+
+
 end DimRed
