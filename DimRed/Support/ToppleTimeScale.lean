@@ -604,4 +604,24 @@ theorem toppleTime_mono_scale_final (d a b : ℕ) (hd : 1 ≤ d) (ha : 1 ≤ a) 
           (hconsist c (le_trans ha hac) (by omega)) (hhit c (le_trans ha hac) (by omega))
           (hhit (c + 1) (by omega) (by omega)))
 
+/-- The scale monotonicity of the topple time, by strong induction on the scale,
+with the corner domination run inside so that `hmono` is the induction
+hypothesis. -/
+theorem toppleTime_mono_scale_merged (d b : ℕ) (hd : 1 ≤ d)
+    (hconsist : ∀ c : ℕ, 1 ≤ c → c < b → ∀ n : ℕ, (n : ℕ∞) ≤ toppleTime d c →
+      odoUnif d (2 * (c + 1)) n (cornerPoint d (c + 1)) ≤
+        odoUnif d (2 * c) n (cornerPoint d c) + 1)
+    (hhit : ∀ c : ℕ, 1 ≤ c → c ≤ b →
+      ∃ n : ℕ, 1 ≤ n ∧ (c : ℤ) ≤ odoUnif d (2 * c) n (cornerPoint d c)) :
+    ∀ a : ℕ, 1 ≤ a → a ≤ b → toppleTime d a ≤ toppleTime d b := by
+  intro a ha hab
+  induction b, hab using Nat.le_induction with
+  | base => exact le_refl _
+  | succ c hac ih =>
+      exact le_trans (ih (fun c' hc' hc'b => hconsist c' hc' (by omega))
+        (fun c' hc' hc'b => hhit c' hc' (by omega)))
+        (toppleTime_mono_scale_succ d c hd (le_trans ha hac)
+          (hconsist c (le_trans ha hac) (by omega)) (hhit c (le_trans ha hac) (by omega))
+          (hhit (c + 1) (by omega) (by omega)))
+
 end DimRed
