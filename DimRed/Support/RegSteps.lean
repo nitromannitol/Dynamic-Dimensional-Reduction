@@ -158,7 +158,7 @@ theorem dimred_step_of_earlier (d M t : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
           subst hieq
           exact (hprev_time q hq).2
       exact odoUnif_snoc_of_reduction i M q (fun w hw => hred_i i hi rfl w hw)
-    have hcritical : ∀ (z : Site e), inSimplex e M z →
+    have hcritical : 1 ≤ q → ∀ (z : Site e), inSimplex e M z →
         (∀ k : Fin e, 1 < z k) →
         odoUnif (e + 1) (2 * M) (q + 1 - 1) (Fin.snoc z 1) =
           odoUnif (e + 1) (2 * M) (q + 1 - 1)
@@ -183,9 +183,251 @@ theorem dimred_step_of_earlier (d M t : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
                 (fun i => w i - ((M : ℤ) - (j : ℤ)))) →
         odoUnif (e + 1) (2 * M) (q + 1) (Fin.snoc z 1) =
           odoUnif e (2 * M) (q + 1) z := by
-      intro z hz hz1 hgap hprev' hweak' hfacet' htopple' hconsist'
-      exact hcritical e q z hz hz1 hgap hprev' hweak' hfacet' htopple' hconsist'
+      intro hqpos z hz hz1 hgap hprev' hweak' hfacet' htopple' hconsist'
+      have he1 : 1 ≤ e := by
+        rcases Nat.eq_zero_or_pos e with he0 | hpos
+        · subst he0
+          have h := hz1 ⟨0, by omega⟩
+          omega
+        · exact hpos
+      have hq1 : 2 ≤ q + 1 := by omega
+      have hconsist'' : ∀ (j : ℕ), 1 ≤ j → j ≤ M → (q : ℕ∞) ≤ toppleTime e j →
+          ∀ w : Site e, inSimplex e M w →
+            (∀ i : Fin e, (M : ℤ) - (j : ℤ) < w i) →
+            odoUnif e (2 * M) q w =
+              odoUnif e (2 * j) q (fun i => w i - ((M : ℤ) - (j : ℤ))) := by
+        intro j hj1 hj2 hs w hw hwgt
+        exact (hprior e M q (Or.inl (by omega)) (by omega) hM).1.1 j hj1 hj2 hs w hw hwgt
+      have hqeq : q + 1 - 1 = q := by omega
+      rw [hqeq] at hgap hprev' hweak' hfacet' hconsist'
+      have hq2 : q + 1 - 2 = q - 1 := by omega
+      rw [hq2] at htopple'
+      have hprev : ∀ (s : ℕ) (m : ℕ), s < q + 1 → 2 ≤ m → m ≤ M → ∀ y : Site e,
+          inSimplex e m y →
+          odoUnif (e + 1) (2 * m) s (Fin.snoc y 1) = odoUnif e (2 * m) s y := by
+        intro s m hs hm2 hmM y hy
+        have he : regEarlier (e + 1) M (q + 1) (e + 1) m s := by
+          by_cases hm : m < M
+          · exact Or.inr (Or.inl ⟨rfl, hm⟩)
+          · exact Or.inr (Or.inr ⟨rfl, by omega, by omega⟩)
+        exact (hprior (e + 1) m s he (by omega) (by omega)).2 e he1 rfl y hy
+      have hprev_one : ∀ (s : ℕ), s < q + 1 → ∀ y : Site e, inSimplex e 1 y →
+          odoUnif (e + 1) 2 s (Fin.snoc y 1) = odoUnif e 2 s y := by
+        intro s hs y hy
+        have hy1 : Fin.snoc y 1 = fun _ : Fin (e + 1) => (1 : ℤ) := by
+          funext k
+          refine Fin.lastCases ?_ (fun a => ?_) k
+          · rw [Fin.snoc_last]
+          · rw [Fin.snoc_castSucc]
+            have h := (hy.1 a).1
+            have h2 := (hy.1 a).2
+            omega
+        have hy2 : y = fun _ : Fin e => (1 : ℤ) := by
+          funext a
+          have h := (hy.1 a).1
+          have h2 := (hy.1 a).2
+          omega
+        rw [hy1, hy2, odoUnif_one_scale (e + 1) s (by omega), odoUnif_one_scale e s he1]
+      have hgap' : odoUnif (e + 1) (2 * M) ((q + 1) - 1) (Fin.snoc z 1) =
+          odoUnif (e + 1) (2 * M) ((q + 1) - 1) (Fin.snoc z 2) + 1 := by
+        have hq : q + 1 - 1 = q := by omega
+        rw [hq]
+        have hsnoc : Fin.snoc z 1 + unit (Fin.last e) = Fin.snoc z 2 := by
+          funext k
+          refine Fin.lastCases ?_ (fun a => ?_) k
+          · rw [Pi.add_apply, Fin.snoc_last, Fin.snoc_last]
+            simp [unit]
+          · rw [Pi.add_apply, Fin.snoc_castSucc, Fin.snoc_castSucc]
+            simp [unit]
+        rw [← hsnoc]
+        exact hgap
+      have hjump : odoUnif (e + 1) (2 * M) ((q + 1) - 1) (Fin.snoc z 1) =
+          odoUnif (e + 1) (2 * M) ((q + 1) - 2) (Fin.snoc z 1) + 1 := by
+        have hq : q + 1 - 1 = q := by omega
+        have hq2 : q + 1 - 2 = q - 1 := by omega
+        rw [hq, hq2]
+        have hX : inSimplex (e + 1) M (Fin.snoc z 1) := inSimplex_snoc_one_local z hz (by omega)
+        have hk : (Fin.snoc z 1 : Site (e + 1)) (Fin.last e) = 1 := by rw [Fin.snoc_last]
+        have h2 : ∃ l, 2 ≤ (Fin.snoc z 1 : Site (e + 1)) l :=
+          ⟨Fin.castSucc ⟨0, by omega⟩, by
+            rw [Fin.snoc_castSucc]
+            exact hz1 ⟨0, by omega⟩⟩
+        have hS : RegStrongFacet (e + 1) M ((q + 1) - 2) :=
+          (hprior (e + 1) M ((q + 1) - 2) (Or.inr (Or.inr ⟨rfl, rfl, by omega⟩))
+            (by omega) (by omega)).1.2.2.2.1
+        have h := odo_jump_of_gap (d := e + 1) (M := M) (t := q + 1) (by omega) hM (by omega) hS
+          (Fin.snoc z 1) hX (Fin.last e) hk h2 hgap
+        have h1 : q + 1 - 1 = q := by omega
+        have h2' : q + 1 - 2 = q - 1 := by omega
+        rw [h1, h2'] at h
+        exact h
+      have htopple_up : toppleTime (e + 1) (M - 1) ≤ (((q + 1) - 2 : ℕ) : ℕ∞) →
+          simplexMax (e + 1) M (fun w => odoUnif (e + 1) (2 * M) (q + 1) w
+            - odoUnif (e + 1) (2 * M) ((q + 1) - 2) w) ≤ 1 := by
+        intro hs
+        have hq2 : q + 1 - 2 = q - 1 := by omega
+        rw [hq2] at hs ⊢
+        exact htopple' (e + 1) (by omega) (by omega) hs
+      have htopple_down : toppleTime (e + 1) (M - 1) ≤ (((q + 1) - 2 : ℕ) : ℕ∞) →
+          simplexMax e M (fun w => odoUnif e (2 * M) (q + 1) w
+            - odoUnif e (2 * M) ((q + 1) - 2) w) ≤ 1 := by
+        intro hs
+        have hq2 : q + 1 - 2 = q - 1 := by omega
+        rw [hq2] at hs ⊢
+        -- the topple time in dimension e is at most the one in dimension e+1, from
+        -- dimensional reduction at the corner at every earlier time
+        have hmono : toppleTime e (M - 1) ≤ toppleTime (e + 1) (M - 1) := by
+          by_cases hM3 : 3 ≤ M
+          · have hM3' : 2 ≤ M - 1 := by omega
+            have hred : ∀ (t : ℕ) (y : Site e), inSimplex e (M - 1) y →
+                odoUnif (e + 1) (2 * (M - 1)) t (Fin.snoc y 1) =
+                  odoUnif e (2 * (M - 1)) t y := by
+              intro t y hy
+              exact (hprior (e + 1) (M - 1) t
+                (Or.inr (Or.inl ⟨rfl, by omega⟩)) (by omega) hM3').2 e (by omega) rfl y hy
+            have hred' : ∀ (e' : ℕ), 1 ≤ e' → e' < e + 1 → ∀ (t : ℕ) (y : Site e'),
+                inSimplex e' (M - 1) y →
+                odoUnif (e' + 1) (2 * (M - 1)) t (Fin.snoc y 1) =
+                  odoUnif e' (2 * (M - 1)) t y := by
+              intro e' he' he'l t y hy
+              rcases lt_or_eq_of_le (by omega : e' ≤ e) with hlt | heq
+              · exact (hprior (e' + 1) (M - 1) t (Or.inl (by omega)) (by omega)
+                  hM3').2 e' he' rfl y hy
+              · cases heq
+                exact (hprior (e + 1) (M - 1) t
+                  (Or.inr (Or.inl ⟨rfl, by omega⟩)) (by omega) hM3').2 e he' rfl y hy
+            exact toppleTime_mono_dim e (M - 1) (by omega) (by omega) hred hred'
+          · -- M = 2: the topple time is one in every dimension
+            have hM2 : M = 2 := by omega
+            subst hM2
+            have h1 : toppleTime e 1 = 1 := by
+              have hle : toppleTime e 1 ≤ 1 := by
+                rw [toppleTime_eq_corner e 1 (by omega) (by omega)]
+                apply sInf_le
+                exact ⟨1, ⟨by norm_num, corner_one_le e⟩, rfl⟩
+              exact le_antisymm hle (one_le_toppleTime e 1)
+            have h2 : toppleTime (e + 1) 1 = 1 := by
+              have hle : toppleTime (e + 1) 1 ≤ 1 := by
+                rw [toppleTime_eq_corner (e + 1) 1 (by omega) (by omega)]
+                apply sInf_le
+                exact ⟨1, ⟨by norm_num, corner_one_le (e + 1)⟩, rfl⟩
+              exact le_antisymm hle (one_le_toppleTime (e + 1) 1)
+            rw [h1, h2]
+        exact htopple' e (by omega) (by omega) (le_trans hmono hs)
+      have hconsist : (((q + 1) - 1 : ℕ) : ℕ∞) ≤ toppleTime (e + 1) (M - 1) →
+          odoUnif (e + 1) (2 * M) ((q + 1) - 1) (Fin.snoc z 2)
+            = odoUnif (e + 1) (2 * (M - 1)) ((q + 1) - 1) (Fin.snoc (fun k => z k - 1) 1) ∧
+          odoUnif e (2 * M) ((q + 1) - 1) z = odoUnif e (2 * (M - 1)) ((q + 1) - 1) (fun k => z k - 1) := by
+        intro hs
+        have hq : q + 1 - 1 = q := by omega
+        rw [hq] at hs ⊢
+        have hMsub : (M : ℤ) - ((M - 1 : ℕ) : ℤ) = 1 := by omega
+        have hsnoc : (fun i : Fin (e + 1) => (Fin.snoc z 2 : Site (e + 1)) i - 1)
+            = Fin.snoc (fun k => z k - 1) 1 := by
+          funext k
+          refine Fin.lastCases ?_ (fun a => ?_) k
+          · rw [Fin.snoc_last, Fin.snoc_last]
+            norm_num
+          · rw [Fin.snoc_castSucc, Fin.snoc_castSucc]
+        constructor
+        · rw [← hsnoc]
+          have hgoal : (fun i : Fin (e + 1) => (Fin.snoc z 2 : Site (e + 1)) i - 1)
+              = (fun i => (Fin.snoc z 2 : Site (e + 1)) i - ((M : ℤ) - ((M - 1 : ℕ) : ℤ))) := by
+            funext i
+            rw [hMsub]
+          rw [hgoal]
+          exact (hconsist' (M - 1) (by omega) (by omega) hs (Fin.snoc z 2)
+            (inSimplex_snoc_two_local z hz hz1 hM)
+            (fun i => by
+              refine Fin.lastCases ?_ (fun a => ?_) i
+              · rw [Fin.snoc_last]
+                omega
+              · rw [Fin.snoc_castSucc]
+                have h1 := (hz.1 a).1
+                have h3 := hz1 a
+                omega))
+        · have hmono : toppleTime (e + 1) (M - 1) ≤ toppleTime e (M - 1) := by
+            by_cases hM3 : 3 ≤ M
+            · have hM3' : 2 ≤ M - 1 := by omega
+              have hred : ∀ (t : ℕ) (y : Site e), inSimplex e (M - 1) y →
+                  odoUnif (e + 1) (2 * (M - 1)) t (Fin.snoc y 1) =
+                    odoUnif e (2 * (M - 1)) t y := by
+                intro t y hy
+                exact (hprior (e + 1) (M - 1) t
+                  (Or.inr (Or.inl ⟨rfl, by omega⟩)) (by omega) hM3').2 e (by omega) rfl y hy
+              have hred' : ∀ (e' : ℕ), 1 ≤ e' → e' < e + 1 → ∀ (t : ℕ) (y : Site e'),
+                  inSimplex e' (M - 1) y →
+                  odoUnif (e' + 1) (2 * (M - 1)) t (Fin.snoc y 1) =
+                    odoUnif e' (2 * (M - 1)) t y := by
+                intro e' he' he'l t y hy
+                rcases lt_or_eq_of_le (by omega : e' ≤ e) with hlt | heq
+                · exact (hprior (e' + 1) (M - 1) t (Or.inl (by omega)) (by omega)
+                    hM3').2 e' he' rfl y hy
+                · cases heq
+                  exact (hprior (e + 1) (M - 1) t
+                    (Or.inr (Or.inl ⟨rfl, by omega⟩)) (by omega) hM3').2 e he' rfl y hy
+              exact toppleTime_mono_dim_le e (M - 1) (by omega) (by omega) hred hred'
+            · have hM2 : M = 2 := by omega
+              subst hM2
+              have h1 : toppleTime e 1 = 1 := by
+                have hle : toppleTime e 1 ≤ 1 := by
+                  rw [toppleTime_eq_corner e 1 (by omega) (by omega)]
+                  apply sInf_le
+                  exact ⟨1, ⟨by norm_num, corner_one_le e⟩, rfl⟩
+                exact le_antisymm hle (one_le_toppleTime e 1)
+              have h2 : toppleTime (e + 1) 1 = 1 := by
+                have hle : toppleTime (e + 1) 1 ≤ 1 := by
+                  rw [toppleTime_eq_corner (e + 1) 1 (by omega) (by omega)]
+                  apply sInf_le
+                  exact ⟨1, ⟨by norm_num, corner_one_le (e + 1)⟩, rfl⟩
+                exact le_antisymm hle (one_le_toppleTime (e + 1) 1)
+              rw [h1, h2]
+          have h := hconsist'' (M - 1) (by omega) (by omega) (le_trans hs hmono) z hz
+            (fun i => by
+              have h1 := (hz.1 i).1
+              have h3 := hz1 i
+              omega)
+          simpa only [hMsub] using h
+      exact odo_dimred_critical e M (q + 1) he1 hM hq1 z hz hz1 hprev hprev_one hgap' hjump
+        htopple_up htopple_down hconsist
+
+    have hcrit : ∀ (z : Site e), inSimplex e M z →
+        (∀ k : Fin e, 1 < z k) →
+        odoUnif (e + 1) (2 * M) (q + 1 - 1) (Fin.snoc z 1) =
+          odoUnif (e + 1) (2 * M) (q + 1 - 1)
+            (Fin.snoc z 1 + unit (Fin.last e)) + 1 →
+        (∀ i : ℕ, 1 ≤ i → i ≤ e → ∀ w : Site i,
+            odoUnif (i + 1) (2 * M) (q + 1 - 1) (Fin.snoc w 1) =
+              odoUnif i (2 * M) (q + 1 - 1) w) →
+        (weak_facet_step (e + 1) M (q + 1 - 1) ∧
+          ∀ i : ℕ, 1 ≤ i → i ≤ e → weak_facet_step i M (q + 1 - 1)) →
+        (strong_facet_step (e + 1) M (q + 1 - 1) ∧
+          ∀ i : ℕ, 1 ≤ i → i ≤ e → strong_facet_step i M (q + 1 - 1)) →
+        (∀ i : ℕ, 1 ≤ i → i ≤ e + 1 →
+          (toppleTime i (M - 1) ≤ ((q + 1 - 2 : ℕ) : ℕ∞) →
+            simplexMax i M (fun w => odoUnif i (2 * M) (q + 1) w
+              - odoUnif i (2 * M) (q + 1 - 2) w) ≤ 1)) →
+        (∀ (j : ℕ), 1 ≤ j → j ≤ M →
+          ((q + 1 - 1 : ℕ) : ℕ∞) ≤ toppleTime (e + 1) j →
+          ∀ w : Site (e + 1), inSimplex (e + 1) M w →
+            (∀ i : Fin (e + 1), (M : ℤ) - (j : ℤ) < w i) →
+            odoUnif (e + 1) (2 * M) (q + 1 - 1) w =
+              odoUnif (e + 1) (2 * j) (q + 1 - 1)
+                (fun i => w i - ((M : ℤ) - (j : ℤ)))) →
+        odoUnif (e + 1) (2 * M) (q + 1) (Fin.snoc z 1) =
+          odoUnif e (2 * M) (q + 1) z := by
+      rcases Nat.eq_zero_or_pos q with hq0 | hqpos
+      · subst hq0
+        intro z hz hz1 hgap hprev' hweak' hfacet' htopple' hconsist'
+        have h1 : odoUnif (e + 1) (2 * M) 1 (Fin.snoc z 1) = 1 :=
+          odoUnif_one (e + 1) (2 * M) (by omega) _
+            (inSimplex_inCube (e + 1) M (Fin.snoc z 1)
+              (inSimplex_snoc_one_local z hz (by omega)))
+        have h2 : odoUnif e (2 * M) 1 z = 1 :=
+          odoUnif_one e (2 * M) (by omega) _ (inSimplex_inCube e M z hz)
+        rw [h1, h2]
+      · exact hcritical hqpos
     exact odo_dimred_step e M (q + 1) (by omega) hM x hx hprev hweak hfacet htopple
-      hconsist hcritical
+      hconsist hcrit
 
 end DimRed

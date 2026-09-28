@@ -114,4 +114,69 @@ theorem corner_reaches (d j : ℕ) (hd : 1 ≤ d) (hj : 1 ≤ j)
   rw [hiter]
   exact hone_dim_n
 
+/-- The topple time is monotone in the dimension, given dimensional reduction at
+the corner: the corner of the smaller cube reaches height `j` no later than the
+corner of the larger one. -/
+theorem toppleTime_mono_dim (d j : ℕ) (hd : 1 ≤ d) (hj : 1 ≤ j)
+    (hred : ∀ (t : ℕ) (y : Site d), inSimplex d j y →
+      odoUnif (d + 1) (2 * j) t (Fin.snoc y 1) = odoUnif d (2 * j) t y)
+    (hred' : ∀ (e : ℕ), 1 ≤ e → e < d + 1 → ∀ (t : ℕ) (y : Site e),
+      inSimplex e j y →
+      odoUnif (e + 1) (2 * j) t (Fin.snoc y 1) = odoUnif e (2 * j) t y) :
+    toppleTime d j ≤ toppleTime (d + 1) j := by
+  have hhit : ∃ n : ℕ, 1 ≤ n ∧
+      (j : ℤ) ≤ odoUnif (d + 1) (2 * j) n (cornerPoint (d + 1) j) :=
+    corner_reaches (d + 1) j (by omega) hj (fun e he hed t y hy => by
+      -- the reduction in dimension `e+1` at scale `j` is the corner identity of
+      -- the smaller dimension, which is the induction hypothesis at `e`
+      exact hred' e he hed t y hy)
+  have hbig := (toppleTime_le_iff (d + 1) j (by omega) hj hhit
+    (toppleTime (d + 1) j)).mp (le_refl _)
+  obtain ⟨n, hn, hn1, hval⟩ := hbig
+  have hc : inSimplex d j (cornerPoint d j) := cornerPoint_mem_inSimplex d j hj
+  have hsmall : (j : ℤ) ≤ odoUnif d (2 * j) n (cornerPoint d j) := by
+    rw [← hred n (cornerPoint d j) hc, cornerPoint_snoc d j hd]
+    exact hval
+  refine (toppleTime_le_iff d j hd hj ⟨n, hn1, hsmall⟩ (toppleTime (d + 1) j)).mpr
+    ⟨n, hn, hn1, hsmall⟩
+
+/-- At scale one the corner of the cube has already toppled once at the first
+step, in every dimension. -/
+theorem corner_one_le (d : ℕ) :
+    (1 : ℤ) ≤ odoUnif d 2 1 (cornerPoint d 1) := by
+  have hc : inCube d 2 (cornerPoint d 1) := by
+    intro i
+    rw [cornerPoint]
+    split <;> simp [loCoord, hiCoord, sideHalf]
+  simp only [odoUnif]
+  rw [odo_succ_eq d 2 (fun _ => 2 * (d : ℤ)) 0 (cornerPoint d 1) hc]
+  have hzero : odo d 2 (fun _ => 2 * (d : ℤ)) 0 (cornerPoint d 1) = 0 := rfl
+  rw [hzero]
+  have hsand : sandp d 2 (fun _ => 2 * (d : ℤ)) 0 (cornerPoint d 1) = 2 * (d : ℤ) := by
+    simp [sandp, lap, odo, nbrSum]
+  rw [hsand]
+  norm_num
+
+/-- The reverse dimension monotonicity of the topple time, from dimensional
+reduction at the corner. -/
+theorem toppleTime_mono_dim_le (d j : ℕ) (hd : 1 ≤ d) (hj : 1 ≤ j)
+    (hred : ∀ (t : ℕ) (y : Site d), inSimplex d j y →
+      odoUnif (d + 1) (2 * j) t (Fin.snoc y 1) = odoUnif d (2 * j) t y)
+    (hred' : ∀ (e : ℕ), 1 ≤ e → e < d + 1 → ∀ (t : ℕ) (y : Site e),
+      inSimplex e j y →
+      odoUnif (e + 1) (2 * j) t (Fin.snoc y 1) = odoUnif e (2 * j) t y) :
+    toppleTime (d + 1) j ≤ toppleTime d j := by
+  have hhit : ∃ n : ℕ, 1 ≤ n ∧
+      (j : ℤ) ≤ odoUnif d (2 * j) n (cornerPoint d j) :=
+    corner_reaches d j hd hj (fun e he hed t y hy => hred' e he (by omega) t y hy)
+  have hbig := (toppleTime_le_iff d j hd hj hhit (toppleTime d j)).mp (le_refl _)
+  obtain ⟨n, hn, hn1, hval⟩ := hbig
+  have hc : inSimplex d j (cornerPoint d j) := cornerPoint_mem_inSimplex d j hj
+  have hbig' : (j : ℤ) ≤ odoUnif (d + 1) (2 * j) n (cornerPoint (d + 1) j) := by
+    rw [← cornerPoint_snoc d j hd]
+    rw [hred n (cornerPoint d j) hc]
+    exact hval
+  refine (toppleTime_le_iff (d + 1) j (by omega) hj ⟨n, hn1, hbig'⟩
+    (toppleTime d j)).mpr ⟨n, hn, hn1, hbig'⟩
+
 end DimRed

@@ -183,4 +183,149 @@ theorem odo_facetPoint_add_mid {i j M : ℕ} (x : Fin i → ℤ) (c' : ℤ) (t :
   rw [facetPoint_add_mid_point x 1]
   norm_num
 
+/-- The tail neighbour of `facetPoint x 2 j` in the negative direction is the
+point itself, by the reflection in that coordinate. -/
+theorem odo_facetPoint_two_sub_tail {i j M : ℕ} (t : ℕ) (x : Fin i → ℤ) (b : Fin j) :
+    odoUnif (i + 1 + j) (2 * M) t (facetPoint x 2 j - unit (Fin.natAdd (i + 1) b))
+      = odoUnif (i + 1 + j) (2 * M) t (facetPoint x 2 j) := by
+  have h := odo_reflect_coord (i + 1 + j) M (2 * ((i + 1 + j : ℕ) : ℤ)) t
+    (facetPoint x 2 j) (Fin.natAdd (i + 1) b)
+  have hu : (facetPoint x 2 j) (Fin.natAdd (i + 1) b) = 1 := facetPoint_tail x 2 b
+  have e : (fun k => if k = Fin.natAdd (i + 1) b then 1 - (facetPoint x 2 j) k
+      else (facetPoint x 2 j) k) = facetPoint x 2 j - unit (Fin.natAdd (i + 1) b) := by
+    funext k
+    by_cases hk : k = Fin.natAdd (i + 1) b
+    · subst hk
+      rw [if_pos rfl, hu, sub_unit_self, hu]
+    · rw [if_neg hk, sub_unit_apply, if_neg hk]
+      norm_num
+  have hfun : (fun k => if k = Fin.natAdd (i + 1) b then 1 - (facetPoint x 2 j) k
+      else (facetPoint x 2 j) k)
+      = (fun k => if k = Fin.natAdd (i + 1) b then 1 - (facetPoint x 2 j) (Fin.natAdd (i + 1) b)
+      else (facetPoint x 2 j) k) := by
+    funext k
+    by_cases hk : k = Fin.natAdd (i + 1) b
+    · subst hk; rfl
+    · rw [if_neg hk, if_neg hk]
+  rw [← hfun] at h
+  rw [e] at h
+  exact h
+
+/-- The positive tail neighbour of `facetPoint x 2 j` is the reflection of the
+point two steps below it in that coordinate. -/
+theorem odo_facetPoint_two_add_tail {i j M : ℕ} (t : ℕ) (x : Fin i → ℤ) (b : Fin j) :
+    odoUnif (i + 1 + j) (2 * M) t (facetPoint x 2 j + unit (Fin.natAdd (i + 1) b))
+      = odoUnif (i + 1 + j) (2 * M) t (facetPoint x 2 j - unit (Fin.natAdd (i + 1) b)
+          - unit (Fin.natAdd (i + 1) b)) := by
+  have h := odo_reflect_coord (i + 1 + j) M (2 * ((i + 1 + j : ℕ) : ℤ)) t
+    (facetPoint x 2 j + unit (Fin.natAdd (i + 1) b)) (Fin.natAdd (i + 1) b)
+  have hu : (facetPoint x 2 j + unit (Fin.natAdd (i + 1) b)) (Fin.natAdd (i + 1) b) = 2 := by
+    rw [add_unit_self, facetPoint_tail x 2 b]
+    norm_num
+  have e : (fun k => if k = Fin.natAdd (i + 1) b then
+      1 - (facetPoint x 2 j + unit (Fin.natAdd (i + 1) b)) k
+      else (facetPoint x 2 j + unit (Fin.natAdd (i + 1) b)) k)
+      = facetPoint x 2 j - unit (Fin.natAdd (i + 1) b) - unit (Fin.natAdd (i + 1) b) := by
+    funext k
+    by_cases hk : k = Fin.natAdd (i + 1) b
+    · subst hk
+      rw [if_pos rfl, hu]
+      rw [sub_unit_self, sub_unit_self, facetPoint_tail x 2 b]
+      norm_num
+    · rw [if_neg hk, sub_unit_apply, if_neg hk, sub_unit_apply, if_neg hk]
+      rw [add_unit_other _ _ _ _ hk]
+      norm_num
+  have hfun : (fun k => if k = Fin.natAdd (i + 1) b then
+      1 - (facetPoint x 2 j + unit (Fin.natAdd (i + 1) b)) k
+      else (facetPoint x 2 j + unit (Fin.natAdd (i + 1) b)) k)
+      = (fun k => if k = Fin.natAdd (i + 1) b then
+      1 - (facetPoint x 2 j + unit (Fin.natAdd (i + 1) b)) (Fin.natAdd (i + 1) b)
+      else (facetPoint x 2 j + unit (Fin.natAdd (i + 1) b)) k) := by
+    funext k
+    by_cases hk : k = Fin.natAdd (i + 1) b
+    · subst hk; rfl
+    · rw [if_neg hk, if_neg hk]
+  rw [← hfun] at h
+  rw [e] at h
+  exact h.symm
+
+/-- The mid neighbour of `facetPoint x c j` in the negative direction. -/
+theorem facetPoint_sub_mid_point {i j : ℕ} (x : Fin i → ℤ) (c : ℤ) :
+    facetPoint x c j - unit (Fin.castAdd j (Fin.last i)) = facetPoint x (c - 1) j := by
+  rw [eq_comm, eq_sub_iff_add_eq, facetPoint_add_mid_point x (c - 1)]
+  congr 1
+  ring
+
+/-- Adding a head unit vector to `facetPoint x c j` shifts `x`. -/
+theorem facetPoint_add_head' {i j : ℕ} (x : Fin i → ℤ) (c : ℤ) (a : Fin i) :
+    facetPoint x c j + unit (Fin.castAdd j (Fin.castSucc a))
+      = facetPoint (x + unit a) c j := by
+  funext k
+  refine Fin.addCases ?_ ?_ k
+  · intro h
+    refine Fin.lastCases ?_ (fun b => ?_) h
+    · simp [facetPoint]
+      apply unit_apply_ne
+      intro hh
+      exact Fin.castSucc_ne_last a (Fin.castAdd_injective _ _ hh.symm)
+    · by_cases hab : b = a
+      · subst hab; simp [facetPoint, unit_apply_self]
+      · simp [facetPoint]
+        rw [unit_apply_ne]
+        · exact (unit_apply_ne hab).symm
+        · intro hh
+          exact hab (Fin.castSucc_injective _ (Fin.castAdd_injective _ _ hh))
+  · intro b
+    simp [facetPoint]
+    apply unit_apply_ne
+    intro hh
+    have hv := congrArg Fin.val hh
+    simp [Fin.castAdd, Fin.natAdd, Fin.castLE] at hv
+    omega
+
+/-- Subtracting a head unit vector from `facetPoint x c j` shifts `x`. -/
+theorem facetPoint_sub_head' {i j : ℕ} (x : Fin i → ℤ) (c : ℤ) (a : Fin i) :
+    facetPoint x c j - unit (Fin.castAdd j (Fin.castSucc a))
+      = facetPoint (x - unit a) c j := by
+  funext k
+  refine Fin.addCases ?_ ?_ k
+  · intro h
+    refine Fin.lastCases ?_ (fun b => ?_) h
+    · simp [facetPoint]
+      apply unit_apply_ne
+      intro hh
+      exact Fin.castSucc_ne_last a (Fin.castAdd_injective _ _ hh.symm)
+    · by_cases hab : b = a
+      · subst hab; simp [facetPoint, unit_apply_self]
+      · simp [facetPoint]
+        rw [unit_apply_ne]
+        · exact (unit_apply_ne hab).symm
+        · intro hh
+          exact hab (Fin.castSucc_injective _ (Fin.castAdd_injective _ _ hh))
+  · intro b
+    simp [facetPoint]
+    apply unit_apply_ne
+    intro hh
+    have hv := congrArg Fin.val hh
+    simp [Fin.castAdd, Fin.natAdd, Fin.castLE] at hv
+    omega
+
+/-- The head part of the neighbour sum at `facetPoint x 2 j`. -/
+theorem sum_head_facetPoint_two {i j M : ℕ} (t : ℕ) (x : Fin i → ℤ) :
+    (∑ a : Fin (i + 1),
+        (odoUnif (i + 1 + j) (2 * M) t (facetPoint x 2 j + unit (Fin.castAdd j a))
+          + odoUnif (i + 1 + j) (2 * M) t (facetPoint x 2 j - unit (Fin.castAdd j a))))
+      = (∑ a : Fin i,
+          (odoUnif (i + 1 + j) (2 * M) t (facetPoint (x + unit a) 2 j)
+            + odoUnif (i + 1 + j) (2 * M) t (facetPoint (x - unit a) 2 j)))
+        + (odoUnif (i + 1 + j) (2 * M) t (facetPoint x 1 j)
+            + odoUnif (i + 1 + j) (2 * M) t (facetPoint x 3 j)) := by
+  rw [Fin.sum_univ_castSucc]
+  rw [facetPoint_add_mid_point x 2, facetPoint_sub_mid_point x 2]
+  norm_num
+  congr 1
+  · refine Finset.sum_congr rfl fun a _ => ?_
+    rw [facetPoint_add_head' x 2 a, facetPoint_sub_head' x 2 a]
+  · ring
+
 end DimRed
