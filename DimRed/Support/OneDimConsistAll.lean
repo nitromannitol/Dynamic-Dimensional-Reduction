@@ -3,6 +3,7 @@ The iterated one-dimensional self-similarity clause and the lower bound on
 successive toppling times from `dimred.tex:915-918` and `1040-1044`.
 -/
 import DimRed.Support.OneDimConsist
+import DimRed.Support.StrongDerivPure
 import DimRed.Support.ToppleTime
 
 set_option autoImplicit false
@@ -282,5 +283,272 @@ theorem toppleTime_succ_lower
       norm_num [ENat.coe_add]
     _ ≤ (T : ℕ∞) := ENat.coe_le_coe.mpr hq2T
     _ = toppleTime 1 (M - 1) := hT
+
+/-- The `hdouble` input of `toppleTime_succ_lower` is vacuously true.  At the
+topple time `q` of the cube of half-side `M-2`, the corner of the cube of
+half-side `M-1` has exactly `M-2` topples; if it reached `M-1` one step later it
+would have toppled at `q`, forcing `v_q(M-2) = 2(M-2)` by the derivative bound
+at scale `M-1`, while self-similarity at scale `M-1` and the derivative bound at
+scale `M-2` force `v_q(M-2) ≤ 2(M-2) - 1`. -/
+theorem one_dim_double (M q : ℕ) (hM : 4 ≤ M)
+    (hq : (q : ℕ∞) = toppleTime 1 (M - 2))
+    (hconsist : ∀ (j : ℕ), 1 ≤ j → j ≤ M - 1 → (q : ℕ∞) ≤ toppleTime 1 j →
+      ∀ x : Site 1, inSimplex 1 (M - 1) x →
+        (∀ i : Fin 1, ((M - 1 : ℕ) : ℤ) - (j : ℤ) < x i) →
+        odoUnif 1 (2 * (M - 1)) q x =
+          odoUnif 1 (2 * j) q (fun i => x i - (((M - 1 : ℕ) : ℤ) - (j : ℤ))))
+    (hlarge_eq : odoUnif 1 (2 * (M - 1)) q (fun _ => ((M - 1 : ℕ) : ℤ))
+      = ((M - 2 : ℕ) : ℤ))
+    (hreach : ((M - 1 : ℕ) : ℤ) ≤ odoUnif 1 (2 * (M - 1)) (q + 1)
+      (cornerPoint 1 (M - 1))) :
+    2 ≤ odoUnif 1 (2 * (M - 1)) (q + 2) (cornerPoint 1 (M - 1)) -
+      odoUnif 1 (2 * (M - 1)) q (cornerPoint 1 (M - 1)) := by
+  exfalso
+  have hcorner : cornerPoint 1 (M - 1) = (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ)) := by
+    funext i
+    have hi : i = (0 : Fin 1) := Fin.eq_zero i
+    subst hi
+    rw [cornerPoint]
+    simp
+  rw [hcorner] at hreach
+  -- the corner topples at `q + 1`, so its sandpile at `q` is at least two
+  have hcube : inCube 1 (2 * (M - 1)) (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ)) := by
+    intro i
+    rw [loCoord_two_mul, hiCoord_two_mul]
+    rw [Nat.cast_sub (by omega : 1 ≤ M)]
+    norm_num
+    omega
+  have hstep := odo_succ_eq 1 (2 * (M - 1)) (fun _ => 2) q
+    (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ)) hcube
+  norm_num at hstep
+  have hlarge : odo 1 (2 * (M - 1)) (fun _ => 2) q (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ))
+      = ((M - 2 : ℕ) : ℤ) := by
+    have h := hlarge_eq
+    simp only [odoUnif] at h
+    norm_num at h
+    exact h
+  have hreach' : ((M - 1 : ℕ) : ℤ) ≤ odo 1 (2 * (M - 1)) (fun _ => 2) (q + 1)
+      (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ)) := by
+    have h := hreach
+    simp only [odoUnif] at h
+    norm_num at h
+    exact h
+  -- `v_{q+1} ≤ v_q + 1`, so `v_{q+1} = M - 1` and the corner topples at `q`
+  have hbound := (odo_succ_sub_bounds 1 (2 * (M - 1)) (fun _ => 2) q
+    (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ))).2
+  have htopple : 2 * (1 : ℤ) ≤ sandp 1 (2 * (M - 1)) (fun _ => 2) q
+      (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ)) := by
+    by_contra hcon
+    push Not at hcon
+    rw [if_neg (show ¬ (2 ≤ sandp 1 (2 * (M - 1)) (fun _ => 2) q
+      (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ))) from not_le.mpr hcon)] at hstep
+    rw [hlarge] at hstep
+    omega
+  -- the sandpile at the corner is `2 - 2 v_q(M-1) + v_q(M-2)`
+  have hsand : sandp 1 (2 * (M - 1)) (fun _ => 2) q
+      (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ))
+      = 2 - 2 * odoUnif 1 (2 * (M - 1)) q (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ))
+        + odoUnif 1 (2 * (M - 1)) q (fun _ : Fin 1 => ((M - 2 : ℕ) : ℤ)) := by
+    rw [sandp, lap]
+    norm_num
+    have hnbr : nbrSum (odo 1 (2 * (M - 1)) (fun _ => 2) q)
+        (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ))
+        = odo 1 (2 * (M - 1)) (fun _ => 2) q (fun _ => ((M - 1 : ℕ) : ℤ) + 1)
+          + odo 1 (2 * (M - 1)) (fun _ => 2) q (fun _ => ((M - 1 : ℕ) : ℤ) - 1) := by
+      simp only [nbrSum, Fin.sum_univ_one]
+      rw [site_one_add_unit, site_one_sub_unit]
+    rw [hnbr]
+    have hoff : ¬ inCube 1 (2 * (M - 1)) (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ) + 1) := by
+      intro hc
+      have h := hc ⟨0, by omega⟩
+      rw [loCoord_two_mul, hiCoord_two_mul] at h
+      rw [Nat.cast_sub (by omega : 1 ≤ M)] at h
+      simp only at h
+      omega
+    rw [odo_eq_zero_outside 1 (2 * (M - 1)) (fun _ => 2) q _ hoff]
+    have hinner : (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ) - 1)
+        = (fun _ : Fin 1 => ((M - 2 : ℕ) : ℤ)) := by
+      funext i
+      rw [Nat.cast_sub (by omega : 1 ≤ M)]
+      have hM2 : ((M - 2 : ℕ) : ℤ) = (M : ℤ) - 2 := by
+        rw [Nat.cast_sub (by omega : 2 ≤ M)]
+        norm_num
+      rw [hM2]
+      ring
+    rw [hinner]
+    simp only [odoUnif]
+    norm_num
+    ring
+  -- so `v_q(M-2) ≥ 2(M-2)`
+  have hlow : 2 * ((M - 2 : ℕ) : ℤ)
+      ≤ odoUnif 1 (2 * (M - 1)) q (fun _ : Fin 1 => ((M - 2 : ℕ) : ℤ)) := by
+    have hlarge' : odoUnif 1 (2 * (M - 1)) q (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ))
+        = ((M - 2 : ℕ) : ℤ) := hlarge_eq
+    rw [hsand, hlarge'] at htopple
+    linarith
+  -- and the derivative bound at scale `M-1` gives the reverse inequality
+  have hderiv : odoUnif 1 (2 * (M - 1)) q (fun _ : Fin 1 => ((M - 2 : ℕ) : ℤ))
+      - odoUnif 1 (2 * (M - 1)) q (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ))
+      ≤ ((M - 2 : ℕ) : ℤ) := by
+    have h := odo_first_diff 1 (M - 1) (by norm_num) (by omega) q
+      (⟨0, by omega⟩ : Fin 1) (fun _ : Fin 1 => ((M - 2 : ℕ) : ℤ)) (by
+        have hM2 : ((M - 2 : ℕ) : ℤ) = (M : ℤ) - 2 := by
+          rw [Nat.cast_sub (by omega : 2 ≤ M)]
+          norm_num
+        rw [hM2]
+        omega)
+    have hpt : (fun _ : Fin 1 => ((M - 2 : ℕ) : ℤ)) + unit (⟨0, by omega⟩ : Fin 1)
+        = (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ)) := by
+      funext i
+      have hi : i = (0 : Fin 1) := Fin.eq_zero i
+      subst hi
+      rw [Pi.add_apply]
+      have hM2 : ((M - 2 : ℕ) : ℤ) = (M : ℤ) - 2 := by
+        rw [Nat.cast_sub (by omega : 2 ≤ M)]
+        norm_num
+      rw [hM2, Nat.cast_sub (by omega : 1 ≤ M)]
+      simp [unit]
+      ring
+    rw [hpt] at h
+    exact h
+  -- the self-similarity clause at scale `M-1` with `j = M-2`
+  have hqle : (q : ℕ∞) ≤ toppleTime 1 (M - 2) := le_of_eq hq
+  have hsim : odoUnif 1 (2 * (M - 1)) q (fun _ : Fin 1 => ((M - 2 : ℕ) : ℤ))
+      = odoUnif 1 (2 * (M - 2)) q (fun _ : Fin 1 => ((M - 3 : ℕ) : ℤ)) := by
+    have h := hconsist (M - 2) (by omega) (by omega) hqle
+      (fun _ : Fin 1 => ((M - 2 : ℕ) : ℤ))
+      (by
+        constructor
+        · intro i
+          have hi : i = (0 : Fin 1) := Fin.eq_zero i
+          subst hi
+          have h1 : (1 : ℤ) ≤ ((M - 2 : ℕ) : ℤ) := by
+            rw [Nat.cast_sub (by omega : 2 ≤ M)]
+            norm_num
+            omega
+          have h2 : ((M - 2 : ℕ) : ℤ) ≤ ((M - 1 : ℕ) : ℤ) := by
+            rw [Nat.cast_sub (by omega : 2 ≤ M), Nat.cast_sub (by omega : 1 ≤ M)]
+            norm_num
+          exact ⟨h1, h2⟩
+        · intro i j _
+          have hi : i = (0 : Fin 1) := Fin.eq_zero i
+          have hj : j = (0 : Fin 1) := Fin.eq_zero j
+          rw [hi, hj])
+      (fun i => by
+        have hi : i = (0 : Fin 1) := Fin.eq_zero i
+        subst hi
+        change ((M - 1 : ℕ) : ℤ) - ((M - 2 : ℕ) : ℤ) < ((M - 2 : ℕ) : ℤ)
+        have hM2 : ((M - 2 : ℕ) : ℤ) = (M : ℤ) - 2 := by
+          rw [Nat.cast_sub (by omega : 2 ≤ M)]
+          norm_num
+        rw [Nat.cast_sub (by omega : 1 ≤ M), hM2]
+        omega)
+    have hpt : (fun i : Fin 1 => ((M - 2 : ℕ) : ℤ) - (((M - 1 : ℕ) : ℤ) - ((M - 2 : ℕ) : ℤ)))
+        = (fun _ : Fin 1 => ((M - 3 : ℕ) : ℤ)) := by
+      funext i
+      have hM2 : ((M - 2 : ℕ) : ℤ) = (M : ℤ) - 2 := by
+        rw [Nat.cast_sub (by omega : 2 ≤ M)]
+        norm_num
+      have hM3 : ((M - 3 : ℕ) : ℤ) = (M : ℤ) - 3 := by
+        rw [Nat.cast_sub (by omega : 3 ≤ M)]
+        norm_num
+      rw [Nat.cast_sub (by omega : 1 ≤ M), hM2, hM3]
+      ring
+    rw [hpt] at h
+    exact h
+  -- the corner of the smaller cube at its topple time
+  have hsim2 : odoUnif 1 (2 * (M - 1)) q (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ))
+      = odoUnif 1 (2 * (M - 2)) q (fun _ : Fin 1 => ((M - 2 : ℕ) : ℤ)) := by
+    have h := hconsist (M - 2) (by omega) (by omega) hqle
+      (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ))
+      (by
+        constructor
+        · intro i
+          have hi : i = (0 : Fin 1) := Fin.eq_zero i
+          subst hi
+          have h1 : (1 : ℤ) ≤ ((M - 1 : ℕ) : ℤ) := by
+            rw [Nat.cast_sub (by omega : 1 ≤ M)]
+            norm_num
+            omega
+          exact ⟨h1, le_refl _⟩
+        · intro i j _
+          have hi : i = (0 : Fin 1) := Fin.eq_zero i
+          have hj : j = (0 : Fin 1) := Fin.eq_zero j
+          rw [hi, hj])
+      (fun i => by
+        have hi : i = (0 : Fin 1) := Fin.eq_zero i
+        subst hi
+        change ((M - 1 : ℕ) : ℤ) - ((M - 2 : ℕ) : ℤ) < ((M - 1 : ℕ) : ℤ)
+        have hM2 : ((M - 2 : ℕ) : ℤ) = (M : ℤ) - 2 := by
+          rw [Nat.cast_sub (by omega : 2 ≤ M)]
+          norm_num
+        rw [Nat.cast_sub (by omega : 1 ≤ M), hM2]
+        omega)
+    have hpt : (fun i : Fin 1 => ((M - 1 : ℕ) : ℤ) - (((M - 1 : ℕ) : ℤ) - ((M - 2 : ℕ) : ℤ)))
+        = (fun _ : Fin 1 => ((M - 2 : ℕ) : ℤ)) := by
+      funext i
+      have hM2 : ((M - 2 : ℕ) : ℤ) = (M : ℤ) - 2 := by
+        rw [Nat.cast_sub (by omega : 2 ≤ M)]
+        norm_num
+      rw [Nat.cast_sub (by omega : 1 ≤ M), hM2]
+      ring
+    rw [hpt] at h
+    exact h
+  -- the derivative bound at scale `M-2`
+  have hderiv2 : odoUnif 1 (2 * (M - 2)) q (fun _ : Fin 1 => ((M - 3 : ℕ) : ℤ))
+      - odoUnif 1 (2 * (M - 2)) q (fun _ : Fin 1 => ((M - 2 : ℕ) : ℤ))
+      ≤ ((M - 3 : ℕ) : ℤ) := by
+    have h := odo_first_diff 1 (M - 2) (by norm_num) (by omega) q
+      (⟨0, by omega⟩ : Fin 1) (fun _ : Fin 1 => ((M - 3 : ℕ) : ℤ)) (by
+        have hM3 : ((M - 3 : ℕ) : ℤ) = (M : ℤ) - 3 := by
+          rw [Nat.cast_sub (by omega : 3 ≤ M)]
+          norm_num
+        rw [hM3]
+        omega)
+    have hpt : (fun _ : Fin 1 => ((M - 3 : ℕ) : ℤ)) + unit (⟨0, by omega⟩ : Fin 1)
+        = (fun _ : Fin 1 => ((M - 2 : ℕ) : ℤ)) := by
+      funext i
+      have hi : i = (0 : Fin 1) := Fin.eq_zero i
+      subst hi
+      rw [Pi.add_apply]
+      have hM3 : ((M - 3 : ℕ) : ℤ) = (M : ℤ) - 3 := by
+        rw [Nat.cast_sub (by omega : 3 ≤ M)]
+        norm_num
+      have hM2 : ((M - 2 : ℕ) : ℤ) = (M : ℤ) - 2 := by
+        rw [Nat.cast_sub (by omega : 2 ≤ M)]
+        norm_num
+      rw [hM3, hM2]
+      simp [unit]
+      ring
+    rw [hpt] at h
+    exact h
+  -- combine: `2(M-2) ≤ v_q(M-2) ≤ 2(M-2) - 1`
+  have hM2 : ((M - 2 : ℕ) : ℤ) = (M : ℤ) - 2 := by
+    rw [Nat.cast_sub (by omega : 2 ≤ M)]
+    norm_num
+  have hM3 : ((M - 3 : ℕ) : ℤ) = (M : ℤ) - 3 := by
+    rw [Nat.cast_sub (by omega : 3 ≤ M)]
+    norm_num
+  have hlarge'' : odoUnif 1 (2 * (M - 1)) q (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ))
+      = ((M - 2 : ℕ) : ℤ) := hlarge_eq
+  -- `v_q^{(M-1)}(M-2) = 2(M-2)`
+  have hEq : odoUnif 1 (2 * (M - 1)) q (fun _ : Fin 1 => ((M - 2 : ℕ) : ℤ))
+      = 2 * ((M - 2 : ℕ) : ℤ) := by
+    have h := hderiv
+    rw [hlarge''] at h
+    linarith
+  -- so `v_q^{(M-2)}(M-3) = 2(M-2)`
+  have hEq2 : odoUnif 1 (2 * (M - 2)) q (fun _ : Fin 1 => ((M - 3 : ℕ) : ℤ))
+      = 2 * ((M - 2 : ℕ) : ℤ) := by
+    rw [← hsim]
+    exact hEq
+  -- and `v_q^{(M-2)}(M-2) = M-2`
+  have hEq3 : odoUnif 1 (2 * (M - 2)) q (fun _ : Fin 1 => ((M - 2 : ℕ) : ℤ))
+      = ((M - 2 : ℕ) : ℤ) := by
+    rw [← hsim2]
+    exact hlarge''
+  rw [hEq2, hEq3] at hderiv2
+  rw [hM2, hM3] at hderiv2
+  linarith
 
 end DimRed
