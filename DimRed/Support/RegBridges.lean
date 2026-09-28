@@ -250,4 +250,21 @@ theorem one_dim_consist_derived (M T : ℕ) (hM : 2 ≤ M)
   rw [h1, h2] at hstep
   exact hstep.trans hstep'.symm
 
+/-- The strong facet compatibility clause at a facet point, in the form the
+loaded-spring argument consumes: if the `1`-point is one above the `2`-point at
+time `n`, then the `2`-point topples at time `n`. -/
+theorem strong_facet_at_point (i j m n : ℕ) (hi : 1 ≤ i) (z : Fin i → ℤ) (hz2 : ∀ a, 2 ≤ z a)
+    (hzs : inSimplex (i + 1 + j) m (facetPoint z 1 j))
+    (hS : RegStrongFacet (i + 1 + j) m n)
+    (hgap : odoUnif (i + 1 + j) (2 * m) n (facetPoint z 1 j)
+      = odoUnif (i + 1 + j) (2 * m) n (facetPoint z 2 j) + 1) :
+    odoUnif (i + 1 + j) (2 * m) (n + 1) (facetPoint z 2 j)
+      = odoUnif (i + 1 + j) (2 * m) n (facetPoint z 2 j) + 1 := by
+  have hreg : (n : ℕ∞) < toppleTime (i + 1 + j) m ∨
+      (1 ≤ i ∧ toppleTime (i + 1 + j) m ≤ (n : ℕ∞)) := by
+    by_cases h : (n : ℕ∞) < toppleTime (i + 1 + j) m
+    · exact Or.inl h
+    · exact Or.inr ⟨hi, not_lt.mp h⟩
+  exact (hS i j rfl z hz2 hzs hreg hgap).2
+
 end DimRed
