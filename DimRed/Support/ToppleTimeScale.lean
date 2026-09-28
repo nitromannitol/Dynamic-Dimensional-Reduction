@@ -319,4 +319,26 @@ theorem inCube_of_inSimplex_gt_one (d m : ℕ) (y : Site d) (hm : 2 ≤ m)
   constructor <;> omega
 
 
+
+
+/-- The head of a point of the sorted domain lies in the cube of side `2M`. -/
+theorem inCube_castSucc (d M : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M) (x : Site d)
+    (hx : inSimplex d M x) :
+    inCube (d - 1) (2 * M) (fun k : Fin (d - 1) => x (Fin.cast (by omega : d - 1 + 1 = d) k.castSucc)) := by
+  intro k
+  rw [loCoord_two_mul, hiCoord_two_mul]
+  have h := hx.1 (Fin.cast (by omega : d - 1 + 1 = d) k.castSucc)
+  have hM1 : (1 : ℤ) ≤ (M : ℤ) := by exact_mod_cast hM
+  constructor <;> linarith [h.1, h.2]
+
+
+
+/-- The head of a point of the sorted domain has all coordinates at least one. -/
+theorem one_le_castSucc (d M : ℕ) (hd : 1 ≤ d) (x : Site d)
+    (hx : inSimplex d M x) :
+    ∀ k : Fin (d - 1), (1 : ℤ) ≤ x (Fin.cast (by omega : d - 1 + 1 = d) k.castSucc) := by
+  intro k
+  exact (hx.1 (Fin.cast (by omega : d - 1 + 1 = d) k.castSucc)).1
+
+
 end DimRed
