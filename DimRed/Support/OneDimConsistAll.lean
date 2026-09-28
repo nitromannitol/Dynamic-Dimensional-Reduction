@@ -962,8 +962,7 @@ theorem toppleTime_mono_scale (a b : ℕ) (ha : 1 ≤ a) (hab : a ≤ b)
       odoUnif 1 (2 * b) n (cornerPoint 1 b) =
         odoUnif 1 (2 * a) n (cornerPoint 1 a))
     (hhitb : ∃ n : ℕ, 1 ≤ n ∧ (b : ℤ) ≤ odoUnif 1 (2 * b) n (cornerPoint 1 b))
-    (hprior : ∀ d' M' t' : ℕ, regEarlier 1 b (toppleTime 1 b).toNat d' M' t' →
-      1 ≤ d' → 2 ≤ M' → Reg d' M' t' ∧ DimRedAt d' M' t') :
+    (hhita : ∃ n : ℕ, 1 ≤ n ∧ (a : ℤ) ≤ odoUnif 1 (2 * a) n (cornerPoint 1 a)) :
     toppleTime 1 a ≤ toppleTime 1 b := by
   by_contra hcon
   push Not at hcon
@@ -1010,14 +1009,7 @@ theorem toppleTime_mono_scale (a b : ℕ) (ha : 1 ≤ a) (hab : a ≤ b)
       exact_mod_cast (lt_of_le_of_ne hab hne)
     linarith
   -- contradicting `T < τ_a`
-  have hiff := (toppleTime_le_iff 1 a (by norm_num) ha
-    (corner_reaches 1 a (by norm_num) ha
-      (fun e he hel t y hy => by
-        have he0 : e = 0 := by omega
-        subst he0
-        exact (hprior 1 a t (Or.inr (Or.inl ⟨rfl, by omega⟩))
-          (by omega) (by omega)).2 0 (by omega) rfl y hy))
-    (T : ℕ∞)).mpr
+  have hiff := (toppleTime_le_iff 1 a (by norm_num) ha hhita (T : ℕ∞)).mpr
   have hle : toppleTime 1 a ≤ (T : ℕ∞) :=
     hiff ⟨T, le_rfl, by
       have h1 : (1 : ℕ∞) ≤ (T : ℕ∞) := by
