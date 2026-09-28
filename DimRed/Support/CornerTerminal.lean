@@ -58,4 +58,19 @@ theorem corner_dominate_step_dimred (d c n : ℕ) (hd : 1 ≤ d) (_hc : 1 ≤ c)
   exact le_of_eq (hred n (cornerPoint d (c + 1))
     (cornerPoint_mem_inSimplex d (c + 1) (by omega)))
 
+/-- The one-step corner domination in the form the wiring uses: the corner of the
+`d`-cube at scale `c+1` is at most the `(d-1)`-dimensional corner at scale `c`
+plus one, for `n ≤ τ_{d-1}(c)`. -/
+theorem corner_dominate_wire (d c n : ℕ) (hd : 2 ≤ d) (hc : 1 ≤ c)
+    (hn : (n : ℕ∞) ≤ toppleTime (d - 1) c)
+    (hred : ∀ (t : ℕ) (y : Site (d - 1)), inSimplex (d - 1) (c + 1) y →
+      odoUnif ((d - 1) + 1) (2 * (c + 1)) t (Fin.snoc y 1)
+        = odoUnif (d - 1) (2 * (c + 1)) t y) :
+    odoUnif ((d - 1) + 1) (2 * (c + 1)) n (cornerPoint ((d - 1) + 1) (c + 1)) ≤
+      odoUnif (d - 1) (2 * (c + 1)) n (cornerPoint (d - 1) (c + 1)) := by
+  have h := corner_dominate_step_dimred (d - 1) c n (by omega) hc hn
+    (fun t y hy => hred t y hy)
+  have hcast : (d - 1) + 1 = d := by omega
+  simpa only [hcast] using h
+
 end DimRed
