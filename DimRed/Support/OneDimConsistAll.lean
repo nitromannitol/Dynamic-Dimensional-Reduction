@@ -23,7 +23,7 @@ open LatticeProb
 theorem odo_one_consist_all
     (M j t : ℕ) (_hM : 2 ≤ M) (hj : 1 ≤ j) (hjm : j ≤ M)
     (ht : (t : ℕ∞) ≤ toppleTime 1 j)
-    (hmono : ∀ {a b : ℕ}, j ≤ a → a ≤ b →
+    (hmono : ∀ {a b : ℕ}, j ≤ a → a ≤ b → b < M →
       toppleTime 1 a ≤ toppleTime 1 b)
     (hprev : ∀ K : ℕ, j < K → ∀ t' : ℕ, t' < t → ∀ z : Site 1,
       2 ≤ z 0 → z 0 ≤ (K : ℤ) →
@@ -42,7 +42,7 @@ theorem odo_one_consist_all
     odoUnif 1 (2 * M) t x =
       odoUnif 1 (2 * j) t
         (fun i => x i - ((M : ℤ) - (j : ℤ))) := by
-  have hchain : ∀ K : ℕ, j ≤ K → ∀ y : ℤ,
+  have hchain : ∀ K : ℕ, j ≤ K → K ≤ M → ∀ y : ℤ,
       1 ≤ y → y ≤ (K : ℤ) → (K : ℤ) - (j : ℤ) < y →
       odoUnif 1 (2 * K) t (fun _ => y) =
         odoUnif 1 (2 * j) t
@@ -50,7 +50,7 @@ theorem odo_one_consist_all
     intro K
     induction K using Nat.strong_induction_on with
     | h K ih =>
-        intro hKj y hy1 hyK hygt
+        intro hKj hKM y hy1 hyK hygt
         by_cases hKeq : K = j
         · subst K
           simp
@@ -58,13 +58,13 @@ theorem odo_one_consist_all
           have hK2 : 2 ≤ K := by omega
           have hKm1 : j ≤ K - 1 := by omega
           have htK : (t : ℕ∞) ≤ toppleTime 1 (K - 1) := by
-            exact le_trans ht (hmono (a := j) (b := K - 1) (by omega) hKm1)
+            exact le_trans ht (hmono (a := j) (b := K - 1) (by omega) hKm1 (by omega))
           have hstep := odo_one_consist_step K t hK2 htK
             (hprev K hKj') (hfacet K hKj') (fun _ => y) (by omega) hyK
           have hprevK : 1 ≤ y - 1 := by omega
           have hprevK' : y - 1 ≤ (K - 1 : ℕ) := by omega
           have hprevKgt : ((K - 1 : ℕ) : ℤ) - (j : ℤ) < y - 1 := by omega
-          have hind := ih (K - 1) (by omega) hKm1 (y - 1)
+          have hind := ih (K - 1) (by omega) hKm1 (by omega) (y - 1)
             hprevK hprevK' hprevKgt
           calc
             odoUnif 1 (2 * K) t (fun _ => y) =
@@ -80,7 +80,7 @@ theorem odo_one_consist_all
   rw [hxconst]
   have hx1 : 1 ≤ x 0 := (hx.1 (0 : Fin 1)).1
   have hxM : x 0 ≤ (M : ℤ) := (hx.1 (0 : Fin 1)).2
-  have h := hchain M (by omega) (x 0) hx1 hxM hxgt
+  have h := hchain M (by omega) (le_refl M) (x 0) hx1 hxM hxgt
   simpa using h
 
 theorem toppleTime_succ_lower
