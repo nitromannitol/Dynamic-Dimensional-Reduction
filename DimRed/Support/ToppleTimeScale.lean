@@ -134,4 +134,29 @@ theorem nbrSum_extend_nonneg (d m t : ℕ) (y : Site d) :
   linarith
 
 
+
+
+/-- Shifting a point down by one commutes with adding a unit vector. -/
+theorem sub_one_add_unit (d : ℕ) (y : Site d) (i : Fin d) :
+    (fun k : Fin d => (y + unit i) k - 1) = (fun k : Fin d => y k - 1) + unit i := by
+  funext k
+  simp only [Pi.add_apply, unit]
+  by_cases hk : k = i
+  · subst hk
+    simp
+  · simp [hk]
+
+
+
+/-- Shifting a point down by one commutes with subtracting a unit vector. -/
+theorem sub_one_sub_unit (d : ℕ) (y : Site d) (i : Fin d) :
+    (fun k : Fin d => (y - unit i) k - 1) = (fun k : Fin d => y k - 1) - unit i := by
+  funext k
+  simp only [Pi.sub_apply, unit]
+  by_cases hk : k = i
+  · subst hk
+    simp
+  · simp [hk]
+
+
 end DimRed
