@@ -169,4 +169,14 @@ theorem lap_corner_facet' (d M q : ℕ) (_hM : 3 ≤ M) :
       from rfl]
   exact h
 
+/-- The corner's sandpile, via the facet Laplacian. -/
+theorem corner_sandp_facet' (d M q : ℕ) (_hM : 3 ≤ M) :
+    sandp (1 + 1 + d) (2 * (M - 1)) (fun _ => 2 * ((1 + 1 + d : ℕ) : ℤ)) q
+        (cornerPoint (1 + 1 + d) (M - 1))
+      = 2 * ((1 + 1 + d : ℕ) : ℤ)
+        + lap (odoUnif (1 + 1 + d) (2 * (M - 1)) q)
+            (cornerPoint (1 + 1 + d) (M - 1)) := by
+  simp only [sandp]
+  rfl
+
 end DimRed
