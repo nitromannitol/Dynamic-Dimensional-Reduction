@@ -52,10 +52,6 @@ structure FacetTermBounds (i j M t : ℕ) (y : Fin i → ℤ) : Prop where
   /-- the two-step bound at time `t`, `eq:two_derivative_bound` -/
   two : odoUnif (i + 1 + j) (2 * M) t (facetPoint y 1 j)
     - odoUnif (i + 1 + j) (2 * M) t (facetPoint y 3 j) ≤ 2
-  /-- the tail term at time `t` is at most the mid term plus one, which is the
-  first-difference bound at the mid coordinate -/
-  tailstep : odoUnif (i + 1 + j) (2 * M) t (facetPoint y 2 j)
-    - odoUnif (i + 1 + j) (2 * M) t (facetPoint y 3 j) ≤ 1
 
 /-- The Laplacian at the facet point `(y, 1, 1_j)` is at most the Laplacian at
 `(y, 2, 1_j)` when the clause holds at the previous time and the two-step bound
