@@ -113,7 +113,7 @@ theorem reg_induction
       ∀ d M t : ℕ, 1 ≤ d → 2 ≤ M →
         (∀ d' M' t' : ℕ, regEarlier d M t d' M' t' →
           1 ≤ d' → 2 ≤ M' → Reg d' M' t' ∧ DimRedAt d' M' t') →
-        DimRedAt d M t → RegStrongFacet d M t → RegTopple d M t)
+        DimRedAt d M t → RegStrongFacet d M t → RegConsist d M t → RegTopple d M t)
     (hdimred_step :
       ∀ d M t : ℕ, 1 ≤ d → 2 ≤ M →
         (∀ d' M' t' : ℕ, regEarlier d M t d' M' t' →
@@ -147,7 +147,7 @@ theorem reg_induction
         have hfacet := hfacet_step d M t hd hM hprior hdimred hderiv
         have hweak := hweak_step d M t hd hM hprior hdimred hfacet
         have hconsist := hconsist_step d M t hd hM hprior hdimred hfacet
-        have htopple := htopple_step d M t hd hM hprior hdimred hfacet
+        have htopple := htopple_step d M t hd hM hprior hdimred hfacet hconsist
         exact ⟨⟨hconsist, hweak, hderiv, hfacet, htopple⟩, hdimred⟩
 
 end DimRed

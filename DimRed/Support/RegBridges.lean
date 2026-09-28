@@ -113,4 +113,141 @@ theorem odo_jump_of_gap {d M t : ℕ} (hd : 1 ≤ d) (hM : 2 ≤ M) (ht : 2 ≤ 
   rw [ht1] at htopple
   omega
 
+/-- The paper's Case 1 derivation: at the topple time `T` of the smaller cube,
+the odometer one step later at height `y` equals the smaller cube's odometer at
+`y - 1`, because the two neighbours at time `T` are the smaller cube's values. -/
+theorem one_dim_consist_derived (M T : ℕ) (hM : 2 ≤ M)
+    (hT : toppleTime 1 (M - 1) = (T : ℕ∞))
+    (hconsT : RegConsist 1 M T)
+    (y : ℤ) (hy3 : 3 ≤ y) (hyM : y ≤ (M : ℤ)) :
+    odoUnif 1 (2 * M) (T + 1) (fun _ => y)
+      = odoUnif 1 (2 * (M - 1)) (T + 1) (fun _ => y - 1) := by
+  -- the clause at time `T` at the point `y` and at `y - 1`
+  have hy1 : 2 ≤ y := by omega
+  have hyM1 : y ≤ (M : ℤ) := hyM
+  have hM1 : 1 ≤ M - 1 := by omega
+  have hsub : ((M : ℤ) - ((M - 1 : ℕ) : ℤ)) = 1 := by
+    rw [Nat.cast_sub (by omega : 1 ≤ M)]
+    norm_num
+  have hpoint : (fun i : Fin 1 => y - ((M : ℤ) - ((M - 1 : ℕ) : ℤ)))
+      = (fun _ : Fin 1 => y - 1) := by
+    funext i
+    rw [hsub]
+  have hTle : (T : ℕ∞) ≤ toppleTime 1 (M - 1) := by rw [hT]
+  have h1 := hconsT (M - 1) hM1 (by omega) hTle (fun _ : Fin 1 => y)
+    (by
+      constructor
+      · intro i
+        have hi : i = (0 : Fin 1) := Fin.eq_zero i
+        subst hi
+        exact ⟨by linarith, hyM⟩
+      · intro i j _
+        have hi : i = (0 : Fin 1) := Fin.eq_zero i
+        have hj : j = (0 : Fin 1) := Fin.eq_zero j
+        rw [hi, hj])
+    (fun i => by
+      have hi : i = (0 : Fin 1) := Fin.eq_zero i
+      subst hi
+      change (M : ℤ) - ((M - 1 : ℕ) : ℤ) < y
+      rw [hsub]
+      omega)
+  rw [hpoint] at h1
+  simp only [odoUnif] at h1
+  norm_num at h1
+  -- the induction step at `T` and at `T + 1`
+  have hstep := Frozen.pt_ind_lemma 1 (2 * M) (by norm_num) (fun _ => 2)
+    (fun _ _ => by norm_num) (fun _ _ => by norm_num) T (fun _ : Fin 1 => y)
+    (by
+      intro i
+      rw [loCoord_two_mul, hiCoord_two_mul]
+      exact ⟨by linarith, hyM⟩)
+  have hstep' := Frozen.pt_ind_lemma 1 (2 * (M - 1)) (by norm_num) (fun _ => 2)
+    (fun _ _ => by norm_num) (fun _ _ => by norm_num) T (fun _ : Fin 1 => y - 1)
+    (by
+      intro i
+      rw [loCoord_two_mul, hiCoord_two_mul]
+      rw [Nat.cast_sub (by omega : 1 ≤ M)]
+      norm_num
+      exact ⟨by omega, by omega⟩)
+  -- the neighbour sums at the two points
+  have hnbr : nbrSum (odo 1 (2 * M) (fun _ => 2) T) (fun _ : Fin 1 => y)
+      = odo 1 (2 * M) (fun _ => 2) T (fun _ => y + 1)
+        + odo 1 (2 * M) (fun _ => 2) T (fun _ => y - 1) := by
+    simp only [nbrSum, Fin.sum_univ_one]
+    rw [site_one_add_unit, site_one_sub_unit]
+  have hnbr' : nbrSum (odo 1 (2 * (M - 1)) (fun _ => 2) T) (fun _ : Fin 1 => y - 1)
+      = odo 1 (2 * (M - 1)) (fun _ => 2) T (fun _ => y)
+        + odo 1 (2 * (M - 1)) (fun _ => 2) T (fun _ => y - 2) := by
+    simp only [nbrSum, Fin.sum_univ_one]
+    rw [site_one_add_unit, site_one_sub_unit]
+    congr 2
+    · funext i
+      ring
+    · funext i
+      ring
+  rw [hnbr] at hstep
+  rw [hnbr'] at hstep'
+  -- the clause at time `T` at the three heights
+  have hclause : ∀ (z : ℤ), 2 ≤ z → z ≤ (M : ℤ) →
+      odo 1 (2 * M) (fun _ => 2 * (1 : ℤ)) T (fun _ => z)
+        = odo 1 (2 * (M - 1)) (fun _ => 2 * (1 : ℤ)) T (fun _ => z - 1) := by
+    intro z hz2 hzM
+    have h := hconsT (M - 1) hM1 (by omega) (by rw [hT]) (fun _ : Fin 1 => z)
+      (by
+        constructor
+        · intro i
+          have hi : i = (0 : Fin 1) := Fin.eq_zero i
+          subst hi
+          exact ⟨by linarith, hzM⟩
+        · intro i j _
+          have hi : i = (0 : Fin 1) := Fin.eq_zero i
+          have hj : j = (0 : Fin 1) := Fin.eq_zero j
+          rw [hi, hj])
+      (fun i => by
+        have hi : i = (0 : Fin 1) := Fin.eq_zero i
+        subst hi
+        change (M : ℤ) - ((M - 1 : ℕ) : ℤ) < z
+        rw [hsub]
+        omega)
+    have hpoint' : (fun i : Fin 1 => z - ((M : ℤ) - ((M - 1 : ℕ) : ℤ)))
+        = (fun _ : Fin 1 => z - 1) := by
+      funext i
+      rw [hsub]
+    rw [hpoint'] at h
+    simpa only [odoUnif, Nat.cast_one, mul_one] using h
+  have h1 : odo 1 (2 * M) (fun _ => 2) T (fun _ => y + 1)
+      = odo 1 (2 * (M - 1)) (fun _ => 2) T (fun _ => y) := by
+    by_cases hyM' : y + 1 ≤ (M : ℤ)
+    · have h := hclause (y + 1) (by omega) hyM'
+      simpa using h
+    · -- `y = M`: the point `y + 1` is off the cube, and so is `y` in the
+      -- smaller cube
+      have hyMeq : y = (M : ℤ) := by omega
+      rw [hyMeq]
+      have hoff : ¬ inCube 1 (2 * M) (fun _ : Fin 1 => (M : ℤ) + 1) := by
+        intro hc
+        have h := hc ⟨0, by omega⟩
+        rw [loCoord_two_mul, hiCoord_two_mul] at h
+        simp only at h
+        omega
+      have hoff' : ¬ inCube 1 (2 * (M - 1)) (fun _ : Fin 1 => (M : ℤ)) := by
+        intro hc
+        have h := hc ⟨0, by omega⟩
+        rw [loCoord_two_mul, hiCoord_two_mul] at h
+        rw [Nat.cast_sub (by omega : 1 ≤ M)] at h
+        simp only at h
+        omega
+      rw [odo_eq_zero_outside 1 (2 * M) (fun _ => 2) T _ hoff,
+        odo_eq_zero_outside 1 (2 * (M - 1)) (fun _ => 2) T _ hoff']
+  have h2 : odo 1 (2 * M) (fun _ => 2) T (fun _ => y - 1)
+      = odo 1 (2 * (M - 1)) (fun _ => 2) T (fun _ => y - 2) := by
+    have h := hclause (y - 1) (by omega) (by omega)
+    have hpt : (fun _ : Fin 1 => y - 1 - 1) = (fun _ : Fin 1 => y - 2) := by
+      funext i
+      ring
+    rw [hpt] at h
+    exact h
+  rw [h1, h2] at hstep
+  exact hstep.trans hstep'.symm
+
 end DimRed
