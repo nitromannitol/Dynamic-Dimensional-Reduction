@@ -586,4 +586,22 @@ theorem corner_dominate_succ (d c n : ℕ) (_hd : 1 ≤ d) (hc : 1 ≤ c)
     exact hn)
   rwa [show c + 1 - 1 = c from by omega] at h
 
+/-- The scale monotonicity of the topple time, with the corner domination run
+inside the induction so that no monotonicity is assumed. -/
+theorem toppleTime_mono_scale_final (d a b : ℕ) (hd : 1 ≤ d) (ha : 1 ≤ a) (hab : a ≤ b)
+    (hconsist : ∀ c : ℕ, 1 ≤ c → c + 1 ≤ b → ∀ n : ℕ, (n : ℕ∞) ≤ toppleTime d c →
+      odoUnif d (2 * (c + 1)) n (cornerPoint d (c + 1)) ≤
+        odoUnif d (2 * c) n (cornerPoint d c) + 1)
+    (hhit : ∀ c : ℕ, 1 ≤ c → c ≤ b →
+      ∃ n : ℕ, 1 ≤ n ∧ (c : ℤ) ≤ odoUnif d (2 * c) n (cornerPoint d c)) :
+    toppleTime d a ≤ toppleTime d b := by
+  induction b, hab using Nat.le_induction with
+  | base => exact le_refl _
+  | succ c hac ih =>
+      exact le_trans (ih (fun c' hc' hc'b => hconsist c' hc' (by omega))
+        (fun c' hc' hc'b => hhit c' hc' (by omega)))
+        (toppleTime_mono_scale_succ d c hd (le_trans ha hac)
+          (hconsist c (le_trans ha hac) (by omega)) (hhit c (le_trans ha hac) (by omega))
+          (hhit (c + 1) (by omega) (by omega)))
+
 end DimRed
