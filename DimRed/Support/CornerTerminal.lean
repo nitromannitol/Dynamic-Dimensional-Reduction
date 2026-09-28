@@ -73,4 +73,23 @@ theorem corner_dominate_wire (d c n : ℕ) (hd : 2 ≤ d) (hc : 1 ≤ c)
   have hcast : (d - 1) + 1 = d := by omega
   simpa only [hcast] using h
 
+/-- The `i`-th component of the head neighbour `-e_0` of the corner, for `i ≠ 0`. -/
+theorem corner_sub_head_apply_ne (d M : ℕ) (i : Fin (d + 1)) (hi : (i : ℕ) ≠ 0) :
+    (cornerPoint (d + 1) (M - 1) - unit (0 : Fin (d + 1))) i = 1 := by
+  rw [Pi.sub_apply, cornerPoint_apply, if_neg hi]
+  rw [unit_apply_ne (by intro h'; exact hi (by rw [h']; rfl))]
+  ring
+
+/-- The `0`-th component of the head neighbour `-e_0` of the corner. -/
+theorem corner_sub_head_apply_zero (d M : ℕ) (hM : 3 ≤ M) :
+    (cornerPoint (d + 1) (M - 1) - unit (0 : Fin (d + 1))) 0 = ((M - 2 : ℕ) : ℤ) := by
+  rw [Pi.sub_apply, cornerPoint_apply]
+  norm_num
+  have hz : (unit (0 : Fin (d + 1)) : Site (d + 1)) 0 = 1 := unit_apply_self 0
+  rw [hz]
+  have h : M - 1 = (M - 2) + 1 := by omega
+  rw [h]
+  push_cast
+  ring
+
 end DimRed
