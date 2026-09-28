@@ -23,9 +23,9 @@ theorem self_similarity_main (N d : ℕ) (_hN : 1 ≤ N) (_hd : 2 ≤ d)
     (hxgt : ∀ i, (sideHalf N : ℤ) - (j : ℤ) < x i)
     (hscale : odoUnif d N t x = odoUnif d (2 * sideHalf N) t x)
     (htime : ∀ m : ℕ, j + 1 < m → m ≤ sideHalf N →
-      (t : ℕ∞) ≤ toppleTime d j)
+      (t : ℕ∞) ≤ toppleTime d (m - 1))
     (hstep : ∀ m : ℕ, j < m → m ≤ sideHalf N →
-      (t : ℕ∞) ≤ toppleTime d j →
+      (t : ℕ∞) ≤ toppleTime d (m - 1) →
       ∀ y : Site d, inSimplex d m y → (∀ i, 1 < y i) →
         odoUnif d (2 * m) t y =
           odoUnif d (2 * (m - 1)) t (fun i => y i - 1)) :
@@ -70,10 +70,12 @@ theorem self_similarity_main (N d : ℕ) (_hN : 1 ≤ N) (_hd : 2 ≤ d)
         have hkM : k < M := by omega
         have hmj : j < M - k := by omega
         have hmM : M - k ≤ M := Nat.sub_le _ _
-        have htime_m : (t : ℕ∞) ≤ toppleTime d j := by
+        have htime_m : (t : ℕ∞) ≤ toppleTime d ((M - k) - 1) := by
           by_cases hlarge : j + 1 < M - k
           · exact htime (M - k) hlarge hmM
-          · exact ht
+          · have hmk : M - k = j + 1 := by omega
+            rw [hmk]
+            simpa using ht
         have hy : inSimplex d (M - k) (fun i => x i - (k : ℤ)) :=
           hsimplex k hkprev
         have hygt : ∀ i, 1 < x i - (k : ℤ) := by
