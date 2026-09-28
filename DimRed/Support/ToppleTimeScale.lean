@@ -403,4 +403,21 @@ theorem lastCases_at_castSucc {n : ℕ} (c : ℤ) (x : Fin n → ℤ) (a : Fin n
   simp only [Fin.lastCases_castSucc]
 
 
+
+
+/-- The `Fin 1` points are all equal. -/
+theorem fin_one_subsingleton (a b : Fin 1) : a = b := by
+  exact Subsingleton.elim a b
+
+
+
+
+/-- The terminal odometer at a `Fin 1` point is independent of the point. -/
+theorem odoInfUnif_fin_one_eq (M : ℕ) (a b : Fin 1) :
+    odoInfUnif 1 (2 * M) (fun _ : Fin 1 => a) = odoInfUnif 1 (2 * M) (fun _ : Fin 1 => b) := by
+  congr 1
+  funext k
+  rw [fin_one_subsingleton a b]
+
+
 end DimRed
