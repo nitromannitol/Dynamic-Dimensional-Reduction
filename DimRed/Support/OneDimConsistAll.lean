@@ -3,6 +3,7 @@ The iterated one-dimensional self-similarity clause and the lower bound on
 successive toppling times from `dimred.tex:915-918` and `1040-1044`.
 -/
 import DimRed.Support.OneDimConsist
+import DimRed.Support.EarlyTimes
 import DimRed.Support.StrongDerivPure
 import DimRed.Support.ToppleTime
 
@@ -551,4 +552,152 @@ theorem one_dim_double (M q : ℕ) (hM : 4 ≤ M)
   rw [hM2, hM3] at hderiv2
   linarith
 
+/-- The sandpile at the corner of the cube of side four at time one is one. -/
+theorem sandp_corner_one : sandp 1 4 (fun _ => 2) 1 (fun _ : Fin 1 => (2 : ℤ)) = 1 := by
+  rw [sandp, lap]
+  norm_num
+  have hnbr : nbrSum (odo 1 4 (fun _ => 2) 1) (fun _ : Fin 1 => (2 : ℤ))
+      = odo 1 4 (fun _ => 2) 1 (fun _ => (3 : ℤ))
+        + odo 1 4 (fun _ => 2) 1 (fun _ => (1 : ℤ)) := by
+    simp only [nbrSum, Fin.sum_univ_one]
+    rw [site_one_add_unit, site_one_sub_unit]
+    norm_num
+  rw [hnbr]
+  have h1 : odo 1 4 (fun _ => 2) 1 (fun _ : Fin 1 => (2 : ℤ)) = 1 := by
+    have h := odoUnif_one 1 4 (by norm_num) (fun _ : Fin 1 => (2 : ℤ)) (by
+      intro i
+      have hi : i = (0 : Fin 1) := Fin.eq_zero i
+      subst hi
+      rw [show (4 : ℕ) = 2 * 2 by norm_num, loCoord_two_mul, hiCoord_two_mul]
+      norm_num)
+    have h' := h
+    simp only [odoUnif] at h'
+    norm_num at h'
+    exact h'
+  rw [h1]
+  have hoff : ¬ inCube 1 4 (fun _ : Fin 1 => (3 : ℤ)) := by
+    intro hc
+    have h := hc ⟨0, by omega⟩
+    rw [show (4 : ℕ) = 2 * 2 by norm_num, loCoord_two_mul, hiCoord_two_mul] at h
+    norm_num at h
+  rw [odo_eq_zero_outside 1 4 (fun _ => 2) 1 _ hoff]
+  have hone : odo 1 4 (fun _ => 2) 1 (fun _ : Fin 1 => (1 : ℤ)) = 1 := by
+    have h := odoUnif_one 1 4 (by norm_num) (fun _ : Fin 1 => (1 : ℤ)) (by
+      intro i
+      have hi : i = (0 : Fin 1) := Fin.eq_zero i
+      subst hi
+      rw [show (4 : ℕ) = 2 * 2 by norm_num, loCoord_two_mul, hiCoord_two_mul]
+      norm_num)
+    have h' := h
+    simp only [odoUnif] at h'
+    norm_num at h'
+    exact h'
+  rw [hone]
+  norm_num
+
+/-- The sandpile at the corner of the cube of side four at time one, at the
+neighbouring site, is at least two. -/
+theorem sandp_corner_one_neighbour :
+    2 ≤ sandp 1 4 (fun _ => 2) 1 (fun _ : Fin 1 => (1 : ℤ)) := by
+  rw [sandp, lap]
+  have hnbr1 : nbrSum (odo 1 4 (fun _ => 2) 1) (fun _ : Fin 1 => (1 : ℤ))
+      = odo 1 4 (fun _ => 2) 1 (fun _ => (2 : ℤ))
+        + odo 1 4 (fun _ => 2) 1 (fun _ => (0 : ℤ)) := by
+    simp only [nbrSum, Fin.sum_univ_one]
+    rw [site_one_add_unit, site_one_sub_unit]
+    norm_num
+  have h1' : odo 1 4 (fun _ => 2) 1 (fun _ : Fin 1 => (1 : ℤ)) = 1 := by
+    have h := odoUnif_one 1 4 (by norm_num) (fun _ : Fin 1 => (1 : ℤ)) (by
+      intro i
+      have hi : i = (0 : Fin 1) := Fin.eq_zero i
+      subst hi
+      rw [show (4 : ℕ) = 2 * 2 by norm_num, loCoord_two_mul, hiCoord_two_mul]
+      norm_num)
+    have h' := h
+    simp only [odoUnif] at h'
+    norm_num at h'
+    exact h'
+  have hzero : odo 1 4 (fun _ => 2) 1 (fun _ : Fin 1 => (0 : ℤ)) = 1 := by
+    have h := odoUnif_one 1 4 (by norm_num) (fun _ : Fin 1 => (0 : ℤ)) (by
+      intro i
+      have hi : i = (0 : Fin 1) := Fin.eq_zero i
+      subst hi
+      rw [show (4 : ℕ) = 2 * 2 by norm_num, loCoord_two_mul, hiCoord_two_mul]
+      norm_num)
+    have h' := h
+    simp only [odoUnif] at h'
+    norm_num at h'
+    exact h'
+  have h2' : odo 1 4 (fun _ => 2) 1 (fun _ : Fin 1 => (2 : ℤ)) = 1 := by
+    have h := odoUnif_one 1 4 (by norm_num) (fun _ : Fin 1 => (2 : ℤ)) (by
+      intro i
+      have hi : i = (0 : Fin 1) := Fin.eq_zero i
+      subst hi
+      rw [show (4 : ℕ) = 2 * 2 by norm_num, loCoord_two_mul, hiCoord_two_mul]
+      norm_num)
+    have h' := h
+    simp only [odoUnif] at h'
+    norm_num at h'
+    exact h'
+  rw [hnbr1, h1', hzero, h2']
+  norm_num
+/-- The sandpile at the corner of the cube of side four at time two is at
+least two, so the corner topples at time three. -/
+theorem sandp_corner_two :
+    2 ≤ sandp 1 4 (fun _ => 2) 2 (fun _ : Fin 1 => (2 : ℤ)) := by
+  have hcube : inCube 1 4 (fun _ : Fin 1 => (2 : ℤ)) := by
+    intro i
+    have hi : i = (0 : Fin 1) := Fin.eq_zero i
+    subst hi
+    rw [show (4 : ℕ) = 2 * 2 by norm_num, loCoord_two_mul, hiCoord_two_mul]
+    norm_num
+  have h1 : odo 1 4 (fun _ => 2) 1 (fun _ : Fin 1 => (2 : ℤ)) = 1 := by
+    have h := odoUnif_one 1 4 (by norm_num) (fun _ : Fin 1 => (2 : ℤ)) hcube
+    have h' := h
+    simp only [odoUnif] at h'
+    norm_num at h'
+    exact h'
+  have h2 : odo 1 4 (fun _ => 2) 2 (fun _ : Fin 1 => (2 : ℤ)) = 1 := by
+    rw [odo_succ_eq 1 4 (fun _ => 2) 1 _ hcube, h1]
+    rw [if_neg (by rw [sandp_corner_one]; norm_num)]
+    norm_num
+  rw [sandp, lap]
+  rw [h2]
+  have hnbr : nbrSum (odo 1 4 (fun _ => 2) 2) (fun _ : Fin 1 => (2 : ℤ))
+      = odo 1 4 (fun _ => 2) 2 (fun _ => (3 : ℤ))
+        + odo 1 4 (fun _ => 2) 2 (fun _ => (1 : ℤ)) := by
+    simp only [nbrSum, Fin.sum_univ_one]
+    rw [site_one_add_unit, site_one_sub_unit]
+    norm_num
+  rw [hnbr]
+  have hoff : ¬ inCube 1 4 (fun _ : Fin 1 => (3 : ℤ)) := by
+    intro hc
+    have h := hc ⟨0, by omega⟩
+    rw [show (4 : ℕ) = 2 * 2 by norm_num, loCoord_two_mul, hiCoord_two_mul] at h
+    norm_num at h
+  rw [odo_eq_zero_outside 1 4 (fun _ => 2) 2 _ hoff]
+  have hone : 2 ≤ odo 1 4 (fun _ => 2) 2 (fun _ : Fin 1 => (1 : ℤ)) := by
+    rw [odo_succ_eq 1 4 (fun _ => 2) 1 _ (by
+      intro i
+      have hi : i = (0 : Fin 1) := Fin.eq_zero i
+      subst hi
+      rw [show (4 : ℕ) = 2 * 2 by norm_num, loCoord_two_mul, hiCoord_two_mul]
+      norm_num)]
+    have h1' : odo 1 4 (fun _ => 2) 1 (fun _ : Fin 1 => (1 : ℤ)) = 1 := by
+      have h := odoUnif_one 1 4 (by norm_num) (fun _ : Fin 1 => (1 : ℤ)) (by
+        intro i
+        have hi : i = (0 : Fin 1) := Fin.eq_zero i
+        subst hi
+        rw [show (4 : ℕ) = 2 * 2 by norm_num, loCoord_two_mul, hiCoord_two_mul]
+        norm_num)
+      have h' := h
+      simp only [odoUnif] at h'
+      norm_num at h'
+      exact h'
+    rw [h1']
+    norm_num
+    rw [if_pos sandp_corner_one_neighbour]
+    norm_num
+  norm_num at hone ⊢
+  linarith [hone]
 end DimRed
