@@ -3,6 +3,7 @@ The iterated one-dimensional self-similarity clause and the lower bound on
 successive toppling times from `dimred.tex:915-918` and `1040-1044`.
 -/
 import DimRed.Support.OneDimConsist
+import DimRed.Support.CornerReaches
 import DimRed.Support.EarlyTimes
 import DimRed.Support.StrongDerivPure
 import DimRed.Support.ToppleTime
@@ -700,4 +701,234 @@ theorem sandp_corner_two :
     norm_num
   norm_num at hone ⊢
   linarith [hone]
+theorem toppleTime_one_two : toppleTime 1 2 = 3 := by
+  have hc : cornerPoint 1 2 = (fun _ : Fin 1 => (2 : ℤ)) := by
+    funext i
+    have hi : i = (0 : Fin 1) := Fin.eq_zero i
+    subst hi
+    rw [cornerPoint]
+    simp
+  have hcube : inCube 1 4 (fun _ : Fin 1 => (2 : ℤ)) := by
+    intro i
+    have hi : i = (0 : Fin 1) := Fin.eq_zero i
+    subst hi
+    rw [show (4 : ℕ) = 2 * 2 by norm_num, loCoord_two_mul, hiCoord_two_mul]
+    norm_num
+  have h1 : odo 1 4 (fun _ => 2) 1 (fun _ : Fin 1 => (2 : ℤ)) = 1 := by
+    simp only [odo]
+    rw [if_pos hcube]
+    norm_num [lap, nbrSum, Fin.sum_univ_one, unit]
+  have h2 : odo 1 4 (fun _ => 2) 2 (fun _ : Fin 1 => (2 : ℤ)) = 1 := by
+    rw [odo_succ_eq 1 4 (fun _ => 2) 1 _ hcube, h1]
+    rw [if_neg (by rw [sandp_corner_one]; norm_num)]
+    norm_num
+  have h3 : 2 ≤ odo 1 4 (fun _ => 2) 3 (fun _ : Fin 1 => (2 : ℤ)) := by
+    rw [odo_succ_eq 1 4 (fun _ => 2) 2 _ hcube, h2]
+    norm_num
+    rw [if_pos sandp_corner_two]
+    norm_num
+  have hle : toppleTime 1 2 ≤ 3 := by
+    rw [toppleTime_eq_corner 1 2 (by norm_num) (by omega)]
+    apply sInf_le
+    exact ⟨3, ⟨by norm_num, by rw [hc]; exact h3⟩, rfl⟩
+  have hgt : ¬ (toppleTime 1 2 ≤ 2) := by
+    intro hcon
+    have hmem := (toppleTime_le_iff 1 2 (by norm_num) (by omega)
+      ⟨3, by norm_num, by rw [hc]; exact h3⟩ (2 : ℕ∞)).mp hcon
+    obtain ⟨n, hn, hn1, hnval⟩ := hmem
+    have hn2 : n ≤ 2 := ENat.coe_le_coe.mp hn
+    -- the odometer is monotone in time, so it is at most one for `n ≤ 2`
+    have hmono : odoUnif 1 4 n (fun _ : Fin 1 => (2 : ℤ))
+        ≤ odoUnif 1 4 2 (fun _ : Fin 1 => (2 : ℤ)) :=
+      odo_mono 1 4 (fun _ => 2) hn2 _
+    have h2u : odoUnif 1 4 2 (fun _ : Fin 1 => (2 : ℤ)) = 1 := by
+      change odo 1 4 (fun _ => 2 * (1 : ℤ)) 2 (fun _ : Fin 1 => (2 : ℤ)) = 1
+      norm_num
+      exact h2
+    rw [h2u] at hmono
+    rw [hc] at hnval
+    have hnval' : (2 : ℤ) ≤ odoUnif 1 4 n (fun _ : Fin 1 => (2 : ℤ)) := hnval
+    linarith
+  -- `τ_2 ≤ 3` and `τ_2 > 2`, so `τ_2 = 3`
+  -- `τ_2 ≤ 3` and `τ_2 > 2`, so `τ_2 = 3`
+  have hge : 3 ≤ toppleTime 1 2 := by
+    by_contra hcon
+    push Not at hcon
+    -- `τ_2 < 3` and `τ_2 ≤ 3` make `τ_2` a natural number below three
+    obtain ⟨T, hT, _⟩ := (WithTop.le_coe_iff).mp hle
+    rw [hT] at hcon
+    have hT3 : T < 3 := ENat.coe_lt_coe.mp hcon
+    have hT2 : T ≤ 2 := by omega
+    exact hgt (by rw [hT]; exact ENat.coe_le_coe.mpr hT2)
+  exact le_antisymm hle hge
+theorem one_dim_tau_gap (M t : ℕ) (hM : 3 ≤ M) (ht : toppleTime 1 (M - 1) ≤ (t : ℕ∞))
+    (hconsist : RegConsist 1 M t)
+    (hclause : ∀ q' : ℕ, (q' : ℕ∞) ≤ toppleTime 1 (M - 2) →
+      odoUnif 1 (2 * M) q' (fun _ => (M : ℤ))
+          = odoUnif 1 (2 * (M - 1)) q' (fun _ => ((M - 1 : ℕ) : ℤ)) ∧
+        odoUnif 1 (2 * M) q' (fun _ => (M : ℤ))
+          = odoUnif 1 (2 * (M - 2)) q' (fun _ => ((M - 2 : ℕ) : ℤ)))
+    (hprior : ∀ d' M' t' : ℕ, regEarlier 1 M t d' M' t' →
+      1 ≤ d' → 2 ≤ M' → Reg d' M' t' ∧ DimRedAt d' M' t') :
+    toppleTime 1 (M - 2) + 2 ≤ toppleTime 1 (M - 1) := by
+  refine toppleTime_succ_lower M hM ?_ ?_ ?_ ?_ ?_
+  · intro q' hq'
+    -- the clause at scale `M` at time `q'`: either `q' < t`, where the earlier
+    -- instances supply it, or `q' = t`, where the triple's own consistency
+    -- clause does
+    exact hclause q' hq'
+  · intro q' hq'
+    have h := (hprior 1 (M - 1) q' (Or.inr (Or.inl ⟨rfl, by omega⟩))
+      (by omega) (by omega)).1.2.2.2.2
+    exact h hq'
+  · exact corner_reaches 1 (M - 2) (by norm_num) (by omega)
+      (fun e he hed t y hy => by omega)
+  · exact corner_reaches 1 (M - 1) (by norm_num) (by omega)
+      (fun e he hed t y hy => by omega)
+  · intro q' hq' hdbl
+    by_cases hM4 : 4 ≤ M
+    · exact one_dim_double M q' hM4 hq'
+        (fun j hj1 hj2 hqj x hx hxgt => by
+          have h := (hprior 1 (M - 1) q' (Or.inr (Or.inl ⟨rfl, by omega⟩))
+            (by omega) (by omega)).1.1
+          exact h j hj1 hj2 hqj x hx hxgt)
+        (by
+          have h := (hprior 1 (M - 1) q' (Or.inr (Or.inl ⟨rfl, by omega⟩))
+            (by omega) (by omega)).1.1 (M - 2) (by omega) (by omega)
+            (by rw [hq'])
+            (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ))
+            (by
+              constructor
+              · intro i
+                have hi : i = (0 : Fin 1) := Fin.eq_zero i
+                subst hi
+                have h1 : (1 : ℤ) ≤ ((M - 1 : ℕ) : ℤ) := by
+                  rw [Nat.cast_sub (by omega : 1 ≤ M)]
+                  norm_num
+                  omega
+                exact ⟨h1, le_refl _⟩
+              · intro i j _
+                have hi : i = (0 : Fin 1) := Fin.eq_zero i
+                have hj : j = (0 : Fin 1) := Fin.eq_zero j
+                rw [hi, hj])
+            (fun i => by
+              have hi : i = (0 : Fin 1) := Fin.eq_zero i
+              subst hi
+              change ((M - 1 : ℕ) : ℤ) - ((M - 2 : ℕ) : ℤ) < ((M - 1 : ℕ) : ℤ)
+              have hM2 : ((M - 2 : ℕ) : ℤ) = (M : ℤ) - 2 := by
+                rw [Nat.cast_sub (by omega : 2 ≤ M)]
+                norm_num
+              rw [Nat.cast_sub (by omega : 1 ≤ M), hM2]
+              omega)
+          have hpt : (fun i : Fin 1 => ((M - 1 : ℕ) : ℤ) - (((M - 1 : ℕ) : ℤ) - ((M - 2 : ℕ) : ℤ)))
+              = (fun _ : Fin 1 => ((M - 2 : ℕ) : ℤ)) := by
+            funext i
+            have hM2 : ((M - 2 : ℕ) : ℤ) = (M : ℤ) - 2 := by
+              rw [Nat.cast_sub (by omega : 2 ≤ M)]
+              norm_num
+            rw [Nat.cast_sub (by omega : 1 ≤ M), hM2]
+            ring
+          rw [hpt] at h
+          -- `v_{q'}^{(M-1)}(M-1) = v_{q'}^{(M-2)}(M-2)`, and the smaller cube's
+          -- corner at its own topple time is `M-2`
+          have hval : odoUnif 1 (2 * (M - 2)) q' (fun _ : Fin 1 => ((M - 2 : ℕ) : ℤ))
+              = ((M - 2 : ℕ) : ℤ) := by
+            have hc := (hclause q' (le_of_eq hq')).2
+            -- the smaller cube's corner at its own topple time is `M-2`
+            -- the smaller cube's corner at its own topple time is `M-2`
+            have hhit : ∃ n : ℕ, 1 ≤ n ∧
+                ((M - 2 : ℕ) : ℤ) ≤ odoUnif 1 (2 * (M - 2)) n
+                  (cornerPoint 1 (M - 2)) := by
+              exact corner_reaches 1 (M - 2) (by norm_num) (by omega)
+                (fun e he hel t y hy => by
+                  have he0 : e = 0 := by omega
+                  subst he0
+                  exact (hprior 1 (M - 2) t (Or.inr (Or.inl ⟨rfl, by omega⟩))
+                    (by omega) (by omega)).2 0 (by omega) rfl y hy)
+            have hle := (toppleTime_le_iff 1 (M - 2) (by norm_num) (by omega) hhit
+              (q' : ℕ∞)).mp (le_of_eq hq'.symm)
+            obtain ⟨n, hn, hn1, hnval⟩ := hle
+            have hq'le : (q' : ℕ∞) ≤ toppleTime 1 (M - 2) := le_of_eq hq'
+            have hnq : n ≤ q' := ENat.coe_le_coe.mp hn
+            have hmono : odoUnif 1 (2 * (M - 2)) n (cornerPoint 1 (M - 2))
+                ≤ odoUnif 1 (2 * (M - 2)) q' (cornerPoint 1 (M - 2)) :=
+              odo_mono 1 (2 * (M - 2)) (fun _ => 2) hnq (cornerPoint 1 (M - 2))
+            have hcorner : cornerPoint 1 (M - 2) = (fun _ : Fin 1 => ((M - 2 : ℕ) : ℤ)) := by
+              funext i
+              have hi : i = (0 : Fin 1) := Fin.eq_zero i
+              subst hi
+              rw [cornerPoint]
+              simp
+            rw [hcorner] at hmono hnval
+            have hup : odoUnif 1 (2 * (M - 2)) q' (fun _ : Fin 1 => ((M - 2 : ℕ) : ℤ))
+                ≤ ((M - 2 : ℕ) : ℤ) := by
+              have h := odo_corner_le_M 1 (M - 2) (by norm_num) (by omega) q'
+              rw [hcorner] at h
+              exact h
+            exact le_antisymm hup (le_trans hnval hmono)
+          rw [hval] at h
+          exact h)
+        hdbl
+    · -- M = 3: the gap is `τ_1 + 2 ≤ τ_2`
+      have hM3' : M = 3 := by omega
+      subst hM3'
+      norm_num
+      -- `q' = τ_1 = 1`, and the corner of the side-four cube reaches two at
+      -- time three, so the difference over two steps is two
+      have hq1 : q' = 1 := by
+        have h1 : toppleTime 1 1 = 1 := by
+          apply le_antisymm
+          · rw [toppleTime_eq_corner 1 1 (by norm_num) (by omega)]
+            apply sInf_le
+            exact ⟨1, ⟨by norm_num, corner_one_le 1⟩, rfl⟩
+          · exact one_le_toppleTime 1 1
+        have hle : q' ≤ 1 := by
+          have h2 : (q' : ℕ∞) ≤ toppleTime 1 (3 - 2) := le_of_eq hq'
+          rw [show (3 : ℕ) - 2 = 1 by norm_num, h1] at h2
+          exact ENat.coe_le_coe.mp h2
+        have hge : 1 ≤ q' := by
+          have h2 : (1 : ℕ∞) ≤ (q' : ℕ∞) := by
+            rw [hq']
+            exact one_le_toppleTime 1 (3 - 2)
+          exact ENat.coe_le_coe.mp h2
+        omega
+      subst hq1
+      have hc : cornerPoint 1 2 = (fun _ : Fin 1 => (2 : ℤ)) := by
+        funext i
+        have hi : i = (0 : Fin 1) := Fin.eq_zero i
+        subst hi
+        rw [cornerPoint]
+        simp
+      have hcube : inCube 1 4 (fun _ : Fin 1 => (2 : ℤ)) := by
+        intro i
+        have hi : i = (0 : Fin 1) := Fin.eq_zero i
+        subst hi
+        rw [show (4 : ℕ) = 2 * 2 by norm_num, loCoord_two_mul, hiCoord_two_mul]
+        norm_num
+      have h1v : odo 1 4 (fun _ => 2) 1 (fun _ : Fin 1 => (2 : ℤ)) = 1 := by
+        have h := odoUnif_one 1 4 (by norm_num) (fun _ : Fin 1 => (2 : ℤ)) hcube
+        have h' := h
+        simp only [odoUnif] at h'
+        norm_num at h'
+        exact h'
+      have h2v : odo 1 4 (fun _ => 2) 2 (fun _ : Fin 1 => (2 : ℤ)) = 1 := by
+        rw [odo_succ_eq 1 4 (fun _ => 2) 1 _ hcube, h1v]
+        rw [if_neg (by rw [sandp_corner_one]; norm_num)]
+        norm_num
+      have h3v : 2 ≤ odo 1 4 (fun _ => 2) 3 (fun _ : Fin 1 => (2 : ℤ)) := by
+        rw [odo_succ_eq 1 4 (fun _ => 2) 2 _ hcube, h2v]
+        norm_num
+        rw [if_pos sandp_corner_two]
+        norm_num
+      rw [hc]
+      -- the hypothesis `hdbl` is false at `M = 3`: the corner of the side-four
+      -- cube has only one topple at time two
+      exfalso
+      have hdbl' := hdbl
+      rw [show (1 : ℕ) + 1 = 2 by norm_num] at hdbl'
+      rw [show cornerPoint 1 2 = (fun _ : Fin 1 => (2 : ℤ)) from hc] at hdbl'
+      rw [show odoUnif 1 (2 * 2) 2 (fun _ : Fin 1 => (2 : ℤ))
+          = odo 1 4 (fun _ => 2) 2 (fun _ : Fin 1 => (2 : ℤ)) from rfl] at hdbl'
+      rw [h2v] at hdbl'
+      norm_num at hdbl'
 end DimRed
