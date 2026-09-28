@@ -173,4 +173,92 @@ theorem foldPoint_sub_one (d m : ℕ) (z : Site d) (hz : ∀ k : Fin d, 1 < z k)
   rw [if_pos hz1']
 
 
+
+
+/-- Sorting commutes with shifting down by one, for points with all coordinates
+above one. -/
+theorem toSimplexPoint_sub_one (d m : ℕ) (z : Site d) (hz : ∀ k : Fin d, 1 < z k) :
+    toSimplexPoint d (m - 1) (fun k => z k - 1)
+      = fun k => toSimplexPoint d m z k - 1 := by
+  -- the sorting key is unchanged by the shift, so the permutation is the same
+  have hkey : (fun i : Fin d => -(foldPoint d (2 * (m - 1)) (fun k => z k - 1) i))
+      = (fun i : Fin d => -(foldPoint d (2 * m) z i) + 1) := by
+    funext i
+    rw [foldPoint_sub_one d m z hz]
+    ring
+  have hfold : foldPoint d (2 * (m - 1)) (fun k => z k - 1)
+      = fun k => foldPoint d (2 * m) z k - 1 := foldPoint_sub_one d m z hz
+  -- the two sort permutations agree, because the keys differ by a constant
+  -- the two sorted tuples agree as functions, which is all the caller needs
+  have hsort : (fun j : Fin d => foldPoint d (2 * (m - 1)) (fun k => z k - 1)
+        (Tuple.sort (fun i : Fin d => -(foldPoint d (2 * (m - 1)) (fun k => z k - 1) i)) j))
+      = fun j : Fin d => foldPoint d (2 * m) z
+        (Tuple.sort (fun i : Fin d => -(foldPoint d (2 * m) z i)) j) - 1 := by
+    -- `κ₁ = κ₂ + 1`, so `κ₁ ∘ σ₂ = (κ₂ ∘ σ₂) + 1` is monotone
+    have hmono1 : Monotone ((fun i : Fin d => -(foldPoint d (2 * (m - 1)) (fun k => z k - 1) i))
+        ∘ Tuple.sort (fun i : Fin d => -(foldPoint d (2 * m) z i))) := by
+      intro a b hab
+      have h := Tuple.monotone_sort (fun i : Fin d => -(foldPoint d (2 * m) z i)) hab
+      have hka := congrFun hkey ((Tuple.sort fun i => -foldPoint d (2 * m) z i) a)
+      have hkb := congrFun hkey ((Tuple.sort fun i => -foldPoint d (2 * m) z i) b)
+      simp only [Function.comp_apply] at h ⊢
+      linarith
+    -- `κ₁ ∘ σ₂ = κ₁ ∘ σ₁` by uniqueness of the monotone permutation
+    have h1 := Tuple.unique_monotone hmono1
+      (Tuple.monotone_sort (fun i : Fin d => -(foldPoint d (2 * (m - 1)) (fun k => z k - 1) i)))
+    funext j
+    have h2 := congrFun h1 j
+    simp only [Function.comp_apply] at h2
+    -- `κ₁ (σ₂ j) = κ₁ (σ₁ j)`; unfold `κ₁` with `foldPoint_sub_one`
+    have hka := congrFun hkey ((Tuple.sort fun i => -foldPoint d (2 * (m - 1)) (fun k => z k - 1) i) j)
+    have hkb := congrFun hkey ((Tuple.sort fun i => -foldPoint d (2 * m) z i) j)
+    rw [foldPoint_sub_one d m z hz] at hka
+    simp only at hka hkb
+    linarith
+  change (fun j : Fin d => foldPoint d (2 * (m - 1)) (fun k => z k - 1)
+      (Tuple.sort (fun i : Fin d => -(foldPoint d (2 * (m - 1)) (fun k => z k - 1) i)) j))
+    = fun j : Fin d => foldPoint d (2 * m) z
+      (Tuple.sort (fun i : Fin d => -(foldPoint d (2 * m) z i)) j) - 1
+  exact hsort
+
+
+
+
+/-- Adding a unit vector to a point of the sorted domain with all coordinates
+above two keeps it in the cube of side `2m`. -/
+theorem inCube_add_unit_of_gt_two (d m : ℕ) (y : Site d) (i : Fin d)
+    (h1 : ∀ k : Fin d, (1 : ℤ) ≤ y k) (h2 : ∀ k : Fin d, y k ≤ (m : ℤ))
+    (h3 : ∀ k : Fin d, (2 : ℤ) < y k) (hm : 2 ≤ m) (hi : y i < (m : ℤ)) :
+    inCube d (2 * m) (y + unit i) := by
+  intro k
+  rw [loCoord_two_mul, hiCoord_two_mul]
+  have h1k : (1 : ℤ) ≤ y k := h1 k
+  have h2k : y k ≤ (m : ℤ) := h2 k
+  have h3k : (2 : ℤ) < y k := h3 k
+  simp only [Pi.add_apply, unit]
+  by_cases hk : k = i
+  · subst hk
+    simp only [Pi.single_eq_same]
+    constructor <;> omega
+  · simp only [Pi.single_eq_of_ne hk]
+    constructor <;> omega
+
+
+
+/-- Adding a unit vector to a point with all coordinates above two keeps every
+coordinate above one. -/
+theorem gt_one_add_unit_of_gt_two (d : ℕ) (y : Site d) (i : Fin d)
+    (h3 : ∀ k : Fin d, (2 : ℤ) < y k) :
+    ∀ k : Fin d, (1 : ℤ) < (y + unit i) k := by
+  intro k
+  have h3k : (2 : ℤ) < y k := h3 k
+  simp only [Pi.add_apply, unit]
+  by_cases hk : k = i
+  · subst hk
+    simp only [Pi.single_eq_same]
+    omega
+  · simp only [Pi.single_eq_of_ne hk]
+    omega
+
+
 end DimRed
