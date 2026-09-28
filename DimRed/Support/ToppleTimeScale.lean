@@ -370,4 +370,22 @@ theorem snoc_eq_lastCases {n : ℕ} (x : Fin n → ℤ) (c : ℤ) :
   · rw [Fin.snoc_castSucc, Fin.lastCases_castSucc]
 
 
+
+
+/-- The `Fin.lastCases` form of a point equals its `Fin.snoc` form. -/
+theorem lastCases_eq_snoc {n : ℕ} (x : Fin n → ℤ) (c : ℤ) :
+    (fun k : Fin (n + 1) => Fin.lastCases c x k) = (Fin.snoc x c : Fin (n + 1) → ℤ) := by
+  exact (snoc_eq_lastCases x c).symm
+
+
+
+
+/-- The terminal odometer at a `Fin.lastCases` point equals the one at its
+`Fin.snoc` form. -/
+theorem odoInfUnif_lastCases_eq_snoc (n M : ℕ) (x : Fin n → ℤ) (c : ℤ) :
+    odoInfUnif (n + 1) (2 * M) (fun k : Fin (n + 1) => Fin.lastCases c x k)
+      = odoInfUnif (n + 1) (2 * M) (Fin.snoc x c) := by
+  rw [lastCases_eq_snoc]
+
+
 end DimRed
