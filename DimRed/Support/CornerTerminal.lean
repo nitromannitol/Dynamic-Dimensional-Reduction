@@ -191,4 +191,37 @@ theorem corner_sandp_topple' (d M q : ℕ) (hM : 3 ≤ M)
   rw [hfac] at h
   linarith
 
+/-- The head neighbour `+e_0` of the corner is the `M`-corner. -/
+theorem corner_add_head_eq (_d M : ℕ) (hM : 3 ≤ M) :
+    (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ)) + unit 0 = (fun _ : Fin 1 => ((M : ℕ) : ℤ)) := by
+  funext i
+  have hi : i = (0 : Fin 1) := Subsingleton.elim i 0
+  subst hi
+  rw [Pi.add_apply, unit_apply_self]
+  have h : M - 1 = M - 1 := rfl
+  have hM1 : 1 ≤ M := by omega
+  have hcast : ((M - 1 : ℕ) : ℤ) = (M : ℤ) - 1 := by
+    rw [Nat.cast_sub hM1]
+    norm_num
+  rw [hcast]
+  ring
+
+/-- The head neighbour `-e_0` of the corner is the `(M-2)`-corner. -/
+theorem corner_sub_head_eq'' (_d M : ℕ) (hM : 3 ≤ M) :
+    (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ)) - unit 0 = (fun _ : Fin 1 => ((M - 2 : ℕ) : ℤ)) := by
+  funext i
+  have hi : i = (0 : Fin 1) := Subsingleton.elim i 0
+  subst hi
+  rw [Pi.sub_apply, unit_apply_self]
+  have hM1 : 1 ≤ M := by omega
+  have hcast : ((M - 1 : ℕ) : ℤ) = (M : ℤ) - 1 := by
+    rw [Nat.cast_sub hM1]
+    norm_num
+  have hcast2 : ((M - 2 : ℕ) : ℤ) = (M : ℤ) - 2 := by
+    have h2 : 2 ≤ M := by omega
+    rw [Nat.cast_sub h2]
+    norm_num
+  rw [hcast, hcast2]
+  ring
+
 end DimRed
