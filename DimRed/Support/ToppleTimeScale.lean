@@ -556,18 +556,20 @@ with NO circularity: the one-step case is `toppleTime_mono_scale_succ` and the
 chain is `Nat.le_induction`. -/
 theorem toppleTime_mono_scale_dim' (d a b M : ℕ) (hd : 1 ≤ d) (ha : 1 ≤ a) (hab : a ≤ b)
     (hbM : b < M)
-    (hconsist : ∀ c : ℕ, 1 ≤ c → c < M → ∀ n : ℕ, (n : ℕ∞) ≤ toppleTime d c →
+    (hconsist : ∀ c : ℕ, 1 ≤ c → c + 1 ≤ b → ∀ n : ℕ, (n : ℕ∞) ≤ toppleTime d c →
       odoUnif d (2 * (c + 1)) n (cornerPoint d (c + 1)) ≤
         odoUnif d (2 * c) n (cornerPoint d c) + 1)
-    (hhit : ∀ c : ℕ, 1 ≤ c → c < M →
+    (hhit : ∀ c : ℕ, 1 ≤ c → c ≤ b →
       ∃ n : ℕ, 1 ≤ n ∧ (c : ℤ) ≤ odoUnif d (2 * c) n (cornerPoint d c)) :
     toppleTime d a ≤ toppleTime d b := by
   induction b, hab using Nat.le_induction with
   | base => exact le_refl _
   | succ c hac ih =>
-      exact le_trans (ih (by omega)) (toppleTime_mono_scale_succ d c hd (le_trans ha hac)
-        (hconsist c (le_trans ha hac) (by omega)) (hhit c (le_trans ha hac) (by omega))
-        (hhit (c + 1) (by omega) hbM))
+      exact le_trans (ih (by omega) (fun c' hc' hc'b n' hn' => hconsist c' hc' (by omega) n' hn')
+        (fun c' hc' hc'b => hhit c' hc' (by omega)))
+        (toppleTime_mono_scale_succ d c hd (le_trans ha hac)
+          (hconsist c (le_trans ha hac) (by omega)) (hhit c (le_trans ha hac) (by omega))
+          (hhit (c + 1) (by omega) (by omega)))
 
 /-- The one-step corner domination: at any time `n ≤ τ_c` the corner of the
 `(c+1)`-cube is at most one above the corner of the `c`-cube.  This is
