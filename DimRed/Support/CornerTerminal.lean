@@ -108,4 +108,16 @@ theorem corner_sub_head_eq' (d M : ℕ) (hM : 3 ≤ M) :
     · simp only [Pi.sub_apply]
     · rw [cornerPoint_apply, if_neg hi]
 
+/-- The head neighbour `+e_0` of the corner is off the cube. -/
+theorem corner_add_head_off (d M : ℕ) (_hM : 3 ≤ M) :
+    ¬ inCube (d + 1) (2 * (M - 1)) (cornerPoint (d + 1) (M - 1) + unit 0) := by
+  intro hc
+  have h := hc 0
+  simp only [Pi.add_apply, cornerPoint_apply, unit_apply_self] at h
+  have h2 := h.2
+  have hN : hiCoord (2 * (M - 1)) = ((M - 1 : ℕ) : ℤ) := hiCoord_two_mul (M - 1)
+  rw [hN] at h2
+  have h3 : ((M - 1 : ℕ) : ℤ) + 1 ≤ ((M - 1 : ℕ) : ℤ) := h2
+  omega
+
 end DimRed
