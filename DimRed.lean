@@ -75,5 +75,7 @@ import DimRed.Support.RegBridges
 import DimRed.Support.RegSteps
 import DimRed.Support.RegFacetTime
 import DimRed.Support.RegFacetStep
+import DimRed.Support.HeadTermSub
+import DimRed.Support.FacetTermBounds
 import DimRed.Support.SimplexFold
 import DimRed.MainTheorems

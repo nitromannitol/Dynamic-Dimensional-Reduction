@@ -21,6 +21,58 @@ theorem facetPoint_tail {i j : ℕ} (x : Fin i → ℤ) (c : ℤ) (b : Fin j) :
     facetPoint x c j (Fin.natAdd (i + 1) b) = 1 := by
   simp [facetPoint]
 
+/-- The mid facet point with its first tail coordinate raised from one to two:
+the paper's tail neighbour `(x_i, 2, 2, 1_{j-1})` of `eq:laplace_13`.  When
+`j = 0` the tail sum is empty and the point is the mid point itself. -/
+def facetTailRaise {i : ℕ} (x : Fin i → ℤ) (j : ℕ) : Site (i + 1 + j) :=
+  fun l => if i + 1 ≤ (l : ℕ) then (if (l : ℕ) = i + 1 then 2 else 1) else facetPoint x 2 j l
+
+theorem facetTailRaise_apply {i : ℕ} (x : Fin i → ℤ) (j : ℕ) (l : Fin (i + 1 + j)) :
+    facetTailRaise x j l
+      = if i + 1 ≤ (l : ℕ) then (if (l : ℕ) = i + 1 then 2 else 1) else facetPoint x 2 j l := rfl
+
+theorem facetTailRaise_eq_mid {i : ℕ} (x : Fin i → ℤ) (j : ℕ) (hj : j = 0) :
+    facetTailRaise x j = facetPoint x 2 j := by
+  subst hj
+  funext l
+  rw [facetTailRaise_apply]
+  have h : ¬ (i + 1 ≤ (l : ℕ)) := by
+    have := l.isLt
+    omega
+  rw [if_neg h]
+
+theorem facetTailRaise_head {i : ℕ} (x : Fin i → ℤ) (j : ℕ) (a : Fin i) :
+    facetTailRaise x j (Fin.castAdd j (Fin.castSucc a))
+      = facetPoint x 2 j (Fin.castAdd j (Fin.castSucc a)) := by
+  rw [facetTailRaise_apply]
+  have h : ¬ (i + 1 ≤ ((Fin.castAdd j (Fin.castSucc a) : Fin (i + 1 + j)) : ℕ)) := by
+    simp only [Fin.val_castAdd, Fin.val_castSucc]
+    omega
+  rw [if_neg h]
+
+theorem facetTailRaise_mid {i : ℕ} (x : Fin i → ℤ) (j : ℕ) :
+    facetTailRaise x j (Fin.castAdd j (Fin.last i))
+      = facetPoint x 2 j (Fin.castAdd j (Fin.last i)) := by
+  rw [facetTailRaise_apply]
+  have h : ¬ (i + 1 ≤ ((Fin.castAdd j (Fin.last i) : Fin (i + 1 + j)) : ℕ)) := by
+    simp only [Fin.val_castAdd, Fin.val_last]
+    omega
+  rw [if_neg h]
+
+theorem facetTailRaise_tail {i : ℕ} (x : Fin i → ℤ) (j : ℕ) (b : Fin j) :
+    facetTailRaise x j (Fin.natAdd (i + 1) b)
+      = if (b : ℕ) = 0 then 2 else 1 := by
+  rw [facetTailRaise_apply]
+  have hval : ((Fin.natAdd (i + 1) b : Fin (i + 1 + j)) : ℕ) = i + 1 + (b : ℕ) := by
+    simp only [Fin.val_natAdd]
+  have hlt : i + 1 ≤ ((Fin.natAdd (i + 1) b : Fin (i + 1 + j)) : ℕ) := by
+    rw [hval]
+    omega
+  rw [if_pos hlt]
+  by_cases hb : (b : ℕ) = 0
+  · rw [if_pos (by rw [hval, hb]), if_pos hb]
+  · rw [if_neg (by rw [hval]; omega), if_neg hb]
+
 theorem facetPoint_add_head {i j : ℕ} (x : Fin i → ℤ) (a : Fin i) :
     facetPoint x 1 j + unit (Fin.castAdd j (Fin.castSucc a))
       = facetPoint (x + unit a) 1 j := by

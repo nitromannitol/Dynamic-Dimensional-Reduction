@@ -1,4 +1,5 @@
 import DimRed.Support.RegFacetTime
+import DimRed.Support.FacetNbr
 
 /-!
 # Strong facet compatibility at one triple
@@ -45,7 +46,7 @@ structure FacetTermBounds (i j M t : ℕ) (y : Fin i → ℤ) : Prop where
   mid : odoUnif (i + 1 + j) (2 * M) (t - 1) (facetPoint y 1 j)
     = odoUnif (i + 1 + j) (2 * M) t (facetPoint y 2 j)
   tail : odoUnif (i + 1 + j) (2 * M) (t - 1) (facetPoint y 2 j)
-    ≤ odoUnif (i + 1 + j) (2 * M) t (facetPoint y 3 j)
+    ≤ odoUnif (i + 1 + j) (2 * M) t (facetTailRaise y j)
   /-- the gap at time `t-1`, which the clause supplies in the toppling case -/
   gap : odoUnif (i + 1 + j) (2 * M) (t - 1) (facetPoint y 1 j)
     = odoUnif (i + 1 + j) (2 * M) (t - 1) (facetPoint y 2 j) + 1
@@ -70,9 +71,9 @@ theorem lap_facet_le_of_prev {i j M t : ℕ} (_ht : 1 ≤ t) (_hi : 1 ≤ i) (_h
             odoUnif (i + 1 + j) (2 * M) t (facetPoint (y - unit a) 2 j))) -
         2 * (i : ℤ) * odoUnif (i + 1 + j) (2 * M) t (facetPoint y 2 j) +
         ((j : ℤ) + 1) *
-          (odoUnif (i + 1 + j) (2 * M) t (facetPoint y 3 j) -
+          (odoUnif (i + 1 + j) (2 * M) t (facetTailRaise y j) -
             odoUnif (i + 1 + j) (2 * M) t (facetPoint y 2 j)))
-    (hgap : odoUnif (i + 1 + j) (2 * M) t (facetPoint y 1 j)
+    (_hgap : odoUnif (i + 1 + j) (2 * M) t (facetPoint y 1 j)
         = odoUnif (i + 1 + j) (2 * M) t (facetPoint y 2 j) + 1) :
     lap (odoUnif (i + 1 + j) (2 * M) (t - 1)) (facetPoint y 1 j)
       ≤ lap (odoUnif (i + 1 + j) (2 * M) t) (facetPoint y 2 j) := by
@@ -97,15 +98,11 @@ theorem lap_facet_le_of_prev {i j M t : ℕ} (_ht : 1 ≤ t) (_hi : 1 ≤ i) (_h
     exact h
   rw [hlap1]
   rw [hlap2]
-  have hmid1 : odoUnif (i + 1 + j) (2 * M) (t - 1) (facetPoint y 2 j)
-      - odoUnif (i + 1 + j) (2 * M) (t - 1) (facetPoint y 1 j) = -1 := by
-    linarith [hb.gap]
-  have hmid2 : -1 ≤ odoUnif (i + 1 + j) (2 * M) t (facetPoint y 3 j)
-      - odoUnif (i + 1 + j) (2 * M) t (facetPoint y 2 j) := by
-    linarith [hgap, htwo]
+  -- the head value at `t-1` is the mid value at `t`, and the tail term at `t`
+  -- dominates the mid value at `t-1`
   have hj1 : (0 : ℤ) ≤ (j : ℤ) + 1 := by positivity
   have hi0 : (0 : ℤ) ≤ (i : ℤ) := by positivity
-  nlinarith [hb.head, hb.mid, hb.tail, hmid1, hmid2, hj1, hi0]
+  nlinarith [hb.head, hb.mid, hb.tail, hb.gap, hj1, hi0]
 
 /-- The head term of the facet comparison at `y + unit a`, from the time
 comparison at the facet normal form of the head neighbour. -/

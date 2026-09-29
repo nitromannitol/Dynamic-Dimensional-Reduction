@@ -106,4 +106,78 @@ theorem inPos_facetPoint_add_head {i j M : ℕ} (hM : 1 ≤ M) (x : Fin i → �
           have hM1 : (1 : ℤ) ≤ (M : ℤ) := by exact_mod_cast hM
           omega
 
+theorem inPos_facetPoint_sub_head {i j M : ℕ} (hM : 1 ≤ M) (x : Fin i → ℤ) (a : Fin i)
+    (hx2 : ∀ a, 2 ≤ x a) (hxa1 : 1 < x a)
+    (hxs : inSimplex (i + 1 + j) M (facetPoint x 1 j)) :
+    inPos (i + 1 + j) M (facetPoint (x - unit a) 1 j) := by
+  intro l
+  refine ⟨?_, ?_⟩
+  · -- every coordinate is at least one
+    by_cases hl : l = Fin.castAdd j (Fin.castSucc a)
+    · rw [hl, facetPoint_head (x - unit a) 1 a, sub_unit_self]
+      have h0 := hx2 a
+      omega
+    · by_cases hhead : ∃ b : Fin i, l = Fin.castAdd j (Fin.castSucc b)
+      · obtain ⟨b, rfl⟩ := hhead
+        have hba : b ≠ a := by
+          intro hcon
+          exact hl (by rw [hcon])
+        rw [facetPoint_head (x - unit a) 1 b, sub_unit_other i x a b hba]
+        have h0 := hx2 b
+        omega
+      · -- the mid or a tail coordinate: value `1`
+        by_cases hmid : l = Fin.castAdd j (Fin.last i)
+        · rw [hmid, facetPoint_mid]
+        · -- a tail coordinate
+          have htail : ∃ b : Fin j, l = Fin.natAdd (i + 1) b := by
+            -- `l` is not a head coordinate and not the mid, so it is a tail
+            have hlt : (l : ℕ) < i + 1 + j := l.isLt
+            have hge : i + 1 ≤ (l : ℕ) := by
+              by_contra hcon
+              have hlt' : (l : ℕ) < i + 1 := by omega
+              -- `l` is a head coordinate or the mid
+              by_cases hlast : (l : ℕ) = i
+              · exact hmid (Fin.ext (by rw [hlast]; simp [Fin.castAdd, Fin.last]))
+              · -- `l` is a head coordinate, contradicting `hhead`
+                exact hhead ⟨⟨(l : ℕ), by omega⟩, Fin.ext (by simp)⟩
+            exact exists_natAdd_of_isTail l hge
+          obtain ⟨b, rfl⟩ := htail
+          rw [facetPoint_tail]
+  · -- every coordinate is at most `M`
+    by_cases hl : l = Fin.castAdd j (Fin.castSucc a)
+    · rw [hl, facetPoint_head (x - unit a) 1 a, sub_unit_self]
+      have h := (hxs.1 (Fin.castAdd j (Fin.castSucc a))).2
+      rw [facetPoint_head] at h
+      omega
+    · by_cases hhead : ∃ b : Fin i, l = Fin.castAdd j (Fin.castSucc b)
+      · obtain ⟨b, rfl⟩ := hhead
+        have hba : b ≠ a := by
+          intro hcon
+          exact hl (by rw [hcon])
+        rw [facetPoint_head (x - unit a) 1 b, sub_unit_other i x a b hba]
+        have h0 := hx2 b
+        have hM1 : (1 : ℤ) ≤ (M : ℤ) := by exact_mod_cast hM
+        have hbM : x b ≤ (M : ℤ) := by
+          have h := (hxs.1 (Fin.castAdd j (Fin.castSucc b))).2
+          rw [facetPoint_head x 1 b] at h
+          exact h
+        omega
+      · by_cases hmid : l = Fin.castAdd j (Fin.last i)
+        · rw [hmid, facetPoint_mid]
+          have hM1 : (1 : ℤ) ≤ (M : ℤ) := by exact_mod_cast hM
+          omega
+        · have htail : ∃ b : Fin j, l = Fin.natAdd (i + 1) b := by
+            have hlt : (l : ℕ) < i + 1 + j := l.isLt
+            have hge : i + 1 ≤ (l : ℕ) := by
+              by_contra hcon
+              have hlt' : (l : ℕ) < i + 1 := by omega
+              by_cases hlast : (l : ℕ) = i
+              · exact hmid (Fin.ext (by rw [hlast]; simp [Fin.castAdd, Fin.last]))
+              · exact hhead ⟨⟨(l : ℕ), by omega⟩, Fin.ext (by simp)⟩
+            exact exists_natAdd_of_isTail l hge
+          obtain ⟨b, rfl⟩ := htail
+          rw [facetPoint_tail]
+          have hM1 : (1 : ℤ) ≤ (M : ℤ) := by exact_mod_cast hM
+          omega
+
 end DimRed
