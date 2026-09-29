@@ -257,4 +257,149 @@ theorem head_field_one (j M t : ℕ) (ht : 1 ≤ t) (hM : 2 ≤ M)
   rw [h1', h2'] at hadd
   -- `hsub` is already in the `facetPoint (fun _ => 2)` form
   linarith
+theorem head_field_one_ge_three (j M t : ℕ) (ht : 1 ≤ t) (hM : 2 ≤ M)
+    (hS : RegStrongFacet (1 + 1 + j) M (t - 1))
+    (c : ℤ) (hc : 3 ≤ c)
+    (hys : inSimplex (1 + 1 + j) M (facetPoint (fun _ : Fin 1 => c) 1 j)) :
+    odoUnif (1 + 1 + j) (2 * M) (t - 1) (facetPoint (fun _ : Fin 1 => c + 1) 1 j)
+      + odoUnif (1 + 1 + j) (2 * M) (t - 1) (facetPoint (fun _ : Fin 1 => c - 1) 1 j)
+      ≤ odoUnif (1 + 1 + j) (2 * M) t (facetPoint (fun _ : Fin 1 => c + 1) 2 j)
+      + odoUnif (1 + 1 + j) (2 * M) t (facetPoint (fun _ : Fin 1 => c - 1) 2 j) := by
+  have hadd := head_term_add (i := 1) (j := j) (M := M) (t := t) ht (by omega) hM
+    (fun i' j' hij hi' => by
+      have h : i' + 1 + j' = 1 + 1 + j := hij
+      rw [h]
+      exact hS) (fun _ : Fin 1 => c) (fun _ => by omega) hys ⟨0, by omega⟩
+  have hsub := head_term_sub (i := 1) (j := j) (M := M) (t := t) ht (by omega) hM
+    hS (fun _ : Fin 1 => c) (fun _ => by omega) hys ⟨0, by omega⟩
+    ⟨Fin.castAdd j (Fin.castSucc (0 : Fin 1)), by
+      rw [← facetPoint_sub_head', Pi.sub_apply, facetPoint_head]
+      have heq : (Fin.castAdd j (Fin.castSucc (0 : Fin 1)) : Fin (1 + 1 + j))
+          = Fin.castAdd j (⟨0, by omega⟩ : Fin 1).castSucc := by
+        congr 1
+      rw [unit, Pi.single_apply, if_pos heq]
+      omega⟩
+  -- the point identities
+  have h1 : facetPoint ((fun _ : Fin 1 => c) + unit (0 : Fin 1)) 1 j
+      = facetPoint (fun _ : Fin 1 => c + 1) 1 j := by
+    rw [← facetPoint_add_head']
+    funext l
+    refine Fin.addCases ?_ ?_ l
+    · intro h
+      refine Fin.lastCases ?_ (fun b => ?_) h
+      · rw [Pi.add_apply, facetPoint_mid, facetPoint_mid]
+        have hne : (Fin.castAdd j (Fin.last 1) : Fin (1 + 1 + j))
+            ≠ Fin.castAdd j (Fin.castSucc (0 : Fin 1)) := by
+          intro hh
+          have hv := congrArg Fin.val hh
+          simp only [Fin.val_castAdd, Fin.val_castSucc, Fin.val_last] at hv
+          omega
+        rw [unit, Pi.single_apply, if_neg hne, add_zero]
+      · rw [Pi.add_apply, facetPoint_head, facetPoint_head]
+        have hb : (b : ℕ) < 1 := b.isLt
+        have hba : b = (0 : Fin 1) := Fin.ext (by omega)
+        rw [hba, unit, Pi.single_apply, if_pos rfl]
+    · intro b
+      rw [Pi.add_apply, facetPoint_tail, facetPoint_tail]
+      have hne : (Fin.natAdd (1 + 1) b : Fin (1 + 1 + j))
+          ≠ Fin.castAdd j (Fin.castSucc (0 : Fin 1)) := by
+        intro hh
+        have hv := congrArg Fin.val hh
+        simp [Fin.castAdd, Fin.natAdd] at hv
+      rw [unit, Pi.single_apply, if_neg hne]
+      norm_num
+  have h2 : facetPoint ((fun _ : Fin 1 => c) + unit (0 : Fin 1)) 2 j
+      = facetPoint (fun _ : Fin 1 => c + 1) 2 j := by
+    rw [← facetPoint_add_head']
+    funext l
+    refine Fin.addCases ?_ ?_ l
+    · intro h
+      refine Fin.lastCases ?_ (fun b => ?_) h
+      · rw [Pi.add_apply, facetPoint_mid, facetPoint_mid]
+        have hne : (Fin.castAdd j (Fin.last 1) : Fin (1 + 1 + j))
+            ≠ Fin.castAdd j (Fin.castSucc (0 : Fin 1)) := by
+          intro hh
+          have hv := congrArg Fin.val hh
+          simp only [Fin.val_castAdd, Fin.val_castSucc, Fin.val_last] at hv
+          omega
+        rw [unit, Pi.single_apply, if_neg hne, add_zero]
+      · rw [Pi.add_apply, facetPoint_head, facetPoint_head]
+        have hb : (b : ℕ) < 1 := b.isLt
+        have hba : b = (0 : Fin 1) := Fin.ext (by omega)
+        rw [hba, unit, Pi.single_apply, if_pos rfl]
+    · intro b
+      rw [Pi.add_apply, facetPoint_tail, facetPoint_tail]
+      have hne : (Fin.natAdd (1 + 1) b : Fin (1 + 1 + j))
+          ≠ Fin.castAdd j (Fin.castSucc (0 : Fin 1)) := by
+        intro hh
+        have hv := congrArg Fin.val hh
+        simp [Fin.castAdd, Fin.natAdd] at hv
+      rw [unit, Pi.single_apply, if_neg hne]
+      norm_num
+  have h1' : facetPoint ((fun _ : Fin 1 => c) + unit (⟨0, by omega⟩ : Fin 1)) 1 j
+      = facetPoint (fun _ : Fin 1 => c + 1) 1 j := h1
+  have h2' : facetPoint ((fun _ : Fin 1 => c) + unit (⟨0, by omega⟩ : Fin 1)) 2 j
+      = facetPoint (fun _ : Fin 1 => c + 1) 2 j := h2
+  rw [h1', h2'] at hadd
+  -- the `-e_0` point identities
+  have h3 : facetPoint ((fun _ : Fin 1 => c) - unit (0 : Fin 1)) 1 j
+      = facetPoint (fun _ : Fin 1 => c - 1) 1 j := by
+    rw [← facetPoint_sub_head']
+    funext l
+    refine Fin.addCases ?_ ?_ l
+    · intro h
+      refine Fin.lastCases ?_ (fun b => ?_) h
+      · rw [Pi.sub_apply, facetPoint_mid, facetPoint_mid]
+        have hne : (Fin.castAdd j (Fin.last 1) : Fin (1 + 1 + j))
+            ≠ Fin.castAdd j (Fin.castSucc (0 : Fin 1)) := by
+          intro hh
+          have hv := congrArg Fin.val hh
+          simp only [Fin.val_castAdd, Fin.val_castSucc, Fin.val_last] at hv
+          omega
+        rw [unit, Pi.single_apply, if_neg hne, sub_zero]
+      · rw [Pi.sub_apply, facetPoint_head, facetPoint_head]
+        have hb : (b : ℕ) < 1 := b.isLt
+        have hba : b = (0 : Fin 1) := Fin.ext (by omega)
+        rw [hba, unit, Pi.single_apply, if_pos rfl]
+    · intro b
+      rw [Pi.sub_apply, facetPoint_tail, facetPoint_tail]
+      have hne : (Fin.natAdd (1 + 1) b : Fin (1 + 1 + j))
+          ≠ Fin.castAdd j (Fin.castSucc (0 : Fin 1)) := by
+        intro hh
+        have hv := congrArg Fin.val hh
+        simp [Fin.castAdd, Fin.natAdd] at hv
+      rw [unit, Pi.single_apply, if_neg hne, sub_zero]
+  have h4 : facetPoint ((fun _ : Fin 1 => c) - unit (0 : Fin 1)) 2 j
+      = facetPoint (fun _ : Fin 1 => c - 1) 2 j := by
+    rw [← facetPoint_sub_head']
+    funext l
+    refine Fin.addCases ?_ ?_ l
+    · intro h
+      refine Fin.lastCases ?_ (fun b => ?_) h
+      · rw [Pi.sub_apply, facetPoint_mid, facetPoint_mid]
+        have hne : (Fin.castAdd j (Fin.last 1) : Fin (1 + 1 + j))
+            ≠ Fin.castAdd j (Fin.castSucc (0 : Fin 1)) := by
+          intro hh
+          have hv := congrArg Fin.val hh
+          simp only [Fin.val_castAdd, Fin.val_castSucc, Fin.val_last] at hv
+          omega
+        rw [unit, Pi.single_apply, if_neg hne, sub_zero]
+      · rw [Pi.sub_apply, facetPoint_head, facetPoint_head]
+        have hb : (b : ℕ) < 1 := b.isLt
+        have hba : b = (0 : Fin 1) := Fin.ext (by omega)
+        rw [hba, unit, Pi.single_apply, if_pos rfl]
+    · intro b
+      rw [Pi.sub_apply, facetPoint_tail, facetPoint_tail]
+      have hne : (Fin.natAdd (1 + 1) b : Fin (1 + 1 + j))
+          ≠ Fin.castAdd j (Fin.castSucc (0 : Fin 1)) := by
+        intro hh
+        have hv := congrArg Fin.val hh
+        simp [Fin.castAdd, Fin.natAdd] at hv
+      rw [unit, Pi.single_apply, if_neg hne, sub_zero]
+  have h3' : facetPoint ((fun _ : Fin 1 => c) - unit (⟨0, by omega⟩ : Fin 1)) 1 j
+      = facetPoint (fun _ : Fin 1 => c - 1) 1 j := h3
+  have h4' : facetPoint ((fun _ : Fin 1 => c) - unit (⟨0, by omega⟩ : Fin 1)) 2 j
+      = facetPoint (fun _ : Fin 1 => c - 1) 2 j := h4
+  rw [h3', h4'] at hsub
+  linarith
 end DimRed
