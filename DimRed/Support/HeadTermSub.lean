@@ -225,9 +225,7 @@ theorem nbrSum_facetPoint_one {j M t : ℕ} :
   ring
 theorem head_field_one (j M t : ℕ) (ht : 1 ≤ t) (hM : 2 ≤ M)
     (hS : RegStrongFacet (1 + 1 + j) M (t - 1))
-    (hys : inSimplex (1 + 1 + j) M (facetPoint (fun _ : Fin 1 => (2 : ℤ)) 1 j))
-    (_hgap : odoUnif (1 + 1 + j) (2 * M) (t - 1) (facetPoint (fun _ : Fin 1 => (1 : ℤ)) 1 j)
-      = odoUnif (1 + 1 + j) (2 * M) (t - 1) (facetPoint (fun _ : Fin 1 => (2 : ℤ)) 1 j) + 1) :
+    (hys : inSimplex (1 + 1 + j) M (facetPoint (fun _ : Fin 1 => (2 : ℤ)) 1 j)) :
     odoUnif (1 + 1 + j) (2 * M) (t - 1) (facetPoint (fun _ : Fin 1 => (3 : ℤ)) 1 j)
       + odoUnif (1 + 1 + j) (2 * M) (t - 1) (facetPoint (fun _ : Fin 1 => (2 : ℤ)) 1 j)
       ≤ odoUnif (1 + 1 + j) (2 * M) t (facetPoint (fun _ : Fin 1 => (3 : ℤ)) 2 j)
