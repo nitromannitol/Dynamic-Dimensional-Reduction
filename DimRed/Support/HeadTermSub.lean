@@ -1,5 +1,6 @@
 import DimRed.Support.StrongRawLe
 import DimRed.Support.RegFacetTime
+import DimRed.Support.RegFacetStep
 
 /-!
 # The head term of the facet comparison at `y - unit a`
@@ -222,4 +223,38 @@ theorem nbrSum_facetPoint_one {j M t : ℕ} :
   rw [← hswap]
   push_cast
   ring
+theorem head_field_one (j M t : ℕ) (ht : 1 ≤ t) (hM : 2 ≤ M)
+    (hS : RegStrongFacet (1 + 1 + j) M (t - 1))
+    (hys : inSimplex (1 + 1 + j) M (facetPoint (fun _ : Fin 1 => (2 : ℤ)) 1 j))
+    (_hgap : odoUnif (1 + 1 + j) (2 * M) (t - 1) (facetPoint (fun _ : Fin 1 => (1 : ℤ)) 1 j)
+      = odoUnif (1 + 1 + j) (2 * M) (t - 1) (facetPoint (fun _ : Fin 1 => (2 : ℤ)) 1 j) + 1) :
+    odoUnif (1 + 1 + j) (2 * M) (t - 1) (facetPoint (fun _ : Fin 1 => (3 : ℤ)) 1 j)
+      + odoUnif (1 + 1 + j) (2 * M) (t - 1) (facetPoint (fun _ : Fin 1 => (2 : ℤ)) 1 j)
+      ≤ odoUnif (1 + 1 + j) (2 * M) t (facetPoint (fun _ : Fin 1 => (3 : ℤ)) 2 j)
+      + odoUnif (1 + 1 + j) (2 * M) t (facetPoint (fun _ : Fin 1 => (2 : ℤ)) 2 j) := by
+  have hadd := head_term_add (i := 1) (j := j) (M := M) (t := t) ht (by omega) hM
+    (fun i' j' hij hi' => by
+      have h : i' + 1 + j' = 1 + 1 + j := hij
+      rw [h]
+      exact hS) (fun _ : Fin 1 => (2 : ℤ)) (fun _ => by norm_num) hys ⟨0, by omega⟩
+  have hsub := head_term_sub_one (j := j) (M := M) (t := t) ht hM hS hys
+  have h1 : facetPoint ((fun _ : Fin 1 => (2 : ℤ)) + unit (0 : Fin 1)) 1 j
+      = facetPoint (fun _ : Fin 1 => (3 : ℤ)) 1 j := facetPoint_two_add_head (j := j) (c := 1)
+  have h2 : facetPoint ((fun _ : Fin 1 => (2 : ℤ)) + unit (0 : Fin 1)) 2 j
+      = facetPoint (fun _ : Fin 1 => (3 : ℤ)) 2 j := facetPoint_two_add_head (j := j) (c := 2)
+  have h3 : facetPoint ((fun _ : Fin 1 => (2 : ℤ)) - unit (0 : Fin 1)) 1 j
+      = facetPoint (fun _ : Fin 1 => (1 : ℤ)) 1 j := facetPoint_two_sub_head (j := j) (c := 1)
+  have h4 : facetPoint ((fun _ : Fin 1 => (2 : ℤ)) - unit (0 : Fin 1)) 2 j
+      = facetPoint (fun _ : Fin 1 => (1 : ℤ)) 2 j := facetPoint_two_sub_head (j := j) (c := 2)
+  have h1' : facetPoint ((fun _ : Fin 1 => (2 : ℤ)) + unit (⟨0, by omega⟩ : Fin 1)) 1 j
+      = facetPoint (fun _ : Fin 1 => (3 : ℤ)) 1 j := h1
+  have h2' : facetPoint ((fun _ : Fin 1 => (2 : ℤ)) + unit (⟨0, by omega⟩ : Fin 1)) 2 j
+      = facetPoint (fun _ : Fin 1 => (3 : ℤ)) 2 j := h2
+  have h3' : facetPoint ((fun _ : Fin 1 => (2 : ℤ)) - unit (⟨0, by omega⟩ : Fin 1)) 1 j
+      = facetPoint (fun _ : Fin 1 => (1 : ℤ)) 1 j := h3
+  have h4' : facetPoint ((fun _ : Fin 1 => (2 : ℤ)) - unit (⟨0, by omega⟩ : Fin 1)) 2 j
+      = facetPoint (fun _ : Fin 1 => (1 : ℤ)) 2 j := h4
+  rw [h1', h2'] at hadd
+  -- `hsub` is already in the `facetPoint (fun _ => 2)` form
+  linarith
 end DimRed
