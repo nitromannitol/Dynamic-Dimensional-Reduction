@@ -129,4 +129,97 @@ theorem head_term_sub_one (j M t : ℕ) (ht : 1 ≤ t) (hM : 2 ≤ M)
       ≤ odoUnif (1 + 1 + j) (2 * M) t (facetPoint (fun _ : Fin 1 => (2 : ℤ)) 2 j) :=
   odo_facet_two_ge_prev_one (j := j) (M := M) (t := t) ht hM hS 2 le_rfl hys
 
+theorem nbrSum_facetPoint_one {j M t : ℕ} :
+    nbrSum (odoUnif (1 + 1 + j) (2 * M) t) (facetPoint (fun _ : Fin 1 => (1 : ℤ)) 1 j)
+      = ((1 + 1 + j : ℕ) : ℤ) *
+        (odoUnif (1 + 1 + j) (2 * M) t (facetPoint (fun _ : Fin 1 => (2 : ℤ)) 1 j)
+          + odoUnif (1 + 1 + j) (2 * M) t (facetPoint (fun _ : Fin 1 => (1 : ℤ)) 1 j)) := by
+  rw [nbrSum]
+  -- split the sum into the head direction and the tail directions
+  rw [Fin.sum_univ_add]
+  rw [Fin.sum_univ_castSucc]
+  rw [Fin.sum_univ_one]
+  -- the head direction
+  have hhead : odoUnif (1 + 1 + j) (2 * M) t
+        (facetPoint (fun _ : Fin 1 => (1 : ℤ)) 1 j + unit (Fin.castAdd j (Fin.castSucc 0)))
+      + odoUnif (1 + 1 + j) (2 * M) t
+        (facetPoint (fun _ : Fin 1 => (1 : ℤ)) 1 j - unit (Fin.castAdd j (Fin.castSucc 0)))
+      = odoUnif (1 + 1 + j) (2 * M) t (facetPoint (fun _ : Fin 1 => (2 : ℤ)) 1 j)
+        + odoUnif (1 + 1 + j) (2 * M) t (facetPoint (fun _ : Fin 1 => (1 : ℤ)) 1 j) := by
+    congr 1
+    · rw [facetPoint_add_head']
+      congr 1
+      funext l
+      refine Fin.addCases ?_ ?_ l
+      · intro h
+        refine Fin.lastCases ?_ (fun b => ?_) h
+        · rw [facetPoint_mid, facetPoint_mid]
+        · rw [facetPoint_head, facetPoint_head]
+          have hb : (b : ℕ) < 1 := b.isLt
+          have hba : b = (0 : Fin 1) := Fin.ext (by omega)
+          rw [hba]
+          simp [unit]
+      · intro b
+        rw [facetPoint_tail, facetPoint_tail]
+    · -- the `-e_0` neighbour is the point itself by reflection
+      have hpt : facetPoint (fun _ : Fin 1 => (1 : ℤ)) 1 j - unit (Fin.castAdd j (Fin.castSucc 0))
+          = fun k => if k = (Fin.castAdd j (Fin.castSucc 0) : Fin (1 + 1 + j))
+              then 1 - (facetPoint (fun _ : Fin 1 => (1 : ℤ)) 1 j) (Fin.castAdd j (Fin.castSucc 0))
+              else (facetPoint (fun _ : Fin 1 => (1 : ℤ)) 1 j) k := by
+        funext k
+        by_cases hk : k = (Fin.castAdd j (Fin.castSucc 0) : Fin (1 + 1 + j))
+        · rw [hk, Pi.sub_apply, unit_apply_self, facetPoint_head]
+          norm_num
+        · rw [Pi.sub_apply, unit_apply_ne hk, sub_zero, if_neg hk]
+      rw [hpt]
+      simp only [odoUnif]
+      rw [odo_reflect_coord]
+  rw [hhead]
+  -- the tail directions: each gives the head-raised point plus the point itself
+  have htail : ∀ b : Fin j,
+      odoUnif (1 + 1 + j) (2 * M) t
+        (facetPoint (fun _ : Fin 1 => (1 : ℤ)) 1 j + unit (Fin.natAdd (1 + 1) b))
+      + odoUnif (1 + 1 + j) (2 * M) t
+        (facetPoint (fun _ : Fin 1 => (1 : ℤ)) 1 j - unit (Fin.natAdd (1 + 1) b))
+      = odoUnif (1 + 1 + j) (2 * M) t (facetPoint (fun _ : Fin 1 => (2 : ℤ)) 1 j)
+        + odoUnif (1 + 1 + j) (2 * M) t (facetPoint (fun _ : Fin 1 => (1 : ℤ)) 1 j) := by
+    intro b
+    have h1 := odo_facetPoint_add_tail (i := 1) (j := j) (M := M)
+      (fun _ : Fin 1 => (1 : ℤ)) (2 * ((1 + 1 + j : ℕ) : ℤ)) t b
+    have h2 := odo_facetPoint_sub_tail (i := 1) (j := j) (M := M)
+      (fun _ : Fin 1 => (1 : ℤ)) (2 * ((1 + 1 + j : ℕ) : ℤ)) t b
+    simp only [odoUnif] at h1 h2 ⊢
+    rw [h1, h2]
+    have hswap := facetPoint_one_two_refl (j := j) (M := M) (t := t)
+    simp only [odoUnif] at hswap
+    rw [← hswap]
+  rw [Finset.sum_congr rfl (fun b _ => htail b)]
+  simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+  have hmid' : facetPoint (fun _ : Fin 1 => (1 : ℤ)) 1 j + unit (Fin.castAdd j (Fin.last 1))
+      = facetPoint (fun _ : Fin 1 => (1 : ℤ)) 2 j := by
+    rw [facetPoint_add_mid_point]
+    norm_num
+  rw [hmid']
+  -- the `-e_mid` neighbour reflects to the point itself
+  have hrefl : odoUnif (1 + 1 + j) (2 * M) t
+      (facetPoint (fun _ : Fin 1 => (1 : ℤ)) 1 j - unit (Fin.castAdd j (Fin.last 1)))
+      = odoUnif (1 + 1 + j) (2 * M) t (facetPoint (fun _ : Fin 1 => (1 : ℤ)) 1 j) := by
+    have hpt : facetPoint (fun _ : Fin 1 => (1 : ℤ)) 1 j - unit (Fin.castAdd j (Fin.last 1))
+        = fun k => if k = (Fin.castAdd j (Fin.last 1) : Fin (1 + 1 + j))
+            then 1 - (facetPoint (fun _ : Fin 1 => (1 : ℤ)) 1 j) (Fin.castAdd j (Fin.last 1))
+            else (facetPoint (fun _ : Fin 1 => (1 : ℤ)) 1 j) k := by
+      funext k
+      by_cases hk : k = (Fin.castAdd j (Fin.last 1) : Fin (1 + 1 + j))
+      · rw [hk, Pi.sub_apply, unit_apply_self, facetPoint_mid]
+        norm_num
+      · rw [Pi.sub_apply, unit_apply_ne hk, sub_zero, if_neg hk]
+    rw [hpt]
+    simp only [odoUnif]
+    rw [odo_reflect_coord]
+  rw [hrefl]
+  have hswap := facetPoint_one_two_refl (j := j) (M := M) (t := t)
+  simp only [odoUnif] at hswap ⊢
+  rw [← hswap]
+  push_cast
+  ring
 end DimRed
