@@ -108,6 +108,100 @@ theorem lap_facetPoint {i j M : ℕ} (c' : ℤ) (x : Fin i → ℤ) (t : ℕ)
   norm_num at *
   ring
 
+/-- The Laplacian at the mid facet point `(x, 2, 1_j)`, the same decomposition as
+`lap_facetPoint` with the head replaced by the mid. -/
+theorem lap_facetPoint_two {i j M : ℕ} (c' : ℤ) (x : Fin i → ℤ) (t : ℕ)
+    (htail_sub : ∀ l : Fin (i + 1 + j), IsTail l →
+      odo (i + 1 + j) (2 * M) (fun _ => c') t
+        (facetPoint x 3 j - unit l) = odo (i + 1 + j) (2 * M) (fun _ => c') t
+          (facetPoint x 3 j))
+    (htail_add : ∀ l : Fin (i + 1 + j), IsTail l →
+      odo (i + 1 + j) (2 * M) (fun _ => c') t
+        (facetPoint x 3 j + unit l) = odo (i + 1 + j) (2 * M) (fun _ => c') t
+          (facetPoint x 3 j))
+    (hmid_sub : odo (i + 1 + j) (2 * M) (fun _ => c') t
+        (facetPoint x 3 j - unit (facetMid (i := i) (j := j))) =
+      odo (i + 1 + j) (2 * M) (fun _ => c') t (facetPoint x 3 j))
+    (hmid_add : odo (i + 1 + j) (2 * M) (fun _ => c') t
+        (facetPoint x 3 j + unit (facetMid (i := i) (j := j))) =
+      odo (i + 1 + j) (2 * M) (fun _ => c') t (facetPoint x 3 j))
+    (hhead : ∀ a : Fin i,
+      facetPoint x 3 j + unit (facetHead a) = facetPoint (x + unit a) 2 j ∧
+      facetPoint x 3 j - unit (facetHead a) = facetPoint (x - unit a) 2 j) :
+    lap (odo (i + 1 + j) (2 * M) (fun _ => c') t) (facetPoint x 3 j) =
+      (∑ a : Fin i,
+        (odo (i + 1 + j) (2 * M) (fun _ => c') t (facetPoint (x + unit a) 2 j) +
+          odo (i + 1 + j) (2 * M) (fun _ => c') t (facetPoint (x - unit a) 2 j))) -
+        2 * (i : ℤ) * odo (i + 1 + j) (2 * M) (fun _ => c') t (facetPoint x 3 j) +
+      ((j : ℤ) + 1) *
+        (odo (i + 1 + j) (2 * M) (fun _ => c') t (facetPoint x 3 j) -
+          odo (i + 1 + j) (2 * M) (fun _ => c') t (facetPoint x 3 j)) := by
+  let v : Site (i + 1 + j) → ℤ := odo (i + 1 + j) (2 * M) (fun _ => c') t
+  let p : Site (i + 1 + j) := facetPoint x 3 j
+  let q : Site (i + 1 + j) := facetPoint x 3 j
+  have htail : ∀ l : Fin j,
+      v (p + unit (Fin.natAdd (i + 1) l)) + v (p - unit (Fin.natAdd (i + 1) l)) = v q + v p := by
+    intro l
+    have hl : IsTail (Fin.natAdd (i + 1) l) := by
+      simp [IsTail]
+    change odo (i + 1 + j) (2 * M) (fun _ => c') t
+        (facetPoint x 3 j + unit (Fin.natAdd (i + 1) l)) +
+      odo (i + 1 + j) (2 * M) (fun _ => c') t
+        (facetPoint x 3 j - unit (Fin.natAdd (i + 1) l)) =
+      odo (i + 1 + j) (2 * M) (fun _ => c') t (facetPoint x 3 j) +
+        odo (i + 1 + j) (2 * M) (fun _ => c') t (facetPoint x 3 j)
+    rw [htail_add (Fin.natAdd (i + 1) l) hl,
+      htail_sub (Fin.natAdd (i + 1) l) hl]
+  have hmid :
+      v (p + unit (facetMid (i := i) (j := j))) +
+          v (p - unit (facetMid (i := i) (j := j))) = v q + v p := by
+    change odo (i + 1 + j) (2 * M) (fun _ => c') t
+        (facetPoint x 3 j + unit (facetMid (i := i) (j := j))) +
+      odo (i + 1 + j) (2 * M) (fun _ => c') t
+        (facetPoint x 3 j - unit (facetMid (i := i) (j := j))) =
+      odo (i + 1 + j) (2 * M) (fun _ => c') t (facetPoint x 3 j) +
+        odo (i + 1 + j) (2 * M) (fun _ => c') t (facetPoint x 3 j)
+    rw [hmid_add, hmid_sub]
+  have hhead' : ∀ a : Fin i,
+      v (p + unit (facetHead a)) + v (p - unit (facetHead a)) =
+        v (facetPoint (x + unit a) 2 j) + v (facetPoint (x - unit a) 2 j) := by
+    intro a
+    rw [(hhead a).1, (hhead a).2]
+  have hsum : nbrSum v p =
+      (∑ a : Fin i, (v (facetPoint (x + unit a) 2 j) +
+        v (facetPoint (x - unit a) 2 j))) + ((j : ℤ) + 1) * (v q + v p) := by
+    have hheadsum :
+        (∑ a : Fin i, (v (p + unit (facetHead a)) +
+          v (p - unit (facetHead a)))) =
+          ∑ a : Fin i, (v (facetPoint (x + unit a) 2 j) +
+            v (facetPoint (x - unit a) 2 j)) :=
+      Finset.sum_congr rfl (fun a _ => hhead' a)
+    have hheadsum' :
+        (∑ a : Fin i, (v (p + unit (Fin.castAdd j a.castSucc)) +
+          v (p - unit (Fin.castAdd j a.castSucc)))) =
+          ∑ a : Fin i, (v (facetPoint (x + unit a) 2 j) +
+            v (facetPoint (x - unit a) 2 j)) := by
+      simpa [facetHead] using hheadsum
+    have hmidsum :
+        v (p + unit (Fin.castAdd j (Fin.last i))) +
+            v (p - unit (Fin.castAdd j (Fin.last i))) = v q + v p := by
+      simpa [facetMid] using hmid
+    have htailsum :
+        (∑ l : Fin j, (v (p + unit (Fin.natAdd (i + 1) l)) +
+          v (p - unit (Fin.natAdd (i + 1) l)))) =
+          ∑ l : Fin j, (v q + v p) :=
+      Finset.sum_congr rfl (fun l _ => htail l)
+    simp only [nbrSum]
+    rw [Fin.sum_univ_add]
+    rw [Fin.sum_univ_castSucc]
+    rw [hheadsum', hmidsum, htailsum]
+    simp [Finset.sum_const, Finset.card_univ]
+    ring
+  dsimp [lap, v, p, q] at hsum ⊢
+  rw [hsum]
+  norm_num at *
+  ring
+
 theorem lap_facetPoint_zero {j M : ℕ} (c' : ℤ) (x : Fin 0 → ℤ) (t : ℕ)
     (htail_sub : ∀ l : Fin (0 + 1 + j), IsTail l →
       odo (0 + 1 + j) (2 * M) (fun _ => c') t
