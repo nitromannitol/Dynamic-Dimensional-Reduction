@@ -208,4 +208,14 @@ theorem toppleTime_mono (d j j' : ℕ) (hd : 1 ≤ d) (hj : 1 ≤ j) (hjj' : j �
     rw [hempty]
     simp
 
+/-- The topple time is at least one when the boundary is reached. -/
+theorem one_le_toppleTime_of_reached {d j : ℕ} (hd : 1 ≤ d) (hj : 1 ≤ j)
+    (h : ∃ n : ℕ, 1 ≤ n ∧ (j : ℤ) ≤ odoUnif d (2 * j) n (cornerPoint d j)) :
+    (1 : ℕ∞) ≤ toppleTime d j := by
+  obtain ⟨n, hn1, hn⟩ := h
+  refine le_csInf ?_ ?_
+  · exact ⟨(n : ℕ∞), n, ⟨hn1, cornerPoint d j, cornerPoint_mem_innerBoundary d j hd hj, hn⟩, rfl⟩
+  · rintro m ⟨k, ⟨hk1, _⟩, rfl⟩
+    exact Nat.cast_le.mpr hk1
+
 end DimRed
