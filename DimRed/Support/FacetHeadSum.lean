@@ -64,4 +64,26 @@ theorem facet_head_minus_sum {i j M : ℕ} (hM : 1 ≤ M) (t : ℕ) (x : Fin i �
         rw [Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ, Fintype.card_fin]
         simp only [nsmul_eq_mul]
 
+/-- The tail neighbours of the mid point are at most the mid: the `+e_b`
+direction by axis monotonicity, the `-e_b` direction by the reflection in the
+tail coordinate. -/
+theorem odo_facetPoint_two_tail_le {j M : ℕ} (_hM : 1 ≤ M) (x : Fin 0 → ℤ) (t : ℕ) (b : Fin j) :
+    odoUnif (0 + 1 + j) (2 * M) t (facetPoint x 2 j + unit (Fin.natAdd (0 + 1) b))
+      + odoUnif (0 + 1 + j) (2 * M) t (facetPoint x 2 j - unit (Fin.natAdd (0 + 1) b))
+    ≤ odoUnif (0 + 1 + j) (2 * M) t (facetPoint x 2 j)
+      + odoUnif (0 + 1 + j) (2 * M) t (facetPoint x 2 j) := by
+  -- the `+e_b` direction: axis monotonicity at the mid
+  have hplus : odoUnif (0 + 1 + j) (2 * M) t (facetPoint x 2 j + unit (Fin.natAdd (0 + 1) b))
+      ≤ odoUnif (0 + 1 + j) (2 * M) t (facetPoint x 2 j) := by
+    have h := odo_axis_refl (d := 0 + 1 + j) (M := M) (by omega)
+      (2 * ((0 + 1 + j : ℕ) : ℤ)) (by positivity) (by omega) t
+      (facetPoint x 2 j) (Fin.natAdd (0 + 1) b)
+      (by rw [facetPoint_tail])
+    exact h
+  -- the `-e_b` direction: the reflection in the tail coordinate
+  have hminus : odoUnif (0 + 1 + j) (2 * M) t (facetPoint x 2 j - unit (Fin.natAdd (0 + 1) b))
+      = odoUnif (0 + 1 + j) (2 * M) t (facetPoint x 2 j) :=
+    odo_facetPoint_two_sub_tail (i := 0) (j := j) (M := M) t x b
+  linarith
+
 end DimRed
