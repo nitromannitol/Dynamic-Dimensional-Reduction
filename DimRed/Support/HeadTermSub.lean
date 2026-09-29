@@ -402,4 +402,42 @@ theorem head_field_one_ge_three (j M t : ℕ) (ht : 1 ≤ t) (hM : 2 ≤ M)
       = facetPoint (fun _ : Fin 1 => c - 1) 2 j := h4
   rw [h3', h4'] at hsub
   linarith
+theorem head_field_ge_two (i j M t : ℕ) (ht : 1 ≤ t) (hi : 2 ≤ i) (hM : 2 ≤ M)
+    (hS : ∀ (i' j' : ℕ), i' + 1 + j' = i + 1 + j → 1 ≤ i' →
+      RegStrongFacet (i' + 1 + j') M (t - 1))
+    (y : Fin i → ℤ) (hy2 : ∀ a, 2 ≤ y a)
+    (hys : inSimplex (i + 1 + j) M (facetPoint y 1 j)) :
+    (∑ a : Fin i,
+      (odoUnif (i + 1 + j) (2 * M) (t - 1) (facetPoint (y + unit a) 1 j) +
+        odoUnif (i + 1 + j) (2 * M) (t - 1) (facetPoint (y - unit a) 1 j)))
+    ≤ (∑ a : Fin i,
+      (odoUnif (i + 1 + j) (2 * M) t (facetPoint (y + unit a) 2 j) +
+        odoUnif (i + 1 + j) (2 * M) t (facetPoint (y - unit a) 2 j))) := by
+  refine Finset.sum_le_sum fun a _ => ?_
+  exact add_le_add
+    (head_term_add i j M t ht (by omega) hM hS y hy2 hys a)
+    (head_term_sub i j M t ht (by omega) hM (hS i j rfl (by omega)) y hy2 hys a (by
+      -- the shifted point has a coordinate at least two: `i >= 2` gives a
+      -- coordinate `b` with `y b >= 2` and `b ≠ a`
+      by_cases ha : (a : ℕ) = 0
+      · refine ⟨Fin.castAdd j (Fin.castSucc (⟨1, by omega⟩ : Fin i)), ?_⟩
+        rw [facetPoint_head]
+        have hba : (⟨1, by omega⟩ : Fin i) ≠ a := by
+          intro hcon
+          have hv := congrArg Fin.val hcon
+          simp at hv
+          omega
+        rw [sub_unit_other (d := i) y a (⟨1, by omega⟩ : Fin i) hba]
+        have := hy2 (⟨1, by omega⟩ : Fin i)
+        omega
+      · refine ⟨Fin.castAdd j (Fin.castSucc (⟨0, by omega⟩ : Fin i)), ?_⟩
+        rw [facetPoint_head]
+        have hba : (⟨0, by omega⟩ : Fin i) ≠ a := by
+          intro hcon
+          have hv := congrArg Fin.val hcon
+          simp at hv
+          omega
+        rw [sub_unit_other (d := i) y a (⟨0, by omega⟩ : Fin i) hba]
+        have := hy2 (⟨0, by omega⟩ : Fin i)
+        omega))
 end DimRed
