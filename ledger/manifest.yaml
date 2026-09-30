@@ -53,7 +53,7 @@ nodes:
   - id: cor-sandpile-reduction
     version: 1
     kind: theorem
-    source: dimred.tex:143-160 (label sandpile_corollary)
+    source: dimred.tex:143-159 (label sandpile_corollary)
     file: DimRed/Frozen/Main/SandpileReduction.lean
     export: DimRed.Frozen.sandpile_dimensional_reduction
     state: DRAFT_SORRY
@@ -86,7 +86,7 @@ nodes:
   - id: lem-radial-laplacian
     version: 2
     kind: theorem
-    source: dimred.tex:728-733 (label radial_laplacian)
+    source: dimred.tex:728-734 (label radial_laplacian)
     file: DimRed/Frozen/BaseCase/RadialLaplacian.lean
     export: DimRed.Frozen.radial_laplacian
     state: SEALED
@@ -205,7 +205,7 @@ nodes:
   - id: cor-sandpile-self-similarity
     version: 2
     kind: theorem
-    source: dimred.tex:143-160 (label sandpile_corollary)
+    source: dimred.tex:143-159 (label sandpile_corollary)
     file: DimRed/Frozen/Main/SandpileSelfSimilarity.lean
     export: DimRed.Frozen.sandpile_self_similarity
     state: DRAFT_SORRY
