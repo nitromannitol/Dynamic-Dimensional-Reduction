@@ -1,0 +1,17 @@
+clauses: {}
+constants: {}
+exponents: {}
+noise:
+- "\ast"
+- +
+- '-1'
+- '2'
+- \R
+- \Z
+- \infty
+- \star
+- i
+- j
+- k
+- m
+- n
