@@ -138,9 +138,10 @@ clauses:
     Paper (Proposition 4.1, strong facet compatibility, display base_dimension:strong_derivative,
     dimred.tex:927-931): for x_i >= 2, j >= 0, i < d and (t < tau_M and i >= 0) or (i >= 1 and
     t >= tau_M), v_t^{(M)}(x) - v_t^{(M)}(x + 2 e_{i+1}) <= 2.  The display leaves the bold x unbound,
-    and read as all x in S_M it would contradict the proof, which bounds v_t(x) - v_t(x+2e_i) by 2 x_i
-    (dimred.tex:1322-1325); Lean takes x = (x_i,1,1_j) so that x + 2 e_{i+1} = (x_i,3,1_j), which is
-    eq:two_derivative_bound at dimred.tex:1263-1265 and the only reading that matches both.  Lean:
+    and read as all x in S_M it would be stronger than what the proof establishes, which bounds
+    v_t(x) - v_t(x+2e_i) by 2 x_i (dimred.tex:1322-1325); Lean takes x = (x_i,1,1_j) so that
+    x + 2 e_{i+1} = (x_i,3,1_j), which is eq:two_derivative_bound at dimred.tex:1263-1265, the
+    form the paper proves and uses.  Lean:
     d = i+1+j (so i < d is automatic, and the paper never ties d to i and j in this clause), hx2, hxs
     (the point lies in S_M), hreg the regime as written, conclusion odoUnif ... (facetPoint x 1 j) -
     odoUnif ... (facetPoint x 3 j) <= 2.  FLAGGED: the paper's display is ambiguous and Lean fixes it.
