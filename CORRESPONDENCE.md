@@ -122,18 +122,19 @@ the reason for it.
 
 ## Main results
 
-None of the paper's main results is proved yet.  Their frozen statements are registered and
-open, and [`DimRed/MainTheorems.lean`](DimRed/MainTheorems.lean) names them in its docstring
-without restating them; it states in full only the ten results that are proved.
+The paper's main results are proved.  Their frozen statements are registered and sealed,
+and [`DimRed/MainTheorems.lean`](DimRed/MainTheorems.lean) states each of them in full,
+together with the other fifteen registered statements.
 
 | Source | Frozen statement | State |
 |---|---|---|
-| Theorem 1.1(i), first display | `DimRed.Frozen.dimensional_reduction` | open |
-| Theorem 1.1(i), second display | `DimRed.Frozen.terminal_dimensional_reduction` | open |
-| Theorem 1.1(ii) | `DimRed.Frozen.self_similarity` | open |
-| Corollary 1.1(i) | `DimRed.Frozen.sandpile_dimensional_reduction` | open |
-| Corollary 1.1(ii) | `DimRed.Frozen.sandpile_self_similarity` | open |
+| Theorem 1.1(i), first display | `DimRed.Frozen.dimensional_reduction` | proved |
+| Theorem 1.1(i), second display | `DimRed.Frozen.terminal_dimensional_reduction` | proved |
+| Theorem 1.1(ii) | `DimRed.Frozen.self_similarity` | proved |
+| Corollary 1.1(i) | `DimRed.Frozen.sandpile_dimensional_reduction` | proved |
+| Corollary 1.1(ii) | `DimRed.Frozen.sandpile_self_similarity` | proved |
 
 The paper proves them together with the five clauses of Proposition 4.1 by one induction
-over dimension, side length and time.  No comparator challenge exists yet; see
+over dimension, side length and time, and so does the formalization (`DimRed.reg_proved` in
+`DimRed/Support/RegProved.lean`).  No comparator challenge exists yet; see
 [`Audit/README.md`](Audit/README.md).

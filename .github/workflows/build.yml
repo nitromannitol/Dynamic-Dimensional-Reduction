@@ -33,10 +33,10 @@ jobs:
       - name: Get the Mathlib cache
         run: lake exe cache get
 
-      # This formalization is a work in progress: the build emits one
-      # "declaration uses sorry" warning for each open registered statement.
-      # the check_warnings gate (run by tools/verify.py below) fails on any
-      # other warning, and on any sorry warning the manifest does not register.
+      # Every registered statement is proved, so the build emits no warning
+      # and no "declaration uses sorry" message.  The check_warnings gate
+      # (run by tools/verify.py below) fails on any warning, and on any sorry
+      # the manifest does not register.
       - name: Build
         run: lake build
 

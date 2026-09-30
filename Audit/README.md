@@ -10,14 +10,12 @@ that fills it from the library; and a `comparator.json` for
 two statements have identical elaborated types and that the proof reduces to the three
 standard axioms.
 
-**It holds none yet.**  None of the paper's main results is proved: Theorem 1.1
-(dimensional reduction and self-similarity) and Corollary 1.1 (their consequences for the
-sandpile) are registered as frozen statements whose proofs are still open, together with
+**It holds none yet.**  The main results are now proved: Theorem 1.1 (dimensional reduction
+and self-similarity) and Corollary 1.1 (their consequences for the sandpile) are sealed, with
 the five clauses of Proposition 4.1 that the paper proves with them by one joint induction.
-A challenge whose solution rests on a `sorry` would certify nothing, so the challenges will
-be added when the main theorems are sealed.  Until then there is no `Audit` library in
-`lakefile.lean` and no comparator workflow.
+The comparator challenges are being added; until they are, there is no `Audit` library in
+`lakefile.lean` and no comparator workflow.  The plan above is unchanged.
 
-What is proved so far, the results of Sections 2 and 3 of the paper, is restated in full in
+Every registered statement of the paper, the main results included, is restated in full in
 [`DimRed/MainTheorems.lean`](../DimRed/MainTheorems.lean), and
 [`DimRed/Meta/AxiomsAudit.lean`](../DimRed/Meta/AxiomsAudit.lean) prints the axioms of each.
