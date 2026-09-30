@@ -1,15 +1,16 @@
 cff-version: 1.2.0
 message: "If you use this formalization, please cite it as below."
-title: "Dynamic-Dimensional-Reduction: a Lean 4 formalization, in progress, of Dynamic dimensional reduction in the Abelian sandpile"
+title: "Dynamic-Dimensional-Reduction: a Lean 4 formalization of Dynamic dimensional reduction in the Abelian sandpile"
 abstract: >-
-  A Lean 4 / mathlib formalization, in progress, of the paper "Dynamic
-  dimensional reduction in the Abelian sandpile" (Bou-Rabee).  Every theorem,
-  lemma, proposition and corollary of the paper is registered as a frozen
-  statement, 20 in all.  The 10 results of Sections 2 and 3 are proved, with
-  no custom axiom and no cited result taken as a hypothesis.  The other 10,
-  the main theorem (dimensional reduction and self-similarity of the parallel
-  toppling odometer), its corollary for the sandpile and the regularity
-  proposition proved with them, are open, each a single registered sorry.
+  A Lean 4 / mathlib formalization of the paper "Dynamic dimensional
+  reduction in the Abelian sandpile" (Bou-Rabee).  Every theorem, lemma,
+  proposition and corollary of the paper is registered as a frozen statement,
+  20 in all, and all 20 are proved, with no sorry, no custom axiom and no
+  cited result taken as a hypothesis.  They include the main theorem
+  (dimensional reduction and self-similarity of the parallel toppling
+  odometer), its corollary for the sandpile and the regularity proposition
+  proved with them by one joint induction over dimension, side length and
+  time.
 type: software
 authors:
   - family-names: Bou-Rabee

@@ -1,8 +1,7 @@
 # Contributing / Building notes
 
-This repository is a formalization in progress: 10 of its 20 registered statements are
-proved, and the other 10, including every main result of the paper, are open.  Issues and
-pull requests are welcome.
+All 20 registered statements of this repository are proved, the paper's main results
+included.  Issues and pull requests are welcome.
 
 ## Building locally
 
@@ -11,10 +10,9 @@ lake exe cache get   # first time: prebuilt Mathlib
 lake build           # compile the project
 ```
 
-The production build is required to emit no Lean or linter warnings other than one
-`declaration uses 'sorry'` warning for each open registered statement (the `check_warnings`
-gate).  A `sorry` anywhere else, or a second one in an open node's file, fails the
-`check_manifest` gate.  Run `python3 tools/verify.py` from the repository root for every
+The production build is required to emit no Lean or linter warnings (the `check_warnings`
+gate); a registered statement reopened as a draft may carry one `declaration uses 'sorry'`
+warning, and a `sorry` anywhere else fails the `check_manifest` gate.  Run `python3 tools/verify.py` from the repository root for every
 gate, or `cd tools/leanform && python3 -m leanform_tools.<gate> ../..` for one.
 
 A few practical notes for working with this development:

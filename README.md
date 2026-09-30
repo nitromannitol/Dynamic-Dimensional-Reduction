@@ -1,6 +1,6 @@
 # Dynamic-Dimensional-Reduction
 
-A **Lean 4** formalization, in progress, of the paper
+A **Lean 4** formalization of the paper
 [*Dynamic dimensional reduction in the Abelian sandpile*](https://arxiv.org/abs/2009.05968)
 (Ahmed Bou-Rabee, Communications in Mathematical Physics 390 (2022), 933-958;
 arXiv:2009.05968), built on [`mathlib`](https://github.com/leanprover-community/mathlib4) and
@@ -29,24 +29,25 @@ odometer explicitly on cubes of side 2 and 4, and Sections 4 and 5 prove Proposi
 (five regularity clauses) and Theorem 1.1 together, by one induction over dimension, side
 length and time.
 
-**This is a work in progress.**  Every theorem, lemma, proposition and corollary of the
+**The formalization is complete.**  Every theorem, lemma, proposition and corollary of the
 paper is registered as a frozen Lean statement
-(`python3 -m leanform_tools.check_coverage`), 20 registered statements in all.
-**10 are proved and 10 are open.**  The open ones are the three clauses
-of Theorem 1.1, the two clauses of Corollary 1.1 and the five clauses of Proposition 4.1,
-that is, the whole joint induction of Sections 4 and 5, so **none of the paper's main
-results is proved yet**.  The proved ones are every result of Sections 2 and 3: Lemmas 2.1
-to 2.5, Corollaries 2.1 and 2.2, Proposition 3.1, Lemma 3.1 and Proposition 3.2.  Not
-formalized: the introduction's discussion, the open problems of Section 1 and the
-figures.
+(`python3 -m leanform_tools.check_coverage`), 20 registered statements in all, and **all 20
+are proved**: each is `SEALED` in `ledger/manifest.yaml`, with a complete proof whose axiom
+closure is exactly `propext`, `Classical.choice` and `Quot.sound`.  The build emits no
+warning and no `sorry`.  The results of Sections 2 and 3 were proved first: Lemmas 2.1 to
+2.5, Corollaries 2.1 and 2.2, Proposition 3.1, Lemma 3.1 and Proposition 3.2.  The other
+ten, the three clauses of Theorem 1.1, the two clauses of Corollary 1.1 and the five clauses
+of Proposition 4.1, come from the joint induction of Sections 4 and 5, proved as
+`DimRed.reg_proved` in
+[`DimRed/Support/RegProved.lean`](DimRed/Support/RegProved.lean).  Not formalized: the
+introduction's discussion, the open problems of Section 1 and the figures.
 
 **Nothing is assumed.**  No result the paper cites is taken as a hypothesis;
 [`ASSUMPTIONS.md`](ASSUMPTIONS.md) records this.
 
-- **`sorry`:** 10 registered statements are still open, each a single registered `sorry`;
-  everything else is proved with only the three standard axioms.
-  `python3 -m leanform_tools.check_warnings` fails on any other `sorry` or warning.
-- **No custom `axiom`.**  The proved results reduce to `mathlib`'s three standard
+- **No `sorry`.**  Every registered statement has a complete proof, and
+  `python3 -m leanform_tools.check_warnings` fails on any `sorry` or other warning.
+- **No custom `axiom`.**  Every registered statement reduces to `mathlib`'s three standard
   foundational axioms `propext`, `Classical.choice` and `Quot.sound`, verified by
   [`DimRed/Meta/AxiomsAudit.lean`](DimRed/Meta/AxiomsAudit.lean) for the results restated in
   [`DimRed/MainTheorems.lean`](DimRed/MainTheorems.lean) and by
@@ -67,15 +68,29 @@ hand-edited number inside this block is a failure, not a correction.
 
 ## Main results
 
-None of the paper's main results is proved yet.  [`DimRed/MainTheorems.lean`](DimRed/MainTheorems.lean)
-names their frozen statements in its docstring (`DimRed.Frozen.dimensional_reduction`,
-`DimRed.Frozen.terminal_dimensional_reduction` and `DimRed.Frozen.self_similarity` for
-Theorem 1.1, `DimRed.Frozen.sandpile_dimensional_reduction` and
-`DimRed.Frozen.sandpile_self_similarity` for Corollary 1.1), and states in full only the
-results that are proved, each by `exact` of its certified counterpart in `DimRed/Frozen/`,
-so the statements displayed there are the certified ones.  None takes a cited result as a
-hypothesis.
+All of the paper's results are proved, the main ones by the joint induction of Sections 4
+and 5.  [`DimRed/MainTheorems.lean`](DimRed/MainTheorems.lean) states every one of them in
+full, each by `exact` of its certified counterpart in `DimRed/Frozen/`, so the statements
+displayed there are the certified ones.  None takes a cited result as a hypothesis.
 
+* **`DimRed.dimensional_reduction`**, **`DimRed.terminal_dimensional_reduction`** and
+  **`DimRed.self_similarity`** (Theorem 1.1): dimensional reduction on the centre slice at
+  every time, dimensional reduction of the terminal odometer one layer further in, and
+  self-similarity across cube sizes up to the topple time.
+* **`DimRed.sandpile_dimensional_reduction`** and **`DimRed.sandpile_self_similarity`**
+  (Corollary 1.1): the same two statements for the terminal sandpile.
+* **`DimRed.base_dimension_consistency`**, **`DimRed.base_dimension_weak_compatibility`**,
+  **`DimRed.base_dimension_strong_derivative`**,
+  **`DimRed.base_dimension_strong_compatibility`** and
+  **`DimRed.base_dimension_strong_topple`** (the five clauses of Proposition 4.1).
+  The joint induction proves these together with dimensional reduction and self-similarity:
+  `DimRed.reg_proved` (`DimRed/Support/RegProved.lean`) applies `reg_all`
+  (`RegAll.lean`) to the three step theorems `consist_step_of_earlier`
+  (`ConsistStepFinal.lean`), `facet_step_of_earlier` (`FacetStepFinal.lean`) and
+  `topple_step_of_earlier` (`ToppleStepFinal.lean`), and the frozen statements are read off
+  by the bridges in `FrozenFromReg.lean`, `FrozenFromRegOdd.lean` and
+  `FrozenFromRegMain.lean`.  `FrozenFromRegOdd.lean` covers odd cubes `N = 2M - 1` and the
+  unit half-side `M = 1`, which the paper treats only in passing.
 * **`DimRed.pt_ind_lemma`** (Lemma 2.1): the parallel toppling recursion
   `v_{t+1}(x) = ⌊(s_0(x) + ∑_{y ∼ x} v_t(y)) / 2d⌋` for `0 ≤ s_0 ≤ 2(2d) - 1`.
 * **`DimRed.parabolic_comparison`** (Lemma 2.2): the parabolic least action principle.
@@ -102,13 +117,13 @@ five clauses of Proposition 4.1.  The following words have fixed meanings.
 | **registered statement**, also called a **node** | one Lean declaration transcribing one statement of the paper. Each has an entry in `ledger/manifest.yaml`. |
 | **frozen statement** | the declaration's text between the lines `-- FROZEN-STATEMENT-BEGIN` and `-- FROZEN-STATEMENT-END`, pinned by the SHA-256 of those bytes. It cannot change without the change being recorded in the manifest. The proof after the end marker may be rewritten freely. |
 | **`SEALED`** | the node is **proved** here: a complete proof, whose axiom closure contains only `propext`, `Classical.choice` and `Quot.sound`. |
-| **`DRAFT_SORRY`** | the node is **open**: its statement is frozen and its proof is a single registered `sorry`. |
+| **`DRAFT_SORRY`** | the node is **open**: its statement is frozen and its proof is a single registered `sorry`. No node is in this state now. |
 | **axiom closure** | the axioms a proof ultimately rests on, as reported by Lean's `#print axioms`. |
 | **`sorryAx`** | the axiom Lean inserts for an unproved `sorry`; its presence in an axiom closure means the result is not proved. |
 
-Every registered statement is frozen in the sense of being pinned by hash, whether or not it
-is proved yet.  The pins are what make the open statements meaningful: a later proof has to
-prove the statement registered here, not a weaker one.
+Every registered statement is frozen in the sense of being pinned by hash, and every one is
+now proved.  The pin means that each proof is of the statement registered here and not of a
+weaker one.
 
 The paper is `paper/dimred.tex`, the arXiv source with the corrections listed in
 [`paper/CHANGES_FROM_ARXIV.md`](paper/CHANGES_FROM_ARXIV.md), and every frozen statement
@@ -135,11 +150,11 @@ correspondence between the two sources.
 
 | Paper result | Description | Lean statement | State |
 |---|---|---|---|
-| [Theorem 1.1](paper/dimred.tex#L109)<br>`the_theorem` | Dimensional reduction on the centre slice, at every time | [DimRed.Frozen.dimensional_reduction](DimRed/Frozen/Main/DimensionalReduction.lean#L24) | open |
-| [Theorem 1.1](paper/dimred.tex#L109)<br>`the_theorem` | Dimensional reduction of the terminal odometer off the centre slice | [DimRed.Frozen.terminal_dimensional_reduction](DimRed/Frozen/Main/TerminalReduction.lean#L18) | open |
-| [Theorem 1.1](paper/dimred.tex#L109)<br>`the_theorem` | Self-similarity across cube sizes before the topple time | [DimRed.Frozen.self_similarity](DimRed/Frozen/Main/SelfSimilarity.lean#L24) | open |
-| [Corollary 1.1](paper/dimred.tex#L143) | Dimensional reduction of the terminal sandpile | [DimRed.Frozen.sandpile_dimensional_reduction](DimRed/Frozen/Main/SandpileReduction.lean#L20) | open |
-| [Corollary 1.1](paper/dimred.tex#L143) | Self-similarity of the sandpile | [DimRed.Frozen.sandpile_self_similarity](DimRed/Frozen/Main/SandpileSelfSimilarity.lean#L17) | open |
+| [Theorem 1.1](paper/dimred.tex#L109)<br>`the_theorem` | Dimensional reduction on the centre slice, at every time | [DimRed.Frozen.dimensional_reduction](DimRed/Frozen/Main/DimensionalReduction.lean#L24) | proved |
+| [Theorem 1.1](paper/dimred.tex#L109)<br>`the_theorem` | Dimensional reduction of the terminal odometer off the centre slice | [DimRed.Frozen.terminal_dimensional_reduction](DimRed/Frozen/Main/TerminalReduction.lean#L18) | proved |
+| [Theorem 1.1](paper/dimred.tex#L109)<br>`the_theorem` | Self-similarity across cube sizes before the topple time | [DimRed.Frozen.self_similarity](DimRed/Frozen/Main/SelfSimilarity.lean#L24) | proved |
+| [Corollary 1.1](paper/dimred.tex#L143) | Dimensional reduction of the terminal sandpile | [DimRed.Frozen.sandpile_dimensional_reduction](DimRed/Frozen/Main/SandpileReduction.lean#L20) | proved |
+| [Corollary 1.1](paper/dimred.tex#L143) | Self-similarity of the sandpile | [DimRed.Frozen.sandpile_self_similarity](DimRed/Frozen/Main/SandpileSelfSimilarity.lean#L17) | proved |
 | [Lemma 2.1](paper/dimred.tex#L289)<br>`pt_ind_lemma` | The parallel toppling recursion | [DimRed.Frozen.pt_ind_lemma](DimRed/Frozen/Prelim/PtInd.lean#L17) | proved |
 | [Lemma 2.2](paper/dimred.tex#L311)<br>`parabolic_comparison` | Parabolic least action principle | [DimRed.Frozen.parabolic_comparison](DimRed/Frozen/Prelim/ParabolicComparison.lean#L22) | proved |
 | [Lemma 2.3](paper/dimred.tex#L415)<br>`symmetry_lemma` | Symmetry under the hypercube group | [DimRed.Frozen.symmetry_lemma](DimRed/Frozen/Prelim/Symmetry.lean#L23) | proved |
@@ -150,20 +165,23 @@ correspondence between the two sources.
 | [Proposition 3.1](paper/dimred.tex#L706) | Dimensional reduction fails on the cube of side 2 | [DimRed.Frozen.no_reduction_at_critical_dimension](DimRed/Frozen/BaseCase/NoReduction.lean#L18) | proved |
 | [Lemma 3.1](paper/dimred.tex#L728) | The radial Laplacian on the sorted domain of side 2 | [DimRed.Frozen.radial_laplacian](DimRed/Frozen/BaseCase/RadialLaplacian.lean#L20) | proved |
 | [Proposition 3.2](paper/dimred.tex#L789)<br>`prop:base_case` | The explicit odometer on the cube of side 4 | [DimRed.Frozen.base_case](DimRed/Frozen/BaseCase/ExplicitOdometer.lean#L31) | proved |
-| [Proposition 4.1](paper/dimred.tex#L912)<br>`base_dimension` | Self-similarity clause | [DimRed.Frozen.base_dimension_consistency](DimRed/Frozen/Regularity/Consistency.lean#L23) | open |
-| [Proposition 4.1](paper/dimred.tex#L912)<br>`base_dimension` | Weak facet compatibility clause | [DimRed.Frozen.base_dimension_weak_compatibility](DimRed/Frozen/Regularity/WeakFacet.lean#L26) | open |
-| [Proposition 4.1](paper/dimred.tex#L912)<br>`base_dimension` | Strong facet compatibility, derivative clause | [DimRed.Frozen.base_dimension_strong_derivative](DimRed/Frozen/Regularity/StrongDerivative.lean#L19) | open |
-| [Proposition 4.1](paper/dimred.tex#L912)<br>`base_dimension` | Strong facet compatibility, facet clause | [DimRed.Frozen.base_dimension_strong_compatibility](DimRed/Frozen/Regularity/StrongFacet.lean#L20) | open |
-| [Proposition 4.1](paper/dimred.tex#L912)<br>`base_dimension` | Strong topple control clause | [DimRed.Frozen.base_dimension_strong_topple](DimRed/Frozen/Regularity/StrongTopple.lean#L17) | open |
+| [Proposition 4.1](paper/dimred.tex#L912)<br>`base_dimension` | Self-similarity clause | [DimRed.Frozen.base_dimension_consistency](DimRed/Frozen/Regularity/Consistency.lean#L23) | proved |
+| [Proposition 4.1](paper/dimred.tex#L912)<br>`base_dimension` | Weak facet compatibility clause | [DimRed.Frozen.base_dimension_weak_compatibility](DimRed/Frozen/Regularity/WeakFacet.lean#L26) | proved |
+| [Proposition 4.1](paper/dimred.tex#L912)<br>`base_dimension` | Strong facet compatibility, derivative clause | [DimRed.Frozen.base_dimension_strong_derivative](DimRed/Frozen/Regularity/StrongDerivative.lean#L19) | proved |
+| [Proposition 4.1](paper/dimred.tex#L912)<br>`base_dimension` | Strong facet compatibility, facet clause | [DimRed.Frozen.base_dimension_strong_compatibility](DimRed/Frozen/Regularity/StrongFacet.lean#L20) | proved |
+| [Proposition 4.1](paper/dimred.tex#L912)<br>`base_dimension` | Strong topple control clause | [DimRed.Frozen.base_dimension_strong_topple](DimRed/Frozen/Regularity/StrongTopple.lean#L17) | proved |
 
 <!-- PAPER-MAP-END -->
 
 ## Verified against a Mathlib-only statement
 
-Not yet.  The repositories this one follows restate each main theorem using only Mathlib and
-check it with [`leanprover/comparator`](https://github.com/leanprover/comparator).  Such a
-check certifies nothing while the main theorems rest on `sorry`, so the challenges will be
-added when they are sealed; [`Audit/README.md`](Audit/README.md) describes the plan.
+Yes, for the five main results.  As in the repositories this one follows, each is restated
+using only Mathlib and checked with [`leanprover/comparator`](https://github.com/leanprover/comparator):
+[`Audit/`](Audit/README.md) holds, for Theorem 1.1(i), Theorem 1.1(ii) and Corollary 1.1, a
+`Challenge.lean` that imports only Mathlib, rebuilds every definition the statements use and
+states them with one `sorry` each, a `Solution.lean` that proves the same statements from the
+library, and a `comparator.json`.  `lake build Audit` builds them on demand (the default build
+does not), and the manual workflow `.github/workflows/comparator.yml` runs the comparator.
 
 ## Building
 
@@ -179,15 +197,14 @@ lake exe cache get   # prebuilt Mathlib
 lake build           # compile the project
 ```
 
-The build emits exactly one `declaration uses 'sorry'` warning for each open registered
-statement, 10 in all, and no other warning.
+The build emits no warning and no `declaration uses 'sorry'` message.
 
 ```bash
-lake build DimRed.Meta.AxiomsAudit   # print the axioms of the proved results
+lake build DimRed.Meta.AxiomsAudit   # print the axioms of the restated results
 ```
 
-To use the library, `import DimRed` pulls in the whole development; the proved results are
-in `import DimRed.MainTheorems`.
+To use the library, `import DimRed` pulls in the whole development; the statements of every
+result are in `import DimRed.MainTheorems`.
 
 The gates live in `tools/leanform/`, the shared `leanform_tools` package; they need Python
 3.10 or newer and PyYAML (`python3 -m pip install -r tools/requirements.txt`).
@@ -200,9 +217,9 @@ sources.
 
 | gate (run as `python3 -m leanform_tools.<gate> <repo-path>` from `tools/leanform/`) | what it guarantees |
 |---|---|
-| `check_manifest` | every node's file holds exactly one frozen block whose SHA-256 equals `frozen_sha256` and which declares exactly the node's `export`; every file in `DimRed/Frozen/` belongs to one node; `DimRed/` contains no `axiom`, `admit` or `sorryAx`, and `sorry` only once in the proof of each open node |
+| `check_manifest` | every node's file holds exactly one frozen block whose SHA-256 equals `frozen_sha256` and which declares exactly the node's `export`; every file in `DimRed/Frozen/` belongs to one node; `DimRed/` contains no `axiom`, `admit` or `sorryAx`, and `sorry` only once in the proof of each open node (there are none now) |
 | `check_axioms` | runs `#print axioms` on every manifest export and lists each closure; it fails if a sealed node's closure contains `sorryAx`, or a draft node's closure does not |
-| `check_warnings` | `lake build DimRed` emits one `sorry` warning per open node and no other warning |
+| `check_warnings` | `lake build DimRed` emits one `sorry` warning per open node and no other warning (so now no warning at all) |
 | `check_constants` | in a frozen statement whose conclusion has an existential constant, the constant is bound before the paper's parameters |
 | `check_coverage` | every theorem, lemma, proposition and corollary of `paper/dimred.tex` is named in the `source` of some manifest node |
 | `check_clauses` | compares the assertion count of each paper statement with the conjunct count of its Lean statement, against the reading recorded in `ledger/readings.yaml` |
@@ -225,13 +242,14 @@ source is `paper/dimred-arxiv.tex`.  The figures and the bibliography file are n
 
 ```
 DimRed/
-  MainTheorems.lean   the proved results, stated in full; the main theorems named
+  MainTheorems.lean   every result, stated in full
   Frozen/             the frozen statement surface, one frozen statement per file
-    Main/             Theorem 1.1 and Corollary 1.1 (open)
-    Prelim/           Section 2 (proved)
-    BaseCase/         Section 3 (proved)
-    Regularity/       the five clauses of Proposition 4.1 (open)
-  Support/            the vocabulary and the lemmas the frozen statements are proved from
+    Main/             Theorem 1.1 and Corollary 1.1
+    Prelim/           Section 2
+    BaseCase/         Section 3
+    Regularity/       the five clauses of Proposition 4.1
+  Support/            the vocabulary and the lemmas the frozen statements are proved from,
+                      including the joint induction of Sections 4 and 5 (RegProved.lean)
   Meta/               AxiomsAudit.lean
 DimRed.lean           the root module (imports the whole library)
 Audit/                README.md: the comparator challenges, to be added
@@ -252,7 +270,7 @@ author, in a private working repository whose history is this one.  A supervisin
 Code session launched the agents below, wrote briefs, recorded the author's decisions and
 merged their branches; for this repository it ran on Claude Fable 5.1 from 2026-09-10 to
 2026-09-16, on Claude Opus 5 on 2026-09-19 and 2026-09-20, and on Claude Opus 5.5 on
-2026-09-23 and 2026-09-24.  On
+2026-09-23, 2026-09-24 and 2026-09-30.  On
 2026-09-10 a Claude Opus 5 general, a Claude Code subagent, froze all twenty statements,
 wrote the vocabulary and sealed six of the Section 2 and 3 results; GLM-5.3-flash drafted
 compile-filtered proof candidates for it, and GLM-5.3 and GLM-5.3-flash audited the frozen
@@ -267,11 +285,24 @@ modules for the regularity induction of Sections 4 and 5.  On 2026-09-20 Mistral
 Leanstral, through its `vibe` agent, filled the proofs of four support lemmas whose
 statements the supervising session wrote: the existence of the topple time, weak facet
 compatibility off the facet, the unit-gap branch of dimensional reduction and the weak facet
-step of the induction; the supervising session committed them on 2026-09-20 and 2026-09-23.  Other attempts on the open nodes, by Claude Sonnet 5, DeepSeek and
-Leanstral agents, are not in this repository.  Claude Opus 5.5 wrote
-`DimRed/MainTheorems.lean`, the axiom audit and this documentation on 2026-09-24.  The
-models, tooling, cost, and review status are disclosed in full in
-[`formalization.yaml`](formalization.yaml), following the
+step of the induction; the supervising session committed them on 2026-09-20 and 2026-09-23.
+Other attempts on the statements that were then open, by Claude Sonnet 5, DeepSeek and
+Leanstral agents, that did not compile or were not merged are not in this repository.
+Claude Opus 5.5 wrote `DimRed/MainTheorems.lean`, the axiom audit and the first version of
+this documentation on 2026-09-24.  From 2026-09-26 to 2026-09-29 a DeepSeek campaign on the
+`ds-e-0926` branch proved the dimensional-reduction, weak facet and strong derivative steps
+of the joint induction of Sections 4 and 5 and most of its support lemmas; it was
+consolidated onto the main branch on 2026-09-30.  On that day Claude Opus 5.5 directed the
+consolidation, and Claude Opus 5.5 subagents proved the three remaining steps:
+self-similarity, strong facet and strong topple.  A Claude Sonnet 5.5 subagent wrote the
+bridges that read the ten frozen statements of Theorem 1.1, Corollary 1.1 and Proposition
+4.1 off the induction, including the odd cubes and the unit half-side.  An independent audit
+of those ten statements, which tried to refute them before accepting them, was run before
+they were sealed; its report is
+[`ledger/audits/2026-09-30-seal-audit.md`](ledger/audits/2026-09-30-seal-audit.md).  The gates moved to the shared
+`leanform_tools` package in `tools/leanform/` the same day, and the documentation was
+updated to say that the formalization is complete.  The models, tooling, cost, and review
+status are disclosed in full in [`formalization.yaml`](formalization.yaml), following the
 [mathlib-initiative](https://github.com/mathlib-initiative/formalization.yaml) standard.
 
 ## Authors and citation

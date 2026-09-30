@@ -29,3 +29,38 @@ Corollary 2.2 directly: `DimRed.strong_facet_step_of_reg`
 (`DimRed/Support/RegFacetStep.lean`) formalize the defective comparison and are
 off the critical path; they are retained only as a record of the paper's text and
 are not used by the induction.
+
+## Record (2026-09-30): how the strong-facet clause was proved
+
+This is a record for the owner, not a ruling.  The ruling of 2026-09-27 above stands
+as written: the paper's argument is repaired and no frozen statement changes.  Two of
+its details turned out differently when the step was proved:
+
+* `DimRed.strong_facet_step_of_reg` and `DimRed.odo_jump_of_gap` give only the bound
+  `v_t(x,1,1_j) - v_t(x,2,1_j) <= 1`; they do not give the clause.  The clause is
+  proved by `DimRed.facet_step_of_earlier` (`DimRed/Support/FacetStepFinal.lean`).
+  Under the gap `v_t(p1) = v_t(p2) + 1`, the clause at `t - 1` together with the
+  first-difference bound forces the gap at `t - 1` to be `0`, with `p1` toppling at
+  `t - 1`.  A neighbour-by-neighbour Laplacian comparison, `Δv_t(p2) >= Δv_{t-1}(p1)`,
+  then shows that `p2` topples at `t`.  Strong topple control at `t - 1` keeps `p1`
+  fixed when `t - 1 >= τ_{M-1}`; before that time the gap cannot occur.
+* The measured failures of `eq:laplace_11 >= eq:laplace_21` quoted above all lie
+  outside the clause's gap hypothesis.  Under the gap, the comparison holds termwise:
+  0 failures in 311 gap instances (`d <= 4`, `M <= 6`; `scratch/facet/t2.py`).  So the
+  paper's comparison is wrong only as stated without the gap.  The corrected paper's
+  sentence that the clause "is Corollary 2.2 directly" (CHANGES_FROM_ARXIV.md, last
+  section) should be revisited by the owner.
+* `DimRed.FacetTermBounds` and `DimRed.lap_facet_le_of_prev` remain unused.  Their
+  `gap` field (a gap at `t - 1`) is false whenever the clause's hypotheses hold.
+
+## Record (2026-09-30): reading of the strong derivative clause
+
+This is a record for the owner, not a ruling.  At `dimred.tex:929-931` the paper leaves
+the bold `x` of the strong derivative clause unbound.  The frozen statement
+`prop-base-dimension-strong-derivative` reads it as the facet point `(x_i, 1, 1_j)`.
+That is how the paper uses the bound (`dimred.tex:1263-1265`, the step "taking x = 1"
+at `dimred.tex:1029`, and CHANGES_FROM_ARXIV.md §9).  The broader reading over all of
+`S_M` is false: `d = 1`, `M = 4`, `t = 9 < τ_4 = 13` gives
+`v_9(2) - v_9(4) = 6 - 3 = 3 > 2`.  The refute-first seal audit
+(`ledger/audits/2026-09-30-seal-audit.md`) failed to refute the facet-point reading.
+The owner should confirm it.
