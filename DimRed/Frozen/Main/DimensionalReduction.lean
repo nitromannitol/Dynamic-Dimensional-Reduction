@@ -13,7 +13,7 @@ The first display of Theorem 1.1(i) of `dimred.tex`, frozen.
 
 The dimension is written `d + 1` in place of `d`, so `d ≥ 2` becomes `d ≥ 1`
 and `d - 1` needs no truncated subtraction.  The initial condition is
-`s_0^{(d)} ≡ 2d` in each dimension separately (`dimred.tex:39-41`), which is
+`s_0^{(d)} ≡ 2d` in each dimension separately (`dimred.tex:38`), which is
 what `odoUnif` carries.  `(x_{d-1}, 1)` appends a last coordinate equal to `1`.
 -/
 import DimRed.Support.RegProved

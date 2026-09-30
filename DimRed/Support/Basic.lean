@@ -1,7 +1,7 @@
 /-
 The vocabulary of the paper.
 
-`dimred.tex:271-273` embeds the hypercube of side `N` into `ℤ^d` as
+`dimred.tex:277` embeds the hypercube of side `N` into `ℤ^d` as
 `{x - k : 1 ≤ x_i ≤ 2k}` when `N = 2k` and as `{x + 1 : |x_i| ≤ k}` when
 `N = 2k + 1`; both are the box whose coordinates run from `1 - ⌊N/2⌋` to
 `⌈N/2⌉`, which is how `inCube` is written here.
@@ -118,7 +118,7 @@ noncomputable def toppleTime (d j : ℕ) : ℕ∞ :=
 /-- The action on `ℤ^d` of a symmetry of the hypercube of side `N`: a permutation
 of the coordinates followed by the reflections `x_i ↦ (lo + hi) - x_i`.  This is
 the paper's `Aut_{C_d}` acting by matrix-vector multiplication followed by the
-translation which preserves `C_N^{(d)}` (`dimred.tex:389-397`); `lo + hi` is `1`
+translation which preserves `C_N^{(d)}` (`dimred.tex:348-349`); `lo + hi` is `1`
 for even `N` and `2` for odd `N`. -/
 def cubeSym (d N : ℕ) (π : Equiv.Perm (Fin d)) (ε : Fin d → Bool) (x : Site d) : Site d :=
   fun i => if ε i then x (π i) else (loCoord N + hiCoord N) - x (π i)

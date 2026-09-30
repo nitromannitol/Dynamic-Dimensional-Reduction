@@ -11,9 +11,9 @@ The self-similarity clause of Proposition 4.1 of `dimred.tex`, frozen.
    $\mathbf{x} > M-j$."
 
 `v_t^{(M)}` is the odometer of the initial condition `s_0 ≡ 2d` on the
-hypercube `C_{2M}^{(d)}`, restricted to `S_M^{(d)}` (`dimred.tex:428-431`).
+hypercube `C_{2M}^{(d)}`, restricted to `S_M^{(d)}` (`dimred.tex:434-436`).
 `τ_j` is `toppleTime`; it is valued in `ℕ∞`, so `t ≤ τ_j` is an inequality
-there.  Vector inequalities are coordinatewise (`dimred.tex:263-266`).
+there.  Vector inequalities are coordinatewise (`dimred.tex:273`).
 -/
 import DimRed.Support.RegProved
 

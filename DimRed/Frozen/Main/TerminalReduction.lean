@@ -8,7 +8,7 @@ The second display of Theorem 1.1(i) of `dimred.tex`, frozen.
 
 The dimension is written `d + 1` in place of `d`.  `v_∞` is `odoInf`, valued in
 `ℕ∞`; that it is finite is a theorem of the development.  Vector inequalities
-are coordinatewise (`dimred.tex:263-266`).
+are coordinatewise (`dimred.tex:273`).
 -/
 import DimRed.Support.RegProved
 

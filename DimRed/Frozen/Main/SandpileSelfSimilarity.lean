@@ -7,7 +7,7 @@ Clause 2 of the Corollary to Theorem 1.1 of `dimred.tex`, frozen.
    $s_t^{(d,N)}(\mathbf{x}) = s_t^{(d,2 j)}(\mathbf{x}-(M-j))$."
 
 `τ_j` is `toppleTime d j`.  Vector inequalities and the subtraction of a scalar
-from a vector are coordinatewise (`dimred.tex:263-266`).
+from a vector are coordinatewise (`dimred.tex:273`).
 -/
 import DimRed.Support.RegProved
 

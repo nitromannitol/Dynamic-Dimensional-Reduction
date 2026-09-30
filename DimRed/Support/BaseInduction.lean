@@ -1,5 +1,5 @@
 /-
-The invariant profile of the parallel toppling odometer for `dimred.tex:812-880`
+The invariant profile of the parallel toppling odometer for `dimred.tex:812-881`
 (Proposition 3.2's proof): the closed value in the firing block (`block_eq`),
 the frozen value immediately beyond it (`beyond_block_eq`), and the
 front-shifted ripple relation (`ripple_shift`) that together prove
@@ -33,7 +33,7 @@ theorem blockEdge_succ_eq_pred_sub_one (d s : ℕ) (hs : tCrit d ≤ s) :
     rw [h1, h2]; push_cast; ring
 
 /-- Inside the firing block, the odometer equals the elapsed time,
-`dimred.tex:812` (iterating the block clause from `v_1 ≡ 1`). -/
+`dimred.tex:816` (iterating the block clause from `v_1 ≡ 1`). -/
 theorem block_eq (d : ℕ) (hd : 1 ≤ d) :
     ∀ T x : ℕ, x ≤ d → (x : ℤ) ≤ blockEdge d T →
       odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) T (radial d x) = (T : ℤ) := by
@@ -205,7 +205,7 @@ theorem shifted_value (d : ℕ) (hd : 1 ≤ d) (s : ℕ) (hs1 : 1 ≤ s) (z : �
     exact block_eq d hd s z hz hzs
 
 /-- The base case's ripple clause for shift `1` (the front's first step
-after formation), `dimred.tex:850-878`: proved by strong induction on the
+after formation), `dimred.tex:850-882`: proved by strong induction on the
 front `s` alone, since the only cross-front fact it needs (the previous
 front's own first step) is at a strictly smaller front. General shifts
 (`ripple_shift`, shift `k ≥ 2`) need `s + 1` as well as `s - 1`, so they
@@ -337,7 +337,7 @@ theorem blockEdge_two (d : ℕ) : blockEdge d 2 = (d : ℤ) - 1 := by
   · rfl
 
 set_option maxHeartbeats 4000000 in
-/-- The general-shift ripple relation, `dimred.tex:850-878`:
+/-- The general-shift ripple relation, `dimred.tex:850-882`:
 the profile at absolute time `s + k + 1` is the profile at time `s + 1`, shifted
 outward by the whole shift `k`, for every `k`, not only `k = 1`
 (`ripple_one_step`). Proved by strong induction on `k`, using the smaller shift

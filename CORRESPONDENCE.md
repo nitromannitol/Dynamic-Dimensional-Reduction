@@ -38,10 +38,10 @@ listed in [`paper/CHANGES_FROM_ARXIV.md`](paper/CHANGES_FROM_ARXIV.md).
 
 | paper | Lean | notes |
 |---|---|---|
-| `C_N^{(d)}`, `dimred.tex:271-273` | `DimRed.inCube d N` | the paper embeds the cube two ways depending on the parity of `N`; both are the box with coordinates in `[1 - ⌊N/2⌋, ⌈N/2⌉]`, which is the single definition used here |
+| `C_N^{(d)}`, `dimred.tex:277` | `DimRed.inCube d N` | the paper embeds the cube two ways depending on the parity of `N`; both are the box with coordinates in `[1 - ⌊N/2⌋, ⌈N/2⌉]`, which is the single definition used here |
 | `M = ⌈N/2⌉` | `DimRed.hiCoord N` | |
 | `S_M^{(d)}`, `dimred.tex:363-366` | `DimRed.inSimplex d M`, `DimRed.simplex d M` | the predicate is decidable; the `Finset` is used where the paper takes a maximum over the domain |
-| `∂C_N^{(d)}`, `dimred.tex:134-136` | `DimRed.innerBoundary d N` | |
+| `∂C_N^{(d)}`, `dimred.tex:130` | `DimRed.innerBoundary d N` | |
 | `Δ^{(d)}`, `dimred.tex:275-281` | `DimRed.lap` | every function in the development vanishes off the cube, so the paper's padding `f(y) := 0` for `y ∉ C` is automatic |
 | `∑_{y ∼ x}` | `DimRed.nbrSum` | the sum over the `2d` neighbours, direction by direction |
 | `v_t`, `dimred.tex:100-107` | `DimRed.odo d N s₀ t` | |
@@ -88,7 +88,7 @@ symmetrized Laplacian is defined.
 
 ## The domain of the regularity statements
 
-From `dimred.tex:428-431` ("Henceforth, we consider `v_t^S` in `S_M^{(d)}` and
+From `dimred.tex:434-436` ("Henceforth, we consider `v_t^S` in `S_M^{(d)}` and
 drop all `S` superscripts ... we only consider `N = 2M`") every point named in
 Sections 2.5 onward, in Proposition 4.1 and in Section 5 is a point of the
 sorted fundamental domain.  The frozen statements therefore carry
@@ -99,7 +99,7 @@ hypotheses: they say which points the paper is talking about.
 ## Hypotheses the development does NOT carry
 
 `lem-symmetry` carries only the symmetry of the initial sandpile
-(`dimred.tex:400-402`) and not the bound `0 ≤ s₀ ≤ 2(2d) - 1`, which its proof
+(`dimred.tex:369`) and not the bound `0 ≤ s₀ ≤ 2(2d) - 1`, which its proof
 does not use.  The statement is therefore stronger than the paper's.
 
 ## Nodes carrying cited inputs
@@ -111,7 +111,7 @@ None so far.  The paper cites Babai-Gorodezky for the attribution of Corollary
 
 | node | added hypothesis | why |
 |---|---|---|
-| `lem-topple-limit` | `IsSymmetricPile d (2M) s₀` | version 2.  The first transcription carried only the bound of `dimred.tex:286-288` and omitted the standing hypothesis of `dimred.tex:400-402`, that the initial sandpile is symmetric, which is in force from Section 2.4 onward and is what makes a maximum over the fundamental domain a maximum over the whole hypercube.  Without it the statement is not the paper's |
+| `lem-topple-limit` | `IsSymmetricPile d (2M) s₀` | version 2.  The first transcription carried only the bound of `dimred.tex:286-288` and omitted the standing hypothesis of `dimred.tex:369`, that the initial sandpile is symmetric, which is in force from Section 2.4 onward and is what makes a maximum over the fundamental domain a maximum over the whole hypercube.  Without it the statement is not the paper's |
 | `lem-pt-ind`, `lem-parabolic-comparison`, `lem-topple-limit` | the bounds `0 ≤ s₀ ≤ 2(2d) - 1` are hypotheses only ON the hypercube | version 3.  `dimred.tex:286-288` constrains the initial sandpile on `C`, not on all of `ℤ^d`; the odometer never reads `s₀` off the cube, so the restricted hypothesis is the paper's and gives the stronger statement |
 
 The statements whose text differs from the arXiv version (Lemma 2.1, Lemma 2.4,

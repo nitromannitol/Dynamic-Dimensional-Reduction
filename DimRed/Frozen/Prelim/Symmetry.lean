@@ -7,10 +7,10 @@ Lemma 2.3 of `dimred.tex`, frozen.  `dimred.tex:415-417` (label `symmetry_lemma`
 
 `Aut_{C_d}` is the group of `(d × d)` matrices with exactly one `±1` in each row
 and column, acting by matrix-vector multiplication followed by the translation
-that preserves `C_N^{(d)}` (`dimred.tex:389-397`); that is a permutation of the
+that preserves `C_N^{(d)}` (`dimred.tex:348-349`); that is a permutation of the
 coordinates followed by the reflections `x_i ↦ (lo + hi) - x_i`, which is
 `cubeSym`.  The standing hypothesis is that the initial sandpile is symmetric
-(`dimred.tex:400-402`).  The second sentence is the identification of `v_t` with
+(`dimred.tex:369`).  The second sentence is the identification of `v_t` with
 the symmetrized odometer on the fundamental domain; the development works with
 `v_t` on `S_M^{(d)}` throughout, so it is recorded in CORRESPONDENCE.md rather
 than as a second frozen clause.

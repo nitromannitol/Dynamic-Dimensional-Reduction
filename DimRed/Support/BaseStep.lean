@@ -9,7 +9,7 @@ namespace DimRed
 
 open LatticeProb
 
-/-- `v_1(x) = v_0(x) + 1` at every radial site, `dimred.tex:812`. -/
+/-- `v_1(x) = v_0(x) + 1` at every radial site, `dimred.tex:816`. -/
 theorem odo_radial_one (d : ℕ) (hd : 1 ≤ d) (x : ℕ) (_hx : x ≤ d) :
     odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) 1 (radial d x)
       = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) 0 (radial d x) + 1 := by

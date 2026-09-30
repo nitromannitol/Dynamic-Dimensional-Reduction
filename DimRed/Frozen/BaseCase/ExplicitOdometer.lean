@@ -16,7 +16,7 @@ odometer at `radial d x` at time `t + 1` equals the odometer at
 `radial d (x - (t - s))` at time `s + 1`.
 
 The setting is `M = 2`, hence the hypercube `C_4^{(d)}` (`dimred.tex:722-723`
-and `dimred.tex:428-431`), and `x` is the radial coordinate of
+and `dimred.tex:434-436`), and `x` is the radial coordinate of
 `dimred.tex:724-727`, so `v_t(x)` is the odometer at `radial d x`.  `a_t` is
 `blockEdge`, `dimred.tex:784-790`.  Time is written `t + 1` so that `t ≥ 1` and
 `t - 1` need no truncated subtraction, and the ripple's `t'` is written `s + 1`

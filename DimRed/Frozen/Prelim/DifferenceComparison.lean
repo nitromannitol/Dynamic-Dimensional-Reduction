@@ -13,7 +13,7 @@ Lemma 2.4 of `dimred.tex`, frozen.  `dimred.tex:473-492`
    then $\sup_j ( D_{w_j} v_{t+1}(x) - g_j(x) ) \leq 0$ for all $t \geq t_0$ and
    $x \in \mathcal{S}$."
 
-`D_w v_t(x) = v_t(x) - v_t(x+w)` (`dimred.tex:437-439`) and the three pieces of
+`D_w v_t(x) = v_t(x) - v_t(x+w)` (`dimred.tex:441`) and the three pieces of
 `B_w` are `dimred.tex:453-467`.  A supremum over the finite index set being at
 most zero is every term being at most zero.  The standing hypothesis of the
 subsection is that the initial sandpile is constant (`dimred.tex:434-436`),

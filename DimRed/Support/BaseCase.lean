@@ -333,7 +333,7 @@ theorem blockEdge_antitone_le (d : ℕ) {m n : ℕ} (h : m ≤ n) : blockEdge d 
   | step hk ih => exact le_trans (blockEdge_antitone d _) ih
 
 /-- The excess bound read at the front `s`: `x ≤ a_s` gives
-`x (s-1) ≤ d-1`, `dimred.tex:850-866`. -/
+`x (s-1) ≤ d-1`, `dimred.tex:850-874`. -/
 theorem blockEdge_window_le' (d s x : ℕ) (hd : 1 ≤ d) (_hx : x ≤ d)
     (h : (x : ℤ) ≤ blockEdge d s) : (x : ℤ) * ((s : ℤ) - 1) ≤ (d : ℤ) - 1 := by
   by_cases hs0 : s = 0
@@ -354,7 +354,7 @@ theorem blockEdge_window_le' (d s x : ℕ) (hd : 1 ≤ d) (_hx : x ≤ d)
       rw [hsub, hcast] at hm
       nlinarith [h, hm]
 
-/-- The paper's first displayed chain of Step 2, `dimred.tex:850-866`: if the
+/-- The paper's first displayed chain of Step 2, `dimred.tex:850-874`: if the
 odometer at time `t` is `s+1` at `x-1` and `s` at `x` and `x+1`, then the
 sandpile at `x` is at least `2d`. -/
 theorem sandp_ge_two_d (d t s x : ℕ) (hd : 1 ≤ d) (_hs : s + 1 ≤ t) (_hx : t - s ≤ x) (hxd : x ≤ d)
@@ -424,7 +424,7 @@ theorem blockEdge_le_self (d m : ℕ) (hd : 1 ≤ d) : blockEdge d m ≤ (d : �
         linarith
 
 /-- The ripple step when the site fires: `v_{t+1}(x) = v_t(x-1)` follows from
-`odo_succ_eq` and the hypothesis `v_t(x-1) = v_t(x) + 1`, `dimred.tex:850-866`. -/
+`odo_succ_eq` and the hypothesis `v_t(x-1) = v_t(x) + 1`, `dimred.tex:850-874`. -/
 theorem ripple_step_ge (d t x : ℕ) (_hd : 1 ≤ d) (_hx : x ≤ d)
     (h : 2 * (d : ℤ) ≤ sandp d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x))
     (hx1 : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x - 1))
@@ -436,7 +436,7 @@ theorem ripple_step_ge (d t x : ℕ) (_hd : 1 ≤ d) (_hx : x ≤ d)
   omega
 
 /-- The ripple step when the site does not fire: `v_{t+1}(x) = v_t(x-1)` follows
-from `odo_succ_eq` and the hypothesis `v_t(x-1) = v_t(x)`, `dimred.tex:850-866`. -/
+from `odo_succ_eq` and the hypothesis `v_t(x-1) = v_t(x)`, `dimred.tex:850-874`. -/
 theorem ripple_step_lt (d t x : ℕ) (_hd : 1 ≤ d) (_hx : x ≤ d)
     (h : ¬ 2 * (d : ℤ) ≤ sandp d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x))
     (hx1 : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x - 1))
@@ -447,7 +447,7 @@ theorem ripple_step_lt (d t x : ℕ) (_hd : 1 ≤ d) (_hx : x ≤ d)
   rw [if_neg h]
   omega
 
-/-- The ripple step, split on whether the site fires, `dimred.tex:850-866`. -/
+/-- The ripple step, split on whether the site fires, `dimred.tex:850-874`. -/
 theorem ripple_window_step (d t x : ℕ) (_hd : 1 ≤ d) (_hx : x ≤ d)
     (hge : 2 * (d : ℤ) ≤ sandp d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x) →
       odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x - 1))
@@ -464,7 +464,7 @@ theorem ripple_window_step (d t x : ℕ) (_hd : 1 ≤ d) (_hx : x ≤ d)
   · rw [if_neg h]
     omega
 
-/-- The paper's first displayed chain of Step 2, `dimred.tex:850-866`: if the
+/-- The paper's first displayed chain of Step 2, `dimred.tex:850-874`: if the
 odometer at time `t` is `s` at `x-2` and `x-1` and `s-1` at `x` and `x+1`, and
 `x ≤ a_s`, then the sandpile at `x` is at least `2d`. -/
 theorem sandp_ge_two_d' (d t s x : ℕ) (hd : 1 ≤ d) (hx : x ≤ d) (h2 : 2 ≤ x)

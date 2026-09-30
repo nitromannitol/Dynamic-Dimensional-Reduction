@@ -9,7 +9,7 @@ Lemma 2.5 of `dimred.tex`, frozen.  `dimred.tex:669-676` (label `topple_limit`):
 and `v_t` on it is the odometer of the hypercube (`symmetry_lemma`; see
 CORRESPONDENCE.md).  The standing hypotheses at this point of Section 2 are
 carried: the bound `0 ≤ s_0 ≤ 2(2d) - 1` of `dimred.tex:286-288` as `hs0` and
-`hs1`, and the symmetry of the initial sandpile of `dimred.tex:400-402` as
+`hs1`, and the symmetry of the initial sandpile of `dimred.tex:369` as
 `hsym`, without which the maximum over a fundamental domain says nothing about
 the rest of the cube.
 -/
