@@ -18,7 +18,7 @@ $\Delta v_t(1) = -1$ and so $v_{t+1}(1) = v_{t}(1)$"), `dimred.tex:1436-1445`
 
 `(x_i, c, 1_j)` is `facetPoint`, and the dimension is `d = i + 1 + j`.
 -/
-import DimRed.Support.Recursion
+import DimRed.Support.RegProved
 
 open LatticeProb DimRed
 
@@ -31,4 +31,4 @@ theorem DimRed.Frozen.base_dimension_weak_compatibility (M i j : â„•) (hM : 2 â‰
     odoUnif (i + 1 + j) (2 * M) (t + 1) (facetPoint x 1 j)
       = odoUnif (i + 1 + j) (2 * M) t (facetPoint x 1 j)
 -- FROZEN-STATEMENT-END
-:= by sorry
+:= base_dimension_weak_compatibility_of_reg reg_proved M i j hM t ht x hx2 hxs h

@@ -11,7 +11,7 @@ The strong derivative clause of Proposition 4.1 of `dimred.tex`, frozen.
 `dimred.tex:1263-1265`, `eq:two_derivative_bound`.  `i < d` is automatic once
 `d = i + 1 + j`.  `τ_M` is `toppleTime d M`, valued in `ℕ∞`.
 -/
-import DimRed.Support.Recursion
+import DimRed.Support.RegProved
 
 open LatticeProb DimRed
 
@@ -24,4 +24,4 @@ theorem DimRed.Frozen.base_dimension_strong_derivative (M i j : ℕ) (hM : 2 ≤
     odoUnif (i + 1 + j) (2 * M) t (facetPoint x 1 j)
       - odoUnif (i + 1 + j) (2 * M) t (facetPoint x 3 j) ≤ 2
 -- FROZEN-STATEMENT-END
-:= by sorry
+:= base_dimension_strong_derivative_of_reg reg_proved M i j hM t x hx2 hxs hreg

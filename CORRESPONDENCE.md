@@ -11,10 +11,10 @@ listed in [`paper/CHANGES_FROM_ARXIV.md`](paper/CHANGES_FROM_ARXIV.md).
 
 | id | Lean | paper | state |
 |---|---|---|---|
-| `prop-base-dimension-weak` | `DimRed.Frozen.base_dimension_weak_compatibility` | `dimred.tex:919-926`, `base_dimension` | DRAFT_SORRY |
-| `thm-dimensional-reduction` | `DimRed.Frozen.dimensional_reduction` | `dimred.tex:109-140`, `the_theorem` | DRAFT_SORRY |
-| `thm-terminal-reduction` | `DimRed.Frozen.terminal_dimensional_reduction` | `dimred.tex:109-140`, `the_theorem` | DRAFT_SORRY |
-| `cor-sandpile-reduction` | `DimRed.Frozen.sandpile_dimensional_reduction` | `dimred.tex:143-159`, `sandpile_corollary` | DRAFT_SORRY |
+| `prop-base-dimension-weak` | `DimRed.Frozen.base_dimension_weak_compatibility` | `dimred.tex:919-926`, `base_dimension` | SEALED |
+| `thm-dimensional-reduction` | `DimRed.Frozen.dimensional_reduction` | `dimred.tex:109-140`, `the_theorem` | SEALED |
+| `thm-terminal-reduction` | `DimRed.Frozen.terminal_dimensional_reduction` | `dimred.tex:109-140`, `the_theorem` | SEALED |
+| `cor-sandpile-reduction` | `DimRed.Frozen.sandpile_dimensional_reduction` | `dimred.tex:143-159`, `sandpile_corollary` | SEALED |
 | `lem-symmetry` | `DimRed.Frozen.symmetry_lemma` | `dimred.tex:415-417`, `symmetry_lemma` | SEALED |
 | `prop-no-reduction` | `DimRed.Frozen.no_reduction_at_critical_dimension` | `dimred.tex:706-708`, `no_reduction` | SEALED |
 | `lem-radial-laplacian` | `DimRed.Frozen.radial_laplacian` | `dimred.tex:728-734`, `radial_laplacian` | SEALED |
@@ -23,12 +23,12 @@ listed in [`paper/CHANGES_FROM_ARXIV.md`](paper/CHANGES_FROM_ARXIV.md).
 | `lem-topple-limit` | `DimRed.Frozen.topple_limit` | `dimred.tex:669-676`, `topple_limit` | SEALED |
 | `lem-difference-comparison` | `DimRed.Frozen.general_difference_comparison` | `dimred.tex:473-492`, `general_difference_comparison` | SEALED |
 | `prop-base-case` | `DimRed.Frozen.base_case` | `dimred.tex:789-813`, `prop-base_case` | SEALED |
-| `prop-base-dimension-consistency` | `DimRed.Frozen.base_dimension_consistency` | `dimred.tex:915-918`, `base_dimension` | DRAFT_SORRY |
-| `prop-base-dimension-strong-derivative` | `DimRed.Frozen.base_dimension_strong_derivative` | `dimred.tex:927-931`, `base_dimension` | DRAFT_SORRY |
-| `prop-base-dimension-strong-facet` | `DimRed.Frozen.base_dimension_strong_compatibility` | `dimred.tex:932-940`, `base_dimension` | DRAFT_SORRY |
-| `prop-base-dimension-strong-topple` | `DimRed.Frozen.base_dimension_strong_topple` | `dimred.tex:944-948`, `base_dimension` | DRAFT_SORRY |
-| `thm-self-similarity` | `DimRed.Frozen.self_similarity` | `dimred.tex:109-140`, `the_theorem` | DRAFT_SORRY |
-| `cor-sandpile-self-similarity` | `DimRed.Frozen.sandpile_self_similarity` | `dimred.tex:143-159`, `sandpile_corollary` | DRAFT_SORRY |
+| `prop-base-dimension-consistency` | `DimRed.Frozen.base_dimension_consistency` | `dimred.tex:915-918`, `base_dimension` | SEALED |
+| `prop-base-dimension-strong-derivative` | `DimRed.Frozen.base_dimension_strong_derivative` | `dimred.tex:927-931`, `base_dimension` | SEALED |
+| `prop-base-dimension-strong-facet` | `DimRed.Frozen.base_dimension_strong_compatibility` | `dimred.tex:932-940`, `base_dimension` | SEALED |
+| `prop-base-dimension-strong-topple` | `DimRed.Frozen.base_dimension_strong_topple` | `dimred.tex:944-948`, `base_dimension` | SEALED |
+| `thm-self-similarity` | `DimRed.Frozen.self_similarity` | `dimred.tex:109-140`, `the_theorem` | SEALED |
+| `cor-sandpile-self-similarity` | `DimRed.Frozen.sandpile_self_similarity` | `dimred.tex:143-159`, `sandpile_corollary` | SEALED |
 | `cor-axis-monotonicity` | `DimRed.Frozen.axis_monotonicity` | `dimred.tex:513-527`, `axis_monotonicity` | SEALED |
 | `cor-derivative-bound` | `DimRed.Frozen.derivative_bound` | `dimred.tex:531-538`, `cor-derivative_bound` | SEALED |
 

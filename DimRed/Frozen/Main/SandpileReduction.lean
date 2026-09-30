@@ -12,7 +12,7 @@ Clause 1 of the Corollary to Theorem 1.1 of `dimred.tex`, frozen.
 The dimension is written `d + 1` in place of `d`.  `s_∞ = 2d + Δ v_∞` is
 `sandpInfUnif`, an integer, `v_∞` being read through `ℕ∞`.
 -/
-import DimRed.Support.Recursion
+import DimRed.Support.RegProved
 
 open LatticeProb DimRed
 
@@ -21,4 +21,4 @@ theorem DimRed.Frozen.sandpile_dimensional_reduction (N d : ℕ) (hN : 1 ≤ N) 
     (x : Site d) (hx : inSimplex d (sideHalf N) x) (hx2 : ∀ i, 2 ≤ x i) :
     sandpInfUnif (d + 1) N (Fin.snoc x 1) = sandpInfUnif d N x + 2
 -- FROZEN-STATEMENT-END
-:= by sorry
+:= sandpile_dimensional_reduction_of_reg reg_proved N d hN hd x hx hx2

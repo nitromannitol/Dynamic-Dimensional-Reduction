@@ -9,7 +9,7 @@ Clause 2 of the Corollary to Theorem 1.1 of `dimred.tex`, frozen.
 `τ_j` is `toppleTime d j`.  Vector inequalities and the subtraction of a scalar
 from a vector are coordinatewise (`dimred.tex:263-266`).
 -/
-import DimRed.Support.Recursion
+import DimRed.Support.RegProved
 
 open LatticeProb DimRed
 
@@ -20,4 +20,4 @@ theorem DimRed.Frozen.sandpile_self_similarity (N d : ℕ) (hN : 1 ≤ N) (hd : 
     (hxgt : ∀ i, (sideHalf N : ℤ) - (j : ℤ) + 1 < x i) :
     sandpUnif d N t x = sandpUnif d (2 * j) t (fun i => x i - ((sideHalf N : ℤ) - (j : ℤ)))
 -- FROZEN-STATEMENT-END
-:= by sorry
+:= sandpile_self_similarity_of_reg reg_proved N d hN hd j hj t ht x hx hxgt

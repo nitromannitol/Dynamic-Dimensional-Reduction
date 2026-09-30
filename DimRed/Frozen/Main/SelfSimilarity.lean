@@ -16,7 +16,7 @@ there.
 Vector inequalities and the subtraction of a scalar from a vector are
 coordinatewise (`dimred.tex:263-266`).
 -/
-import DimRed.Support.Recursion
+import DimRed.Support.RegProved
 
 open LatticeProb DimRed
 
@@ -27,4 +27,4 @@ theorem DimRed.Frozen.self_similarity (N d : ℕ) (hN : 1 ≤ N) (hd : 2 ≤ d)
     (hxgt : ∀ i, (sideHalf N : ℤ) - (j : ℤ) < x i) :
     odoUnif d N t x = odoUnif d (2 * j) t (fun i => x i - ((sideHalf N : ℤ) - (j : ℤ)))
 -- FROZEN-STATEMENT-END
-:= by sorry
+:= self_similarity_of_reg reg_proved N d hN hd j hj t ht x hx hxgt

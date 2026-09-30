@@ -4,7 +4,7 @@ Formalizes statements pinned in `paper/dimred.tex` as the Lean library `DimRed`.
 
 ## What is claimed
 
-Of 20 node(s) registered in `ledger/manifest.yaml`: 10 `SEALED`, 10 `DRAFT_SORRY`. Only `SEALED` and `PROVED` nodes are proved with a clean axiom closure; `FROZEN` nodes are cited results carried as explicit hypotheses and are assumed here, not proved; `CONDITIONAL` and `DRAFT_SORRY` nodes are not yet sealed.
+Every node's state in `ledger/manifest.yaml` is `SEALED`: all 20 are proved with no added axiom and no `sorry`.
 
 ## Environment
 
@@ -13,8 +13,8 @@ Of 20 node(s) registered in `ledger/manifest.yaml`: 10 `SEALED`, 10 `DRAFT_SORRY
 | Lean toolchain | `leanprover/lean4:v4.32.0` |
 | Mathlib revision | `81a5d257c8e410db227a6665ed08f64fea08e997` |
 | Paper (`paper/dimred.tex`) SHA-256 | `1423810fa6c1469dbec2a1ba633652946a467297bfab3ea4d89cbd3b1e12b3ef` |
-| Build | succeeded, 8752 jobs |
-| Build warnings | 10 |
+| Build | succeeded, 8759 jobs |
+| Build warnings | 0 |
 | Generated | 2026-09-30 |
 
 ## Reproducing it
@@ -34,10 +34,10 @@ python3 -m leanform_tools.certificate . --check
 
 | # | node | Lean name(s) | state | axiom closure |
 |---|---|---|---|---|
-| 1 | `prop-base-dimension-weak` | `DimRed.Frozen.base_dimension_weak_compatibility` | `DRAFT_SORRY` | `sorryAx` (registered draft) |
-| 2 | `thm-dimensional-reduction` | `DimRed.Frozen.dimensional_reduction` | `DRAFT_SORRY` | `sorryAx` (registered draft) |
-| 3 | `thm-terminal-reduction` | `DimRed.Frozen.terminal_dimensional_reduction` | `DRAFT_SORRY` | `sorryAx` (registered draft) |
-| 4 | `cor-sandpile-reduction` | `DimRed.Frozen.sandpile_dimensional_reduction` | `DRAFT_SORRY` | `sorryAx` (registered draft) |
+| 1 | `prop-base-dimension-weak` | `DimRed.Frozen.base_dimension_weak_compatibility` | `SEALED` | classical only |
+| 2 | `thm-dimensional-reduction` | `DimRed.Frozen.dimensional_reduction` | `SEALED` | classical only |
+| 3 | `thm-terminal-reduction` | `DimRed.Frozen.terminal_dimensional_reduction` | `SEALED` | classical only |
+| 4 | `cor-sandpile-reduction` | `DimRed.Frozen.sandpile_dimensional_reduction` | `SEALED` | classical only |
 | 5 | `lem-symmetry` | `DimRed.Frozen.symmetry_lemma` | `SEALED` | classical only |
 | 6 | `prop-no-reduction` | `DimRed.Frozen.no_reduction_at_critical_dimension` | `SEALED` | classical only |
 | 7 | `lem-radial-laplacian` | `DimRed.Frozen.radial_laplacian` | `SEALED` | classical only |
@@ -46,12 +46,12 @@ python3 -m leanform_tools.certificate . --check
 | 10 | `lem-topple-limit` | `DimRed.Frozen.topple_limit` | `SEALED` | classical only |
 | 11 | `lem-difference-comparison` | `DimRed.Frozen.general_difference_comparison` | `SEALED` | classical only |
 | 12 | `prop-base-case` | `DimRed.Frozen.base_case` | `SEALED` | classical only |
-| 13 | `prop-base-dimension-consistency` | `DimRed.Frozen.base_dimension_consistency` | `DRAFT_SORRY` | `sorryAx` (registered draft) |
-| 14 | `prop-base-dimension-strong-derivative` | `DimRed.Frozen.base_dimension_strong_derivative` | `DRAFT_SORRY` | `sorryAx` (registered draft) |
-| 15 | `prop-base-dimension-strong-facet` | `DimRed.Frozen.base_dimension_strong_compatibility` | `DRAFT_SORRY` | `sorryAx` (registered draft) |
-| 16 | `prop-base-dimension-strong-topple` | `DimRed.Frozen.base_dimension_strong_topple` | `DRAFT_SORRY` | `sorryAx` (registered draft) |
-| 17 | `thm-self-similarity` | `DimRed.Frozen.self_similarity` | `DRAFT_SORRY` | `sorryAx` (registered draft) |
-| 18 | `cor-sandpile-self-similarity` | `DimRed.Frozen.sandpile_self_similarity` | `DRAFT_SORRY` | `sorryAx` (registered draft) |
+| 13 | `prop-base-dimension-consistency` | `DimRed.Frozen.base_dimension_consistency` | `SEALED` | classical only |
+| 14 | `prop-base-dimension-strong-derivative` | `DimRed.Frozen.base_dimension_strong_derivative` | `SEALED` | classical only |
+| 15 | `prop-base-dimension-strong-facet` | `DimRed.Frozen.base_dimension_strong_compatibility` | `SEALED` | classical only |
+| 16 | `prop-base-dimension-strong-topple` | `DimRed.Frozen.base_dimension_strong_topple` | `SEALED` | classical only |
+| 17 | `thm-self-similarity` | `DimRed.Frozen.self_similarity` | `SEALED` | classical only |
+| 18 | `cor-sandpile-self-similarity` | `DimRed.Frozen.sandpile_self_similarity` | `SEALED` | classical only |
 | 19 | `cor-axis-monotonicity` | `DimRed.Frozen.axis_monotonicity` | `SEALED` | classical only |
 | 20 | `cor-derivative-bound` | `DimRed.Frozen.derivative_bound` | `SEALED` | classical only |
 
@@ -85,5 +85,4 @@ The bytes of each statement are pinned, so a statement cannot be weakened after 
 ## What is not claimed
 
 - Anything not registered as a node in `ledger/manifest.yaml` is outside this certificate; `python3 -m leanform_tools.check_coverage` tracks whether the paper's statements are all registered.
-- `cor-sandpile-reduction`, `cor-sandpile-self-similarity`, `prop-base-dimension-consistency`, `prop-base-dimension-strong-derivative`, `prop-base-dimension-strong-facet`, `prop-base-dimension-strong-topple`, `prop-base-dimension-weak`, `thm-dimensional-reduction`, `thm-self-similarity`, `thm-terminal-reduction` are `DRAFT_SORRY`: the statement is frozen and registered, and no proof exists yet.
 

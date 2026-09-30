@@ -10,7 +10,7 @@ The dimension is written `d + 1` in place of `d`.  `v_∞` is `odoInf`, valued i
 `ℕ∞`; that it is finite is a theorem of the development.  Vector inequalities
 are coordinatewise (`dimred.tex:263-266`).
 -/
-import DimRed.Support.Recursion
+import DimRed.Support.RegProved
 
 open LatticeProb DimRed
 
@@ -19,4 +19,4 @@ theorem DimRed.Frozen.terminal_dimensional_reduction (N d : ℕ) (hN : 1 ≤ N) 
     (x : Site d) (hx : inSimplex d (sideHalf N) x) (hx2 : ∀ i, 2 ≤ x i) :
     odoInfUnif (d + 1) N (Fin.snoc x 2) = odoInfUnif d N x
 -- FROZEN-STATEMENT-END
-:= by sorry
+:= terminal_dimensional_reduction_of_reg reg_proved N d hN hd x hx hx2

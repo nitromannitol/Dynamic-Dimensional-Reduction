@@ -12,7 +12,7 @@ frozen.  `dimred.tex:932-940` (display `base_dimension:strong_compatability`):
    $v_{t+1}^{(M)}(\mathbf{x}_i, 2, \mathbf{1}_j) =
     v_{t}^{(M)}(\mathbf{x}_i, 2, \mathbf{1}_j)+1$."
 -/
-import DimRed.Support.Recursion
+import DimRed.Support.RegProved
 
 open LatticeProb DimRed
 
@@ -29,4 +29,4 @@ theorem DimRed.Frozen.base_dimension_strong_compatibility (M i j : ℕ) (hM : 2 
       odoUnif (i + 1 + j) (2 * M) (t + 1) (facetPoint x 2 j)
         = odoUnif (i + 1 + j) (2 * M) t (facetPoint x 2 j) + 1
 -- FROZEN-STATEMENT-END
-:= by sorry
+:= base_dimension_strong_compatibility_of_reg reg_proved M i j hM t x hx2 hxs hreg h

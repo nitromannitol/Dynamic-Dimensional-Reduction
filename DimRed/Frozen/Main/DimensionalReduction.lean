@@ -16,7 +16,7 @@ and `d - 1` needs no truncated subtraction.  The initial condition is
 `s_0^{(d)} ≡ 2d` in each dimension separately (`dimred.tex:39-41`), which is
 what `odoUnif` carries.  `(x_{d-1}, 1)` appends a last coordinate equal to `1`.
 -/
-import DimRed.Support.Recursion
+import DimRed.Support.RegProved
 
 open LatticeProb DimRed
 
@@ -25,4 +25,4 @@ theorem DimRed.Frozen.dimensional_reduction (N d : ℕ) (hN : 1 ≤ N) (hd : 1 �
     (t : ℕ) (ht : 1 ≤ t) (x : Site d) (hx : inSimplex d (sideHalf N) x) :
     odoUnif (d + 1) N t (Fin.snoc x 1) = odoUnif d N t x
 -- FROZEN-STATEMENT-END
-:= by sorry
+:= dimensional_reduction_of_reg reg_proved N d hN hd t ht x hx

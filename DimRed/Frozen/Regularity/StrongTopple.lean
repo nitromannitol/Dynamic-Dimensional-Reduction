@@ -9,7 +9,7 @@ The strong topple control clause of Proposition 4.1 of `dimred.tex`, frozen.
 `τ_{M-1}` is `toppleTime d (M-1)`, valued in `ℕ∞`.  The supremum over the
 finite domain is `simplexMax`.
 -/
-import DimRed.Support.Recursion
+import DimRed.Support.RegProved
 
 open LatticeProb DimRed
 
@@ -18,4 +18,4 @@ theorem DimRed.Frozen.base_dimension_strong_topple (d M : ℕ) (hd : 1 ≤ d) (h
     (t : ℕ) (ht : toppleTime d (M - 1) ≤ (t : ℕ∞)) :
     simplexMax d M (fun x => odoUnif d (2 * M) (t + 2) x - odoUnif d (2 * M) t x) ≤ 1
 -- FROZEN-STATEMENT-END
-:= by sorry
+:= base_dimension_strong_topple_of_reg reg_proved d M hd hM t ht

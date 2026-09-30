@@ -15,7 +15,7 @@ hypercube `C_{2M}^{(d)}`, restricted to `S_M^{(d)}` (`dimred.tex:428-431`).
 `τ_j` is `toppleTime`; it is valued in `ℕ∞`, so `t ≤ τ_j` is an inequality
 there.  Vector inequalities are coordinatewise (`dimred.tex:263-266`).
 -/
-import DimRed.Support.Recursion
+import DimRed.Support.RegProved
 
 open LatticeProb DimRed
 
@@ -25,4 +25,4 @@ theorem DimRed.Frozen.base_dimension_consistency (d M : ℕ) (hd : 1 ≤ d) (hM 
     (x : Site d) (hx : inSimplex d M x) (hxgt : ∀ i, (M : ℤ) - (j : ℤ) < x i) :
     odoUnif d (2 * M) t x = odoUnif d (2 * j) t (fun i => x i - ((M : ℤ) - (j : ℤ)))
 -- FROZEN-STATEMENT-END
-:= by sorry
+:= base_dimension_consistency_of_reg reg_proved d M hd hM j hj1 hj2 t ht x hx hxgt
