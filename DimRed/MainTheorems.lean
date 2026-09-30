@@ -8,34 +8,44 @@ import DimRed.Frozen.Prelim.DifferenceComparison
 import DimRed.Frozen.BaseCase.ExplicitOdometer
 import DimRed.Frozen.Prelim.AxisMonotonicity
 import DimRed.Frozen.Prelim.DerivativeBound
+import DimRed.Frozen.Main.DimensionalReduction
+import DimRed.Frozen.Main.TerminalReduction
+import DimRed.Frozen.Main.SelfSimilarity
+import DimRed.Frozen.Main.SandpileReduction
+import DimRed.Frozen.Main.SandpileSelfSimilarity
+import DimRed.Frozen.Regularity.Consistency
+import DimRed.Frozen.Regularity.WeakFacet
+import DimRed.Frozen.Regularity.StrongDerivative
+import DimRed.Frozen.Regularity.StrongFacet
+import DimRed.Frozen.Regularity.StrongTopple
 
 /-!
 # Main results
 
 The formalization of *Dynamic dimensional reduction in the Abelian sandpile* (Ahmed
-Bou-Rabee) is a work in progress, and **none of the paper's main results is proved yet**.
-Their frozen statements are registered, each with a proof that is a single `sorry`:
+Bou-Rabee) is complete: all twenty registered statements of the paper are proved.  The
+main results are Theorem 1.1 and Corollary 1.1, proved together with the five clauses of
+Proposition 4.1 by one joint induction over dimension, side length and time (Sections 4
+and 5):
 
-* `DimRed.Frozen.dimensional_reduction`: Theorem 1.1(i), dimensional reduction on the
+* `DimRed.dimensional_reduction`: Theorem 1.1(i), dimensional reduction on the
   centre slice, `v_t^{(d,N)}(x_{d-1}, 1) = v_t^{(d-1,N)}(x_{d-1})` for every `t ≥ 1`.
-* `DimRed.Frozen.terminal_dimensional_reduction`: Theorem 1.1(i), second display,
+* `DimRed.terminal_dimensional_reduction`: Theorem 1.1(i), second display,
   `v_∞^{(d,N)}(x_{d-1}, 2) = v_∞^{(d-1,N)}(x_{d-1})` for `x_{d-1} ≥ 2`.
-* `DimRed.Frozen.self_similarity`: Theorem 1.1(ii), self-similarity for `t ≤ τ_j`, with
+* `DimRed.self_similarity`: Theorem 1.1(ii), self-similarity for `t ≤ τ_j`, with
   the topple time `τ_j` the first time some inner boundary site reaches height `j`.
-* `DimRed.Frozen.sandpile_dimensional_reduction`: Corollary 1.1(i), dimensional
+* `DimRed.sandpile_dimensional_reduction`: Corollary 1.1(i), dimensional
   reduction of the terminal sandpile.
-* `DimRed.Frozen.sandpile_self_similarity`: Corollary 1.1(ii), self-similarity of the
+* `DimRed.sandpile_self_similarity`: Corollary 1.1(ii), self-similarity of the
   sandpile.
 
-The paper proves them together with the five clauses of Proposition 4.1 by one joint
-induction over dimension, side length and time (Sections 4 and 5); those clauses are open
-too.  None of the declarations above is restated here, since this file states only what is
-proved.
+and the five clauses of Proposition 4.1: `DimRed.base_dimension_consistency`,
+`DimRed.base_dimension_weak_compatibility`, `DimRed.base_dimension_strong_derivative`,
+`DimRed.base_dimension_strong_compatibility`, `DimRed.base_dimension_strong_topple`.
 
-The theorems below are the results of the paper that **are** proved, those of Sections 2
-and 3.  Each restates its certified counterpart in `DimRed/Frozen/` unchanged and is proved
-by `exact` of it, so the statements displayed in this file are the certified ones.  Nothing
-is assumed: no theorem takes a cited result as a hypothesis.
+Every theorem in this file restates its certified counterpart in `DimRed/Frozen/`
+unchanged and is proved by `exact` of it, so the statements displayed in this file are the
+certified ones.  Nothing is assumed: no theorem takes a cited result as a hypothesis.
 
 The model is that of `DimRed/Support/Basic.lean`.  `DimRed.odo d N s₀ t` is the parallel
 toppling odometer `v_t` of the initial sandpile `s₀` on the cube `C_N^{(d)}`, extended by
@@ -48,6 +58,112 @@ see `DimRed/Meta/AxiomsAudit.lean`.
 -/
 
 open LatticeProb DimRed
+
+/-! ## The main results -/
+
+/-- **Theorem 1.1(i)** (`the_theorem`), first display: dimensional reduction on the centre
+slice, `v_t^{(d,N)}(x_{d-1}, 1) = v_t^{(d-1,N)}(x_{d-1})` for every `t ≥ 1`.  The certified
+statement is `DimRed.Frozen.dimensional_reduction`, restated unchanged. -/
+theorem DimRed.dimensional_reduction (N d : ℕ) (hN : 1 ≤ N) (hd : 1 ≤ d)
+    (t : ℕ) (ht : 1 ≤ t) (x : Site d) (hx : inSimplex d (sideHalf N) x) :
+    odoUnif (d + 1) N t (Fin.snoc x 1) = odoUnif d N t x := by
+  exact DimRed.Frozen.dimensional_reduction N d hN hd t ht x hx
+
+/-- **Theorem 1.1(i)** (`the_theorem`), second display: terminal dimensional reduction,
+`v_∞^{(d,N)}(x_{d-1}, 2) = v_∞^{(d-1,N)}(x_{d-1})` for `x_{d-1} ≥ 2`.  The certified
+statement is `DimRed.Frozen.terminal_dimensional_reduction`, restated unchanged. -/
+theorem DimRed.terminal_dimensional_reduction (N d : ℕ) (hN : 1 ≤ N) (hd : 1 ≤ d)
+    (x : Site d) (hx : inSimplex d (sideHalf N) x) (hx2 : ∀ i, 2 ≤ x i) :
+    odoInfUnif (d + 1) N (Fin.snoc x 2) = odoInfUnif d N x := by
+  exact DimRed.Frozen.terminal_dimensional_reduction N d hN hd x hx hx2
+
+/-- **Theorem 1.1(ii)** (`the_theorem`): self-similarity for `t ≤ τ_j`, with the topple
+time `τ_j` the first time some inner boundary site reaches height `j`.  The certified
+statement is `DimRed.Frozen.self_similarity`, restated unchanged. -/
+theorem DimRed.self_similarity (N d : ℕ) (hN : 1 ≤ N) (hd : 2 ≤ d)
+    (j : ℕ) (hj : j < sideHalf N) (t : ℕ) (ht : (t : ℕ∞) ≤ toppleTime d j)
+    (x : Site d) (hx : inSimplex d (sideHalf N) x)
+    (hxgt : ∀ i, (sideHalf N : ℤ) - (j : ℤ) < x i) :
+    odoUnif d N t x = odoUnif d (2 * j) t (fun i => x i - ((sideHalf N : ℤ) - (j : ℤ))) := by
+  exact DimRed.Frozen.self_similarity N d hN hd j hj t ht x hx hxgt
+
+/-- **Corollary 1.1(i)**: dimensional reduction of the terminal sandpile,
+`s_∞^{(d,N)}(x_{d-1}, 1) = s_∞^{(d-1,N)}(x_{d-1}) + 2`.  The certified statement is
+`DimRed.Frozen.sandpile_dimensional_reduction`, restated unchanged. -/
+theorem DimRed.sandpile_dimensional_reduction (N d : ℕ) (hN : 1 ≤ N) (hd : 1 ≤ d)
+    (x : Site d) (hx : inSimplex d (sideHalf N) x) (hx2 : ∀ i, 2 ≤ x i) :
+    sandpInfUnif (d + 1) N (Fin.snoc x 1) = sandpInfUnif d N x + 2 := by
+  exact DimRed.Frozen.sandpile_dimensional_reduction N d hN hd x hx hx2
+
+/-- **Corollary 1.1(ii)**: self-similarity of the sandpile for `t ≤ τ_j`.  The certified
+statement is `DimRed.Frozen.sandpile_self_similarity`, restated unchanged. -/
+theorem DimRed.sandpile_self_similarity (N d : ℕ) (hN : 1 ≤ N) (hd : 2 ≤ d)
+    (j : ℕ) (hj : j < sideHalf N) (t : ℕ) (ht : (t : ℕ∞) ≤ toppleTime d j)
+    (x : Site d) (hx : inSimplex d (sideHalf N) x)
+    (hxgt : ∀ i, (sideHalf N : ℤ) - (j : ℤ) + 1 < x i) :
+    sandpUnif d N t x = sandpUnif d (2 * j) t (fun i => x i - ((sideHalf N : ℤ) - (j : ℤ))) := by
+  exact DimRed.Frozen.sandpile_self_similarity N d hN hd j hj t ht x hx hxgt
+
+/-! ## Proposition 4.1 -/
+
+/-- **Proposition 4.1** (`base_dimension`), self-similarity clause: for `1 ≤ j ≤ M` and
+`t ≤ τ_j`, `v_t^{(M)}(x) = v_t^{(j)}(x - (M - j))` for `x > M - j`.  The certified
+statement is `DimRed.Frozen.base_dimension_consistency`, restated unchanged. -/
+theorem DimRed.base_dimension_consistency (d M : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
+    (j : ℕ) (hj1 : 1 ≤ j) (hj2 : j ≤ M) (t : ℕ) (ht : (t : ℕ∞) ≤ toppleTime d j)
+    (x : Site d) (hx : inSimplex d M x) (hxgt : ∀ i, (M : ℤ) - (j : ℤ) < x i) :
+    odoUnif d (2 * M) t x = odoUnif d (2 * j) t (fun i => x i - ((M : ℤ) - (j : ℤ))) := by
+  exact DimRed.Frozen.base_dimension_consistency d M hd hM j hj1 hj2 t ht x hx hxgt
+
+/-- **Proposition 4.1** (`base_dimension`), weak facet compatibility: if
+`v_t(x_i, 1, 1_j) = v_t(x_i, 2, 1_j) + 1` then `v_{t+1}(x_i, 1, 1_j) = v_t(x_i, 1, 1_j)`.
+The certified statement is `DimRed.Frozen.base_dimension_weak_compatibility`, restated
+unchanged. -/
+theorem DimRed.base_dimension_weak_compatibility (M i j : ℕ) (hM : 2 ≤ M)
+    (t : ℕ) (ht : 1 ≤ t) (x : Fin i → ℤ) (hx2 : ∀ a, 2 ≤ x a)
+    (hxs : inSimplex (i + 1 + j) M (facetPoint x 1 j))
+    (h : odoUnif (i + 1 + j) (2 * M) t (facetPoint x 1 j)
+        = odoUnif (i + 1 + j) (2 * M) t (facetPoint x 2 j) + 1) :
+    odoUnif (i + 1 + j) (2 * M) (t + 1) (facetPoint x 1 j)
+      = odoUnif (i + 1 + j) (2 * M) t (facetPoint x 1 j) := by
+  exact DimRed.Frozen.base_dimension_weak_compatibility M i j hM t ht x hx2 hxs h
+
+/-- **Proposition 4.1** (`base_dimension`), strong derivative clause:
+`v_t(x_i, 1, 1_j) - v_t(x_i, 3, 1_j) ≤ 2` in the regular range.  The certified statement is
+`DimRed.Frozen.base_dimension_strong_derivative`, restated unchanged. -/
+theorem DimRed.base_dimension_strong_derivative (M i j : ℕ) (hM : 2 ≤ M)
+    (t : ℕ) (x : Fin i → ℤ) (hx2 : ∀ a, 2 ≤ x a)
+    (hxs : inSimplex (i + 1 + j) M (facetPoint x 1 j))
+    (hreg : (t : ℕ∞) < toppleTime (i + 1 + j) M ∨
+      (1 ≤ i ∧ toppleTime (i + 1 + j) M ≤ (t : ℕ∞))) :
+    odoUnif (i + 1 + j) (2 * M) t (facetPoint x 1 j)
+      - odoUnif (i + 1 + j) (2 * M) t (facetPoint x 3 j) ≤ 2 := by
+  exact DimRed.Frozen.base_dimension_strong_derivative M i j hM t x hx2 hxs hreg
+
+/-- **Proposition 4.1** (`base_dimension`), strong facet compatibility: if
+`v_t(x_i, 1, 1_j) = v_t(x_i, 2, 1_j) + 1` then `v_{t+1}(x_i, 1, 1_j) = v_t(x_i, 1, 1_j)`
+and `v_{t+1}(x_i, 2, 1_j) = v_t(x_i, 2, 1_j) + 1` in the regular range.  The certified
+statement is `DimRed.Frozen.base_dimension_strong_compatibility`, restated unchanged. -/
+theorem DimRed.base_dimension_strong_compatibility (M i j : ℕ) (hM : 2 ≤ M)
+    (t : ℕ) (x : Fin i → ℤ) (hx2 : ∀ a, 2 ≤ x a)
+    (hxs : inSimplex (i + 1 + j) M (facetPoint x 1 j))
+    (hreg : (t : ℕ∞) < toppleTime (i + 1 + j) M ∨
+      (1 ≤ i ∧ toppleTime (i + 1 + j) M ≤ (t : ℕ∞)))
+    (h : odoUnif (i + 1 + j) (2 * M) t (facetPoint x 1 j)
+        = odoUnif (i + 1 + j) (2 * M) t (facetPoint x 2 j) + 1) :
+    odoUnif (i + 1 + j) (2 * M) (t + 1) (facetPoint x 1 j)
+        = odoUnif (i + 1 + j) (2 * M) t (facetPoint x 1 j) ∧
+      odoUnif (i + 1 + j) (2 * M) (t + 1) (facetPoint x 2 j)
+        = odoUnif (i + 1 + j) (2 * M) t (facetPoint x 2 j) + 1 := by
+  exact DimRed.Frozen.base_dimension_strong_compatibility M i j hM t x hx2 hxs hreg h
+
+/-- **Proposition 4.1** (`base_dimension`), strong topple control: for `t ≥ τ_{M-1}`,
+`sup_{x ∈ S_M} (v_{t+2}(x) - v_t(x)) ≤ 1`.  The certified statement is
+`DimRed.Frozen.base_dimension_strong_topple`, restated unchanged. -/
+theorem DimRed.base_dimension_strong_topple (d M : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
+    (t : ℕ) (ht : toppleTime d (M - 1) ≤ (t : ℕ∞)) :
+    simplexMax d M (fun x => odoUnif d (2 * M) (t + 2) x - odoUnif d (2 * M) t x) ≤ 1 := by
+  exact DimRed.Frozen.base_dimension_strong_topple d M hd hM t ht
 
 /-- **Lemma 2.1** (`pt_ind_lemma`), the parallel toppling recursion
 `v_{t+1}(x) = ⌊(s_0(x) + ∑_{y ∼ x} v_t(y)) / 2d⌋` on the cube, for a nonnegative initial

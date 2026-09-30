@@ -3,14 +3,12 @@ import DimRed.MainTheorems
 /-!
 # Axioms audit
 
-Building this module prints the axiom dependencies of the ten proved results restated in
+Building this module prints the axiom dependencies of the twenty proved results restated in
 `DimRed/MainTheorems.lean`.  Each must report exactly the three standard foundational axioms
 of Mathlib: `propext`, `Classical.choice`, `Quot.sound`.
 
-None of the paper's main results is proved yet, so none is printed here: the frozen
-statements of Theorem 1.1 and Corollary 1.1 still depend on `sorryAx`.
-`python3 tools/check_axioms.py` prints the axiom closure of all twenty registered
-statements, open ones included.
+`python3 tools/verify.py` (the check_axioms gate) prints the axiom closure of all twenty
+registered statements.
 
 Nothing is assumed in this development: no theorem takes a cited result as a hypothesis,
 and no `axiom` is declared.
@@ -29,3 +27,13 @@ This file is not imported by the library root; the report runs when it is built 
 #print axioms DimRed.no_reduction_at_critical_dimension
 #print axioms DimRed.radial_laplacian
 #print axioms DimRed.base_case
+#print axioms DimRed.dimensional_reduction
+#print axioms DimRed.terminal_dimensional_reduction
+#print axioms DimRed.self_similarity
+#print axioms DimRed.sandpile_dimensional_reduction
+#print axioms DimRed.sandpile_self_similarity
+#print axioms DimRed.base_dimension_consistency
+#print axioms DimRed.base_dimension_weak_compatibility
+#print axioms DimRed.base_dimension_strong_derivative
+#print axioms DimRed.base_dimension_strong_compatibility
+#print axioms DimRed.base_dimension_strong_topple
