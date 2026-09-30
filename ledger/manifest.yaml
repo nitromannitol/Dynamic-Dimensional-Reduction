@@ -13,7 +13,7 @@
 version: 1
 source_pin:
   file: paper/dimred.tex
-  sha256: dcb412f81b22069228a66b128b3aa17e38e2732d572a16eb51b9c52eca93cb2b
+  sha256: 1423810fa6c1469dbec2a1ba633652946a467297bfab3ea4d89cbd3b1e12b3ef
 
 nodes:
   - id: prop-base-dimension-weak
@@ -53,7 +53,7 @@ nodes:
   - id: cor-sandpile-reduction
     version: 1
     kind: theorem
-    source: dimred.tex:143-160 (Corollary 1.1)
+    source: dimred.tex:143-159 (label sandpile_corollary)
     file: DimRed/Frozen/Main/SandpileReduction.lean
     export: DimRed.Frozen.sandpile_dimensional_reduction
     state: DRAFT_SORRY
@@ -75,7 +75,7 @@ nodes:
   - id: prop-no-reduction
     version: 2
     kind: theorem
-    source: dimred.tex:706-708 (Proposition 3.1)
+    source: dimred.tex:706-708 (label no_reduction)
     file: DimRed/Frozen/BaseCase/NoReduction.lean
     export: DimRed.Frozen.no_reduction_at_critical_dimension
     state: SEALED
@@ -86,7 +86,7 @@ nodes:
   - id: lem-radial-laplacian
     version: 2
     kind: theorem
-    source: dimred.tex:728-733 (Lemma 3.1)
+    source: dimred.tex:728-734 (label radial_laplacian)
     file: DimRed/Frozen/BaseCase/RadialLaplacian.lean
     export: DimRed.Frozen.radial_laplacian
     state: SEALED
@@ -205,7 +205,7 @@ nodes:
   - id: cor-sandpile-self-similarity
     version: 2
     kind: theorem
-    source: dimred.tex:143-160 (Corollary 1.1)
+    source: dimred.tex:143-159 (label sandpile_corollary)
     file: DimRed/Frozen/Main/SandpileSelfSimilarity.lean
     export: DimRed.Frozen.sandpile_self_similarity
     state: DRAFT_SORRY

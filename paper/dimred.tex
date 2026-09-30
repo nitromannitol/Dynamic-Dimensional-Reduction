@@ -140,7 +140,7 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 	\end{theorem} 
 
 	Both of these results immediately translate to the sandpile. 
-	\begin{corollary} 
+	\begin{corollary}\label{sandpile_corollary} 
 		% For each integer $k \geq 0$, the following hold for all $d \geq d_0 := (k + 2)$.
 	
 		The results in Theorem \ref{the_theorem}, using the same notation, extend to the sequence of sandpiles. 	
@@ -703,7 +703,7 @@ M = x_{l_0} = x_{r_0} <   \cdots < x_{l_k} = x_{r_k} < \cdots < x_{l_n} = x_{r_n
 	
 	\subsection{\texorpdfstring{$M=1$}{M=1}}
 	As we do not know how to define a $0$-dimensional sandpile, suppose $d_0 \geq 2$. 
-	\begin{prop}
+	\begin{prop}\label{no_reduction}
 	 When $s_0^{(d)} \equiv 2 d + (d_0-1)$,  $v_\infty^{(d_0)} \equiv 1$ but $v_\infty^{(d_0-1)} \equiv 2$.
 	\end{prop}
 	\begin{proof} 
@@ -725,7 +725,7 @@ M = x_{l_0} = x_{r_0} <   \cdots < x_{l_k} = x_{r_k} < \cdots < x_{l_n} = x_{r_n
 	toppling rule.  Indeed, every $\mathbf{x} \in \mathcal{S}_2$ is of the form $\mathbf{x} =(\mathbf{2}_{x},\mathbf{1}_{d-x})$, for $x = 0, \ldots, d$. Overload notation and consider $s_t$ and $v_t$ as functions on $\{0, \ldots, d\}$. The Laplacian on the one-dimensional graph can then be computed using symmetry. 
 	%Fine analysis of this one-dimensional sandpile is tractable 
 	%as its Laplacian is nearest neighbor. % (We could not extend this property  $M \geq 3$.)
-	\begin{lemma}
+	\begin{lemma}\label{radial_laplacian}
 		If we define $0 = v_t(d+1) = v_t(-1)$, then 
 		\[
 		%\Delta v_t(x) = (-2 d + (d-x)) v_t(x) + (d-x) v_t(x+1) + x v_t(x-1)
