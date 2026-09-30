@@ -30,8 +30,9 @@ odometer explicitly on cubes of side 2 and 4, and Sections 4 and 5 prove Proposi
 length and time.
 
 **This is a work in progress.**  Every theorem, lemma, proposition and corollary of the
-paper is registered as a frozen Lean statement (`tools/check_coverage.py`), 20 registered
-statements in all.  **10 are proved and 10 are open.**  The open ones are the three clauses
+paper is registered as a frozen Lean statement
+(`python3 -m leanform_tools.check_coverage`), 20 registered statements in all.
+**10 are proved and 10 are open.**  The open ones are the three clauses
 of Theorem 1.1, the two clauses of Corollary 1.1 and the five clauses of Proposition 4.1,
 that is, the whole joint induction of Sections 4 and 5, so **none of the paper's main
 results is proved yet**.  The proved ones are every result of Sections 2 and 3: Lemmas 2.1
@@ -44,12 +45,12 @@ figures.
 
 - **`sorry`:** 10 registered statements are still open, each a single registered `sorry`;
   everything else is proved with only the three standard axioms.
-  `tools/check_warnings.py` fails on any other `sorry` or warning.
+  `python3 -m leanform_tools.check_warnings` fails on any other `sorry` or warning.
 - **No custom `axiom`.**  The proved results reduce to `mathlib`'s three standard
   foundational axioms `propext`, `Classical.choice` and `Quot.sound`, verified by
   [`DimRed/Meta/AxiomsAudit.lean`](DimRed/Meta/AxiomsAudit.lean) for the results restated in
-  [`DimRed/MainTheorems.lean`](DimRed/MainTheorems.lean) and by `tools/check_axioms.py` for
-  every registered statement.
+  [`DimRed/MainTheorems.lean`](DimRed/MainTheorems.lean) and by
+  `python3 -m leanform_tools.check_axioms` for every registered statement.
 - Pinned to Lean `v4.32.0`, `mathlib` at revision
   `81a5d257c8e410db227a6665ed08f64fea08e997` and `Lattice-Probability` at commit
   `bbe0b90`.
@@ -115,12 +116,14 @@ states what that file states.  [`CORRESPONDENCE.md`](CORRESPONDENCE.md) records 
 vocabulary, the standing hypotheses the frozen statements write out, and the junk values.
 
 Checkers compare the Lean statements with the paper's rather than with their hashes.
-`tools/check_coverage.py` confirms that every theorem, lemma, proposition and corollary of
-`paper/dimred.tex` is claimed by a node.  In each frozen statement whose conclusion has an
-existential constant, `tools/check_constants.py` checks that it is bound before the paper's
-parameters.  `tools/check_clauses.py` and `tools/check_exponents.py` compare assertion
-counts and exponents; neither has a recorded reading of any node yet, so both currently
-check nothing.  These are review aids; none proves equivalence between LaTeX and Lean.
+`python3 -m leanform_tools.check_coverage` confirms that every theorem, lemma, proposition
+and corollary of `paper/dimred.tex` is claimed by a node.  In each frozen statement whose
+conclusion has an existential constant, `python3 -m leanform_tools.check_constants` checks
+that it is bound before the paper's parameters.  `python3 -m leanform_tools.check_clauses`
+and `python3 -m leanform_tools.check_exponents` compare assertion counts and exponents
+against `ledger/readings.yaml`, which records a clause reading of each of the 20 nodes and
+the 12 exponent waivers.  These are review aids; none proves equivalence between LaTeX and
+Lean.
 
 ### Which Lean statement formalizes which result
 
@@ -186,27 +189,32 @@ lake build DimRed.Meta.AxiomsAudit   # print the axioms of the proved results
 To use the library, `import DimRed` pulls in the whole development; the proved results are
 in `import DimRed.MainTheorems`.
 
-The checkers in `tools/` need Python 3.10 or newer and PyYAML
-(`python3 -m pip install -r tools/requirements.txt`).  `python3 tools/verify.py` runs every
-check below and fails on the first failure; continuous integration runs it on request.
-`check_axioms.py` and `check_warnings.py` run Lean; the others read the manifest, the paper
-and the Lean sources.
+The gates live in `tools/leanform/`, the shared `leanform_tools` package; they need Python
+3.10 or newer and PyYAML (`python3 -m pip install -r tools/requirements.txt`).
+`python3 tools/verify.py` runs every gate below and fails on the first failure; add
+`--skip-lake` to run only the pure-Python gates, and continuous integration runs it on
+request.  A single gate runs as
+`cd tools/leanform && python3 -m leanform_tools.<gate> <repo-path>`.  The `check_axioms` and
+`check_warnings` gates run Lean; the others read the manifest, the paper and the Lean
+sources.
 
-| command | what it guarantees |
+| gate (run as `python3 -m leanform_tools.<gate> <repo-path>` from `tools/leanform/`) | what it guarantees |
 |---|---|
-| `python3 tools/check_manifest.py` | every node's file holds exactly one frozen block whose SHA-256 equals `frozen_sha256` and which declares exactly the node's `export`; every file in `DimRed/Frozen/` belongs to one node; `DimRed/` contains no `axiom`, `admit` or `sorryAx`, and `sorry` only once in the proof of each open node |
-| `python3 tools/check_axioms.py` | runs `#print axioms` on every manifest export and lists which closures contain `sorryAx`; it fails while any node is open, and `tools/verify.py` checks instead that exactly the open nodes are the ones that do |
-| `python3 tools/check_warnings.py` | `lake build DimRed` emits one `sorry` warning per open node and no other warning |
-| `python3 tools/check_constants.py` | in a frozen statement whose conclusion has an existential constant, the constant is bound before the paper's parameters |
-| `python3 tools/check_coverage.py` | every theorem, lemma, proposition and corollary of `paper/dimred.tex` is named in the `source` of some manifest node |
-| `python3 tools/check_clauses.py` | compares the assertion count of each paper statement with the conjunct count of its Lean statement, for the nodes with a recorded reading (none yet) |
-| `python3 tools/check_exponents.py` | compares the exponents written in a paper statement with those in its Lean statement, for the nodes with a recorded reading (none yet) |
+| `check_manifest` | every node's file holds exactly one frozen block whose SHA-256 equals `frozen_sha256` and which declares exactly the node's `export`; every file in `DimRed/Frozen/` belongs to one node; `DimRed/` contains no `axiom`, `admit` or `sorryAx`, and `sorry` only once in the proof of each open node |
+| `check_axioms` | runs `#print axioms` on every manifest export and lists each closure; it fails if a sealed node's closure contains `sorryAx`, or a draft node's closure does not |
+| `check_warnings` | `lake build DimRed` emits one `sorry` warning per open node and no other warning |
+| `check_constants` | in a frozen statement whose conclusion has an existential constant, the constant is bound before the paper's parameters |
+| `check_coverage` | every theorem, lemma, proposition and corollary of `paper/dimred.tex` is named in the `source` of some manifest node |
+| `check_clauses` | compares the assertion count of each paper statement with the conjunct count of its Lean statement, against the reading recorded in `ledger/readings.yaml` |
+| `check_exponents` | compares the exponents written in a paper statement with those in its Lean statement, against the waivers recorded in `ledger/readings.yaml` |
 
-Also in `tools/`: `paper_anchors.py` and `paper_citations.py` check the `dimred.tex:<lines>`
-ranges in the manifest and in the Lean docstrings against the paper's labels;
-`sync_docs.py` checks (`--write` regenerates) the status block and the paper map of this
-file and the frozen-surface table of `CORRESPONDENCE.md`; `assumptions.py` regenerates
-`ASSUMPTIONS.md` (`--check` verifies it is current); `freeze.py` registers a frozen
+Also in `tools/leanform/`: `python3 -m leanform_tools.paper_anchors <repo-path>` and
+`python3 -m leanform_tools.paper_citations <repo-path>` check the `dimred.tex:<lines>` ranges
+in the manifest and in the Lean docstrings against the paper's labels;
+`python3 -m leanform_tools.sync_docs <repo-path>` checks (`--write` regenerates) the status
+block of this file and the frozen-surface table of `CORRESPONDENCE.md`;
+`python3 -m leanform_tools.assumptions <repo-path>` regenerates `ASSUMPTIONS.md` (`--check`
+verifies it is current); `python3 -m leanform_tools.freeze <repo-path>` registers a frozen
 statement in the manifest.
 
 The paper `paper/dimred.tex` is the LaTeX source of arXiv:2009.05968v2 with the corrections
@@ -233,7 +241,8 @@ ledger/manifest.yaml  one row per registered statement: hash, paper source, stat
 paper/dimred.tex      the paper, pinned by the SHA-256 in ledger/manifest.yaml
 paper/dimred-arxiv.tex  the unmodified arXiv source (v2)
 paper/CHANGES_FROM_ARXIV.md  every difference between the two
-tools/                the checkers and generators listed under Building
+tools/verify.py       runs every gate; the gates themselves are in tools/leanform/
+tools/leanform/       the shared leanform_tools checkers and generators
 ```
 
 ## How this was built

@@ -12,9 +12,10 @@ lake build           # compile the project
 ```
 
 The production build is required to emit no Lean or linter warnings other than one
-`declaration uses 'sorry'` warning for each open registered statement
-(`python3 tools/check_warnings.py`).  A `sorry` anywhere else, or a second one in an open
-node's file, fails `python3 tools/check_manifest.py`.
+`declaration uses 'sorry'` warning for each open registered statement (the `check_warnings`
+gate).  A `sorry` anywhere else, or a second one in an open node's file, fails the
+`check_manifest` gate.  Run `python3 tools/verify.py` from the repository root for every
+gate, or `cd tools/leanform && python3 -m leanform_tools.<gate> ../..` for one.
 
 A few practical notes for working with this development:
 
@@ -30,15 +31,16 @@ A few practical notes for working with this development:
 - **Frozen statements.**  The text between `-- FROZEN-STATEMENT-BEGIN` and
   `-- FROZEN-STATEMENT-END` in `DimRed/Frozen/` is pinned by the SHA-256
   recorded in `ledger/manifest.yaml`.  A change there shows up in
-  `python3 tools/check_manifest.py` and must be recorded in the manifest;
+  the `check_manifest` gate and must be recorded in the manifest;
   proofs after the end marker may be changed freely.
 
 - **Closing an open node.**  Replace the node's `sorry` by a proof, confirm with
-  `python3 tools/check_axioms.py` that its axiom closure no longer contains `sorryAx`,
-  set its `state` to `SEALED` in the manifest, and regenerate the documentation with
-  `python3 tools/sync_docs.py --write`.  When a main theorem is sealed, restate it in
-  `DimRed/MainTheorems.lean`, add it to `DimRed/Meta/AxiomsAudit.lean`, and add its
-  comparator challenge under `Audit/`.
+  the `check_axioms` gate that its axiom closure no longer contains `sorryAx`,
+  set its `state` to `SEALED` in the manifest, and regenerate the documentation
+  with `cd tools/leanform && python3 -m leanform_tools.sync_docs ../.. --write`.
+  When a main theorem is sealed, restate it in `DimRed/MainTheorems.lean`, add it
+  to `DimRed/Meta/AxiomsAudit.lean`, and add its comparator challenge under
+  `Audit/`.
 
 - **Library lemmas.**  Lattice objects that do not depend on this paper belong in the
   shared library Lattice-Probability.

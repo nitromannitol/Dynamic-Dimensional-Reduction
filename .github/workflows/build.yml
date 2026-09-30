@@ -35,7 +35,7 @@ jobs:
 
       # This formalization is a work in progress: the build emits one
       # "declaration uses sorry" warning for each open registered statement.
-      # tools/check_warnings.py (run by tools/verify.py below) fails on any
+      # the check_warnings gate (run by tools/verify.py below) fails on any
       # other warning, and on any sorry warning the manifest does not register.
       - name: Build
         run: lake build
