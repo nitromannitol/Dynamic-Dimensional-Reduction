@@ -265,3 +265,12 @@ equal to one.  Both are formalized as `DimRed.odo_jump_of_gap` and
 `DimRed.strong_facet_step_of_reg` in `DimRed/Support/RegBridges.lean`, and the
 joint induction of Section 5 is carried out with them.  The ruling and the
 evidence are recorded in `ledger/decisions.md`.
+
+## Labels on three statements
+
+The corollary at `dimred.tex:143` (Corollary 1.1), the proposition at
+`dimred.tex:706` (Proposition 3.1) and the lemma at `dimred.tex:728`
+(Lemma 3.1) carried no `\label`, so no node could claim them by name.  They now
+carry `\label{sandpile_corollary}`, `\label{no_reduction}` and
+`\label{radial_laplacian}`, each on the line of its `\begin`, so no line number
+moves and no mathematical text changes.
