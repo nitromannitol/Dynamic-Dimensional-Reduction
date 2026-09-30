@@ -19,26 +19,28 @@ sources:
 
 status:
   scope: >-
-    A Lean 4 / Mathlib formalization, IN PROGRESS, of every theorem, lemma,
+    A Lean 4 / Mathlib formalization, COMPLETE, of every theorem, lemma,
     proposition and corollary of the paper, 20 registered statements in all:
     the three displays of Theorem 1.1 (dimensional reduction at every time,
     dimensional reduction of the terminal odometer, and self-similarity), the
     two clauses of Corollary 1.1, the results of Sections 2 and 3 (Lemmas 2.1
     to 2.5, Corollaries 2.1 and 2.2, Proposition 3.1, Lemma 3.1, Proposition
-    3.2) and the five clauses of Proposition 4.1.  PROVED (10): every result
-    of Sections 2 and 3.  OPEN (10): Theorem 1.1, Corollary 1.1 and
-    Proposition 4.1, which the paper proves by one joint induction over
-    dimension, side length and time; each is a frozen statement whose proof
-    is a single registered sorry.  None of the paper's main results is proved
-    yet.  SCOPE BOUNDARY: nothing is assumed; no cited result is taken as a
-    hypothesis (ASSUMPTIONS.md).  The paper formalized is paper/dimred.tex,
-    the arXiv source with the corrections listed in
-    paper/CHANGES_FROM_ARXIV.md.  Not
+    3.2) and the five clauses of Proposition 4.1.  PROVED (20): all 20 are
+    SEALED in ledger/manifest.yaml, with complete proofs whose axiom closure
+    is exactly propext, Classical.choice and Quot.sound; the build emits no
+    warning and no sorry.  The ten statements of Theorem 1.1, Corollary 1.1
+    and Proposition 4.1 are proved by the joint induction of Sections 4 and 5
+    over dimension, side length and time (DimRed.reg_proved in
+    DimRed/Support/RegProved.lean), from which the frozen statements, odd
+    cubes and the unit half-side included, are read off.  SCOPE BOUNDARY:
+    nothing is assumed; no cited result is taken as a hypothesis
+    (ASSUMPTIONS.md).  The paper formalized is paper/dimred.tex, the arXiv
+    source with the corrections listed in paper/CHANGES_FROM_ARXIV.md.  Not
     formalized: the introduction's discussion, the open problems of Section 1
-    and the figures.  The proved results are stated in full in
-    DimRed/MainTheorems.lean; no Mathlib-only comparator challenge exists yet
-    (Audit/README.md).
-  sorry_count: 10
+    and the figures.  Every result is stated in full in
+    DimRed/MainTheorems.lean; the Mathlib-only comparator challenges are being
+    added and none exists yet (Audit/README.md).
+  sorry_count: 0
   sorry_in_definitions: 0
   axioms:
     - "propext"
@@ -47,32 +49,32 @@ status:
   main_results:
     - declaration: "DimRed.Frozen.dimensional_reduction"
       file: "DimRed/Frozen/Main/DimensionalReduction.lean"
-      sorry_count: 1
-      axioms: ["propext", "sorryAx", "Classical.choice", "Quot.sound"]
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ""
       literature_dependencies: []
     - declaration: "DimRed.Frozen.terminal_dimensional_reduction"
       file: "DimRed/Frozen/Main/TerminalReduction.lean"
-      sorry_count: 1
-      axioms: ["propext", "sorryAx", "Classical.choice", "Quot.sound"]
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ""
       literature_dependencies: []
     - declaration: "DimRed.Frozen.self_similarity"
       file: "DimRed/Frozen/Main/SelfSimilarity.lean"
-      sorry_count: 1
-      axioms: ["propext", "sorryAx", "Classical.choice", "Quot.sound"]
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ""
       literature_dependencies: []
     - declaration: "DimRed.Frozen.sandpile_dimensional_reduction"
       file: "DimRed/Frozen/Main/SandpileReduction.lean"
-      sorry_count: 1
-      axioms: ["propext", "sorryAx", "Classical.choice", "Quot.sound"]
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ""
       literature_dependencies: []
     - declaration: "DimRed.Frozen.sandpile_self_similarity"
       file: "DimRed/Frozen/Main/SandpileSelfSimilarity.lean"
-      sorry_count: 1
-      axioms: ["propext", "sorryAx", "Classical.choice", "Quot.sound"]
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ""
       literature_dependencies: []
 
@@ -89,6 +91,7 @@ automation:
         - "gpt-5.6-luna"
         - "labs-leanstral-1-5"
         - "claude-opus-5-5"
+        - "claude-sonnet-5-5"
       framework: >-
         Claude Code (Anthropic) as the supervising harness and for the Claude
         subagents; a custom driver (glm_general.py) for the DeepSeek generals
@@ -103,7 +106,7 @@ automation:
         their briefs, recorded the author's decisions and merged their branches;
         for this repository it ran on claude-fable-5-1 (2026-09-10 to
         2026-09-16), claude-opus-5 (2026-09-19 and 2026-09-20) and
-        claude-opus-5-5 (2026-09-23 and 2026-09-24).  A claude-opus-5
+        claude-opus-5-5 (2026-09-23, 2026-09-24 and 2026-09-30).  A claude-opus-5
         general (Claude Code subagent) froze all twenty statements, wrote the vocabulary and sealed six results of
         Sections 2 and 3 (2026-09-10); glm-5.3-flash drafted compile-filtered
         proof candidates for it, and glm-5.3 and glm-5.3-flash audited the
@@ -119,21 +122,33 @@ automation:
         support modules for the regularity induction of Sections 4 and 5
         (2026-09-19); labs-leanstral-1-5 filled the proofs of four support
         lemmas whose statements the supervising session wrote (2026-09-20;
-        committed on 2026-09-20 and 2026-09-23).  Attempts on the open nodes
-        by claude-sonnet-5, deepseek-v4.1-flash and labs-leanstral-1-5 agents that did not compile
-        or were not merged are not in the repository.  claude-opus-5-5 wrote
-        DimRed/MainTheorems.lean, the axiom audit and the release
-        documentation (2026-09-24).  A frozen-statement manifest
-        (ledger/manifest.yaml) pins each registered statement by the SHA-256
-        of its text, and the tools/ checkers verify the hashes, the axiom
-        closure of every node against its recorded state, a build whose only
-        warnings are the registered sorries, coverage of every statement of
-        the paper and quantifier order.
+        committed on 2026-09-20 and 2026-09-23).  Other attempts on the statements
+        that were then open by claude-sonnet-5, deepseek-v4.1-flash and
+        labs-leanstral-1-5 agents that did not compile or were not merged are not in
+        the repository.  claude-opus-5-5 wrote DimRed/MainTheorems.lean, the axiom
+        audit and the first version of the release documentation (2026-09-24).  A
+        DeepSeek campaign on the ds-e-0926 branch (2026-09-26 to 2026-09-29) proved
+        the dimensional-reduction, weak facet and strong derivative steps of the
+        joint induction of Sections 4 and 5 and most of its support lemmas, and was
+        consolidated onto the main branch on 2026-09-30.  On 2026-09-30
+        claude-opus-5-5 directed the consolidation, and claude-opus-5-5 subagents
+        proved the three remaining steps (self-similarity, strong facet and strong
+        topple); a claude-sonnet-5-5 subagent wrote the bridges that read the ten
+        frozen statements of Theorem 1.1, Corollary 1.1 and Proposition 4.1 off the
+        induction.  An independent audit of those ten statements, which tried to
+        refute them before accepting them, was run before they were sealed; an audit
+        report accompanies the seal.  The gates moved to the shared leanform_tools
+        package (tools/leanform/) the same day.  A frozen-statement manifest
+        (ledger/manifest.yaml) pins each registered statement by the SHA-256 of its
+        text, and the tools/ checkers verify the hashes, the axiom closure of every
+        node against its recorded state, a build that emits no warning and no sorry,
+        coverage of every statement of the paper and quantifier order.
       cost:
         wall_time: >-
           the statements were frozen on 2026-09-10; proof work ran on
-          2026-09-10, 2026-09-13 to 2026-09-16, 2026-09-19, 2026-09-20 and
-          2026-09-23, and is not finished
+          2026-09-10, 2026-09-13 to 2026-09-16, 2026-09-19, 2026-09-20,
+          2026-09-23, 2026-09-26 to 2026-09-29 and 2026-09-30, when the last
+          ten statements were sealed
         spend_usd: "not tracked (subscription and API accounts)"
         hardware: "a 20-thread Intel i9-9900X / 125 GB RAM Ubuntu machine"
       prompting_notes: >-
@@ -144,11 +159,10 @@ automation:
   spend_usd: "not tracked (subscription and API accounts)"
   notes: >-
     All Lean code in this repository was written by the listed models under the
-    supervision of the author.  This is a work in progress: 10 of the 20
-    registered statements are proved, and the other 10, including every main
-    result of the paper, are open, each with a proof that is a single
-    registered sorry.  No custom axiom is declared and no cited result enters
-    as a hypothesis.
+    supervision of the author.  The formalization is complete: all 20
+    registered statements are proved, including every main result of the
+    paper, with no sorry.  No custom axiom is declared and no cited result
+    enters as a hypothesis.
 
 fidelity:
   divergences: >-
@@ -170,10 +184,12 @@ review:
     - "Ahmed Bou-Rabee"
   notes: >-
     Correctness of every proved result is guaranteed by the Lean kernel and
-    Mathlib; the open results are not proved.  The author ruled on the
-    statement-level decisions recorded during development.  The statements
-    were audited against the paper by glm-5.3 and glm-5.3-flash auditors
-    during development.  This is not external peer review.
+    Mathlib.  The author ruled on the statement-level decisions recorded
+    during development.  The statements were audited against the paper by
+    glm-5.3 and glm-5.3-flash auditors during development, and the ten
+    statements of Theorem 1.1, Corollary 1.1 and Proposition 4.1 were audited
+    again, independently, before they were sealed.  This is not external peer
+    review.
 
 alignment:
   namespace: "DimRed"
@@ -181,18 +197,18 @@ alignment:
     - source: "Theorem 1.1 (the_theorem), three displays"
       lean: "DimRed.Frozen.dimensional_reduction, DimRed.Frozen.terminal_dimensional_reduction, DimRed.Frozen.self_similarity"
       module: "DimRed.Frozen.Main"
-      status: "open"
-      note: "Frozen statements; each proof is a single registered sorry."
+      status: "proved"
+      note: "Frozen statements, proved by the joint induction of Sections 4 and 5 (DimRed.reg_proved); each restates its certified counterpart DimRed.Frozen.* unchanged in DimRed/MainTheorems.lean."
     - source: "Corollary 1.1, two clauses"
       lean: "DimRed.Frozen.sandpile_dimensional_reduction, DimRed.Frozen.sandpile_self_similarity"
       module: "DimRed.Frozen.Main"
-      status: "open"
-      note: "Frozen statements; each proof is a single registered sorry."
+      status: "proved"
+      note: "Frozen statements, proved by the joint induction of Sections 4 and 5 (DimRed.reg_proved); each restates its certified counterpart DimRed.Frozen.* unchanged in DimRed/MainTheorems.lean."
     - source: "Proposition 4.1 (base_dimension), five clauses"
       lean: "DimRed.Frozen.base_dimension_*"
       module: "DimRed.Frozen.Regularity"
-      status: "open"
-      note: "Frozen statements; each proof is a single registered sorry."
+      status: "proved"
+      note: "Frozen statements, proved by the joint induction of Sections 4 and 5 (DimRed.reg_proved); each restates its certified counterpart DimRed.Frozen.* unchanged in DimRed/MainTheorems.lean."
     - source: "Sections 2 and 3: every lemma, corollary and proposition"
       lean: "DimRed.* in DimRed/MainTheorems.lean"
       module: "DimRed.MainTheorems"
