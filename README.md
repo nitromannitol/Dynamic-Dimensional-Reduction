@@ -295,7 +295,8 @@ self-similarity, strong facet and strong topple.  A Claude Sonnet 5.5 subagent w
 bridges that read the ten frozen statements of Theorem 1.1, Corollary 1.1 and Proposition
 4.1 off the induction, including the odd cubes and the unit half-side.  An independent audit
 of those ten statements, which tried to refute them before accepting them, was run before
-they were sealed, and an audit report accompanies the seal.  The gates moved to the shared
+they were sealed; its report is
+[`ledger/audits/2026-09-30-seal-audit.md`](ledger/audits/2026-09-30-seal-audit.md).  The gates moved to the shared
 `leanform_tools` package in `tools/leanform/` the same day, and the documentation was
 updated to say that the formalization is complete.  The models, tooling, cost, and review
 status are disclosed in full in [`formalization.yaml`](formalization.yaml), following the

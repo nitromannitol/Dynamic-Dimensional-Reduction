@@ -5,7 +5,6 @@ pass the finite-time dimensional-reduction identity to the limit; the final
 reflection identity is kept as an explicit hypothesis, as in
 `dimred.tex:1178-1180` and `dimred.tex:163-164`.
 -/
-import DimRed.Frozen.Main.TerminalReduction
 import DimRed.Frozen.Prelim.ParabolicComparison
 import DimRed.Support.AxisStep
 import DimRed.Support.Stabilize

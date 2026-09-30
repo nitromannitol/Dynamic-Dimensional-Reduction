@@ -136,8 +136,8 @@ automation:
         topple); a claude-sonnet-5-5 subagent wrote the bridges that read the ten
         frozen statements of Theorem 1.1, Corollary 1.1 and Proposition 4.1 off the
         induction.  An independent audit of those ten statements, which tried to
-        refute them before accepting them, was run before they were sealed; an audit
-        report accompanies the seal.  The gates moved to the shared leanform_tools
+        refute them before accepting them, was run before they were sealed; its report
+        is ledger/audits/2026-09-30-seal-audit.md.  The gates moved to the shared leanform_tools
         package (tools/leanform/) the same day.  A frozen-statement manifest
         (ledger/manifest.yaml) pins each registered statement by the SHA-256 of its
         text, and the tools/ checkers verify the hashes, the axiom closure of every
