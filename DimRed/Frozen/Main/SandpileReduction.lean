@@ -1,6 +1,6 @@
 /-
 Clause 1 of the Corollary to Theorem 1.1 of `dimred.tex`, frozen.
-`dimred.tex:143-160`:
+`dimred.tex:143-159`:
 
   "The results in Theorem \ref{the_theorem}, using the same notation, extend to
    the sequence of sandpiles.

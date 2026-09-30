@@ -1,6 +1,6 @@
 /-
 Clause 2 of the Corollary to Theorem 1.1 of `dimred.tex`, frozen.
-`dimred.tex:143-160`:
+`dimred.tex:143-159`:
 
   "(2) Self-similarity: for all $j < M$, $t \leq \tau_j$, and
    $\mathbf{x} \in \mathcal{S}_M^{(d)}$ with $\mathbf{x} > M-j+1$,

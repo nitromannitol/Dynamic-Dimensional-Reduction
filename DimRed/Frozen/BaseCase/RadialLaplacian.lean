@@ -1,5 +1,5 @@
 /-
-Lemma 3.1 of `dimred.tex`, frozen.  `dimred.tex:728-733`:
+Lemma 3.1 of `dimred.tex`, frozen.  `dimred.tex:728-734`:
 
   "If we define $0 = v_t(d+1) = v_t(-1)$, then
    $\Delta v_t(x) = (-d - x) v_t(x) + (d-x) v_t(x+1) + x v_t(x-1)$."
