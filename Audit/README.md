@@ -126,6 +126,7 @@ every pair on request, with the independent nanoda kernel enabled as well.
 **Status.**  The three solutions build, each solution theorem has the elaborated type of its
 challenge theorem and mentions no repository constant, and each depends only on `propext`,
 `Classical.choice` and `Quot.sound`.  `leanprover/comparator` itself was run on the three
-pairs on 2026-09-30 at commit `c079868`, once with the Lean kernel and once with the
-independent nanoda kernel enabled as well (a temporary copy of `comparator.json` with
-`"enable_nanoda": true`); all six runs printed `Your solution is okay!`.
+pairs on 2026-09-30 at commit `c079868`, and re-run on 2026-10-01 at commit `e4f5a9b`, once
+with the Lean kernel and once with the independent nanoda kernel enabled as well (a
+temporary copy of `comparator.json` with `"enable_nanoda": true`); all six runs printed
+`Your solution is okay!` in both sweeps.
