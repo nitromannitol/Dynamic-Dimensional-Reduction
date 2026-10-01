@@ -46,7 +46,9 @@ its details turned out differently when the step was proved:
   fixed when `t - 1 >= τ_{M-1}`; before that time the gap cannot occur.
 * The measured failures of `eq:laplace_11 >= eq:laplace_21` quoted above all lie
   outside the clause's gap hypothesis.  Under the gap, the comparison holds termwise:
-  0 failures in 311 gap instances (`d <= 4`, `M <= 6`; `scratch/facet/t2.py`).  So the
+  0 failures in 311 gap instances (`d <= 4`, `M <= 6`; `scratch/facet/t2.py`), and 0 in
+  723 (`d <= 4`, `M <= 7`) and 671 (`d <= 5`, `M <= 6`) gap instances in the extended
+  check (`ledger/audits/2026-10-01-extended-refutation.md`).  So the
   paper's comparison is wrong only as stated without the gap.  The corrected paper's
   sentence that the clause "is Corollary 2.2 directly" (CHANGES_FROM_ARXIV.md, last
   section) should be revisited by the owner.  On 2026-10-01 that last section was

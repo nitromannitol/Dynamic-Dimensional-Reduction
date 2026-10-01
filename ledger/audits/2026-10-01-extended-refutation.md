@@ -64,3 +64,21 @@ This is a strengthening of the evidence, not a replacement for the seal audit or
 Lean proofs.  The statements are still certified by the joint induction `DimRed.reg_proved`
 with axiom closure `{propext, Classical.choice, Quot.sound}`; the model check is what makes a
 false or vacuous statement at small parameters unlikely to have slipped through.
+
+## The paper's gap-hypothesis comparison
+
+Owner item 2 in [`../FRONTIER.md`](../FRONTIER.md) concerns the paragraph of
+`paper/dimred.tex` that closes `eq:laplace_11 >= eq:laplace_21` under the gap hypothesis of
+the strong-facet clause.  The model also checks, on every instance where the gap
+`v_t(p1) = v_t(p2) + 1` holds in the clause's regime:
+
+- the clause conclusion: `p1` stays and `p2` topples from `t` to `t + 1`;
+- the paper's comparison `Delta v_t(p2) >= Delta v_{t-1}(p1)`;
+- the termwise claims used to prove it (`hp_fail`, `hm_fail`, `tail_fail`, `two_fail`).
+
+Run with `python3 t2ext.py 4 7` and `python3 t2ext.py 5 6`; the only counter that is
+nonzero is `gap` itself (723 and 671 gap instances, respectively), so every check has zero
+failures.  This extends the 311 gap instances recorded in [`../decisions.md`](../decisions.md)
+and supports the reading that the paragraph is valid under the gap hypothesis it assumes;
+whether the paper's narrative should still be rewritten is the owner's call
+([`../FRONTIER.md`](../FRONTIER.md) item 2), not a formalization obligation.
