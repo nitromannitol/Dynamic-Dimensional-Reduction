@@ -257,13 +257,17 @@ dynamics of Section 1 for `j ≤ 2`, `M ≤ 6` and every `t`: 145 failures of th
 inequality, and 40 failures of `eq:laplace_11 ≥ eq:laplace_21` itself; the
 smallest is `j = 0`, `M = 2`, `t = 3`, where `v_{t-1}(2,1) = 1 < 2 = v_{t-1}(1,1)`.
 
-Corrected: the comparison is not used.  The gap one step back in time, which is
-what the unit-gap branch of Section 5 needs, follows from the gap at the current
-time together with the first-difference bound of Corollary 2.2; and the
-strong-facet clause itself is that same first-difference bound at a coordinate
-equal to one.  Both are formalized as `DimRed.odo_jump_of_gap` and
-`DimRed.strong_facet_step_of_reg` in `DimRed/Support/RegBridges.lean`, and the
-joint induction of Section 5 is carried out with them.  The ruling and the
+Corrected: the development does not use the comparison.  The gap one step back
+in time, which is what the unit-gap branch of Section 5 needs, follows from the
+gap at the current time together with the first-difference bound of Corollary
+2.2; that step is `DimRed.odo_jump_of_gap` in `DimRed/Support/RegBridges.lean`.
+The strong-facet clause itself follows from strong facet compatibility one step
+back together with the first-difference bound, and is formalized as
+`DimRed.facet_step_of_earlier` in `DimRed/Support/FacetStepFinal.lean`; the
+first-difference bound at a coordinate equal to one supplies only the "stays
+put" half of the clause (`DimRed.strong_facet_step_of_reg`).  The joint
+induction of Section 5 is carried out with `odo_jump_of_gap` and
+`facet_step_of_earlier`.  The ruling, this corrected attribution and the
 evidence are recorded in `ledger/decisions.md`.
 
 ## Labels on three statements

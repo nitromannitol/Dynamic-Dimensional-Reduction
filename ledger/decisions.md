@@ -49,7 +49,10 @@ its details turned out differently when the step was proved:
   0 failures in 311 gap instances (`d <= 4`, `M <= 6`; `scratch/facet/t2.py`).  So the
   paper's comparison is wrong only as stated without the gap.  The corrected paper's
   sentence that the clause "is Corollary 2.2 directly" (CHANGES_FROM_ARXIV.md, last
-  section) should be revisited by the owner.
+  section) should be revisited by the owner.  On 2026-10-01 that last section was
+  corrected to attribute the clause to `facet_step_of_earlier` and the gap step to
+  `odo_jump_of_gap`, so the erratum no longer names `strong_facet_step_of_reg` for
+  the clause; the owner's confirmation of the paper's narrative remains open.
 * `DimRed.FacetTermBounds` and `DimRed.lap_facet_le_of_prev` remain unused.  Their
   `gap` field (a gap at `t - 1`) is false whenever the clause's hypotheses hold.
 

@@ -10,7 +10,10 @@ no warning and no `sorry`, `lake build Audit` builds the comparator challenges a
 solutions, and `python3 tools/verify.py` passes all 15 gates. The axiom closure of every
 node is exactly `{propext, Classical.choice, Quot.sound}`. The no-hole baseline in
 [`holes.json`](holes.json) is `{"holes": {}, "total": 0}`; the `check_progress` gate now
-fails if any future change opens a hole in the production tree.
+fails if any future change opens a hole in the production tree. An extended independent
+refute-first check on 2026-10-01 (`d ≤ 4, M ≤ 8` and `d ≤ 5, M ≤ 6`) found no failure of
+any of the ten nodes; see
+[`audits/2026-10-01-extended-refutation.md`](audits/2026-10-01-extended-refutation.md).
 
 ## Open obligations
 
@@ -30,12 +33,14 @@ concern the wording of an already-approved paper repair; neither changes a froze
    derivative clause" section of `decisions.md` and in
    [`audits/2026-09-30-seal-audit.md`](audits/2026-09-30-seal-audit.md) §3.
 
-2. `paper/CHANGES_FROM_ARXIV.md`, last section: the erratum says the strong-facet clause
-   "is that same first-difference bound at a coordinate equal to one" and is formalized by
-   `DimRed.strong_facet_step_of_reg`. The clause is in fact proved by
-   `DimRed.facet_step_of_earlier` (`DimRed/Support/FacetStepFinal.lean`); the
-   first-difference bound supplies only the "stays put" half. The owner should revisit the
-   erratum wording to say what was proved, as recorded in `decisions.md`.
+2. `paper/CHANGES_FROM_ARXIV.md`, last section: the erratum's attribution was corrected
+   on 2026-10-01 to name `DimRed.facet_step_of_earlier`
+   (`DimRed/Support/FacetStepFinal.lean`) for the strong-facet clause and
+   `DimRed.odo_jump_of_gap` for the gap step, so it no longer names
+   `DimRed.strong_facet_step_of_reg` for the clause; that lemma supplies only the
+   "stays put" half. What remains for the owner is the paper's proof narrative itself
+   (whether the comparison is used, and under what hypothesis), as recorded in
+   `decisions.md`.
 
 A third reading is settled by design and is not an obligation: `lem-symmetry` states only
 the first sentence of Lemma 2.3. The second sentence (`v_t = v_t^S` on `S_M`) is the
