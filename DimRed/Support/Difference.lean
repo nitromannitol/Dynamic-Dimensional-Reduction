@@ -15,7 +15,7 @@ theorem nbrSum_shift {d : ℕ} (u : Site d → ℤ) (x w : Site d) :
     nbrSum (fun y => u (y + w)) x = nbrSum u (x + w) := by
   simp only [nbrSum]
   refine Finset.sum_congr rfl fun i _ => ?_
-  congr 1 <;> abel
+  congr 1 <;> abel_nf
 
 /-- The neighbour sum is additive. -/
 theorem nbrSum_sub {d : ℕ} (u v : Site d → ℤ) (x : Site d) :

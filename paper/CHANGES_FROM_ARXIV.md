@@ -3,11 +3,16 @@
 The formalization follows `paper/dimred.tex`, which is the LaTeX source of
 arXiv:2009.05968v2 with the ten corrections below.  The arXiv source will be
 replaced by the corrected one.  The unmodified arXiv source is
-`paper/dimred-arxiv.tex`.  The first eight changes keep the line count.  The
-ninth and tenth replace and extend a passage of Section 5, so a line number
-before line 1334 is the same line in both files, and a later line number
-differs.  The figures and `main.bbl` of the arXiv source are not included in
-this repository.
+`paper/dimred-arxiv.tex`.  The first eight changes and the three added labels
+keep the line count, so a line number up to 1325 is the same line in both
+files.  The tenth change edits line 1325 in place and inserts one line after
+it, and replaces line 1329 by two lines, so arXiv lines 1326 to 1328 are lines
+1327 to 1329 of the corrected file and arXiv lines 1330 to 1333 are lines 1332
+to 1335.  From arXiv line 1334 (corrected line 1336) onward the ninth change
+replaces and extends the passage, and later line numbers differ.  Line 1321
+differs only by a trailing space, which the corrected file drops; this
+whitespace change is not one of the ten.  The figures and `main.bbl` of the
+arXiv source are not included in this repository.
 
 ## 1. The topple time in Theorem 1.1
 
