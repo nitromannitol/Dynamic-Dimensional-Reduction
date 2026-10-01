@@ -299,7 +299,11 @@ bridges that read the ten frozen statements of Theorem 1.1, Corollary 1.1 and Pr
 4.1 off the induction, including the odd cubes and the unit half-side.  An independent audit
 of those ten statements, which tried to refute them before accepting them, was run before
 they were sealed; its report is
-[`ledger/audits/2026-09-30-seal-audit.md`](ledger/audits/2026-09-30-seal-audit.md).  The gates moved to the shared
+[`ledger/audits/2026-09-30-seal-audit.md`](ledger/audits/2026-09-30-seal-audit.md).  On
+2026-10-01 a larger refute-first sweep of the same ten statements, recorded in
+[`ledger/audits/2026-10-01-extended-refutation.md`](ledger/audits/2026-10-01-extended-refutation.md),
+and a re-run of `leanprover/comparator` on the three main-result pairs under both the Lean
+and the independent nanoda kernels found no failure.  The gates moved to the shared
 `leanform_tools` package in `tools/leanform/` the same day, and the documentation was
 updated to say that the formalization is complete.  The models, tooling, cost, and review
 status are disclosed in full in [`formalization.yaml`](formalization.yaml), following the
