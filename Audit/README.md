@@ -133,9 +133,4 @@ every pair on request, with the independent nanoda kernel enabled as well.
 
 **Status.**  The four solutions build, each solution theorem has the elaborated type of its
 challenge theorem and mentions no repository constant, and each depends only on `propext`,
-`Classical.choice` and `Quot.sound`.  `leanprover/comparator` was run on the Theorem 1.1 /
-Corollary 1.1 pairs on 2026-09-30 at commit `c079868` and again on 2026-10-01 at commit
-`e4f5a9b`, and on the Proposition 4.1 pair on 2026-10-01; every pair was checked once with
-the Lean kernel and once with the independent nanoda kernel enabled as well (a temporary
-copy of `comparator.json` with `"enable_nanoda": true`), and every run printed
-`Your solution is okay!`.
+`Classical.choice` and `Quot.sound`.  

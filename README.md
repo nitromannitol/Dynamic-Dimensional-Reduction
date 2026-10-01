@@ -267,49 +267,7 @@ tools/leanform/       the shared leanform_tools checkers and generators
 
 ## How this was built
 
-The Lean code in this repository was written by AI models under the supervision of the
-author, in a private working repository whose history is this one.  A supervising Claude
-Code session launched the agents below, wrote briefs, recorded the author's decisions and
-merged their branches; for this repository it ran on Claude Fable 5.1 from 2026-09-10 to
-2026-09-16, on Claude Opus 5 on 2026-09-19 and 2026-09-20, and on Claude Opus 5.5 on
-2026-09-23, 2026-09-24 and 2026-09-30.  On
-2026-09-10 a Claude Opus 5 general, a Claude Code subagent, froze all twenty statements,
-wrote the vocabulary and sealed six of the Section 2 and 3 results; GLM-5.3-flash drafted
-compile-filtered proof candidates for it, and GLM-5.3 and GLM-5.3-flash audited the frozen
-statements against the paper, one audit forcing a transcription repair.  From 2026-09-13 to
-2026-09-16 two DeepSeek-v4.1-flash generals, through a custom driver, sealed the derivative
-comparison (Lemma 2.4), corrected the statements of Lemma 2.4 and Proposition 3.2, and proved
-the block lemmas of Proposition 3.2; a Claude Sonnet 5 general completed Proposition 3.2 on
-2026-09-16.  On 2026-09-19 the supervising session, then on Claude Opus 5, corrected the
-statements of Corollary 2.1 and of the topple time and proved the two corollaries of Section 2,
-and OpenAI's gpt-5.6-luna, through Codex at reasoning effort xhigh, wrote the support
-modules for the regularity induction of Sections 4 and 5.  On 2026-09-20 Mistral's
-Leanstral, through its `vibe` agent, filled the proofs of four support lemmas whose
-statements the supervising session wrote: the existence of the topple time, weak facet
-compatibility off the facet, the unit-gap branch of dimensional reduction and the weak facet
-step of the induction; the supervising session committed them on 2026-09-20 and 2026-09-23.
-Other attempts on the statements that were then open, by Claude Sonnet 5, DeepSeek and
-Leanstral agents, that did not compile or were not merged are not in this repository.
-Claude Opus 5.5 wrote `DimRed/MainTheorems.lean`, the axiom audit and the first version of
-this documentation on 2026-09-24.  From 2026-09-26 to 2026-09-29 a DeepSeek campaign on the
-`ds-e-0926` branch proved the dimensional-reduction, weak facet and strong derivative steps
-of the joint induction of Sections 4 and 5 and most of its support lemmas; it was
-consolidated onto the main branch on 2026-09-30.  On that day Claude Opus 5.5 directed the
-consolidation, and Claude Opus 5.5 subagents proved the three remaining steps:
-self-similarity, strong facet and strong topple.  A Claude Sonnet 5.5 subagent wrote the
-bridges that read the ten frozen statements of Theorem 1.1, Corollary 1.1 and Proposition
-4.1 off the induction, including the odd cubes and the unit half-side.  An independent audit
-of those ten statements, which tried to refute them before accepting them, was run before
-they were sealed; its report is
-[`ledger/audits/2026-09-30-seal-audit.md`](ledger/audits/2026-09-30-seal-audit.md).  On
-2026-10-01 a larger refute-first sweep of the same ten statements, recorded in
-[`ledger/audits/2026-10-01-extended-refutation.md`](ledger/audits/2026-10-01-extended-refutation.md),
-and a re-run of `leanprover/comparator` on the four main-result pairs under both the Lean
-and the independent nanoda kernels found no failure.  The gates moved to the shared
-`leanform_tools` package in `tools/leanform/` the same day, and the documentation was
-updated to say that the formalization is complete.  The models, tooling, cost, and review
-status are disclosed in full in [`formalization.yaml`](formalization.yaml), following the
-[mathlib-initiative](https://github.com/mathlib-initiative/formalization.yaml) standard.
+The Lean code was written by claude-fable-5-1, claude-opus-5, claude-opus-5-5, claude-sonnet-5, claude-sonnet-5-5, deepseek-v4.1-flash, glm-5.3, glm-5.3-flash, gpt-5.6-luna, labs-leanstral-1-5 under the close supervision of the author; models, tooling and cost are disclosed in `formalization.yaml`.
 
 ## Authors and citation
 
