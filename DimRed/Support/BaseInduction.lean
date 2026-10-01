@@ -336,6 +336,8 @@ theorem blockEdge_two (d : ℕ) : blockEdge d 2 = (d : ℤ) - 1 := by
   · norm_num
   · rfl
 
+-- the strong induction over the shift unfolds the ripple relation at two smaller
+-- shifts at every step, which needs the extra budget
 set_option maxHeartbeats 4000000 in
 /-- The general-shift ripple relation, `dimred.tex:850-882`:
 the profile at absolute time `s + k + 1` is the profile at time `s + 1`, shifted

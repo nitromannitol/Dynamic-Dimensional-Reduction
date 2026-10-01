@@ -54,7 +54,7 @@ reducing dimension `i+1+j` to `i+1`.  The proof is by induction on `j`.
 The first peel uses `hred` (which provides `DimRedAt` at the current dimension);
 each subsequent peel uses `hearlier` (which provides `DimRedAt` at strictly smaller
 dimensions). -/
-lemma aux_facet_reduce (M i j : ℕ) (hM : 2 ≤ M)
+lemma odoUnif_facetPoint_reduce (M i j : ℕ) (hM : 2 ≤ M)
     (x : Fin i → ℤ) (hx2 : ∀ a, 2 ≤ x a)
     (hred : ∀ s : ℕ, DimRedAt (i + 1 + j) M s)
     (hearlier : ∀ d' M' t' : ℕ, regEarlier (i + 1 + j) M 0 d' M' t' →

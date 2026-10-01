@@ -10,6 +10,8 @@ compatibility at time `t - 1` and the two-step derivative bound at time `t`.
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+-- the term bounds expand two `Finset.sum`s over `Fin i` and their head and tail
+-- neighbours, which needs the extra budget
 set_option maxHeartbeats 800000
 
 namespace DimRed

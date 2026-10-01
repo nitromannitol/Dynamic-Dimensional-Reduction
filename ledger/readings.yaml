@@ -144,7 +144,8 @@ clauses:
     form the paper proves and uses.  Lean:
     d = i+1+j (so i < d is automatic, and the paper never ties d to i and j in this clause), hx2, hxs
     (the point lies in S_M), hreg the regime as written, conclusion odoUnif ... (facetPoint x 1 j) -
-    odoUnif ... (facetPoint x 3 j) <= 2.  FLAGGED: the paper's display is ambiguous and Lean fixes it.
+    odoUnif ... (facetPoint x 3 j) <= 2.  FLAGGED: the paper's display is ambiguous and Lean fixes
+    it; the disambiguation is recorded in ledger/decisions.md.
   prop-base-dimension-strong-facet: >-
     Paper (Proposition 4.1, strong facet compatibility, display base_dimension:strong_compatability,
     dimred.tex:932-940, same hypotheses and regime as the derivative display before it): if
