@@ -59,4 +59,16 @@ theorem toppleTime_eq (d j : ℕ) :
     StatementAudit.toppleTime d j = DimRed.toppleTime d j := by
   simp only [StatementAudit.toppleTime, DimRed.toppleTime, innerBoundary_eq, odoUnif_eq]
 
+theorem simplex_eq (d M : ℕ) : StatementAudit.simplex d M = DimRed.simplex d M := by
+  ext x
+  simp only [StatementAudit.simplex, DimRed.simplex, Finset.mem_filter, Finset.mem_Icc,
+    StatementAudit.inSimplex, DimRed.inSimplex]
+
+theorem simplexMax_eq (d M : ℕ) (f : StatementAudit.Site d → ℤ) :
+    StatementAudit.simplexMax d M f = DimRed.simplexMax d M f := by
+  simp only [StatementAudit.simplexMax, DimRed.simplexMax, simplex_eq]
+
+theorem facetPoint_eq {i : ℕ} (x : Fin i → ℤ) (c : ℤ) (j : ℕ) :
+    StatementAudit.facetPoint x c j = DimRed.facetPoint x c j := rfl
+
 end DimRed.StatementAudit.Bridge

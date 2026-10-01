@@ -15,7 +15,7 @@ and unit vectors of `ℤ^d`, the hypercube `C_N^{(d)}` and its inner boundary, t
 fundamental domain `S_M^{(d)}`, the neighbour sum and the Laplacian with dissipating
 boundary conditions, the parallel toppling odometer and sandpile, their terminal values,
 and the topple time `τ_j`.  It is a statement-level copy of the repository definitions
-(see `Audit/README.md` for the provenance table) and is byte-identical in the three
+(see `Audit/README.md` for the provenance table) and is byte-identical in the four
 challenges.  The sole intentional `sorry` is the proof of the final theorem.
 
 ## Presentation deltas
@@ -122,6 +122,20 @@ noncomputable def sandpInfUnif (d N : ℕ) (x : Site d) : ℤ :=
 noncomputable def toppleTime (d j : ℕ) : ℕ∞ :=
   sInf ((fun n : ℕ => (n : ℕ∞)) ''
     {n : ℕ | 1 ≤ n ∧ ∃ x ∈ innerBoundary d (2 * j), (j : ℤ) ≤ odoUnif d (2 * j) n x})
+
+/-- The sorted fundamental domain `S_M^{(d)}`, as a finite set. -/
+noncomputable def simplex (d M : ℕ) : Finset (Site d) :=
+  letI := Classical.decPred (inSimplex d M)
+  (Finset.Icc (fun _ => (1 : ℤ)) (fun _ => (M : ℤ))).filter (inSimplex d M)
+
+/-- `sup_{x ∈ S_M} f(x)`, the maximum of `f` over the finite domain `S_M` (`0` if empty). -/
+noncomputable def simplexMax (d M : ℕ) (f : Site d → ℤ) : ℤ :=
+  if h : (simplex d M).Nonempty then (simplex d M).sup' h f else 0
+
+/-- The facet point `(x, c, 1_j)`, the paper's `(\mathbf{x}_i, c, \mathbf{1}_j)`,
+`dimred.tex:915`. -/
+def facetPoint {i : ℕ} (x : Fin i → ℤ) (c : ℤ) (j : ℕ) : Site (i + 1 + j) :=
+  Fin.append (Fin.snoc x c) (fun _ : Fin j => (1 : ℤ))
 
 end DimRed.StatementAudit
 -- VOCABULARY-END

@@ -175,9 +175,11 @@ correspondence between the two sources.
 
 ## Verified against a Mathlib-only statement
 
-Yes, for the five main results.  As in the repositories this one follows, each is restated
-using only Mathlib and checked with [`leanprover/comparator`](https://github.com/leanprover/comparator):
-[`Audit/`](Audit/README.md) holds, for Theorem 1.1(i), Theorem 1.1(ii) and Corollary 1.1, a
+Yes, for the five main results and Proposition 4.1.  As in the repositories this one follows,
+each is restated using only Mathlib and checked with
+[`leanprover/comparator`](https://github.com/leanprover/comparator):
+[`Audit/`](Audit/README.md) holds, for Theorem 1.1(i), Theorem 1.1(ii), Corollary 1.1 and
+Proposition 4.1, a
 `Challenge.lean` that imports only Mathlib, rebuilds every definition the statements use and
 states them with one `sorry` each, a `Solution.lean` that proves the same statements from the
 library, and a `comparator.json`.  `lake build Audit` builds them on demand (the default build
@@ -302,7 +304,7 @@ they were sealed; its report is
 [`ledger/audits/2026-09-30-seal-audit.md`](ledger/audits/2026-09-30-seal-audit.md).  On
 2026-10-01 a larger refute-first sweep of the same ten statements, recorded in
 [`ledger/audits/2026-10-01-extended-refutation.md`](ledger/audits/2026-10-01-extended-refutation.md),
-and a re-run of `leanprover/comparator` on the three main-result pairs under both the Lean
+and a re-run of `leanprover/comparator` on the four main-result pairs under both the Lean
 and the independent nanoda kernels found no failure.  The gates moved to the shared
 `leanform_tools` package in `tools/leanform/` the same day, and the documentation was
 updated to say that the formalization is complete.  The models, tooling, cost, and review

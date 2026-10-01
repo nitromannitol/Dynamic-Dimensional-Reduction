@@ -107,5 +107,19 @@ noncomputable def toppleTime (d j : ℕ) : ℕ∞ :=
   sInf ((fun n : ℕ => (n : ℕ∞)) ''
     {n : ℕ | 1 ≤ n ∧ ∃ x ∈ innerBoundary d (2 * j), (j : ℤ) ≤ odoUnif d (2 * j) n x})
 
+/-- The sorted fundamental domain `S_M^{(d)}`, as a finite set. -/
+noncomputable def simplex (d M : ℕ) : Finset (Site d) :=
+  letI := Classical.decPred (inSimplex d M)
+  (Finset.Icc (fun _ => (1 : ℤ)) (fun _ => (M : ℤ))).filter (inSimplex d M)
+
+/-- `sup_{x ∈ S_M} f(x)`, the maximum of `f` over the finite domain `S_M` (`0` if empty). -/
+noncomputable def simplexMax (d M : ℕ) (f : Site d → ℤ) : ℤ :=
+  if h : (simplex d M).Nonempty then (simplex d M).sup' h f else 0
+
+/-- The facet point `(x, c, 1_j)`, the paper's `(\mathbf{x}_i, c, \mathbf{1}_j)`,
+`dimred.tex:915`. -/
+def facetPoint {i : ℕ} (x : Fin i → ℤ) (c : ℤ) (j : ℕ) : Site (i + 1 + j) :=
+  Fin.append (Fin.snoc x c) (fun _ : Fin j => (1 : ℤ))
+
 end DimRed.StatementAudit
 -- VOCABULARY-END

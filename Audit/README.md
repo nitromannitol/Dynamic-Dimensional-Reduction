@@ -2,8 +2,8 @@
 
 This directory contains Mathlib-only comparator challenges for the main results of the
 formalization of *Dynamic dimensional reduction in the Abelian sandpile* (Ahmed Bou-Rabee):
-the three displays of Theorem 1.1 and the two clauses of Corollary 1.1.  Each comparator
-lives in its own subdirectory:
+the three displays of Theorem 1.1, the two clauses of Corollary 1.1 and the five clauses of
+Proposition 4.1.  Each comparator lives in its own subdirectory:
 
 | Directory | Paper statement | Checked theorem | Library theorem |
 | --- | --- | --- | --- |
@@ -12,6 +12,11 @@ lives in its own subdirectory:
 | `SelfSimilarity/` | Theorem 1.1(ii) | `DimRed.StatementAudit.SelfSimilarity.self_similarity` | `DimRed.self_similarity` |
 | `Sandpile/` | Corollary 1.1(i) | `DimRed.StatementAudit.Sandpile.sandpile_dimensional_reduction` | `DimRed.sandpile_dimensional_reduction` |
 | | Corollary 1.1(ii) | `DimRed.StatementAudit.Sandpile.sandpile_self_similarity` | `DimRed.sandpile_self_similarity` |
+| `Regularity/` | Proposition 4.1, self-similarity | `DimRed.StatementAudit.Regularity.base_dimension_consistency` | `DimRed.base_dimension_consistency` |
+| | Proposition 4.1, weak facet | `DimRed.StatementAudit.Regularity.base_dimension_weak_compatibility` | `DimRed.base_dimension_weak_compatibility` |
+| | Proposition 4.1, strong derivative | `DimRed.StatementAudit.Regularity.base_dimension_strong_derivative` | `DimRed.base_dimension_strong_derivative` |
+| | Proposition 4.1, strong facet | `DimRed.StatementAudit.Regularity.base_dimension_strong_compatibility` | `DimRed.base_dimension_strong_compatibility` |
+| | Proposition 4.1, strong topple | `DimRed.StatementAudit.Regularity.base_dimension_strong_topple` | `DimRed.base_dimension_strong_topple` |
 
 The library theorems are those of [`DimRed/MainTheorems.lean`](../DimRed/MainTheorems.lean),
 which restate the certified statements `DimRed.Frozen.*` unchanged.  Each directory's
@@ -22,12 +27,12 @@ which restate the certified statements `DimRed.Frozen.*` unchanged.  Each direct
 Each `Challenge.lean` imports only `Mathlib`, rebuilds from scratch every definition needed
 to read its theorems, states them, and ends each with one intentional `sorry`, the proof
 being checked.  The definitions form one vocabulary block, between `-- VOCABULARY-BEGIN` and
-`-- VOCABULARY-END`, byte-identical in the three challenges, in the namespace
+`-- VOCABULARY-END`, byte-identical in the four challenges, in the namespace
 `DimRed.StatementAudit`: the sites and unit vectors of `ℤ^d`, the hypercube `C_N^{(d)}` and
 its inner boundary, the sorted fundamental domain `S_M^{(d)}`, the neighbour sum and the
 Laplacian with dissipating boundary conditions, the parallel toppling odometer and sandpile
 of a general initial pile and of the paper's `s_0 ≡ 2d`, the terminal odometer and
-sandpile, and the topple time `τ_j`.
+sandpile, the topple time `τ_j`, the facet point and the simplex maximum.
 
 No theorem has a hypothesis beyond those of the paper's statement: nothing from the
 literature is assumed, so the challenges carry no assumed result.
@@ -42,6 +47,7 @@ for token.
 | `Site`, `unit` | `LatticeProb/Site.lean` (the `lattice-probability` dependency) |
 | `loCoord`, `sideHalf`, `hiCoord`, `inCube` (and its `DecidablePred` instance), `inSimplex`, `cube`, `innerBoundary` | `DimRed/Support/Basic.lean` |
 | `nbrSum`, `lap`, `odo`, `sandp`, `odoUnif`, `sandpUnif`, `odoInf`, `odoInfUnif`, `sandpInfUnif`, `toppleTime` | `DimRed/Support/Basic.lean` |
+| `simplex`, `simplexMax`, `facetPoint` | `DimRed/Support/Basic.lean` |
 
 `nbrSum` is the integer-valued neighbour sum of `DimRed/Support/Basic.lean`, not the
 real-valued one of `LatticeProb/Site.lean`.  `Fin.snoc`, `Finset.Icc` on `Fin d → ℤ`,
@@ -78,7 +84,7 @@ The comparator checks that the solution theorem has the same elaborated type as 
 challenge theorem, constant by constant through the whole dependency closure, so the
 vocabulary must elaborate in the solution exactly as in the challenge.  It is therefore
 compiled in `Support/Vocabulary.lean`, a verbatim copy of the block that imports only
-Mathlib (the analogue of a per-challenge `SolutionBasic.lean`; one copy serves the three
+Mathlib (the analogue of a per-challenge `SolutionBasic.lean`; one copy serves the four
 solutions because the block is shared).  Each `Solution.lean` imports the repository, the
 vocabulary and `Support/Bridge.lean`, restates the challenge theorems byte for byte, and
 proves them by rewriting with the bridges and applying the library theorem.
@@ -87,7 +93,8 @@ The vocabulary declares no new type (`Site d` is `Fin d → ℤ` on both sides),
 in `Support/Bridge.lean` are short: `sideHalf`, `inSimplex`, `innerBoundary` and `lap` agree
 with the repository's by `rfl`; `odo_eq` is an induction on time; `odoUnif_eq`,
 `sandpUnif_eq`, `odoInfUnif_eq`, `sandpInfUnif_eq` and `toppleTime_eq` follow from it by
-rewriting.
+rewriting; `simplex`, `simplexMax` and `facetPoint` are non-recursive and agree by
+unfolding, which `simplex_eq`, `simplexMax_eq` and `facetPoint_eq` record.
 
 ## Reproducing The Checks
 
@@ -105,12 +112,13 @@ repository's Mathlib:
 bash Audit/check_standalone.sh Audit/DimensionalReduction/Challenge.lean
 bash Audit/check_standalone.sh Audit/SelfSimilarity/Challenge.lean
 bash Audit/check_standalone.sh Audit/Sandpile/Challenge.lean
+bash Audit/check_standalone.sh Audit/Regularity/Challenge.lean
 bash Audit/check_standalone.sh --vocabulary
 ```
 
 with expected outcome `rc=0` and exactly one `declaration uses 'sorry'` warning per
 challenge theorem; the last command checks that the vocabulary block is the same in the
-three challenges and in `Support/Vocabulary.lean`.  The solutions build with
+four challenges and in `Support/Vocabulary.lean`.  The solutions build with
 `lake build Audit`.  Then, with `leanprover/comparator`, `lean4export` (at the toolchain's
 tag) and `landrun` built (see [`.github/workflows/comparator.yml`](../.github/workflows/comparator.yml)
 for the pinned revisions), from the repository root:
@@ -123,10 +131,11 @@ COMPARATOR_LANDRUN=<landrun> COMPARATOR_LEAN4EXPORT=<lean4export> \
 expecting the acceptance line `Your solution is okay!`.  The workflow runs the same check on
 every pair on request, with the independent nanoda kernel enabled as well.
 
-**Status.**  The three solutions build, each solution theorem has the elaborated type of its
+**Status.**  The four solutions build, each solution theorem has the elaborated type of its
 challenge theorem and mentions no repository constant, and each depends only on `propext`,
-`Classical.choice` and `Quot.sound`.  `leanprover/comparator` itself was run on the three
-pairs on 2026-09-30 at commit `c079868`, and re-run on 2026-10-01 at commit `e4f5a9b`, once
-with the Lean kernel and once with the independent nanoda kernel enabled as well (a
-temporary copy of `comparator.json` with `"enable_nanoda": true`); all six runs printed
-`Your solution is okay!` in both sweeps.
+`Classical.choice` and `Quot.sound`.  `leanprover/comparator` was run on the Theorem 1.1 /
+Corollary 1.1 pairs on 2026-09-30 at commit `c079868` and again on 2026-10-01 at commit
+`e4f5a9b`, and on the Proposition 4.1 pair on 2026-10-01; every pair was checked once with
+the Lean kernel and once with the independent nanoda kernel enabled as well (a temporary
+copy of `comparator.json` with `"enable_nanoda": true`), and every run printed
+`Your solution is okay!`.
