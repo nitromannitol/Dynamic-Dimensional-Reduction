@@ -137,4 +137,4 @@ them in full, together with the other fifteen registered statements.
 The paper proves them together with the five clauses of Proposition 4.1 by one induction
 over dimension, side length and time, and so does the formalization (`DimRed.reg_proved` in
 `DimRed/Support/RegProved.lean`).  Each of the five main results and Proposition 4.1 also has a
-Mathlib-only comparator challenge; see [`Audit/README.md`](Audit/README.md).
+Mathlib-only comparator challenge; see [`DimRedAudit/README.md`](DimRedAudit/README.md).

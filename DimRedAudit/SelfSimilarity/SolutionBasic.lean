@@ -1,29 +1,13 @@
 import Mathlib
 
 /-!
-# Theorem 1.1(ii) (`the_theorem`, clause 2): comparator challenge
+# Mathlib-only statement vocabulary for the `SelfSimilarity` comparator
 
-Mathlib-only comparator challenge for Theorem 1.1(ii) (`the_theorem`, `dimred.tex:109-140`)
-of Bou-Rabee, *Dynamic dimensional reduction in the Abelian sandpile*: self-similarity of
-the odometer up to the topple time `τ_j`.  The certified statement is
-`DimRed.Frozen.self_similarity`, restated in `DimRed/MainTheorems.lean` as
-`DimRed.self_similarity`.
-
-Only Mathlib is imported.  The vocabulary between `VOCABULARY-BEGIN` and `VOCABULARY-END`
-rebuilds, from Mathlib primitives, every definition needed to read the theorem: the sites
-and unit vectors of `ℤ^d`, the hypercube `C_N^{(d)}` and its inner boundary, the sorted
-fundamental domain `S_M^{(d)}`, the neighbour sum and the Laplacian with dissipating
-boundary conditions, the parallel toppling odometer and sandpile, their terminal values,
-and the topple time `τ_j`.  It is a statement-level copy of the repository definitions
-(see `Audit/README.md` for the provenance table) and is byte-identical in the four
-challenges.  The sole intentional `sorry` is the proof of the final theorem.
-
-## Presentation deltas
-
-None: the theorem below is the statement of `DimRed.self_similarity` with every repository
-name replaced by its vocabulary copy.  `τ_j` is `toppleTime d j`, an infimum in `ℕ∞`, so
-`t ≤ τ_j` is an inequality there.  Vector inequalities and the subtraction of a scalar from
-a vector are coordinatewise (`dimred.tex:273`).
+Verbatim copy of the vocabulary block of `DimRedAudit/SelfSimilarity/Challenge.lean`
+(between `VOCABULARY-BEGIN` and `VOCABULARY-END`); a mechanical copy, not hand-edited.  It
+imports only Mathlib, so the definitions it declares elaborate exactly as they do in the
+challenge; `DimRedAudit/check_standalone.sh --vocabulary` checks that the two blocks are
+byte-identical.
 -/
 
 -- VOCABULARY-BEGIN
@@ -139,17 +123,3 @@ def facetPoint {i : ℕ} (x : Fin i → ℤ) (c : ℤ) (j : ℕ) : Site (i + 1 +
 
 end DimRed.StatementAudit
 -- VOCABULARY-END
-
-namespace DimRed.StatementAudit.SelfSimilarity
-
-/-- **Theorem 1.1(ii)** (`the_theorem`, `dimred.tex:122-130`): self-similarity, for all
-`j < M`, `t ≤ τ_j` and `x ∈ S_M^{(d)}` with `x > M - j`,
-`v_t^{(d,N)}(x) = v_t^{(d,2j)}(x - (M - j))`. -/
-theorem self_similarity (N d : ℕ) (hN : 1 ≤ N) (hd : 2 ≤ d)
-    (j : ℕ) (hj : j < sideHalf N) (t : ℕ) (ht : (t : ℕ∞) ≤ toppleTime d j)
-    (x : Site d) (hx : inSimplex d (sideHalf N) x)
-    (hxgt : ∀ i, (sideHalf N : ℤ) - (j : ℤ) < x i) :
-    odoUnif d N t x = odoUnif d (2 * j) t (fun i => x i - ((sideHalf N : ℤ) - (j : ℤ))) := by
-  sorry
-
-end DimRed.StatementAudit.SelfSimilarity

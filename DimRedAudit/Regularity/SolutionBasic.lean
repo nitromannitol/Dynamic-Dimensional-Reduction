@@ -1,23 +1,13 @@
 import Mathlib
 
 /-!
-# Proposition 4.1 (`base_dimension`): comparator challenge
+# Mathlib-only statement vocabulary for the `Regularity` comparator
 
-Mathlib-only comparator challenge for the five clauses of Proposition 4.1 (`base_dimension`,
-`dimred.tex:913-948`) of Bou-Rabee, *Dynamic dimensional reduction in the Abelian sandpile*:
-self-similarity, weak facet compatibility, the strong derivative bound, strong facet
-compatibility and strong topple control.  The certified statements are
-`DimRed.Frozen.base_dimension_consistency`, `..._weak_compatibility`,
-`..._strong_derivative`, `..._strong_compatibility` and `..._strong_topple`, restated in
-`DimRed/MainTheorems.lean`.
-
-Only Mathlib is imported.  The vocabulary between `VOCABULARY-BEGIN` and `VOCABULARY-END`
-rebuilds, from Mathlib primitives, every definition needed to read the clauses: the sites of
-`ℤ^d`, the hypercube and its inner boundary, the sorted fundamental domain `S_M^{(d)}`, the
-Laplacian, the parallel toppling odometer and sandpile, the terminal values, the topple time,
-the facet point and the simplex maximum.  It is a statement-level copy of the repository
-definitions (see `Audit/README.md` for the provenance table) and is byte-identical in the
-four challenges.  The sole intentional `sorry`s are the proofs of the five clauses.
+Verbatim copy of the vocabulary block of `DimRedAudit/Regularity/Challenge.lean`
+(between `VOCABULARY-BEGIN` and `VOCABULARY-END`); a mechanical copy, not hand-edited.  It
+imports only Mathlib, so the definitions it declares elaborate exactly as they do in the
+challenge; `DimRedAudit/check_standalone.sh --vocabulary` checks that the two blocks are
+byte-identical.
 -/
 
 -- VOCABULARY-BEGIN
@@ -133,62 +123,3 @@ def facetPoint {i : ℕ} (x : Fin i → ℤ) (c : ℤ) (j : ℕ) : Site (i + 1 +
 
 end DimRed.StatementAudit
 -- VOCABULARY-END
-
-namespace DimRed.StatementAudit.Regularity
-
-/-- **Proposition 4.1** (`base_dimension`), self-similarity clause (`dimred.tex:915-918`):
-for `M ≥ 2`, `1 ≤ j ≤ M`, `t ≤ τ_j` and `x ∈ S_M` with `x > M - j`,
-`v_t^{(M)}(x) = v_t^{(j)}(x - (M - j))`. -/
-theorem base_dimension_consistency (d M : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
-    (j : ℕ) (hj1 : 1 ≤ j) (hj2 : j ≤ M) (t : ℕ) (ht : (t : ℕ∞) ≤ toppleTime d j)
-    (x : Site d) (hx : inSimplex d M x) (hxgt : ∀ i, (M : ℤ) - (j : ℤ) < x i) :
-    odoUnif d (2 * M) t x = odoUnif d (2 * j) t (fun i => x i - ((M : ℤ) - (j : ℤ))) := by
-  sorry
-
-/-- **Proposition 4.1** (`base_dimension`), weak facet compatibility (`dimred.tex:919-926`):
-if `v_t(x_i, 1, 1_j) = v_t(x_i, 2, 1_j) + 1` then `v_{t+1}(x_i, 1, 1_j) = v_t(x_i, 1, 1_j)`. -/
-theorem base_dimension_weak_compatibility (M i j : ℕ) (hM : 2 ≤ M)
-    (t : ℕ) (ht : 1 ≤ t) (x : Fin i → ℤ) (hx2 : ∀ a, 2 ≤ x a)
-    (hxs : inSimplex (i + 1 + j) M (facetPoint x 1 j))
-    (h : odoUnif (i + 1 + j) (2 * M) t (facetPoint x 1 j)
-        = odoUnif (i + 1 + j) (2 * M) t (facetPoint x 2 j) + 1) :
-    odoUnif (i + 1 + j) (2 * M) (t + 1) (facetPoint x 1 j)
-      = odoUnif (i + 1 + j) (2 * M) t (facetPoint x 1 j) := by
-  sorry
-
-/-- **Proposition 4.1** (`base_dimension`), strong derivative bound (`dimred.tex:927-931`):
-for `x_i ≥ 2`, `j ≥ 0` and the regime `t < τ_M` or `i ≥ 1, t ≥ τ_M`,
-`v_t(x_i, 1, 1_j) - v_t(x_i, 3, 1_j) ≤ 2`. -/
-theorem base_dimension_strong_derivative (M i j : ℕ) (hM : 2 ≤ M)
-    (t : ℕ) (x : Fin i → ℤ) (hx2 : ∀ a, 2 ≤ x a)
-    (hxs : inSimplex (i + 1 + j) M (facetPoint x 1 j))
-    (hreg : (t : ℕ∞) < toppleTime (i + 1 + j) M ∨
-      (1 ≤ i ∧ toppleTime (i + 1 + j) M ≤ (t : ℕ∞))) :
-    odoUnif (i + 1 + j) (2 * M) t (facetPoint x 1 j)
-      - odoUnif (i + 1 + j) (2 * M) t (facetPoint x 3 j) ≤ 2 := by
-  sorry
-
-/-- **Proposition 4.1** (`base_dimension`), strong facet compatibility (`dimred.tex:932-940`):
-under the derivative bound's hypotheses and the gap
-`v_t(x_i, 1, 1_j) = v_t(x_i, 2, 1_j) + 1`, the first point stays and the second topples. -/
-theorem base_dimension_strong_compatibility (M i j : ℕ) (hM : 2 ≤ M)
-    (t : ℕ) (x : Fin i → ℤ) (hx2 : ∀ a, 2 ≤ x a)
-    (hxs : inSimplex (i + 1 + j) M (facetPoint x 1 j))
-    (hreg : (t : ℕ∞) < toppleTime (i + 1 + j) M ∨
-      (1 ≤ i ∧ toppleTime (i + 1 + j) M ≤ (t : ℕ∞)))
-    (h : odoUnif (i + 1 + j) (2 * M) t (facetPoint x 1 j)
-        = odoUnif (i + 1 + j) (2 * M) t (facetPoint x 2 j) + 1) :
-    odoUnif (i + 1 + j) (2 * M) (t + 1) (facetPoint x 1 j)
-        = odoUnif (i + 1 + j) (2 * M) t (facetPoint x 1 j) ∧
-      odoUnif (i + 1 + j) (2 * M) (t + 1) (facetPoint x 2 j)
-        = odoUnif (i + 1 + j) (2 * M) t (facetPoint x 2 j) + 1 := by
-  sorry
-
-/-- **Proposition 4.1** (`base_dimension`), strong topple control (`dimred.tex:944-948`):
-for all `t ≥ τ_{M-1}`, `sup_{x ∈ S_M}(v_{t+2}(x) - v_t(x)) ≤ 1`. -/
-theorem base_dimension_strong_topple (d M : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
-    (t : ℕ) (ht : toppleTime d (M - 1) ≤ (t : ℕ∞)) :
-    simplexMax d M (fun x => odoUnif d (2 * M) (t + 2) x - odoUnif d (2 * M) t x) ≤ 1 := by
-  sorry
-
-end DimRed.StatementAudit.Regularity

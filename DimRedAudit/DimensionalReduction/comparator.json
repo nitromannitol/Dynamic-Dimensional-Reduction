@@ -1,14 +1,15 @@
 {
-  "challenge_module": "Audit.DimensionalReduction.Challenge",
-  "solution_module": "Audit.DimensionalReduction.Solution",
+  "challenge_module": "DimRedAudit.DimensionalReduction.Challenge",
+  "solution_module": "DimRedAudit.DimensionalReduction.Solution",
   "theorem_names": [
     "DimRed.StatementAudit.DimensionalReduction.dimensional_reduction",
     "DimRed.StatementAudit.DimensionalReduction.terminal_dimensional_reduction"
   ],
+  "definition_names": [],
   "permitted_axioms": [
     "propext",
     "Quot.sound",
     "Classical.choice"
   ],
-  "enable_nanoda": false
+  "enable_nanoda": true
 }

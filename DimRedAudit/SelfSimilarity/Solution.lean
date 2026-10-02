@@ -1,16 +1,17 @@
 import Mathlib
 import DimRed.MainTheorems
-import Audit.Support.Vocabulary
-import Audit.Support.Bridge
+import DimRedAudit.SelfSimilarity.SolutionBasic
+import DimRedAudit.Support.SelfSimilarityBridge
 
 /-!
 # Solution: SelfSimilarity (Theorem 1.1(ii))
 
-The challenge module `Audit/SelfSimilarity/Challenge.lean` imports only Mathlib and states
-the theorem with one intentional `sorry`.  This solution imports the repository together with
-`Audit.Support.Vocabulary`, a verbatim copy of the challenge's vocabulary, and proves the
-byte-identical statement from `DimRed.self_similarity` (`DimRed/MainTheorems.lean`) through
-the bridges in `Audit/Support/Bridge.lean`.
+The challenge module `DimRedAudit/SelfSimilarity/Challenge.lean` imports only Mathlib and
+states the theorem with one intentional `sorry`.  This solution imports the repository
+together with `DimRedAudit.SelfSimilarity.SolutionBasic`, a verbatim copy of the challenge's
+vocabulary, and proves the byte-identical statement from `DimRed.self_similarity`
+(`DimRed/MainTheorems.lean`) through the bridges in
+`DimRedAudit/Support/SelfSimilarityBridge.lean`.
 -/
 
 namespace DimRed.StatementAudit.SelfSimilarity

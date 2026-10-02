@@ -1,17 +1,18 @@
 import Mathlib
 import DimRed.MainTheorems
-import Audit.Support.Vocabulary
-import Audit.Support.Bridge
+import DimRedAudit.DimensionalReduction.SolutionBasic
+import DimRedAudit.Support.DimensionalReductionBridge
 
 /-!
 # Solution: DimensionalReduction (Theorem 1.1(i))
 
-The challenge module `Audit/DimensionalReduction/Challenge.lean` imports only Mathlib and
-states the theorems with one intentional `sorry` each.  This solution imports the repository
-together with `Audit.Support.Vocabulary`, a verbatim copy of the challenge's vocabulary, and
-proves the byte-identical statements from `DimRed.dimensional_reduction` and
-`DimRed.terminal_dimensional_reduction` (`DimRed/MainTheorems.lean`) through the bridges in
-`Audit/Support/Bridge.lean`.
+The challenge module `DimRedAudit/DimensionalReduction/Challenge.lean` imports only Mathlib
+and states the theorems with one intentional `sorry` each.  This solution imports the
+repository together with `DimRedAudit.DimensionalReduction.SolutionBasic`, a verbatim copy of
+the challenge's vocabulary, and proves the byte-identical statements from
+`DimRed.dimensional_reduction` and `DimRed.terminal_dimensional_reduction`
+(`DimRed/MainTheorems.lean`) through the bridges in
+`DimRedAudit/Support/DimensionalReductionBridge.lean`.
 -/
 
 namespace DimRed.StatementAudit.DimensionalReduction

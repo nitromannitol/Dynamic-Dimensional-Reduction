@@ -1,4 +1,4 @@
-# Audit Comparator Surface
+# DimRedAudit Comparator Surface
 
 This directory contains Mathlib-only comparator challenges for the main results of the
 formalization of *Dynamic dimensional reduction in the Abelian sandpile* (Ahmed Bou-Rabee):
@@ -27,12 +27,12 @@ which restate the certified statements `DimRed.Frozen.*` unchanged.  Each direct
 Each `Challenge.lean` imports only `Mathlib`, rebuilds from scratch every definition needed
 to read its theorems, states them, and ends each with one intentional `sorry`, the proof
 being checked.  The definitions form one vocabulary block, between `-- VOCABULARY-BEGIN` and
-`-- VOCABULARY-END`, byte-identical in the four challenges, in the namespace
-`DimRed.StatementAudit`: the sites and unit vectors of `ℤ^d`, the hypercube `C_N^{(d)}` and
-its inner boundary, the sorted fundamental domain `S_M^{(d)}`, the neighbour sum and the
-Laplacian with dissipating boundary conditions, the parallel toppling odometer and sandpile
-of a general initial pile and of the paper's `s_0 ≡ 2d`, the terminal odometer and
-sandpile, the topple time `τ_j`, the facet point and the simplex maximum.
+`-- VOCABULARY-END`, byte-identical in the four challenges and in the four `SolutionBasic.lean`
+files, in the namespace `DimRed.StatementAudit`: the sites and unit vectors of `ℤ^d`, the
+hypercube `C_N^{(d)}` and its inner boundary, the sorted fundamental domain `S_M^{(d)}`, the
+neighbour sum and the Laplacian with dissipating boundary conditions, the parallel toppling
+odometer and sandpile of a general initial pile and of the paper's `s_0 ≡ 2d`, the terminal
+odometer and sandpile, the topple time `τ_j`, the facet point and the simplex maximum.
 
 No theorem has a hypothesis beyond those of the paper's statement: nothing from the
 literature is assumed, so the challenges carry no assumed result.
@@ -82,59 +82,63 @@ vocabulary copy.
 
 The comparator checks that the solution theorem has the same elaborated type as the
 challenge theorem, constant by constant through the whole dependency closure, so the
-vocabulary must elaborate in the solution exactly as in the challenge.  It is therefore
-compiled in `Support/Vocabulary.lean`, a verbatim copy of the block that imports only
-Mathlib (the analogue of a per-challenge `SolutionBasic.lean`; one copy serves the four
-solutions because the block is shared).  Each `Solution.lean` imports the repository, the
-vocabulary and `Support/Bridge.lean`, restates the challenge theorems byte for byte, and
-proves them by rewriting with the bridges and applying the library theorem.
+vocabulary must elaborate in the solution exactly as in the challenge.  Each pair therefore
+has a `SolutionBasic.lean`, a verbatim copy of the vocabulary block of its `Challenge.lean`
+that imports only Mathlib.  Each `Solution.lean` imports the repository, the `SolutionBasic`
+of its pair and the bridge of its pair in `Support/`, restates the challenge theorems byte
+for byte, and proves them by rewriting with the bridges and applying the library theorem.
 
-The vocabulary declares no new type (`Site d` is `Fin d → ℤ` on both sides), so the bridges
-in `Support/Bridge.lean` are short: `sideHalf`, `inSimplex`, `innerBoundary` and `lap` agree
+The four bridges are `Support/DimensionalReductionBridge.lean`,
+`Support/SelfSimilarityBridge.lean`, `Support/SandpileBridge.lean` and
+`Support/RegularityBridge.lean`.  The vocabulary declares no new type (`Site d` is
+`Fin d → ℤ` on both sides), so the bridges are short: `innerBoundary_eq` and `lap_eq` agree
 with the repository's by `rfl`; `odo_eq` is an induction on time; `odoUnif_eq`,
 `sandpUnif_eq`, `odoInfUnif_eq`, `sandpInfUnif_eq` and `toppleTime_eq` follow from it by
-rewriting; `simplex`, `simplexMax` and `facetPoint` are non-recursive and agree by
-unfolding, which `simplex_eq`, `simplexMax_eq` and `facetPoint_eq` record.
+rewriting; `simplex` and `simplexMax` are non-recursive and agree by unfolding, which
+`simplex_eq` and `simplexMax_eq` record.  A bridge keeps only the lemmas its solution uses,
+with those they depend on.  [`DESIGN.md`](DESIGN.md) describes the four files of a pair.
 
 ## Reproducing The Checks
 
-The `Audit` library is not a default target: `lake build` and `lake build DimRed` do not
-build it.  The comparator configurations permit only
+The `DimRedAudit` library is not a default target: `lake build` and `lake build DimRed` do
+not build it.  The comparator configurations permit only
 
 ```json
 ["propext", "Quot.sound", "Classical.choice"]
 ```
 
-and set `enable_nanoda: false`.  Each challenge elaborates standalone against this
+and enable the nanoda replay.  Each challenge elaborates standalone against this
 repository's Mathlib:
 
 ```bash
-bash Audit/check_standalone.sh Audit/DimensionalReduction/Challenge.lean
-bash Audit/check_standalone.sh Audit/SelfSimilarity/Challenge.lean
-bash Audit/check_standalone.sh Audit/Sandpile/Challenge.lean
-bash Audit/check_standalone.sh Audit/Regularity/Challenge.lean
-bash Audit/check_standalone.sh --vocabulary
+bash DimRedAudit/check_standalone.sh DimRedAudit/DimensionalReduction/Challenge.lean
+bash DimRedAudit/check_standalone.sh DimRedAudit/SelfSimilarity/Challenge.lean
+bash DimRedAudit/check_standalone.sh DimRedAudit/Sandpile/Challenge.lean
+bash DimRedAudit/check_standalone.sh DimRedAudit/Regularity/Challenge.lean
+bash DimRedAudit/check_standalone.sh --vocabulary   # Challenge vs SolutionBasic, per pair
 ```
 
 with expected outcome `rc=0` and exactly one `declaration uses 'sorry'` warning per
-challenge theorem; the last command checks that the vocabulary block is the same in the
-four challenges and in `Support/Vocabulary.lean`.  The solutions build with
-`lake build Audit`.  Then, with `leanprover/comparator`, `lean4export` (at the toolchain's
-tag) and `landrun` built (see [`.github/workflows/comparator.yml`](../.github/workflows/comparator.yml)
-for the pinned revisions), from the repository root:
+challenge theorem; the last command checks that the vocabulary block is byte-identical in
+each `Challenge.lean` and in the `SolutionBasic.lean` beside it.  The solutions build with
+`lake build DimRedAudit`.  Then, with `leanprover/comparator`, `lean4export` (at the
+toolchain's tag), `nanoda` and `landrun` built at the pins below (see also
+[`.github/workflows/comparator.yml`](../.github/workflows/comparator.yml)), from the
+repository root:
 
 ```bash
-COMPARATOR_LANDRUN=<landrun> COMPARATOR_LEAN4EXPORT=<lean4export> \
-  lake env <comparator>/.lake/build/bin/comparator Audit/<X>/comparator.json
+COMPARATOR_LANDRUN=<landrun> COMPARATOR_LEAN4EXPORT=<lean4export> COMPARATOR_NANODA=<nanoda_bin> \
+  lake env <comparator>/.lake/build/bin/comparator DimRedAudit/<X>/comparator.json
 ```
 
 expecting the acceptance line `Your solution is okay!`.  The workflow runs the same check on
-every pair on request, with the independent nanoda kernel enabled as well.
+every pair on request.
 
 ## Comparator Runs
 
-All four pairs, `DimensionalReduction`, `SelfSimilarity`, `Sandpile` and `Regularity`, have
-been run with `leanprover/comparator` at the following pins, on repository commit `ea7fe21`:
+The official `leanprover/comparator` was run on every pair in this directory on a local
+machine, with the Lean kernel and the independent `nanoda` kernel both enabled (every committed
+`comparator.json` sets `"enable_nanoda": true`), at these pins:
 
 | tool | revision |
 | --- | --- |
@@ -143,9 +147,7 @@ been run with `leanprover/comparator` at the following pins, on repository commi
 | `nanoda` (`ammkrn/nanoda_lib`) | `6ae1f0cd962f081f6c423454c5da729d841236a7` |
 | `landrun` | `811cfff51ceaf3d9843708aa6d22e9b84ccac8b4` |
 
-The nanoda kernel was enabled through a temporary copy of each `comparator.json`; the
-committed configurations keep `enable_nanoda: false`, so that reproducing the check locally
-needs only comparator, `lean4export` and `landrun`.  Each of the four runs printed
+A pass means the comparator printed
 
 ```
 nanoda kernel accepts the solution
@@ -153,8 +155,34 @@ Lean default kernel accepts the solution
 Your solution is okay!
 ```
 
-so each solution is accepted by both the independent nanoda kernel and Lean's default kernel.
+so the solution proves a theorem whose statement and full dependency closure match the
+challenge's, using only the permitted axioms, and is accepted by both the independent nanoda
+kernel and Lean's default kernel.
+
+### `DimensionalReduction`
+
+| Check | Result |
+| --- | --- |
+| Lean and nanoda kernels | passed (60 s) |
+
+### `SelfSimilarity`
+
+| Check | Result |
+| --- | --- |
+| Lean and nanoda kernels | passed (164 s) |
+
+### `Sandpile`
+
+| Check | Result |
+| --- | --- |
+| Lean and nanoda kernels | passed (106 s) |
+
+### `Regularity`
+
+| Check | Result |
+| --- | --- |
+| Lean and nanoda kernels | passed (59 s) |
 
 **Status.**  The four solutions build, each solution theorem has the elaborated type of its
 challenge theorem and mentions no repository constant, and each depends only on `propext`,
-`Classical.choice` and `Quot.sound`.  
+`Classical.choice` and `Quot.sound`.

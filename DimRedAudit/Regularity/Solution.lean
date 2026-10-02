@@ -1,16 +1,17 @@
 import Mathlib
 import DimRed.MainTheorems
-import Audit.Support.Vocabulary
-import Audit.Support.Bridge
+import DimRedAudit.Regularity.SolutionBasic
+import DimRedAudit.Support.RegularityBridge
 
 /-!
 # Solution: Regularity (Proposition 4.1)
 
-The challenge module `Audit/Regularity/Challenge.lean` imports only Mathlib and states the
-five clauses with one intentional `sorry` each.  This solution imports the repository together
-with `Audit.Support.Vocabulary`, a verbatim copy of the challenge's vocabulary, and proves the
-byte-identical statements from the restatements in `DimRed/MainTheorems.lean` through the
-bridges in `Audit/Support/Bridge.lean`.
+The challenge module `DimRedAudit/Regularity/Challenge.lean` imports only Mathlib and
+states the five clauses with one intentional `sorry` each.  This solution imports the
+repository together with `DimRedAudit.Regularity.SolutionBasic`, a verbatim copy of the
+challenge's vocabulary, and proves the byte-identical statements from the restatements in
+`DimRed/MainTheorems.lean` through the bridges in
+`DimRedAudit/Support/RegularityBridge.lean`.
 -/
 
 namespace DimRed.StatementAudit.Regularity

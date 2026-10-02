@@ -1,14 +1,15 @@
 {
-  "challenge_module": "Audit.Sandpile.Challenge",
-  "solution_module": "Audit.Sandpile.Solution",
+  "challenge_module": "DimRedAudit.Sandpile.Challenge",
+  "solution_module": "DimRedAudit.Sandpile.Solution",
   "theorem_names": [
     "DimRed.StatementAudit.Sandpile.sandpile_dimensional_reduction",
     "DimRed.StatementAudit.Sandpile.sandpile_self_similarity"
   ],
+  "definition_names": [],
   "permitted_axioms": [
     "propext",
     "Quot.sound",
     "Classical.choice"
   ],
-  "enable_nanoda": false
+  "enable_nanoda": true
 }

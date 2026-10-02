@@ -1,17 +1,17 @@
 import Mathlib
 import DimRed.MainTheorems
-import Audit.Support.Vocabulary
-import Audit.Support.Bridge
+import DimRedAudit.Sandpile.SolutionBasic
+import DimRedAudit.Support.SandpileBridge
 
 /-!
 # Solution: Sandpile (Corollary 1.1)
 
-The challenge module `Audit/Sandpile/Challenge.lean` imports only Mathlib and states the
-theorems with one intentional `sorry` each.  This solution imports the repository together
-with `Audit.Support.Vocabulary`, a verbatim copy of the challenge's vocabulary, and proves
-the byte-identical statements from `DimRed.sandpile_dimensional_reduction` and
+The challenge module `DimRedAudit/Sandpile/Challenge.lean` imports only Mathlib and states
+the theorems with one intentional `sorry` each.  This solution imports the repository together
+with `DimRedAudit.Sandpile.SolutionBasic`, a verbatim copy of the challenge's vocabulary, and
+proves the byte-identical statements from `DimRed.sandpile_dimensional_reduction` and
 `DimRed.sandpile_self_similarity` (`DimRed/MainTheorems.lean`) through the bridges in
-`Audit/Support/Bridge.lean`.
+`DimRedAudit/Support/SandpileBridge.lean`.
 -/
 
 namespace DimRed.StatementAudit.Sandpile

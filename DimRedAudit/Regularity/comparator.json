@@ -1,6 +1,6 @@
 {
-  "challenge_module": "Audit.Regularity.Challenge",
-  "solution_module": "Audit.Regularity.Solution",
+  "challenge_module": "DimRedAudit.Regularity.Challenge",
+  "solution_module": "DimRedAudit.Regularity.Solution",
   "theorem_names": [
     "DimRed.StatementAudit.Regularity.base_dimension_consistency",
     "DimRed.StatementAudit.Regularity.base_dimension_weak_compatibility",
@@ -8,10 +8,11 @@
     "DimRed.StatementAudit.Regularity.base_dimension_strong_compatibility",
     "DimRed.StatementAudit.Regularity.base_dimension_strong_topple"
   ],
+  "definition_names": [],
   "permitted_axioms": [
     "propext",
     "Quot.sound",
     "Classical.choice"
   ],
-  "enable_nanoda": false
+  "enable_nanoda": true
 }

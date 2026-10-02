@@ -6,7 +6,7 @@ not a ruling: it changes nothing about the frozen surface and approves nothing.
 ## Registered nodes
 
 All 20 nodes of [`manifest.yaml`](manifest.yaml) are `SEALED`. `lake build` completes with
-no warning and no `sorry`, `lake build Audit` builds the comparator challenges and their
+no warning and no `sorry`, `lake build DimRedAudit` builds the comparator challenges and their
 solutions, and `python3 tools/verify.py` passes all 15 gates. The axiom closure of every
 node is exactly `{propext, Classical.choice, Quot.sound}`. The no-hole baseline in
 [`holes.json`](holes.json) is `{"holes": {}, "total": 0}`; the `check_progress` gate now
@@ -19,7 +19,7 @@ any of the ten nodes; see
 
 None. There is no `DRAFT_SORRY` or `CONDITIONAL` node, no packet in flight, and no `sorry`
 under `DimRed/`. The only `sorry`s in the repository are the documented statement-level
-placeholders of `Audit/*/Challenge.lean`, which are not part of the library.
+placeholders of `DimRedAudit/*/Challenge.lean`, which are not part of the library.
 
 ## Items awaiting the owner — do not self-approve
 

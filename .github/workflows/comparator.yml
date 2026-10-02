@@ -1,10 +1,10 @@
 name: Comparator audit
 
-# Runs the official leanprover/comparator on every Audit/<X>/comparator.json: for each
+# Runs the official leanprover/comparator on every DimRedAudit/<X>/comparator.json: for each
 # pair it checks that Solution proves statements whose full dependency
 # closure matches Challenge's, uses only the permitted axioms, and is
 # accepted by BOTH the Lean kernel (replay) and the independent nanoda
-# kernel (enable_nanoda is switched on for this run only).
+# kernel (every comparator.json sets enable_nanoda).
 #
 # Mathlib olean artifacts come from `lake exe cache get`.  The project's own
 # build and the Lattice-Probability build are cached between runs; the first
@@ -64,7 +64,7 @@ jobs:
         run: lake exe cache get
 
       - name: Build the library and the audit surfaces
-        run: lake build Audit
+        run: lake build DimRedAudit
 
       - name: Restore verification tools
         id: tools-cache
@@ -111,13 +111,6 @@ jobs:
           git -C ~/tools/nanoda_lib checkout "$NANODA_REV"
           cd ~/tools/nanoda_lib && cargo +stable build --release
 
-      - name: Enable the nanoda kernel check (CI-only, on the workspace copy)
-        # The committed configs set enable_nanoda: false so that local
-        # reproduction needs only three tools; CI exercises the stronger
-        # two-kernel variant on its throwaway checkout.
-        run: |
-          sed -i 's/"enable_nanoda": false/"enable_nanoda": true/' Audit/*/comparator.json
-
       - name: Run the comparator on every pair
         run: |
           set -euo pipefail
@@ -127,7 +120,7 @@ jobs:
           export COMPARATOR_LEAN4EXPORT="$HOME/tools/lean4export/.lake/build/bin/lean4export"
           export COMPARATOR_NANODA="$HOME/tools/nanoda_lib/target/release/nanoda_bin"
           fail=0
-          for cfg in Audit/*/comparator.json; do
+          for cfg in DimRedAudit/*/comparator.json; do
             X="$(basename "$(dirname "$cfg")")"
             echo "::group::$X"
             if lake env ~/tools/comparator/.lake/build/bin/comparator "$cfg" \

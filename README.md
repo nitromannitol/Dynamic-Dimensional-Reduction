@@ -174,8 +174,8 @@ correspondence between the two sources.
 
 - **No `sorry`** in the library.  Every registered statement has a complete proof, and
   `python3 -m leanform_tools.check_warnings` fails on any `sorry` or other warning.  The
-  four comparator challenges under `Audit/` carry ten intentional statement-level `sorry`s,
-  one per challenge theorem, which the corresponding solution files prove.
+  four comparator challenges under `DimRedAudit/` carry ten intentional statement-level
+  `sorry`s, one per challenge theorem, which the corresponding solution files prove.
 - **No custom `axiom`.**  Every registered statement reduces to `mathlib`'s three standard
   foundational axioms `propext`, `Classical.choice` and `Quot.sound`, verified by
   [`DimRed/Meta/AxiomsAudit.lean`](DimRed/Meta/AxiomsAudit.lean) for the results restated in
@@ -185,22 +185,22 @@ correspondence between the two sources.
   reproduce them.
 - **Independent check of the statements.**  Theorem 1.1, Corollary 1.1 and Proposition 4.1
   are restated, with every definition they use rebuilt from Mathlib primitives alone, in
-  [`Audit/DimensionalReduction/Challenge.lean`](Audit/DimensionalReduction/Challenge.lean)
+  [`DimRedAudit/DimensionalReduction/Challenge.lean`](DimRedAudit/DimensionalReduction/Challenge.lean)
   (Theorem 1.1(i), both displays),
-  [`Audit/SelfSimilarity/Challenge.lean`](Audit/SelfSimilarity/Challenge.lean)
+  [`DimRedAudit/SelfSimilarity/Challenge.lean`](DimRedAudit/SelfSimilarity/Challenge.lean)
   (Theorem 1.1(ii)),
-  [`Audit/Sandpile/Challenge.lean`](Audit/Sandpile/Challenge.lean)
+  [`DimRedAudit/Sandpile/Challenge.lean`](DimRedAudit/Sandpile/Challenge.lean)
   (both clauses of Corollary 1.1) and
-  [`Audit/Regularity/Challenge.lean`](Audit/Regularity/Challenge.lean)
+  [`DimRedAudit/Regularity/Challenge.lean`](DimRedAudit/Regularity/Challenge.lean)
   (the five clauses of Proposition 4.1).  Each challenge imports only Mathlib and states its
   theorems with one `sorry` each; the matching `Solution.lean` proves the same statements
   from the library, and
   [leanprover/comparator](https://github.com/leanprover/comparator) checks that the
   restatement is proved from the library.  All four pairs are accepted by the Lean kernel and
   by the independent nanoda kernel at the pinned tool revisions listed in
-  [`Audit/README.md`](Audit/README.md).  The default build does not include `Audit/`, and
-  the manual workflow [`comparator.yml`](.github/workflows/comparator.yml) runs the
-  comparator on every pair.
+  [`DimRedAudit/README.md`](DimRedAudit/README.md).  The default build does not include
+  `DimRedAudit/`, and the manual workflow
+  [`comparator.yml`](.github/workflows/comparator.yml) runs the comparator on every pair.
 - **Pinned toolchain.**  Lean `v4.32.0` ([`lean-toolchain`](lean-toolchain)), `mathlib` at
   revision `81a5d257c8e410db227a6665ed08f64fea08e997` and `Lattice-Probability` at
   revision `bbe0b90a7cf0517db0578139aaab7f152edbc45e`, with mathlib's own dependencies
@@ -213,8 +213,8 @@ correspondence between the two sources.
 
 About 20,000 lines of Lean in 102 modules (`DimRed.lean` and the files under `DimRed/`), of
 which about 17,000 lines are code once comments and blank lines are removed, on top of
-`mathlib` and the `Lattice-Probability` library.  The comparator surface under `Audit/` is
-not counted.
+`mathlib` and the `Lattice-Probability` library.  The comparator surface under
+`DimRedAudit/` is not counted.
 
 ## Building
 
@@ -226,14 +226,14 @@ the dependencies are pinned to commits in `lakefile.lean` and
 clone by hand.
 
 ```bash
-lake exe cache get   # prebuilt Mathlib
-lake build           # compile the library
-lake build Audit     # the Mathlib-only comparator surface: challenges and solutions
+lake exe cache get      # prebuilt Mathlib
+lake build              # compile the library
+lake build DimRedAudit  # the Mathlib-only comparator surface: challenges and solutions
 ```
 
 `lake build` emits no warning and no `declaration uses 'sorry'` message.  The only `sorry`s
-are the intentional ones in the challenge theorems under `Audit/`, which `lake build Audit`
-reports.
+are the intentional ones in the challenge theorems under `DimRedAudit/`, which
+`lake build DimRedAudit` reports.
 
 ```bash
 lake build DimRed.Meta.AxiomsAudit   # print the axioms of the restated results
@@ -247,11 +247,11 @@ repository root, for each `<X>` in `DimensionalReduction`, `SelfSimilarity`, `Sa
 
 ```bash
 COMPARATOR_LANDRUN=<landrun> COMPARATOR_LEAN4EXPORT=<lean4export> \
-  lake env <comparator>/.lake/build/bin/comparator Audit/<X>/comparator.json
+  lake env <comparator>/.lake/build/bin/comparator DimRedAudit/<X>/comparator.json
 ```
 
-and expect `Your solution is okay!`; [`Audit/README.md`](Audit/README.md) has the details,
-including the standalone elaboration check of each challenge.
+and expect `Your solution is okay!`; [`DimRedAudit/README.md`](DimRedAudit/README.md) has the
+details, including the standalone elaboration check of each challenge.
 
 To use the library, `import DimRed` pulls in the whole development; the statements of every
 result are in `import DimRed.MainTheorems`.
@@ -300,13 +300,13 @@ DimRed/
                       including the joint induction of Sections 4 and 5 (RegProved.lean)
   Meta/               AxiomsAudit.lean
 DimRed.lean           the root module (imports the whole library)
-Audit/                the Mathlib-only comparator surface
-  DimensionalReduction/   Challenge.lean, Solution.lean, comparator.json: Theorem 1.1(i)
-  SelfSimilarity/         the same three files: Theorem 1.1(ii)
-  Sandpile/               the same three files: Corollary 1.1
-  Regularity/             the same three files: Proposition 4.1
-  Support/                Vocabulary.lean, Bridge.lean, shared by the four solutions
-  check_standalone.sh     elaborates a file standalone; checks the shared vocabulary
+DimRedAudit/          the Mathlib-only comparator surface
+  DimensionalReduction/   Theorem 1.1(i): Challenge, SolutionBasic, Solution, comparator.json
+  SelfSimilarity/         the same four files: Theorem 1.1(ii)
+  Sandpile/               the same four files: Corollary 1.1
+  Regularity/             the same four files: Proposition 4.1
+  Support/                one bridge per pair (DimensionalReductionBridge.lean, ...)
+  check_standalone.sh     elaborates a file standalone; checks each vocabulary copy
   README.md               the comparator surface and how to reproduce its checks
 ASSUMPTIONS.md        the cited results assumed (none; generated)
 CERTIFICATE.md        the axiom closure and frozen-statement hashes of every node (generated)

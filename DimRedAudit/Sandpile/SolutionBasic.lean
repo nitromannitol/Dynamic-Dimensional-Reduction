@@ -1,13 +1,13 @@
 import Mathlib
 
 /-!
-# The comparator vocabulary
+# Mathlib-only statement vocabulary for the `Sandpile` comparator
 
-A verbatim copy of the vocabulary block of the challenges (`Audit/*/Challenge.lean`,
-between `VOCABULARY-BEGIN` and `VOCABULARY-END`).  It imports only Mathlib, so that the
-constants of the vocabulary elaborate in the solutions exactly as in the challenges.
-`bash Audit/check_standalone.sh --vocabulary` checks that the block here and in every
-challenge is the same.
+Verbatim copy of the vocabulary block of `DimRedAudit/Sandpile/Challenge.lean`
+(between `VOCABULARY-BEGIN` and `VOCABULARY-END`); a mechanical copy, not hand-edited.  It
+imports only Mathlib, so the definitions it declares elaborate exactly as they do in the
+challenge; `DimRedAudit/check_standalone.sh --vocabulary` checks that the two blocks are
+byte-identical.
 -/
 
 -- VOCABULARY-BEGIN

@@ -13,16 +13,16 @@ belongs under `DimRed/`.  Contributors must not edit the dependency's sources.
 ## Building locally
 
 ```bash
-lake exe cache get   # first time: prebuilt Mathlib oleans
-lake build           # build the dependencies and the library
-lake build Audit     # the Mathlib-only comparator surface (not a default target)
+lake exe cache get      # first time: prebuilt Mathlib oleans
+lake build              # build the dependencies and the library
+lake build DimRedAudit  # the Mathlib-only comparator surface (not a default target)
 ```
 
 The production build is required to emit no Lean or linter warnings.  The only `sorry`s are
-the ten intentional statement-level ones in the `Challenge.lean` files under `Audit/`, each
-checked against its completed `Solution.lean` by `leanprover/comparator`; see
-[`Audit/README.md`](Audit/README.md).  Run `python3 tools/verify.py` from the repository root
-for every gate (`--skip-lake` for the pure-Python ones), or
+the ten intentional statement-level ones in the `Challenge.lean` files under `DimRedAudit/`,
+each checked against its completed `Solution.lean` by `leanprover/comparator`; see
+[`DimRedAudit/README.md`](DimRedAudit/README.md).  Run `python3 tools/verify.py` from the
+repository root for every gate (`--skip-lake` for the pure-Python ones), or
 `cd tools/leanform && python3 -m leanform_tools.<gate> ../..` for one.
 
 A few practical notes for working with this development:
@@ -43,12 +43,12 @@ A few practical notes for working with this development:
 - **The main results** are in `DimRed/MainTheorems.lean`.  The axiom report is
   `lake build DimRed.Meta.AxiomsAudit`; `python3 tools/verify.py` runs every checker.
 
-- **The comparator surface** under `Audit/` is deliberately not a default target.  Run
-  `bash Audit/check_standalone.sh --vocabulary` after editing a challenge or
-  `Audit/Support/Vocabulary.lean`; the vocabulary block must stay byte-identical in the four
-  challenges and in the support file.  `lake env lean` does not read the options of
-  `lakefile.lean`, so `Audit/check_standalone.sh` passes them explicitly; elaborate a single
-  file standalone with `-DautoImplicit=false` in the same way.
+- **The comparator surface** under `DimRedAudit/` is deliberately not a default target.  Run
+  `bash DimRedAudit/check_standalone.sh --vocabulary` after editing a challenge or its
+  `SolutionBasic.lean`; the vocabulary block must stay byte-identical in each challenge and in
+  the `SolutionBasic.lean` of the same pair.  `lake env lean` does not read the options of
+  `lakefile.lean`, so `DimRedAudit/check_standalone.sh` passes them explicitly; elaborate a
+  single file standalone with `-DautoImplicit=false` in the same way.
 
 ## Elaboration policy for new files
 

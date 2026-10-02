@@ -1,33 +1,29 @@
 import Mathlib
 
 /-!
-# Theorem 1.1(i) (`the_theorem`, clause 1): comparator challenge
+# Theorem 1.1(ii) (`the_theorem`, clause 2): comparator challenge
 
-Mathlib-only comparator challenge for the two displays of Theorem 1.1(i) (`the_theorem`,
-`dimred.tex:109-140`) of Bou-Rabee, *Dynamic dimensional reduction in the Abelian
-sandpile*: dimensional reduction on the centre slice at every time `t ≥ 1`, and dimensional
-reduction of the terminal odometer on the slice `x_d = 2`.  The certified statements are
-`DimRed.Frozen.dimensional_reduction` and `DimRed.Frozen.terminal_dimensional_reduction`,
-restated in `DimRed/MainTheorems.lean` as `DimRed.dimensional_reduction` and
-`DimRed.terminal_dimensional_reduction`.
+Mathlib-only comparator challenge for Theorem 1.1(ii) (`the_theorem`, `dimred.tex:109-140`)
+of Bou-Rabee, *Dynamic dimensional reduction in the Abelian sandpile*: self-similarity of
+the odometer up to the topple time `τ_j`.  The certified statement is
+`DimRed.Frozen.self_similarity`, restated in `DimRed/MainTheorems.lean` as
+`DimRed.self_similarity`.
 
 Only Mathlib is imported.  The vocabulary between `VOCABULARY-BEGIN` and `VOCABULARY-END`
-rebuilds, from Mathlib primitives, every definition needed to read the theorems: the sites
+rebuilds, from Mathlib primitives, every definition needed to read the theorem: the sites
 and unit vectors of `ℤ^d`, the hypercube `C_N^{(d)}` and its inner boundary, the sorted
 fundamental domain `S_M^{(d)}`, the neighbour sum and the Laplacian with dissipating
 boundary conditions, the parallel toppling odometer and sandpile, their terminal values,
 and the topple time `τ_j`.  It is a statement-level copy of the repository definitions
-(see `Audit/README.md` for the provenance table) and is byte-identical in the four
-challenges.  The sole intentional `sorry`s are the proofs of the final theorems, one per
-theorem.
+(see `DimRedAudit/README.md` for the provenance table) and is byte-identical in the four
+challenges.  The sole intentional `sorry` is the proof of the final theorem.
 
 ## Presentation deltas
 
-None: each theorem below is the statement of the corresponding theorem of
-`DimRed/MainTheorems.lean` with every repository name replaced by its vocabulary copy.  The
-dimension is written `d + 1` in place of the paper's `d`, so the paper's `d ≥ 2` is
-`1 ≤ d` and `x_{d-1}` is `x : Site d`; `(x_{d-1}, c)` is `Fin.snoc x c`.  The terminal
-odometer `v_∞` is valued in `ℕ∞`.
+None: the theorem below is the statement of `DimRed.self_similarity` with every repository
+name replaced by its vocabulary copy.  `τ_j` is `toppleTime d j`, an infimum in `ℕ∞`, so
+`t ≤ τ_j` is an inequality there.  Vector inequalities and the subtraction of a scalar from
+a vector are coordinatewise (`dimred.tex:273`).
 -/
 
 -- VOCABULARY-BEGIN
@@ -144,22 +140,16 @@ def facetPoint {i : ℕ} (x : Fin i → ℤ) (c : ℤ) (j : ℕ) : Site (i + 1 +
 end DimRed.StatementAudit
 -- VOCABULARY-END
 
-namespace DimRed.StatementAudit.DimensionalReduction
+namespace DimRed.StatementAudit.SelfSimilarity
 
-/-- **Theorem 1.1(i)** (`the_theorem`, `dimred.tex:114-117`), first display: dimensional
-reduction on the centre slice, `v_t^{(d,N)}(x_{d-1}, 1) = v_t^{(d-1,N)}(x_{d-1})` for every
-`t ≥ 1` and `x_{d-1} ∈ S_M^{(d-1)}`. -/
-theorem dimensional_reduction (N d : ℕ) (hN : 1 ≤ N) (hd : 1 ≤ d)
-    (t : ℕ) (ht : 1 ≤ t) (x : Site d) (hx : inSimplex d (sideHalf N) x) :
-    odoUnif (d + 1) N t (Fin.snoc x 1) = odoUnif d N t x := by
+/-- **Theorem 1.1(ii)** (`the_theorem`, `dimred.tex:122-130`): self-similarity, for all
+`j < M`, `t ≤ τ_j` and `x ∈ S_M^{(d)}` with `x > M - j`,
+`v_t^{(d,N)}(x) = v_t^{(d,2j)}(x - (M - j))`. -/
+theorem self_similarity (N d : ℕ) (hN : 1 ≤ N) (hd : 2 ≤ d)
+    (j : ℕ) (hj : j < sideHalf N) (t : ℕ) (ht : (t : ℕ∞) ≤ toppleTime d j)
+    (x : Site d) (hx : inSimplex d (sideHalf N) x)
+    (hxgt : ∀ i, (sideHalf N : ℤ) - (j : ℤ) < x i) :
+    odoUnif d N t x = odoUnif d (2 * j) t (fun i => x i - ((sideHalf N : ℤ) - (j : ℤ))) := by
   sorry
 
-/-- **Theorem 1.1(i)** (`the_theorem`, `dimred.tex:118-121`), second display: terminal
-dimensional reduction, `v_∞^{(d,N)}(x_{d-1}, 2) = v_∞^{(d-1,N)}(x_{d-1})` for
-`x_{d-1} ∈ S_M^{(d-1)}` with `x_{d-1} ≥ 2`. -/
-theorem terminal_dimensional_reduction (N d : ℕ) (hN : 1 ≤ N) (hd : 1 ≤ d)
-    (x : Site d) (hx : inSimplex d (sideHalf N) x) (hx2 : ∀ i, 2 ≤ x i) :
-    odoInfUnif (d + 1) N (Fin.snoc x 2) = odoInfUnif d N x := by
-  sorry
-
-end DimRed.StatementAudit.DimensionalReduction
+end DimRed.StatementAudit.SelfSimilarity

@@ -17,7 +17,7 @@ and unit vectors of `ℤ^d`, the hypercube `C_N^{(d)}` and its inner boundary, t
 fundamental domain `S_M^{(d)}`, the neighbour sum and the Laplacian with dissipating
 boundary conditions, the parallel toppling odometer and sandpile, their terminal values,
 and the topple time `τ_j`.  It is a statement-level copy of the repository definitions
-(see `Audit/README.md` for the provenance table) and is byte-identical in the four
+(see `DimRedAudit/README.md` for the provenance table) and is byte-identical in the four
 challenges.  The sole intentional `sorry`s are the proofs of the final theorems, one per
 theorem.
 

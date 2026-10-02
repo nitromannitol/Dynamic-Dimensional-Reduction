@@ -1,13 +1,14 @@
 {
-  "challenge_module": "Audit.SelfSimilarity.Challenge",
-  "solution_module": "Audit.SelfSimilarity.Solution",
+  "challenge_module": "DimRedAudit.SelfSimilarity.Challenge",
+  "solution_module": "DimRedAudit.SelfSimilarity.Solution",
   "theorem_names": [
     "DimRed.StatementAudit.SelfSimilarity.self_similarity"
   ],
+  "definition_names": [],
   "permitted_axioms": [
     "propext",
     "Quot.sound",
     "Classical.choice"
   ],
-  "enable_nanoda": false
+  "enable_nanoda": true
 }
