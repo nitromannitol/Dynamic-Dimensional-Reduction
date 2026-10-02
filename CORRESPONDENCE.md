@@ -104,27 +104,27 @@ does not use.  The statement is therefore stronger than the paper's.
 
 ## Nodes carrying cited inputs
 
-None so far.  The paper cites Babai-Gorodezky for the attribution of Corollary
+None.  The paper cites Babai-Gorodezky for the attribution of Corollary
 2.1 but proves it, and cites the comparison principle only in a remark.
 
 ## Hypotheses written out from the paper's standing assumptions
 
 | node | added hypothesis | why |
 |---|---|---|
-| `lem-topple-limit` | `IsSymmetricPile d (2M) s₀` | version 2.  The first transcription carried only the bound of `dimred.tex:286-288` and omitted the standing hypothesis of `dimred.tex:369`, that the initial sandpile is symmetric, which is in force from Section 2.4 onward and is what makes a maximum over the fundamental domain a maximum over the whole hypercube.  Without it the statement is not the paper's |
-| `lem-pt-ind`, `lem-parabolic-comparison`, `lem-topple-limit` | the bounds `0 ≤ s₀ ≤ 2(2d) - 1` are hypotheses only ON the hypercube | version 3.  `dimred.tex:286-288` constrains the initial sandpile on `C`, not on all of `ℤ^d`; the odometer never reads `s₀` off the cube, so the restricted hypothesis is the paper's and gives the stronger statement |
+| `lem-topple-limit` | `IsSymmetricPile d (2M) s₀` | the standing hypothesis of `dimred.tex:369`, that the initial sandpile is symmetric, is in force from Section 2.4 onward and is what makes a maximum over the fundamental domain a maximum over the whole hypercube; the bound of `dimred.tex:286-288` alone does not give it.  Without it the statement is not the paper's |
+| `lem-pt-ind`, `lem-parabolic-comparison`, `lem-topple-limit` | the bounds `0 ≤ s₀ ≤ 2(2d) - 1` are hypotheses only ON the hypercube | `dimred.tex:286-288` constrains the initial sandpile on `C`, not on all of `ℤ^d`; the odometer never reads `s₀` off the cube, so the restricted hypothesis is the paper's and gives the stronger statement |
 
 The statements whose text differs from the arXiv version (Lemma 2.1, Lemma 2.4,
 Corollary 2.1, Proposition 3.2, the definition of `τ_j` in Theorem 1.1 and two
-displays of Proposition 4.1) are frozen as `paper/dimred.tex` now states them;
+displays of Proposition 4.1) are frozen as `paper/dimred.tex` states them;
 [`paper/CHANGES_FROM_ARXIV.md`](paper/CHANGES_FROM_ARXIV.md) lists each change and
 the reason for it.
 
 ## Main results
 
-The paper's main results are proved.  Their frozen statements are registered and sealed,
-and [`DimRed/MainTheorems.lean`](DimRed/MainTheorems.lean) states each of them in full,
-together with the other fifteen registered statements.
+The paper's main results are proved.  Their frozen statements are registered and proved
+(state `SEALED`), and [`DimRed/MainTheorems.lean`](DimRed/MainTheorems.lean) states each of
+them in full, together with the other fifteen registered statements.
 
 | Source | Frozen statement | State |
 |---|---|---|

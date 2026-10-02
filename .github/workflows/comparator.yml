@@ -1,6 +1,6 @@
 name: Comparator audit
 
-# Runs the official leanprover/comparator on each Audit/<X> pair: for each
+# Runs the official leanprover/comparator on every Audit/<X>/comparator.json: for each
 # pair it checks that Solution proves statements whose full dependency
 # closure matches Challenge's, uses only the permitted axioms, and is
 # accepted by BOTH the Lean kernel (replay) and the independent nanoda
@@ -10,7 +10,8 @@ name: Comparator audit
 # build and the Lattice-Probability build are cached between runs; the first
 # run on an empty cache builds the whole DimRed library.
 
-# Manual trigger only: these builds are Mathlib-scale, so they run on request.
+# Manual dispatch only until the public release: these builds are Mathlib-scale, so they run
+# on request.  The release adds `push: branches: [main]`.  There is no `pull_request` trigger.
 on:
   workflow_dispatch:
 
@@ -19,10 +20,10 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  COMPARATOR_REV: "5756749"      # leanprover/comparator commit
-  LEAN4EXPORT_REV: "v4.32.0"     # MUST match ./lean-toolchain
-  NANODA_REV: "6ae1f0c"          # ammkrn/nanoda_lib commit
-  LANDRUN_REV: "811cfff"         # Zouuup/landrun commit (v0.1.18)
+  COMPARATOR_REV: "575674928e239f5bc452aab72d1dd7b0f1326494"  # leanprover/comparator
+  LEAN4EXPORT_REV: "v4.32.0"                                  # MUST match ./lean-toolchain
+  NANODA_REV: "6ae1f0cd962f081f6c423454c5da729d841236a7"      # ammkrn/nanoda_lib
+  LANDRUN_REV: "811cfff51ceaf3d9843708aa6d22e9b84ccac8b4"     # Zouuup/landrun (v0.1.18)
 
 jobs:
   comparator:
@@ -32,39 +33,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Detect comparator pairs
-        id: pairs
-        shell: bash
-        run: |
-          pairs=""
-          for d in Audit/*/; do
-            X=$(basename "$d")
-            if [ -f "$d/Challenge.lean" ] && [ -f "$d/Solution.lean" ] \
-               && [ -f "$d/comparator.json" ]; then
-              pairs="$pairs $X"
-            fi
-          done
-          pairs=$(echo $pairs)
-          echo "pairs=$pairs" >> "$GITHUB_OUTPUT"
-          if [ -z "$pairs" ]; then
-            echo "No comparator pairs; the remaining steps are skipped."
-          else
-            echo "Auditing:$pairs"
-          fi
-
       # Lattice-Probability is private: read it with the repository's deploy key.
       - name: Read access to Lattice-Probability
-        if: steps.pairs.outputs.pairs != ''
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.LP_DEPLOY_KEY }}
       - name: Fetch Lattice-Probability over SSH
-        if: steps.pairs.outputs.pairs != ''
         run: |
           git config --global url."git@github.com:nitromannitol/Lattice-Probability".insteadOf "https://github.com/nitromannitol/Lattice-Probability"
 
       - name: Install elan
-        if: steps.pairs.outputs.pairs != ''
         run: |
           curl https://elan.lean-lang.org/elan-init.sh -sSf | sh -s -- -y --default-toolchain none
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
@@ -73,7 +51,6 @@ jobs:
       # banking completed modules.
       - name: Restore project and dependency build artifacts
         id: cache-restore
-        if: steps.pairs.outputs.pairs != ''
         uses: actions/cache/restore@v4
         with:
           path: |
@@ -84,30 +61,27 @@ jobs:
             lake-cmp-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}-
 
       - name: Get the Mathlib cache
-        if: steps.pairs.outputs.pairs != ''
         run: lake exe cache get
 
       - name: Build the library and the audit surfaces
-        if: steps.pairs.outputs.pairs != ''
         run: lake build Audit
 
       - name: Restore verification tools
         id: tools-cache
-        if: steps.pairs.outputs.pairs != ''
         uses: actions/cache/restore@v4
         with:
           path: ~/tools
           key: cmp-tools-${{ env.COMPARATOR_REV }}-${{ env.LEAN4EXPORT_REV }}-${{ env.NANODA_REV }}-${{ env.LANDRUN_REV }}
 
       - name: Build comparator
-        if: steps.pairs.outputs.pairs != '' && steps.tools-cache.outputs.cache-hit != 'true'
+        if: steps.tools-cache.outputs.cache-hit != 'true'
         run: |
           git clone https://github.com/leanprover/comparator ~/tools/comparator
           git -C ~/tools/comparator checkout "$COMPARATOR_REV"
           cd ~/tools/comparator && lake build
 
       - name: Build lean4export (toolchain-matched)
-        if: steps.pairs.outputs.pairs != '' && steps.tools-cache.outputs.cache-hit != 'true'
+        if: steps.tools-cache.outputs.cache-hit != 'true'
         run: |
           git clone https://github.com/leanprover/lean4export ~/tools/lean4export
           git -C ~/tools/lean4export checkout "$LEAN4EXPORT_REV"
@@ -116,13 +90,13 @@ jobs:
           cd ~/tools/lean4export && lake build
 
       - name: Set up Go (for landrun)
-        if: steps.pairs.outputs.pairs != '' && steps.tools-cache.outputs.cache-hit != 'true'
+        if: steps.tools-cache.outputs.cache-hit != 'true'
         uses: actions/setup-go@v5
         with:
           go-version: '1.24'
 
       - name: Build landrun (static)
-        if: steps.pairs.outputs.pairs != '' && steps.tools-cache.outputs.cache-hit != 'true'
+        if: steps.tools-cache.outputs.cache-hit != 'true'
         run: |
           git clone https://github.com/Zouuup/landrun ~/tools/landrun-src
           git -C ~/tools/landrun-src checkout "$LANDRUN_REV"
@@ -130,7 +104,7 @@ jobs:
           cd ~/tools/landrun-src && CGO_ENABLED=0 go build -o ~/tools/bin/landrun ./cmd/landrun
 
       - name: Build nanoda
-        if: steps.pairs.outputs.pairs != '' && steps.tools-cache.outputs.cache-hit != 'true'
+        if: steps.tools-cache.outputs.cache-hit != 'true'
         run: |
           rustup toolchain install stable --profile minimal
           git clone https://github.com/ammkrn/nanoda_lib ~/tools/nanoda_lib
@@ -141,12 +115,10 @@ jobs:
         # The committed configs set enable_nanoda: false so that local
         # reproduction needs only three tools; CI exercises the stronger
         # two-kernel variant on its throwaway checkout.
-        if: steps.pairs.outputs.pairs != ''
         run: |
           sed -i 's/"enable_nanoda": false/"enable_nanoda": true/' Audit/*/comparator.json
 
       - name: Run the comparator on every pair
-        if: steps.pairs.outputs.pairs != ''
         run: |
           set -euo pipefail
           # Resolve the tool paths from the runner's real home, never a
@@ -155,9 +127,10 @@ jobs:
           export COMPARATOR_LEAN4EXPORT="$HOME/tools/lean4export/.lake/build/bin/lean4export"
           export COMPARATOR_NANODA="$HOME/tools/nanoda_lib/target/release/nanoda_bin"
           fail=0
-          for X in ${{ steps.pairs.outputs.pairs }}; do
+          for cfg in Audit/*/comparator.json; do
+            X="$(basename "$(dirname "$cfg")")"
             echo "::group::$X"
-            if lake env ~/tools/comparator/.lake/build/bin/comparator "Audit/$X/comparator.json" \
+            if lake env ~/tools/comparator/.lake/build/bin/comparator "$cfg" \
                  | tee "/tmp/comparator-$X.log" \
                && grep -q "Your solution is okay!" "/tmp/comparator-$X.log"; then
               echo "$X: OK"
@@ -170,7 +143,7 @@ jobs:
           exit "$fail"
 
       - name: Save project and dependency build artifacts
-        if: always() && steps.pairs.outputs.pairs != '' && steps.cache-restore.outputs.cache-hit != 'true'
+        if: always() && steps.cache-restore.outputs.cache-hit != 'true'
         uses: actions/cache/save@v4
         with:
           path: |
@@ -179,14 +152,14 @@ jobs:
           key: lake-cmp-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}-${{ github.sha }}
 
       - name: Save verification tools
-        if: always() && steps.pairs.outputs.pairs != '' && steps.tools-cache.outputs.cache-hit != 'true'
+        if: always() && steps.tools-cache.outputs.cache-hit != 'true'
         uses: actions/cache/save@v4
         with:
           path: ~/tools
           key: cmp-tools-${{ env.COMPARATOR_REV }}-${{ env.LEAN4EXPORT_REV }}-${{ env.NANODA_REV }}-${{ env.LANDRUN_REV }}
 
       - name: Upload comparator logs
-        if: always() && steps.pairs.outputs.pairs != ''
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: comparator-logs

@@ -131,6 +131,30 @@ COMPARATOR_LANDRUN=<landrun> COMPARATOR_LEAN4EXPORT=<lean4export> \
 expecting the acceptance line `Your solution is okay!`.  The workflow runs the same check on
 every pair on request, with the independent nanoda kernel enabled as well.
 
+## Comparator Runs
+
+All four pairs, `DimensionalReduction`, `SelfSimilarity`, `Sandpile` and `Regularity`, have
+been run with `leanprover/comparator` at the following pins, on repository commit `ea7fe21`:
+
+| tool | revision |
+| --- | --- |
+| `leanprover/comparator` | `575674928e239f5bc452aab72d1dd7b0f1326494` |
+| `lean4export` | `v4.32.0`, the tag of `lean-toolchain` |
+| `nanoda` (`ammkrn/nanoda_lib`) | `6ae1f0cd962f081f6c423454c5da729d841236a7` |
+| `landrun` | `811cfff51ceaf3d9843708aa6d22e9b84ccac8b4` |
+
+The nanoda kernel was enabled through a temporary copy of each `comparator.json`; the
+committed configurations keep `enable_nanoda: false`, so that reproducing the check locally
+needs only comparator, `lean4export` and `landrun`.  Each of the four runs printed
+
+```
+nanoda kernel accepts the solution
+Lean default kernel accepts the solution
+Your solution is okay!
+```
+
+so each solution is accepted by both the independent nanoda kernel and Lean's default kernel.
+
 **Status.**  The four solutions build, each solution theorem has the elaborated type of its
 challenge theorem and mentions no repository constant, and each depends only on `propext`,
 `Classical.choice` and `Quot.sound`.  

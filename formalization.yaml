@@ -4,7 +4,8 @@ project:
   description: 'A Lean 4/Mathlib formalization of *Dynamic dimensional reduction in the Abelian sandpile*
     (Bou-Rabee, Comm. Math. Phys. 2022; arXiv:2009.05968): the joint induction proving dimensional reduction
     at every time, reduction of the terminal odometer, self-similarity, and the two clauses of Corollary
-    1.1, with no assumed results.'
+    1.1, with no assumed results.  The ten statements of Theorem 1.1, Corollary 1.1 and Proposition 4.1
+    are checked independently by the four leanprover/comparator pairs under Audit/.'
   authors:
   - Ahmed Bou-Rabee
   license: Apache-2.0
@@ -27,20 +28,21 @@ sources:
   author_contacted: n/a
   prior_work: ''
 status:
-  scope: 'A Lean 4 / Mathlib formalization, COMPLETE, of every theorem, lemma, proposition and corollary
+  scope: 'A Lean 4 / Mathlib formalization, complete, of every theorem, lemma, proposition and corollary
     of the paper, 20 registered statements in all: the three displays of Theorem 1.1 (dimensional reduction
     at every time, dimensional reduction of the terminal odometer, and self-similarity), the two clauses
     of Corollary 1.1, the results of Sections 2 and 3 (Lemmas 2.1 to 2.5, Corollaries 2.1 and 2.2, Proposition
-    3.1, Lemma 3.1, Proposition 3.2) and the five clauses of Proposition 4.1. PROVED (20): all 20 are
-    SEALED in ledger/manifest.yaml, with complete proofs whose axiom closure is exactly propext, Classical.choice
-    and Quot.sound; the build emits no warning and no sorry. The ten statements of Theorem 1.1, Corollary
-    1.1 and Proposition 4.1 are proved by the joint induction of Sections 4 and 5 over dimension, side
-    length and time (DimRed.reg_proved in DimRed/Support/RegProved.lean), from which the frozen statements,
-    odd cubes and the unit half-side included, are read off. SCOPE BOUNDARY: nothing is assumed; no cited
-    result is taken as a hypothesis (ASSUMPTIONS.md). The paper formalized is paper/dimred.tex, the arXiv
-    source with the corrections listed in paper/CHANGES_FROM_ARXIV.md. Not formalized: the introduction''s
+    3.1, Lemma 3.1, Proposition 3.2) and the five clauses of Proposition 4.1. PROVED (20): all 20 have
+    state SEALED in ledger/manifest.yaml, with complete proofs whose axiom closure is exactly propext,
+    Classical.choice and Quot.sound; the build emits no warning and no sorry. The ten statements of Theorem
+    1.1, Corollary 1.1 and Proposition 4.1 are proved by the joint induction of Sections 4 and 5 over
+    dimension, side length and time (DimRed.reg_proved in DimRed/Support/RegProved.lean), from which the
+    frozen statements, odd cubes and the unit half-side included, are read off. SCOPE BOUNDARY: nothing
+    is assumed; no cited result is taken as a hypothesis (ASSUMPTIONS.md). The paper formalized is paper/dimred.tex,
+    the arXiv source with the corrections listed in paper/CHANGES_FROM_ARXIV.md. Not formalized: the introduction''s
     discussion, the open problems of Section 1 and the figures. Every result is stated in full in DimRed/MainTheorems.lean;
-    the five main results have Mathlib-only comparator challenges in Audit/ (Audit/README.md).'
+    the ten statements of Theorem 1.1, Corollary 1.1 and Proposition 4.1 have Mathlib-only comparator
+    challenges in the four pairs under Audit/ (Audit/README.md).'
   sorry_count: 0
   sorry_in_definitions: 0
   axioms:
@@ -93,6 +95,51 @@ status:
     - Quot.sound
     comparator_config: Audit/Sandpile/comparator.json
     literature_dependencies: []
+  - declaration: DimRed.Frozen.base_dimension_consistency
+    file: DimRed/Frozen/Regularity/Consistency.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: Audit/Regularity/comparator.json
+    literature_dependencies: []
+  - declaration: DimRed.Frozen.base_dimension_weak_compatibility
+    file: DimRed/Frozen/Regularity/WeakFacet.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: Audit/Regularity/comparator.json
+    literature_dependencies: []
+  - declaration: DimRed.Frozen.base_dimension_strong_derivative
+    file: DimRed/Frozen/Regularity/StrongDerivative.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: Audit/Regularity/comparator.json
+    literature_dependencies: []
+  - declaration: DimRed.Frozen.base_dimension_strong_compatibility
+    file: DimRed/Frozen/Regularity/StrongFacet.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: Audit/Regularity/comparator.json
+    literature_dependencies: []
+  - declaration: DimRed.Frozen.base_dimension_strong_topple
+    file: DimRed/Frozen/Regularity/StrongTopple.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: Audit/Regularity/comparator.json
+    literature_dependencies: []
 automation:
   methods:
   - method: agent
@@ -120,8 +167,10 @@ review:
   status: author-verified
   reviewers:
   - Ahmed Bou-Rabee
-  notes: Correctness of every proved result is guaranteed by the Lean kernel and Mathlib. The author ruled
-    on the statement-level decisions recorded during development. This is not external peer review.
+  notes: Correctness of every proved result is guaranteed by the Lean kernel and Mathlib. The statement-level
+    decisions are the author's and are recorded in ledger/decisions.md. All four comparator pairs under
+    Audit/ are accepted by both the Lean kernel and the nanoda kernel (Audit/README.md). This is not external
+    peer review.
 alignment:
   namespace: DimRed
   statements:

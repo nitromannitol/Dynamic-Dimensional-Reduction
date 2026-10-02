@@ -1,6 +1,9 @@
 name: CI
 
-# Manual trigger only: these builds are Mathlib-scale, so they run on request.
+# Manual dispatch only until the public release: these builds are Mathlib-scale, so they run
+# on request and pushes to the private repository do not start them.  The release adds
+# `push: branches: [main]`.  There is no `pull_request` trigger: the cached `.lake` trees are
+# the artifacts every later gate trusts.
 on:
   workflow_dispatch:
 
