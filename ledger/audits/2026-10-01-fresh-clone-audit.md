@@ -205,3 +205,29 @@ logs `ca.type == cb.type`; `#print axioms` on the 49 declarations listed in row 
 `#same_type` on the 20 pairs; `#check @` on the 20 exports; `#print` on the 19 definitions of
 §3.  `AuditWitness.lean`: the three theorems of §5 as written there, and the `#eval` lines
 whose results are tabulated in §5.
+
+## Addendum, 2026-10-02: the comparator layer after the `DimRedAudit` restructuring
+
+Commit `f6669e7` renamed `Audit/` to `DimRedAudit/`, gave each pair its own `SolutionBasic.lean`
+and bridge module, and enabled the nanoda kernel.  The paths in rows 11 and 12 and in §2 and §6
+above are those of `b0c8914`.  It touches no file under `DimRed/`, `paper/`, the manifest or the
+toolchain, so rows 1 to 10 and 13 to 16 are unchanged.  The comparator checks were repeated from
+the same fresh clone at `f6669e7`:
+
+| check | result |
+|---|---|
+| frozen hashes and paper pin | 20/20 and equal |
+| `lake build DimRed` | exit 0, 8759 jobs, no warning, error, `sorry` or suggestion |
+| 49 closures of the exports, restatements, induction root, steps and finiteness lemmas, and 20 `Expr` identities of frozen export and restatement | all three-axiom closures, 20/20 equal |
+| `lake build DimRedAudit` | exit 0, 8759 jobs; the only warnings are the intentional `sorry`, 2 + 1 + 2 + 5 across the four pairs |
+| vocabulary block of each `Challenge.lean` against its own `SolutionBasic.lean` | identical in all four pairs |
+| each `Challenge.lean` elaborated against Mathlib alone | rc 0 for all four, one `sorry` warning per theorem |
+| challenge, solution and `DimRed/MainTheorems.lean` statement texts | the 10 theorems identical token for token |
+| axiom closures of the 10 solution theorems and 21 bridge lemmas | all exactly `propext`, `Classical.choice`, `Quot.sound` |
+| `python3 tools/verify.py --skip-lake` | 12 of 12 gates OK |
+
+The four `SolutionBasic` files define the same vocabulary names, so two pairs cannot be imported
+into one file; this is the isolation the restructuring intends, and the closures above were
+printed one pair per file.  `comparator.json` of each pair now sets `enable_nanoda` to true.  The
+comparator binary itself was not run in this audit; the checks above establish what its input
+guarantees.
