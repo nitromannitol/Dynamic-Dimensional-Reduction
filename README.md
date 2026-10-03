@@ -328,7 +328,7 @@ lakefile.lean, lake-manifest.json, lean-toolchain   the build configuration and 
 
 ## How this was built
 
-The Lean code was written mostly by Claude (Fable 5.1, Opus 5, Opus 5.5, Sonnet 5 and Sonnet 5.5), with contributions by DeepSeek-v4.1-flash, GLM-5.3, GLM-5.3-flash, OpenAI's gpt-5.6-luna and Leanstral 1.5, under the close supervision of the author; models, tooling, cost and review status are disclosed in [`formalization.yaml`](formalization.yaml), following the [mathlib-initiative](https://github.com/mathlib-initiative/formalization.yaml) standard.
+The Lean code was written by AI coding agents under the close supervision of the author; the models, tooling and cost are disclosed in [`formalization.yaml`](formalization.yaml).
 
 ## Authors, citation, acknowledgements
 
