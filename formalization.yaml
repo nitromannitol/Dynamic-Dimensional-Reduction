@@ -33,8 +33,9 @@ status:
     at every time, dimensional reduction of the terminal odometer, and self-similarity), the two clauses
     of Corollary 1.1, the results of Sections 2 and 3 (Lemmas 2.1 to 2.5, Corollaries 2.1 and 2.2, Proposition
     3.1, Lemma 3.1, Proposition 3.2) and the five clauses of Proposition 4.1. PROVED (20): all 20 have
-    state SEALED in ledger/manifest.yaml, with complete proofs whose axiom closure is exactly propext,
-    Classical.choice and Quot.sound; the build emits no warning and no sorry. The ten statements of Theorem
+    state PROVED in ledger/manifest.yaml, with complete proofs whose axiom closure is exactly propext,
+    Classical.choice and Quot.sound and an independent refute-first audit recorded in ledger/audits/;
+    the build emits no warning and no sorry. The ten statements of Theorem
     1.1, Corollary 1.1 and Proposition 4.1 are proved by the joint induction of Sections 4 and 5 over
     dimension, side length and time (DimRed.reg_proved in DimRed/Support/RegProved.lean), from which the
     frozen statements, odd cubes and the unit half-side included, are read off. SCOPE BOUNDARY: nothing

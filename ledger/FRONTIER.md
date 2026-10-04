@@ -5,7 +5,9 @@ not a ruling: it changes nothing about the frozen surface and approves nothing.
 
 ## Registered nodes
 
-All 20 nodes of [`manifest.yaml`](manifest.yaml) are `SEALED`. `lake build` completes with
+All 20 nodes of [`manifest.yaml`](manifest.yaml) are `PROVED`: sealed with a clean axiom
+closure, and each covered by an independent refute-first audit in [`audits/`](audits/).
+`lake build` completes with
 no warning and no `sorry`, `lake build DimRedAudit` builds the comparator challenges and their
 solutions, and `python3 tools/verify.py` passes all 15 gates. The axiom closure of every
 node is exactly `{propext, Classical.choice, Quot.sound}`. The no-hole baseline in

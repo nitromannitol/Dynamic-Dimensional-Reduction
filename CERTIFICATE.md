@@ -4,7 +4,7 @@ Formalizes statements pinned in `paper/dimred.tex` as the Lean library `DimRed`.
 
 ## What is claimed
 
-Every node's state in `ledger/manifest.yaml` is `SEALED`: all 20 are proved with no added axiom and no `sorry`.
+Every node's state in `ledger/manifest.yaml` is `SEALED` or `PROVED` (0 SEALED, 20 PROVED, 20 total): all are proved with no added axiom and no `sorry`.
 
 ## Environment
 
@@ -15,7 +15,7 @@ Every node's state in `ledger/manifest.yaml` is `SEALED`: all 20 are proved with
 | Paper (`paper/dimred.tex`) SHA-256 | `1423810fa6c1469dbec2a1ba633652946a467297bfab3ea4d89cbd3b1e12b3ef` |
 | Build | succeeded, 8759 jobs |
 | Build warnings | 0 |
-| Generated | 2026-09-30 |
+| Generated | 2026-10-03 |
 
 ## Reproducing it
 
@@ -34,26 +34,26 @@ python3 -m leanform_tools.certificate . --check
 
 | # | node | Lean name(s) | state | axiom closure |
 |---|---|---|---|---|
-| 1 | `prop-base-dimension-weak` | `DimRed.Frozen.base_dimension_weak_compatibility` | `SEALED` | classical only |
-| 2 | `thm-dimensional-reduction` | `DimRed.Frozen.dimensional_reduction` | `SEALED` | classical only |
-| 3 | `thm-terminal-reduction` | `DimRed.Frozen.terminal_dimensional_reduction` | `SEALED` | classical only |
-| 4 | `cor-sandpile-reduction` | `DimRed.Frozen.sandpile_dimensional_reduction` | `SEALED` | classical only |
-| 5 | `lem-symmetry` | `DimRed.Frozen.symmetry_lemma` | `SEALED` | classical only |
-| 6 | `prop-no-reduction` | `DimRed.Frozen.no_reduction_at_critical_dimension` | `SEALED` | classical only |
-| 7 | `lem-radial-laplacian` | `DimRed.Frozen.radial_laplacian` | `SEALED` | classical only |
-| 8 | `lem-pt-ind` | `DimRed.Frozen.pt_ind_lemma` | `SEALED` | classical only |
-| 9 | `lem-parabolic-comparison` | `DimRed.Frozen.parabolic_comparison` | `SEALED` | classical only |
-| 10 | `lem-topple-limit` | `DimRed.Frozen.topple_limit` | `SEALED` | classical only |
-| 11 | `lem-difference-comparison` | `DimRed.Frozen.general_difference_comparison` | `SEALED` | classical only |
-| 12 | `prop-base-case` | `DimRed.Frozen.base_case` | `SEALED` | classical only |
-| 13 | `prop-base-dimension-consistency` | `DimRed.Frozen.base_dimension_consistency` | `SEALED` | classical only |
-| 14 | `prop-base-dimension-strong-derivative` | `DimRed.Frozen.base_dimension_strong_derivative` | `SEALED` | classical only |
-| 15 | `prop-base-dimension-strong-facet` | `DimRed.Frozen.base_dimension_strong_compatibility` | `SEALED` | classical only |
-| 16 | `prop-base-dimension-strong-topple` | `DimRed.Frozen.base_dimension_strong_topple` | `SEALED` | classical only |
-| 17 | `thm-self-similarity` | `DimRed.Frozen.self_similarity` | `SEALED` | classical only |
-| 18 | `cor-sandpile-self-similarity` | `DimRed.Frozen.sandpile_self_similarity` | `SEALED` | classical only |
-| 19 | `cor-axis-monotonicity` | `DimRed.Frozen.axis_monotonicity` | `SEALED` | classical only |
-| 20 | `cor-derivative-bound` | `DimRed.Frozen.derivative_bound` | `SEALED` | classical only |
+| 1 | `prop-base-dimension-weak` | `DimRed.Frozen.base_dimension_weak_compatibility` | `PROVED` | classical only |
+| 2 | `thm-dimensional-reduction` | `DimRed.Frozen.dimensional_reduction` | `PROVED` | classical only |
+| 3 | `thm-terminal-reduction` | `DimRed.Frozen.terminal_dimensional_reduction` | `PROVED` | classical only |
+| 4 | `cor-sandpile-reduction` | `DimRed.Frozen.sandpile_dimensional_reduction` | `PROVED` | classical only |
+| 5 | `lem-symmetry` | `DimRed.Frozen.symmetry_lemma` | `PROVED` | classical only |
+| 6 | `prop-no-reduction` | `DimRed.Frozen.no_reduction_at_critical_dimension` | `PROVED` | classical only |
+| 7 | `lem-radial-laplacian` | `DimRed.Frozen.radial_laplacian` | `PROVED` | classical only |
+| 8 | `lem-pt-ind` | `DimRed.Frozen.pt_ind_lemma` | `PROVED` | classical only |
+| 9 | `lem-parabolic-comparison` | `DimRed.Frozen.parabolic_comparison` | `PROVED` | classical only |
+| 10 | `lem-topple-limit` | `DimRed.Frozen.topple_limit` | `PROVED` | classical only |
+| 11 | `lem-difference-comparison` | `DimRed.Frozen.general_difference_comparison` | `PROVED` | classical only |
+| 12 | `prop-base-case` | `DimRed.Frozen.base_case` | `PROVED` | classical only |
+| 13 | `prop-base-dimension-consistency` | `DimRed.Frozen.base_dimension_consistency` | `PROVED` | classical only |
+| 14 | `prop-base-dimension-strong-derivative` | `DimRed.Frozen.base_dimension_strong_derivative` | `PROVED` | classical only |
+| 15 | `prop-base-dimension-strong-facet` | `DimRed.Frozen.base_dimension_strong_compatibility` | `PROVED` | classical only |
+| 16 | `prop-base-dimension-strong-topple` | `DimRed.Frozen.base_dimension_strong_topple` | `PROVED` | classical only |
+| 17 | `thm-self-similarity` | `DimRed.Frozen.self_similarity` | `PROVED` | classical only |
+| 18 | `cor-sandpile-self-similarity` | `DimRed.Frozen.sandpile_self_similarity` | `PROVED` | classical only |
+| 19 | `cor-axis-monotonicity` | `DimRed.Frozen.axis_monotonicity` | `PROVED` | classical only |
+| 20 | `cor-derivative-bound` | `DimRed.Frozen.derivative_bound` | `PROVED` | classical only |
 
 ## Frozen statements
 
