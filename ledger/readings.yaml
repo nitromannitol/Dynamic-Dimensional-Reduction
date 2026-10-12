@@ -1,5 +1,9 @@
 # Clause readings, exponent waivers and the paper's exponent vocabulary.
 #
+# Historical readings below concern the corrected local paper/dimred.tex.
+# They have not been independently reconciled with the author-selected arXiv v2
+# paper and do not certify source fidelity or complete definition bodies.
+#
 # Every node is read against `paper/dimred.tex` (line numbers are those of the
 # pinned file in `ledger/manifest.yaml`).  A reading says what the paper
 # asserts, what the frozen Lean statement asserts, and how they correspond:

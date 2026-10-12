@@ -1,8 +1,10 @@
 # Differences from the arXiv version
 
-The formalization follows `paper/dimred.tex`, which is the LaTeX source of
-arXiv:2009.05968v2 with the ten corrections below.  The arXiv source will be
-replaced by the corrected one.  The unmodified arXiv source is
+The current Lean manifest pins `paper/dimred.tex`, a locally corrected copy of
+arXiv:2009.05968v2 with the ten changes documented below. The author selected
+the unmodified arXiv v2 paper as the final formalization target. These local
+changes are historical proposals, not an adopted replacement of that source;
+their source and proof consequences remain under review. The arXiv source is
 `paper/dimred-arxiv.tex`.  The first eight changes and the three added labels
 keep the line count, so a line number up to 1325 is the same line in both
 files.  The tenth change edits line 1325 in place and inserts one line after

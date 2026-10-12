@@ -1,12 +1,15 @@
 # Dynamic-Dimensional-Reduction
 
-A machine-checked **Lean 4** formalization of the paper
+A **Lean 4** development for a corrected local text associated with the paper
 
 > Ahmed Bou-Rabee,
 > [*Dynamic dimensional reduction in the Abelian sandpile*](https://arxiv.org/abs/2009.05968),
 > Communications in Mathematical Physics 390 (2022), 933-958; arXiv:2009.05968.
 
-Every theorem, lemma, proposition and corollary of the paper is formalized and proved.  The
+The repository has complete proofs of its 20 registered Lean statements. Their source is
+`paper/dimred.tex`, a corrected local text. The final comparison source is the
+[arXiv v2 paper](https://arxiv.org/abs/2009.05968v2), preserved as
+`paper/dimred-arxiv.tex`; correspondence to that source is under review. The
 development is built on [`mathlib`](https://github.com/leanprover-community/mathlib4) and the
 shared library [`Lattice-Probability`](https://github.com/nitromannitol/Lattice-Probability)
 (`LatticeProb`).
@@ -33,12 +36,11 @@ odometer explicitly on cubes of side 2 and 4, and Sections 4 and 5 prove Proposi
 (five regularity clauses) and Theorem 1.1 together, by one induction over dimension, side
 length and time.
 
-**The formalization is complete.**  Every theorem, lemma, proposition and corollary of the
-paper is registered as a frozen Lean statement
-(`python3 -m leanform_tools.check_coverage`), 20 registered statements in all, and **all 20
-are proved**: each is `SEALED` in `ledger/manifest.yaml`, with a complete proof whose axiom
-closure is exactly `propext`, `Classical.choice` and `Quot.sound`.  The build emits no
-warning and no `sorry`.  Lemmas 2.1 to 2.5, Corollaries 2.1 and 2.2, Proposition 3.1,
+**Proof status for the registered local text:** there are 20 registered statements, and all 20
+have complete Lean proofs with the standard axiom closure recorded in the certificate. This
+count does not establish statement fidelity to the selected arXiv v2 paper. The source audit
+has identified differences in hypotheses, public definition bodies and coverage that remain
+to be resolved. Lemmas 2.1 to 2.5, Corollaries 2.1 and 2.2, Proposition 3.1,
 Lemma 3.1 and Proposition 3.2 are the results of Sections 2 and 3.  The other ten, the three
 clauses of Theorem 1.1, the two clauses of Corollary 1.1 and the five clauses of
 Proposition 4.1, come from the joint induction of Sections 4 and 5, proved as
@@ -46,8 +48,8 @@ Proposition 4.1, come from the joint induction of Sections 4 and 5, proved as
 Not formalized: the introduction's discussion, the open problems of Section 1 and the
 figures.
 
-**Nothing is assumed.**  No result the paper cites is taken as a hypothesis;
-[`ASSUMPTIONS.md`](ASSUMPTIONS.md) records this.  The correspondence between the paper and
+**Cited inputs in the registered development:** none is recorded as an assumed result;
+[`ASSUMPTIONS.md`](ASSUMPTIONS.md) records this.  The correspondence between the local text and
 the Lean statements, with the vocabulary, the standing hypotheses the frozen statements write
 out and the junk values, is in [`CORRESPONDENCE.md`](CORRESPONDENCE.md).
 
@@ -63,8 +65,8 @@ hand-edited number inside this block is a failure, not a correction.
 
 ### Main results
 
-All of the paper's results are proved, the main ones by the joint induction of Sections 4
-and 5.  [`DimRed/MainTheorems.lean`](DimRed/MainTheorems.lean) states every one of them in
+The registered Lean declarations have proofs, the main ones by the joint induction of Sections 4
+and 5. [`DimRed/MainTheorems.lean`](DimRed/MainTheorems.lean) states their Lean declarations in
 full, each by `exact` of its certified counterpart in `DimRed/Frozen/`, so the statements
 displayed there are the certified ones.  None takes a cited result as a hypothesis.
 
@@ -102,16 +104,15 @@ displayed there are the certified ones.  None takes a cited result as a hypothes
 
 ### Scope and faithfulness
 
-Every theorem, lemma, proposition and corollary of the paper is registered as a Lean
-declaration.  There are 20 registered statements: the 12 numbered results of Sections 1 to
+The ledger assigns 20 Lean declarations to source labels in the corrected local text: the 12 numbered results of Sections 1 to
 3, with Theorem 1.1 split into its three displays and Corollary 1.1 into its two, and the
 five clauses of Proposition 4.1.  The following words have fixed meanings.
 
 | term | meaning |
 |---|---|
-| **registered statement**, also called a **node** | one Lean declaration transcribing one statement of the paper. Each has an entry in `ledger/manifest.yaml`. |
-| **frozen statement** | the declaration's text between the lines `-- FROZEN-STATEMENT-BEGIN` and `-- FROZEN-STATEMENT-END`, pinned by the SHA-256 of those bytes. It cannot change without the change being recorded in the manifest. The proof after the end marker may be rewritten freely. |
-| **`SEALED`** | the node is **proved** here: a complete proof, whose axiom closure contains only `propext`, `Classical.choice` and `Quot.sound`. |
+| **registered statement**, also called a **node** | one Lean declaration assigned to a source label in `ledger/manifest.yaml`; exact correspondence to arXiv v2 remains under audit. |
+| **frozen statement** | the declaration's text between the lines `-- FROZEN-STATEMENT-BEGIN` and `-- FROZEN-STATEMENT-END`, pinned by the SHA-256 of those bytes. A change requires an author-approved version and updated manifest. The proof after the end marker may be rewritten freely. |
+| **`PROVED`** | the manifest marks the registered Lean declaration as proved: its complete proof has the recorded standard axiom closure. This state alone does not certify the paper statement. |
 | **`DRAFT_SORRY`** | the node is **open**: its statement is frozen and its proof is a single registered `sorry`. No node is in this state. |
 | **axiom closure** | the axioms a proof ultimately rests on, as reported by Lean's `#print axioms`. |
 | **`sorryAx`** | the axiom Lean inserts for an unproved `sorry`; its presence in an axiom closure means the result is not proved. |
@@ -120,14 +121,15 @@ Every registered statement is frozen in the sense of being pinned by hash, and e
 proved.  The pin means that each proof is of the statement registered here and not of a
 weaker one.
 
-The paper is `paper/dimred.tex`, the arXiv source (arXiv:2009.05968v2) with the corrections
-listed in [`paper/CHANGES_FROM_ARXIV.md`](paper/CHANGES_FROM_ARXIV.md), and every frozen
-statement states what that file states; the unmodified arXiv source is
-`paper/dimred-arxiv.tex`.  The figures and the bibliography file are not included.
+The current manifest pins corrected local text `paper/dimred.tex`; its differences from
+the unmodified, selected arXiv v2 source `paper/dimred-arxiv.tex` are recorded in
+[`paper/CHANGES_FROM_ARXIV.md`](paper/CHANGES_FROM_ARXIV.md). Exact statement and definition
+fidelity to arXiv v2 has not been established. The figures and bibliography file are not included.
 [`CORRESPONDENCE.md`](CORRESPONDENCE.md) records the vocabulary, the standing hypotheses the
 frozen statements write out, and the junk values.
 
-Checkers compare the Lean statements with the paper's rather than with their hashes.
+The checkers below validate the current local-text registration and selected syntactic
+features. They do not compare all Lean meanings with the selected arXiv v2 paper.
 `python3 -m leanform_tools.check_coverage` confirms that every theorem, lemma, proposition
 and corollary of `paper/dimred.tex` is claimed by a node.  In each frozen statement whose
 conclusion has an existential constant, `python3 -m leanform_tools.check_constants` checks
@@ -313,7 +315,7 @@ CERTIFICATE.md        the axiom closure and frozen-statement hashes of every nod
 CORRESPONDENCE.md     paper ↔ Lean: vocabulary, standing hypotheses, node table
 CONTRIBUTING.md       building notes and the elaboration policy for new files
 CITATION.cff          citation metadata
-formalization.yaml    models, tooling, cost and review status (mathlib-initiative v0.4)
+formalization.yaml    source, proof and review metadata
 ledger/               the frozen-statement manifest (manifest.yaml), clause readings
                       (readings.yaml), the no-hole baseline (holes.json), and the decision
                       and audit records
@@ -326,14 +328,10 @@ tools/leanform/       the shared leanform_tools checkers and generators
 lakefile.lean, lake-manifest.json, lean-toolchain   the build configuration and its pins
 ```
 
-## How this was built
-
-The Lean code was written by AI coding agents under the close supervision of the author; the models, tooling and cost are disclosed in [`formalization.yaml`](formalization.yaml).
-
 ## Authors, citation, acknowledgements
 
-The Lean development is by **Ahmed Bou-Rabee**, who is also the author of the paper it
-formalizes (arXiv:2009.05968).  To cite it, use [`CITATION.cff`](CITATION.cff).
+The Lean development and paper are by **Ahmed Bou-Rabee**. To cite the development,
+use [`CITATION.cff`](CITATION.cff). Its arXiv-v2 statement correspondence is under review.
 
 This formalization is built on [Lean 4](https://lean-lang.org),
 [Mathlib](https://github.com/leanprover-community/mathlib4) and the shared library
