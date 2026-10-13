@@ -1,11 +1,10 @@
 version: v0.4
 project:
   name: Dynamic-Dimensional-Reduction
-  description: 'A Lean 4/Mathlib formalization of *Dynamic dimensional reduction in the Abelian sandpile*
-    (Bou-Rabee, Comm. Math. Phys. 2022; arXiv:2009.05968): the joint induction proving dimensional reduction
-    at every time, reduction of the terminal odometer, self-similarity, and the two clauses of Corollary
-    1.1, with no assumed results.  The ten statements of Theorem 1.1, Corollary 1.1 and Proposition 4.1
-    are checked independently by the four leanprover/comparator pairs under DimRedAudit/.'
+  description: 'Lean 4/Mathlib development for corrected local text associated with *Dynamic dimensional
+    reduction in the Abelian sandpile* (Bou-Rabee, Comm. Math. Phys. 2022; arXiv:2009.05968).
+    The registered Lean statements have proofs; source fidelity to the author-selected arXiv v2
+    text remains under review.'
   authors:
   - Ahmed Bou-Rabee
   license: Apache-2.0
@@ -28,22 +27,13 @@ sources:
   author_contacted: n/a
   prior_work: ''
 status:
-  scope: 'A Lean 4 / Mathlib formalization, complete, of every theorem, lemma, proposition and corollary
-    of the paper, 20 registered statements in all: the three displays of Theorem 1.1 (dimensional reduction
-    at every time, dimensional reduction of the terminal odometer, and self-similarity), the two clauses
-    of Corollary 1.1, the results of Sections 2 and 3 (Lemmas 2.1 to 2.5, Corollaries 2.1 and 2.2, Proposition
-    3.1, Lemma 3.1, Proposition 3.2) and the five clauses of Proposition 4.1. PROVED (20): all 20 have
-    state PROVED in ledger/manifest.yaml, with complete proofs whose axiom closure is exactly propext,
-    Classical.choice and Quot.sound and an independent refute-first audit recorded in ledger/audits/;
-    the build emits no warning and no sorry. The ten statements of Theorem
-    1.1, Corollary 1.1 and Proposition 4.1 are proved by the joint induction of Sections 4 and 5 over
-    dimension, side length and time (DimRed.reg_proved in DimRed/Support/RegProved.lean), from which the
-    frozen statements, odd cubes and the unit half-side included, are read off. SCOPE BOUNDARY: nothing
-    is assumed; no cited result is taken as a hypothesis (ASSUMPTIONS.md). The paper formalized is paper/dimred.tex,
-    the arXiv source with the corrections listed in paper/CHANGES_FROM_ARXIV.md. Not formalized: the introduction''s
-    discussion, the open problems of Section 1 and the figures. Every result is stated in full in DimRed/MainTheorems.lean;
-    the ten statements of Theorem 1.1, Corollary 1.1 and Proposition 4.1 have Mathlib-only comparator
-    challenges in the four pairs under DimRedAudit/ (DimRedAudit/README.md).'
+  scope: 'The current manifest registers 20 Lean statements against corrected local text
+    paper/dimred.tex; all 20 have complete proofs with the recorded standard axiom closure.
+    The author-selected final comparison source is arXiv:2009.05968v2, preserved as
+    paper/dimred-arxiv.tex. Its exact statement, definition-body and consumer fidelity is
+    under audit. The 20/20 proof count does not certify the arXiv-v2 paper. The current
+    development has no registered cited-input assumptions. The introduction, open problems
+    and figures are outside the registered proof surface.'
   sorry_count: 0
   sorry_in_definitions: 0
   axioms:
@@ -141,44 +131,19 @@ status:
     - Quot.sound
     comparator_config: DimRedAudit/Regularity/comparator.json
     literature_dependencies: []
-automation:
-  methods:
-    - method: "agent"
-      models:
-        - "Claude Opus 5.5"
-        - "Claude Sonnet 5"
-        - "Claude Opus 5"
-        - "DeepSeek v4.1 Flash"
-      framework: >-
-        Claude Code (Anthropic) and the Pi agent harness, directing the models above; the author
-        supervised the work and is responsible for the formalization.
-      tool_setup: >-
-        Lake builds under the pinned Lean toolchain and Mathlib revision. Every change is gated by
-        the axiom-closure and warning-free-build checks, and the public CI runs the Mathlib-only
-        comparator challenge/solution pairs against leanprover/comparator, lean4export and landrun
-        at the revisions recorded in .github/workflows/.
-      cost:
-        spend_usd: "not separately tracked (subscription and API accounts)"
-        hardware: "one Ubuntu workstation"
-      prompting_notes: >-
-        Human-directed agent work, closely supervised by the author. Statement differences from the
-        paper are disclosed under fidelity.
 fidelity:
-  divergences: 'Every frozen statement states what paper/dimred.tex states.  That file is the arXiv source
-    (arXiv:2009.05968v2) with the corrections listed in paper/CHANGES_FROM_ARXIV.md: axis monotonicity
-    (Corollary 2.1) in the one-step form of Babai and Gorodezky, the topple time tau_j defined with "for
-    some boundary site", the ripple clause of Proposition 3.2 as the front-shifted profile, two displays
-    of Proposition 4.1, the nonnegativity of the initial sandpile in Lemma 2.1 and the membership condition
-    in the first boundary branch of Lemma 2.4. CORRESPONDENCE.md records the vocabulary and the standing
-    hypotheses the frozen statements write out; the dimension of Theorem 1.1 is written d + 1.'
+  divergences: 'The current proof certificate concerns registered Lean statements pinned to
+    corrected local text paper/dimred.tex, not the author-selected arXiv v2 source. Known
+    open issues include extra chip-height premises, incomplete symmetrized-odometer coverage,
+    and public definition bodies on empty or infinite carriers. CORRESPONDENCE.md records
+    current intended local-text mappings; an arXiv-v2 correspondence audit is in progress.'
 review:
-  status: author-verified
+  status: source-audit-open
   reviewers:
   - Ahmed Bou-Rabee
-  notes: Correctness of every proved result is guaranteed by the Lean kernel and Mathlib. The statement-level
-    decisions are the author's and are recorded in ledger/decisions.md. All four comparator pairs under
-    DimRedAudit/ are accepted by both the Lean kernel and the nanoda kernel (DimRedAudit/README.md). This is not external
-    peer review.
+  notes: The Lean kernel checks proofs of the registered statements. Source fidelity to the
+    selected arXiv v2 text, including public definition bodies and live consumers, remains open.
+    Comparator checks are evidence about the registered Lean surface, not a paper-level seal.
 alignment:
   namespace: DimRed
   statements:

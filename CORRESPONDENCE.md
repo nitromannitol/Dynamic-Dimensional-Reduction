@@ -1,9 +1,11 @@
 # Correspondence between the paper and the formalization
 
-`paper/dimred.tex` is the contract.  This file records, for every choice that a
-reader might otherwise have to reconstruct, how a statement of the paper became
-a Lean statement.  `paper/dimred.tex` is the arXiv version with the corrections
-listed in [`paper/CHANGES_FROM_ARXIV.md`](paper/CHANGES_FROM_ARXIV.md).
+The current Lean manifest pins corrected local text `paper/dimred.tex`. This file records
+its intended correspondence with the registered Lean statements. The final source for
+the paper formalization is the author's [arXiv v2 text](https://arxiv.org/abs/2009.05968v2),
+preserved as `paper/dimred-arxiv.tex`. The local corrections are listed in
+[`paper/CHANGES_FROM_ARXIV.md`](paper/CHANGES_FROM_ARXIV.md). This table records a claimed
+mapping for the local text, not a completed source-fidelity audit of arXiv v2.
 
 ## The frozen surface
 
@@ -122,9 +124,10 @@ the reason for it.
 
 ## Main results
 
-The paper's main results are proved.  Their frozen statements are registered and proved
-(state `SEALED`), and [`DimRed/MainTheorems.lean`](DimRed/MainTheorems.lean) states each of
-them in full, together with the other fifteen registered statements.
+The five registered Lean declarations assigned to the main-result labels have proofs
+(state `PROVED`). This registration does not establish their exact correspondence to the
+selected arXiv v2 source. [`DimRed/MainTheorems.lean`](DimRed/MainTheorems.lean) states
+the registered declarations in full, together with the other fifteen declarations.
 
 | Source | Frozen statement | State |
 |---|---|---|
@@ -134,7 +137,7 @@ them in full, together with the other fifteen registered statements.
 | Corollary 1.1(i) | `DimRed.Frozen.sandpile_dimensional_reduction` | proved |
 | Corollary 1.1(ii) | `DimRed.Frozen.sandpile_self_similarity` | proved |
 
-The paper proves them together with the five clauses of Proposition 4.1 by one induction
-over dimension, side length and time, and so does the formalization (`DimRed.reg_proved` in
-`DimRed/Support/RegProved.lean`).  Each of the five main results and Proposition 4.1 also has a
+The current Lean proofs use one induction over dimension, side length and time
+(`DimRed.reg_proved` in `DimRed/Support/RegProved.lean`). Each of the five registered
+main-result declarations and Proposition 4.1 also has a
 Mathlib-only comparator challenge; see [`DimRedAudit/README.md`](DimRedAudit/README.md).

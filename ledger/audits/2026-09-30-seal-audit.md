@@ -267,7 +267,7 @@ SOURCE, EXCESS 0.  Witness (kernel): `N=7, d=2, j=3, t=2 ≤ τ_3, x=(3,3)`: bot
 ## R. Reproduction
 
 ```
-cd /home/bourabbe/lean/Dynamic-Dimensional-Reduction
+cd "$(git rev-parse --show-toplevel)"
 PATH=$HOME/.elan/bin:$PATH lake env lean scratch/audit/SealAxioms.lean   # G2, G3, G4  (~25 s)
 PATH=$HOME/.elan/bin:$PATH lake env lean scratch/audit/SealSim.lean      # G3 seal simulation
 PATH=$HOME/.elan/bin:$PATH lake env lean scratch/audit/SealWitness.lean  # G5, witnesses (~3.5 min)
