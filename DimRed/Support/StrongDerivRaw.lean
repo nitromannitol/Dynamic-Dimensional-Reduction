@@ -1,3 +1,4 @@
+import DimRed.Support.NonnegativeUpdate
 import DimRed.Support.StrongDerivPure
 import DimRed.Support.FacetNormal
 
@@ -112,9 +113,9 @@ theorem odo_time_diff (d M T : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M)
     intro _ k x hx
     have h1 : odoUnif d (2 * M) 1 x = 1 := by
       have hdZ : (1 : ℤ) ≤ (d : ℤ) := by exact_mod_cast hd
-      have h := Frozen.pt_ind_lemma d (2 * M) (by omega) (fun _ => 2 * (d : ℤ))
+      have h := DimRed.bounded_point_update d (2 * M) (by omega) (fun _ => 2 * (d : ℤ))
         (fun _ _ => by positivity)
-        (fun _ _ => by linarith) 0 x (inPos_inCube hx)
+       (fun _ _ => by linarith) 0 x (inPos_inCube hx)
       simp only [nbrSum, odoUnif, odo] at h ⊢
       rw [h]
       have hz : (∑ i : Fin d, ((0 : ℤ) + 0)) = 0 := by simp

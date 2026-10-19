@@ -1,14 +1,14 @@
 /-
-The second display of Theorem 1.1(i) of `dimred.tex`, frozen.
-`dimred.tex:109-140` (label `the_theorem`), clause 1:
+The second display of Theorem 1.1(i) of the corrected arXiv-format draft,
+frozen. `dimred-corrected-arxiv.tex:119-121` (label `the_theorem`), clause 1:
 
-  "and for $\mathbf{x}_{d-1} \geq 2$,
-   $v_{\infty}^{(d,N)}(\mathbf{x}_{d-1}, 2) = v_{\infty}^{(d-1,N)}
-   (\mathbf{x}_{d-1})$."
+  "and for $\mathbf{x}_{d-1} \geq 2$ v_{\infty}^{(d,N)}(\mathbf{x}_{d-1}, 2) =
+   v_{\infty}^{(d-1,N)}(\mathbf{x}_{d-1})."
 
-The dimension is written `d + 1` in place of `d`.  `v_∞` is `odoInf`, valued in
-`ℕ∞`; that it is finite is a theorem of the development.  Vector inequalities
-are coordinatewise (`dimred.tex:273`).
+The dimension is written `d + 1` in place of `d`. `v_∞` is `odoInfUnif`, the
+supremum `odoInf` at the constant initial condition `2d`, valued in `ℕ∞`; that
+it is finite is a theorem of the development. Vector inequalities are
+coordinatewise (`dimred-corrected-arxiv.tex:275`).
 -/
 import DimRed.Support.RegProved
 

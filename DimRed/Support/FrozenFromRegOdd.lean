@@ -1,3 +1,4 @@
+import DimRed.Support.NonnegativeUpdate
 import DimRed.Support.RegInduction
 import DimRed.Support.StrongDerivRaw
 import DimRed.Support.SelfSimilarityMain
@@ -58,11 +59,11 @@ theorem odoUnif_odd_eq_even (d M : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
         exact ⟨by have := hx1 i; omega, hxM i⟩
       have hv : odoUnif d (2 * M) (t + 1) x
           = (2 * (d : ℤ) + nbrSum (odoUnif d (2 * M) t) x) / (2 * (d : ℤ)) :=
-        Frozen.pt_ind_lemma d (2 * M) hd (fun _ => 2 * (d : ℤ))
+        DimRed.bounded_point_update d (2 * M) hd (fun _ => 2 * (d : ℤ))
           (fun _ _ => by positivity) (fun _ _ => by linarith) t x hvc
       have hw : odoUnif d N (t + 1) x
           = (2 * (d : ℤ) + nbrSum (odoUnif d N t) x) / (2 * (d : ℤ)) :=
-        Frozen.pt_ind_lemma d N hd (fun _ => 2 * (d : ℤ))
+        DimRed.bounded_point_update d N hd (fun _ => 2 * (d : ℤ))
           (fun _ _ => by positivity) (fun _ _ => by linarith) t x hwc
       have hpos_add : ∀ i : Fin d, ∀ k : Fin d, 1 ≤ (x + unit i) k := by
         intro i k
@@ -178,7 +179,7 @@ theorem odoUnif_ones_succ (d N : ℕ) (hd : 1 ≤ d) (hN : N = 1 ∨ N = 2) (t :
     rcases hN with rfl | rfl <;> simp [loCoord, hiCoord, sideHalf]
   have hrec : odoUnif d N (t + 1) (fun _ => 1)
       = (2 * (d : ℤ) + nbrSum (odoUnif d N t) (fun _ => 1)) / (2 * (d : ℤ)) :=
-    Frozen.pt_ind_lemma d N hd (fun _ => 2 * (d : ℤ))
+    DimRed.bounded_point_update d N hd (fun _ => 2 * (d : ℤ))
       (fun _ _ => by positivity) (fun _ _ => by linarith) t _ hc
   have hplus : ∀ i : Fin d, odoUnif d N t ((fun _ => (1 : ℤ)) + unit i) = 0 := by
     intro i

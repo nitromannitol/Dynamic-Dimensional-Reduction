@@ -1,3 +1,4 @@
+import DimRed.Support.NonnegativeUpdate
 import DimRed.Support.StrongDerivStep
 import DimRed.Support.DimRedCritical
 import DimRed.Support.ToppleGeneral
@@ -155,13 +156,13 @@ theorem one_dim_consist_derived (M T : ℕ) (hM : 2 ≤ M)
   simp only [odoUnif] at h1
   norm_num at h1
   -- the induction step at `T` and at `T + 1`
-  have hstep := Frozen.pt_ind_lemma 1 (2 * M) (by norm_num) (fun _ => 2)
+  have hstep := DimRed.bounded_point_update 1 (2 * M) (by norm_num) (fun _ => 2)
     (fun _ _ => by norm_num) (fun _ _ => by norm_num) T (fun _ : Fin 1 => y)
     (by
       intro i
       rw [loCoord_two_mul, hiCoord_two_mul]
       exact ⟨by linarith, hyM⟩)
-  have hstep' := Frozen.pt_ind_lemma 1 (2 * (M - 1)) (by norm_num) (fun _ => 2)
+  have hstep' := DimRed.bounded_point_update 1 (2 * (M - 1)) (by norm_num) (fun _ => 2)
     (fun _ _ => by norm_num) (fun _ _ => by norm_num) T (fun _ : Fin 1 => y - 1)
     (by
       intro i

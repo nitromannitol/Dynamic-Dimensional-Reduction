@@ -5,7 +5,7 @@ the domain and the recursion of Lemma 2.1 applies at both, and the boundary
 step, where the first branch of `eq:boundaries_ref` bounds the neighbour sums
 directly.  Both are floor-division computations on `ℤ`.
 -/
-import DimRed.Frozen.Prelim.PtInd
+import DimRed.Support.NonnegativeUpdate
 import DimRed.Support.Difference
 
 namespace DimRed
@@ -29,8 +29,8 @@ theorem difference_interior_step (d M : ℕ) (hd : 1 ≤ d) (c : ℤ)
   have hc0' : ∀ y, inCube d (2 * M) y → 0 ≤ (fun _ => c) y := fun y _ => hc0
   have hc1' : ∀ y, inCube d (2 * M) y → (fun _ => c) y ≤ 2 * (2 * (d : ℤ)) - 1 := fun y _ => hc1
   have hx_cube : inCube d (2 * M) x := inSimplex_inCube d M x hx
-  have hA := Frozen.pt_ind_lemma d (2 * M) hd (fun _ => c) hc0' hc1' n x hx_cube
-  have hB := Frozen.pt_ind_lemma d (2 * M) hd (fun _ => c) hc0' hc1' n (x + w) hcube
+  have hA := DimRed.bounded_point_update d (2 * M) hd (fun _ => c) hc0' hc1' n x hx_cube
+  have hB := DimRed.bounded_point_update d (2 * M) hd (fun _ => c) hc0' hc1' n (x + w) hcube
   have hshift : DimRed.nbrSum (odo d (2 * M) (fun _ => c) n) (x + w)
       = DimRed.nbrSum (fun y => odo d (2 * M) (fun _ => c) n (y + w)) x :=
     (nbrSum_shift (odo d (2 * M) (fun _ => c) n) x w).symm
@@ -79,8 +79,8 @@ theorem difference_boundary_step (d M : ℕ) (hd : 1 ≤ d) (c : ℤ)
   have hc0' : ∀ y, inCube d (2 * M) y → 0 ≤ (fun _ => c) y := fun y _ => hc0
   have hc1' : ∀ y, inCube d (2 * M) y → (fun _ => c) y ≤ 2 * (2 * (d : ℤ)) - 1 := fun y _ => hc1
   have hx_cube : inCube d (2 * M) x := inSimplex_inCube d M x hx
-  have hA := Frozen.pt_ind_lemma d (2 * M) hd (fun _ => c) hc0' hc1' n x hx_cube
-  have hB := Frozen.pt_ind_lemma d (2 * M) hd (fun _ => c) hc0' hc1' n (x + w) hcube
+  have hA := DimRed.bounded_point_update d (2 * M) hd (fun _ => c) hc0' hc1' n x hx_cube
+  have hB := DimRed.bounded_point_update d (2 * M) hd (fun _ => c) hc0' hc1' n (x + w) hcube
   have hfloor : odo d (2 * M) (fun _ => c) (n + 1) x - odo d (2 * M) (fun _ => c) (n + 1) (x + w)
       ≤ (c + DimRed.nbrSum (odo d (2 * M) (fun _ => c) n) x
           - (c + DimRed.nbrSum (odo d (2 * M) (fun _ => c) n) (x + w)) + ((2 * d : ℕ) : ℤ) - 1) / ((2 * d : ℕ) : ℤ) := by

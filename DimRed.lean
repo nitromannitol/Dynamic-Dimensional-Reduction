@@ -79,3 +79,14 @@ import DimRed.Support.HeadTermSub
 import DimRed.Support.FacetTermBounds
 import DimRed.Support.SimplexFold
 import DimRed.MainTheorems
+
+import DimRed.Frozen.Regularity.StrictHeadFacet
+import DimRed.Frozen.Regularity.OneTerminalProfile
+import DimRed.Frozen.Regularity.OneTerminalDerivative
+
+import DimRed.Frozen.Definitions.FoldedLift
+import DimRed.Frozen.Definitions.FoldedNeighbors
+import DimRed.Frozen.Definitions.FoldedOdometer
+import DimRed.Frozen.Definitions.Pile
+import DimRed.Frozen.Definitions.TerminalPile
+import DimRed.Frozen.Definitions.Maximum

@@ -285,15 +285,12 @@ lemma eventually_constant_of_monotone_bounded (f : ℕ → ℕ) (K : ℕ)
 lemma one_profile_comparison (M : ℕ) :
     ∀ (t : ℕ) (y : Site 1),
       odo 1 (2 * M) (fun _ => 2) t y ≤ oneProfile M y := by
-  have hs0 : ∀ y, inCube 1 (2 * M) y → (0 : ℤ) ≤ 2 := by
-    intro y hy
-    norm_num
   have hs1 : ∀ y, inCube 1 (2 * M) y →
       (2 : ℤ) ≤ 2 * (2 * (1 : ℤ)) - 1 := by
     intro y hy
     norm_num
   have hcomp := Frozen.parabolic_comparison 1 (2 * M) (by omega)
-    (fun _ => 2) hs0 hs1
+    (fun _ => 2) hs1
   have hu0 : ∀ (t : ℕ) (y : Site 1), 0 ≤ oneProfile M y := by
     intro t y
     exact oneProfile_nonneg M y

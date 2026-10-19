@@ -1,10 +1,8 @@
 version: v0.4
 project:
   name: Dynamic-Dimensional-Reduction
-  description: 'Lean 4/Mathlib development for corrected local text associated with *Dynamic dimensional
-    reduction in the Abelian sandpile* (Bou-Rabee, Comm. Math. Phys. 2022; arXiv:2009.05968).
-    The registered Lean statements have proofs; source fidelity to the author-selected arXiv v2
-    text remains under review.'
+  description: Lean 4 formalization of Dynamic dimensional reduction in the Abelian sandpile, against a
+    separate corrected arXiv-format draft.
   authors:
   - Ahmed Bou-Rabee
   license: Apache-2.0
@@ -27,13 +25,8 @@ sources:
   author_contacted: n/a
   prior_work: ''
 status:
-  scope: 'The current manifest registers 20 Lean statements against corrected local text
-    paper/dimred.tex; all 20 have complete proofs with the recorded standard axiom closure.
-    The author-selected final comparison source is arXiv:2009.05968v2, preserved as
-    paper/dimred-arxiv.tex. Its exact statement, definition-body and consumer fidelity is
-    under audit. The 20/20 proof count does not certify the arXiv-v2 paper. The current
-    development has no registered cited-input assumptions. The introduction, open problems
-    and figures are outside the registered proof surface.'
+  scope: 'Corrected source: 20 inherited successors, 3 added theorem clauses and 6 definition units.
+    Exact registered proofs are not a certificate against the unchanged arXiv v2 text.'
   sorry_count: 0
   sorry_in_definitions: 0
   axioms:
@@ -132,18 +125,19 @@ status:
     comparator_config: DimRedAudit/Regularity/comparator.json
     literature_dependencies: []
 fidelity:
-  divergences: 'The current proof certificate concerns registered Lean statements pinned to
-    corrected local text paper/dimred.tex, not the author-selected arXiv v2 source. Known
-    open issues include extra chip-height premises, incomplete symmetrized-odometer coverage,
-    and public definition bodies on empty or infinite carriers. CORRESPONDENCE.md records
-    current intended local-text mappings; an arXiv-v2 correspondence audit is in progress.'
+  divergences: The manifest selects the separate corrected arXiv-format draft, whose surgical C01-C25
+    changes and C18 proof-description refinement are recorded in paper/corrected-arxiv/SOURCE_NOTE.md.
+    All source-facing rows have Frozen declarations with repaired signed-height scope, folded-process identification
+    and physical pile/nonempty-maximum carriers. The official arXiv extraction and historical local text
+    are preserved. This is not a certificate against unchanged arXiv v2.
 review:
-  status: source-audit-open
+  status: independently-reviewed
   reviewers:
   - Ahmed Bou-Rabee
-  notes: The Lean kernel checks proofs of the registered statements. Source fidelity to the
-    selected arXiv v2 text, including public definition bodies and live consumers, remains open.
-    Comparator checks are evidence about the registered Lean surface, not a paper-level seal.
+  notes: The corrected-source statements, definitions and consumers were reviewed independently against the
+    corrected draft; see ledger/audits/2026-10-19-corrected-source-integration.md. The integrated tree builds and
+    passes tools/verify.py. Historical comparator receipts apply only at their exact original statements and
+    source pins.
 alignment:
   namespace: DimRed
   statements:
@@ -152,23 +146,23 @@ alignment:
     module: DimRed.Frozen.Main
     status: proved
     note: Frozen statements, proved by the joint induction of Sections 4 and 5 (DimRed.reg_proved); each
-      restates its certified counterpart DimRed.Frozen.* unchanged in DimRed/MainTheorems.lean.
+      restates its frozen counterpart DimRed.Frozen.* unchanged in DimRed/MainTheorems.lean.
   - source: Corollary 1.1, two clauses
     lean: DimRed.Frozen.sandpile_dimensional_reduction, DimRed.Frozen.sandpile_self_similarity
     module: DimRed.Frozen.Main
     status: proved
     note: Frozen statements, proved by the joint induction of Sections 4 and 5 (DimRed.reg_proved); each
-      restates its certified counterpart DimRed.Frozen.* unchanged in DimRed/MainTheorems.lean.
+      restates its frozen counterpart DimRed.Frozen.* unchanged in DimRed/MainTheorems.lean.
   - source: Proposition 4.1 (base_dimension), five clauses
     lean: DimRed.Frozen.base_dimension_*
     module: DimRed.Frozen.Regularity
     status: proved
     note: Frozen statements, proved by the joint induction of Sections 4 and 5 (DimRed.reg_proved); each
-      restates its certified counterpart DimRed.Frozen.* unchanged in DimRed/MainTheorems.lean.
+      restates its frozen counterpart DimRed.Frozen.* unchanged in DimRed/MainTheorems.lean.
   - source: 'Sections 2 and 3: every lemma, corollary and proposition'
     lean: DimRed.* in DimRed/MainTheorems.lean
     module: DimRed.MainTheorems
     status: proved
-    note: Each restates its certified counterpart DimRed.Frozen.* unchanged; the full map is in README.md
-      and CORRESPONDENCE.md.
+    note: Each restates its frozen counterpart DimRed.Frozen.* unchanged; the full map is in
+      README.md and CORRESPONDENCE.md.
 acknowledgements: Built on Lean 4, Mathlib, Lake and the shared library Lattice-Probability.

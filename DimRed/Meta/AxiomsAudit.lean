@@ -1,13 +1,19 @@
 import DimRed.MainTheorems
+import DimRed.Frozen.Definitions.FoldedLift
+import DimRed.Frozen.Definitions.FoldedNeighbors
+import DimRed.Frozen.Definitions.FoldedOdometer
+import DimRed.Frozen.Definitions.Pile
+import DimRed.Frozen.Definitions.TerminalPile
+import DimRed.Frozen.Definitions.Maximum
 
 /-!
 # Axioms audit
 
-Building this module prints the axiom dependencies of the twenty proved results restated in
+Building this module prints the axiom dependencies of the candidate results restated in
 `DimRed/MainTheorems.lean`.  Each must report exactly the three standard foundational axioms
 of Mathlib: `propext`, `Classical.choice`, `Quot.sound`.
 
-`python3 tools/verify.py` (the check_axioms gate) prints the axiom closure of all twenty
+`python3 tools/verify.py` (the check_axioms gate) prints the axiom closure of all
 registered statements.
 
 Nothing is assumed in this development: no theorem takes a cited result as a hypothesis,
@@ -37,3 +43,14 @@ This file is not imported by the library root; the report runs when it is built 
 #print axioms DimRed.base_dimension_strong_derivative
 #print axioms DimRed.base_dimension_strong_compatibility
 #print axioms DimRed.base_dimension_strong_topple
+
+#print axioms DimRed.Frozen.strict_head_facet
+#print axioms DimRed.Frozen.one_terminal_profile
+#print axioms DimRed.Frozen.one_terminal_derivative
+
+#print axioms DimRed.Frozen.folded_lift_definition
+#print axioms DimRed.Frozen.folded_neighbors_definition
+#print axioms DimRed.Frozen.folded_odometer_definition
+#print axioms DimRed.Frozen.pile_definition
+#print axioms DimRed.Frozen.terminal_pile_characterization
+#print axioms DimRed.Frozen.maximum_definition

@@ -1,3 +1,4 @@
+import DimRed.Support.NonnegativeUpdate
 /-
 The derivative bound of `dimred.tex:531-538`: if the odometer at the corner
 `(M, 1_{d-1})` never exceeds `k M`, then `v_t(x) - v_t(x + e_j) ≤ k x_j`
@@ -259,8 +260,8 @@ theorem odo_deriv_bound (hd : 1 ≤ d) (c : ℤ) (hc0 : 0 ≤ c)
             simp [Finset.sum_const, Finset.card_univ]
             ring_nf
             exact le_rfl
-          rw [Frozen.pt_ind_lemma d (2 * M) hd _ (fun _ _ => hc0) (fun _ _ => hc1) n _ hx,
-            Frozen.pt_ind_lemma d (2 * M) hd _ (fun _ _ => hc0) (fun _ _ => hc1) n _ hxa]
+          rw [DimRed.bounded_point_update d (2 * M) hd _ (fun _ _ => hc0) (fun _ _ => hc1) n _ hx,
+            DimRed.bounded_point_update d (2 * M) hd _ (fun _ _ => hc0) (fun _ _ => hc1) n _ hxa]
           have h1 : (c + nbrSum (odo d (2 * M) (fun _ => c) n) x) / (2 * (d : ℤ))
               ≤ (c + nbrSum (odo d (2 * M) (fun _ => c) n) (x + unit j)
                   + 2 * (d : ℤ) * ((k : ℤ) * x j)) / (2 * (d : ℤ)) :=

@@ -20,7 +20,7 @@ theorem inCube_two_iff (d : ℕ) (x : Site d) :
 theorem unit_apply_self (d : ℕ) (i : Fin d) : (unit i : Site d) i = 1 := by
   simp [unit]
 
-theorem unit_apply_ne (d : ℕ) (i j : Fin d) (h : j ≠ i) : (unit i : Site d) j = 0 := by
+private theorem unit_apply_ne_of_ne (d : ℕ) (i j : Fin d) (h : j ≠ i) : (unit i : Site d) j = 0 := by
   simp [unit, h]
 
 theorem inCube_two_add (d : ℕ) (x : Site d) (hx : inCube d 2 x) (i : Fin d) :
@@ -35,7 +35,7 @@ theorem inCube_two_add (d : ℕ) (x : Site d) (hx : inCube d 2 x) (i : Fin d) :
   · intro h0 j
     by_cases hj : j = i
     · subst hj; rw [Pi.add_apply, unit_apply_self, h0]; omega
-    · rw [Pi.add_apply, unit_apply_ne d i j hj, add_zero]; exact hx j
+    · rw [Pi.add_apply, unit_apply_ne_of_ne d i j hj, add_zero]; exact hx j
 
 theorem inCube_two_sub (d : ℕ) (x : Site d) (hx : inCube d 2 x) (i : Fin d) :
     inCube d 2 (x - unit i) ↔ x i = 1 := by
@@ -49,7 +49,7 @@ theorem inCube_two_sub (d : ℕ) (x : Site d) (hx : inCube d 2 x) (i : Fin d) :
   · intro h1 j
     by_cases hj : j = i
     · subst hj; rw [Pi.sub_apply, unit_apply_self, h1]; omega
-    · rw [Pi.sub_apply, unit_apply_ne d i j hj, sub_zero]; exact hx j
+    · rw [Pi.sub_apply, unit_apply_ne_of_ne d i j hj, sub_zero]; exact hx j
 
 theorem nbrSum_cube2 (d : ℕ) (a : ℤ) (x : Site d) (hx : inCube d 2 x) :
     nbrSum (fun y => if inCube d 2 y then a else 0) x = a * (d : ℤ) := by
