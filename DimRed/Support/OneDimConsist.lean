@@ -2,8 +2,8 @@ import DimRed.Support.AxisStep
 import DimRed.Support.NonnegativeUpdate
 
 /-
-The one-dimensional inductive self-similarity step in Proposition 4.1:
-`dimred.tex:972-1001`.  The file also records the one-dimensional centre
+The one-dimensional inductive self-similarity step in Proposition 4.1: the self-similarity
+clause (`base_dimension:consistency`) of `dimred-corrected-arxiv.tex`.  The file also records the one-dimensional centre
 estimates used in the exceptional `x = 2` row of the induction.
 -/
 namespace DimRed

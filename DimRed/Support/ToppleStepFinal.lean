@@ -1,6 +1,6 @@
 /-
-The strong topple control step of the joint induction, `dimred.tex:1036-1105`
-(`d = 1`) and `dimred.tex:1447-1474` (`d ≥ 2`).
+The strong topple control step of the joint induction (`base_dimension:strong_topple`) of
+`dimred-corrected-arxiv.tex`, for `d = 1` and for `d ≥ 2`.
 -/
 import DimRed.Support.RegInduction
 import DimRed.Support.OneDimConsistAll
@@ -238,7 +238,7 @@ theorem odoUnif_dim_one_one_le_two_add_one (M s : ℕ) (hM : 2 ≤ M) :
     rw [hr]
     split_ifs with h <;> omega
 
-/-- The neighbour lemma behind `dimred.tex:1049-1051`: a site that rises by two
+/-- The neighbour lemma behind `dimred-corrected-arxiv.tex:864-866`: a site that rises by two
 over two steps has a neighbour that rose by two one step earlier. -/
 theorem odoUnif_dim_one_rise_two_nbr (M s : ℕ) (hs : 1 ≤ s) (c : ℤ)
     (hbad : 2 ≤ odoUnif 1 (2 * M) (s + 2) (fun _ => c) - odoUnif 1 (2 * M) s (fun _ => c)) :
@@ -457,7 +457,7 @@ end OneDimAt
 
 /-! ### Dimensions at least two -/
 
-/-- The parabolic least action principle of `dimred.tex:1455-1458`: the odometer
+/-- The parabolic least action principle of `dimred-corrected-arxiv.tex`: the odometer
 on the slice `x_{d} = 1` is dominated by the odometer one dimension lower. -/
 theorem odoUnif_snoc_one_le (e N s : ℕ) (he : 1 ≤ e) (x : Site e) :
     odoUnif (e + 1) N s (Fin.snoc x 1) ≤ odoUnif e N s x := by
@@ -521,7 +521,7 @@ theorem odoUnif_snoc_one_le (e N s : ℕ) (he : 1 ≤ e) (x : Site e) :
 
 /-- The reflecting boundary identity `eq:reflecting_boundaries` at one time, from
 self-similarity in dimensions `e + 1` and `e` and dimensional reduction at the
-scales `M` and `M - 1`, `dimred.tex:1171-1180`. -/
+scales `M` and `M - 1`, `dimred-corrected-arxiv.tex:997-1006`. -/
 theorem odoUnif_snoc_two_eq_snoc_one {e M T : ℕ}
     (hCd : ∀ y : Site (e + 1), (∀ i, 2 ≤ y i) →
       odoUnif (e + 1) (2 * M) T y = odoUnif (e + 1) (2 * (M - 1)) T (fun i => y i - 1))
@@ -586,7 +586,7 @@ theorem odoUnif_sub_unit_eq_of_eq_two {e M T : ℕ}
   rw [← hsym (y - unit k), ← hsym y, e1, e2]
   exact (hsnoc z hz2).symm
 
-/-- The paper's Case 3, `dimred.tex:1473-1474`: a point with every coordinate at
+/-- The paper's Case 3, `dimred-corrected-arxiv.tex:1276-1277`: a point with every coordinate at
 least three is two steps inside the self-similar region, so its two-step rise
 is the rise at scale `M - 1`. -/
 theorem topple_rise_le_one_of_three_le {d M T : ℕ} (hM : 2 ≤ M)
@@ -624,7 +624,7 @@ theorem topple_rise_le_one_of_three_le {d M T : ℕ} (hM : 2 ≤ M)
   exact le_trans hle hW
 
 /-- Strong topple control at the topple time in dimension `e + 1 ≥ 2`,
-`dimred.tex:1447-1474`. -/
+`dimred-corrected-arxiv.tex`. -/
 theorem topple_dim_succ_at {e M T : ℕ} (he : 1 ≤ e) (hM : 2 ≤ M)
     (hC : ∀ y : Site (e + 1), (∀ i, 2 ≤ y i) →
       odoUnif (e + 1) (2 * M) T y = odoUnif (e + 1) (2 * (M - 1)) T (fun i => y i - 1))
@@ -756,7 +756,7 @@ theorem toppleTime_eq_toppleTime_one (j D : ℕ) (hj : 1 ≤ j)
 /-! ### The induction step -/
 
 /-- Strong topple control at one triple of the joint induction,
-`dimred.tex:944-948`, proved from the earlier triples and the self-similarity
+`dimred-corrected-arxiv.tex:759-763`, proved from the earlier triples and the self-similarity
 and dimensional-reduction clauses at the current triple. -/
 theorem topple_step_of_earlier (d M t : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
     (hprior : ∀ d' M' t' : ℕ, regEarlier d M t d' M' t' →

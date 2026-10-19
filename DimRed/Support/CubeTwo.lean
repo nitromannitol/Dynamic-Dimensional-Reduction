@@ -1,5 +1,5 @@
 /-
-The hypercube of side `2`, the setting `M = 1` of `dimred.tex:704-720`: every
+The hypercube of side `2`, the setting `M = 1` of `dimred-corrected-arxiv.tex`: every
 site is a corner with `d` neighbours inside the cube, so a constant odometer has
 Laplacian `-d` times its value, and the whole process is one scalar recursion.
 -/

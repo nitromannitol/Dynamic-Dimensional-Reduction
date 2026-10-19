@@ -1,5 +1,5 @@
 /-
-The weak facet step of the joint induction of `dimred.tex:1117-1128`: weak facet compatibility
+The weak facet step of the joint induction of `dimred-corrected-arxiv.tex:943-954`: weak facet compatibility
 at a triple, from strong facet compatibility at the same triple.
 -/
 import DimRed.Support.RegInduction

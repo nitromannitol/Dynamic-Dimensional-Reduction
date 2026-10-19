@@ -4,7 +4,7 @@ import DimRed.Frozen.Prelim.ParabolicComparison
 
 /-
 The terminal odometer in dimension one and its first difference, as in
-`dimred.tex:1107-1110`.
+`dimred-corrected-arxiv.tex`.
 -/
 
 namespace DimRed

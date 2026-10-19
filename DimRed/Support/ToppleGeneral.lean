@@ -1,7 +1,7 @@
 /-
 Strong topple control in dimensions at least two, the clause
-`base_dimension:strong_topple` of `dimred.tex:944-948`, with the three-case
-argument at `dimred.tex:1447-1473`.  Dimensional reduction, the reflecting
+`base_dimension:strong_topple` of `dimred-corrected-arxiv.tex:759-763`, with the three-case
+argument at `dimred-corrected-arxiv.tex`.  Dimensional reduction, the reflecting
 boundary comparison, axis monotonicity, least-action comparison, and the
 lower-dimensional control are explicit inputs.  The remaining neighbour
 transfer is isolated as the local induction input for the third case.

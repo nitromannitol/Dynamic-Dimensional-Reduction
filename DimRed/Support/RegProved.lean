@@ -1,5 +1,5 @@
 /-
-The joint induction of `dimred.tex:1117-1128` with all six step hypotheses discharged:
+The joint induction of `dimred-corrected-arxiv.tex:943-954` with all six step hypotheses discharged:
 odometer regularity (Proposition 4.1) and dimensional reduction hold at every dimension
 `d ≥ 1`, half-side `M ≥ 2` and time `t`.  The ten frozen statements of Theorem 1.1,
 Corollary 1.1 and Proposition 4.1 are read off from `reg_proved` by the bridges of

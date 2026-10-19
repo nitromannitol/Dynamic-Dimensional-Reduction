@@ -11,7 +11,7 @@ open LatticeProb DimRed
 namespace DimRed
 
 /-- The neighbour-sum identity of Case 1 of the one-step self-similarity,
-`dimred.tex:1200-1208`: for `y ∈ S_m` with every coordinate above two, the
+`dimred-corrected-arxiv.tex:1026-1034`: for `y ∈ S_m` with every coordinate above two, the
 symmetrized neighbour sum of the odometer at scale `m` equals the symmetrized
 neighbour sum at scale `m - 1` of `y - 1`, given the one-step identity at the
 same time for every point of `S_m` with all coordinates above one. -/
