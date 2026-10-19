@@ -2,7 +2,7 @@
 
 The expensive failure mode of an agentic formalization is not a false proof;
 the axiom gate (`check_axioms.py`) catches that. It is UNPRODUCTIVE WRAPPING:
-a worker reduces an open goal to a new lemma that is itself open, repackages
+a proof step reduces an open goal to a new lemma that is itself open, repackages
 it under a longer name, and reports progress, while the set of open
 assumptions never shrinks.
 
@@ -20,7 +20,7 @@ sealing means, and `check_manifest.py`/`check_axioms.py` are the checks that
 know it is authorized.
 
 Unlike the vendored copies (which `rglob` a single hardcoded library
-directory, e.g. `(ROOT / "Sandpile").rglob("*.lean")`), the file set here is
+directory, e.g. `(ROOT / "Lib").rglob("*.lean")`), the file set here is
 `cfg.production_lean_files()`, so this never needs a per-repo literal and
 never silently scans zero files because the directory name changed.
 

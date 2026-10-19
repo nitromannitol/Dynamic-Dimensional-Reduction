@@ -17,7 +17,7 @@ the challenge's vocabulary, and proves the byte-identical statements from
 
 namespace DimRed.StatementAudit.DimensionalReduction
 
-/-- **Theorem 1.1(i)** (`the_theorem`, `dimred.tex:114-117`), first display: dimensional
+/-- **Theorem 1.1(i)** (`the_theorem`, `dimred-corrected-arxiv.tex:114-117`), first display: dimensional
 reduction on the centre slice, `v_t^{(d,N)}(x_{d-1}, 1) = v_t^{(d-1,N)}(x_{d-1})` for every
 `t ≥ 1` and `x_{d-1} ∈ S_M^{(d-1)}`. -/
 theorem dimensional_reduction (N d : ℕ) (hN : 1 ≤ N) (hd : 1 ≤ d)
@@ -26,7 +26,7 @@ theorem dimensional_reduction (N d : ℕ) (hN : 1 ≤ N) (hd : 1 ≤ d)
   rw [Bridge.odoUnif_eq, Bridge.odoUnif_eq]
   exact DimRed.dimensional_reduction N d hN hd t ht x hx
 
-/-- **Theorem 1.1(i)** (`the_theorem`, `dimred.tex:118-121`), second display: terminal
+/-- **Theorem 1.1(i)** (`the_theorem`, `dimred-corrected-arxiv.tex:118-121`), second display: terminal
 dimensional reduction, `v_∞^{(d,N)}(x_{d-1}, 2) = v_∞^{(d-1,N)}(x_{d-1})` for
 `x_{d-1} ∈ S_M^{(d-1)}` with `x_{d-1} ≥ 2`. -/
 theorem terminal_dimensional_reduction (N d : ℕ) (hN : 1 ≤ N) (hd : 1 ≤ d)

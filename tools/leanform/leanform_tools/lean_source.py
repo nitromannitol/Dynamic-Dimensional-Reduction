@@ -1,13 +1,13 @@
 """Reading Lean source safely, without a Lean parser.
 
-Two hazards this module exists to handle, both observed in the surveyed repos:
+Two hazards this module exists to handle:
 
 1. Ordinary prose in a header comment that happens to begin a line with the
    word `theorem` was read as a declaration by the regex-based discovery in
    `check_axioms.py`. So comments are masked before any declaration scan, and
    the masker is nesting-aware because Lean's `/- -/` nests.
 2. A declaration name that is an ASCII truncation of a non-ASCII identifier
-   (`e` for `e₁`) silently matched the wrong declaration in Manhattan's copy.
+   (`e` for `e₁`) silently matched the wrong declaration.
    So name comparison is exact on the full identifier, and a truncation is a
    hard error rather than a match.
 """
@@ -113,7 +113,7 @@ def token_hits(src: str, tokens) -> list[tuple[str, int]]:
     Whole-identifier matching on both sides. Without the trailing boundary,
     `axiom` matches inside `#print axioms`, which is a legitimate line in
     every `Certificate.lean` and `Meta/AxiomsAudit.lean`; that false positive
-    produced 226 spurious failures in Manhattan-Transience on first run.
+    would fail every such file.
     """
     masked = mask_comments(src)
     hits = []

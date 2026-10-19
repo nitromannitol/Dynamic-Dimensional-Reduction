@@ -5,21 +5,12 @@
     python3 tools/verify.py --skip-lake  # the pure-Python gates only
 
 The gates themselves are not in this repository. They live in
-`tools/leanform/`, a git subtree of `nitromannitol/leanform-tools`, shared by
-every paper repository, so that a fix to a checker is made once rather than
-in a dozen drifting copies.
+`tools/leanform/`, a vendored copy of the shared checker package, and the
+gates run from it.
 
-That sharing is the point. When each repository carried its own copy, the
-copies rotted invisibly: a checker whose paper-name regex no longer matched
-its repository did not fail, it passed while inspecting nothing. Nine of them
-were doing exactly that across four repositories as of 2026-09-23. Everything
-paper-specific now comes from `ledger/manifest.yaml` and
-`ledger/readings.yaml` instead of from a literal in the checker.
-
-To update the gates:
-
-    git subtree pull --prefix tools/leanform \\
-        https://github.com/nitromannitol/leanform-tools.git main --squash
+Paper-specific data comes from `ledger/manifest.yaml` and
+`ledger/readings.yaml`, never from a literal in a checker: a checker whose
+regex named a different paper passed while inspecting nothing.
 """
 
 import pathlib
@@ -29,12 +20,7 @@ _HERE = pathlib.Path(__file__).resolve().parent
 _PKG = _HERE / "leanform"
 
 if not (_PKG / "leanform_tools").is_dir():
-    sys.exit(
-        f"{_PKG}/leanform_tools is missing.\n"
-        "The checker package is a git subtree; restore it with:\n"
-        "  git subtree add --prefix tools/leanform "
-        "https://github.com/nitromannitol/leanform-tools.git main --squash"
-    )
+    sys.exit(f"{_PKG}/leanform_tools is missing.")
 
 sys.path.insert(0, str(_PKG))
 

@@ -1,8 +1,7 @@
 """Tests for the probability-lint gate.
 
-The first two classes pin false positives this gate actually produced on
-2026-09-23 against real repos, and that two independent model lanes also
-produced. A junk-value gate that cries wolf on `(2 : ℂ)⁻¹` gets switched off.
+The early classes pin false positives this gate actually produced against
+real repos, which two independent model runs also produced. A junk-value gate that cries wolf on `(2 : ℂ)⁻¹` gets switched off.
 """
 
 import unittest
@@ -15,7 +14,7 @@ def names(text):
 
 
 class TestLiteralInverseIsNotAHazard(unittest.TestCase):
-    """Manhattan-Transience: 5 hits, all `(2 : ℂ)⁻¹`, all harmless."""
+    """Literal inverses such as `(2 : ℂ)⁻¹` are harmless and must not be flagged."""
 
     def test_typed_literal_inverse_ignored(self):
         self.assertEqual(names("(2 : ℂ)⁻¹ •"), [])
@@ -38,12 +37,12 @@ class TestLiteralInverseIsNotAHazard(unittest.TestCase):
         self.assertEqual(names("(a + b)⁻¹"), ["inv"])
 
     def test_a_projection_inverse_is_still_caught(self):
-        """GMC's `M.delta⁻¹` shape, which is a genuine hazard."""
+        """A projection inverse such as `M.delta⁻¹` is a genuine hazard."""
         self.assertEqual(names("M.delta⁻¹"), ["inv"])
 
 
 class TestLintegralIsNotBochner(unittest.TestCase):
-    """Divisible-Sandpile-RWRS X-009: `∫⁻` is total on ℝ≥0∞."""
+    """The lower Lebesgue integral `∫⁻` is total on ℝ≥0∞, so it is not a hazard."""
 
     def test_lintegral_ignored(self):
         self.assertEqual(names("(∫⁻ N in B, K N A ∂Q) = Q (A ∩ B)"), [])
@@ -53,7 +52,7 @@ class TestLintegralIsNotBochner(unittest.TestCase):
 
 
 class TestWholeIdentifierMatching(unittest.TestCase):
-    """Flash caught this one: `sInf` inside `IsInfPath`, 12 false hits of 54."""
+    """Whole identifiers only: `sInf` inside `IsInfPath` is not a hit."""
 
     def test_sinf_inside_isinfpath_ignored(self):
         self.assertEqual(names("¬ ∃ x : ℕ → V, IsInfPath G x ∧ IsInfLive π ρ x"), [])

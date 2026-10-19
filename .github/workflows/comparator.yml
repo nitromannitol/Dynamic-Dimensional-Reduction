@@ -10,10 +10,12 @@ name: Comparator audit
 # build and the Lattice-Probability build are cached between runs; the first
 # run on an empty cache builds the whole DimRed library.
 
-# Manual dispatch only until the public release: these builds are Mathlib-scale, so they run
-# on request.  The release adds `push: branches: [main]`.  There is no `pull_request` trigger.
+# Runs on manual dispatch.  There is no `pull_request` trigger.
 on:
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 concurrency:
   group: comparator-${{ github.ref }}
@@ -27,22 +29,27 @@ env:
 
 jobs:
   comparator:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 350
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       - name: Install elan
         run: |
           curl https://elan.lean-lang.org/elan-init.sh -sSf | sh -s -- -y --default-toolchain none
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
 
+      # elan retries a failed toolchain download only once; this step retries the pinned
+      # release asset with backoff and checks its SHA-256.
+      - name: Prefetch the pinned Lean toolchain with retries
+        run: python3 tools/prefetch_toolchain.py
+
       # Restore/save are split so the save runs even when a later step fails,
       # banking completed modules.
       - name: Restore project and dependency build artifacts
         id: cache-restore
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6.1.0
         with:
           path: |
             .lake/build
@@ -59,7 +66,7 @@ jobs:
 
       - name: Restore verification tools
         id: tools-cache
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6.1.0
         with:
           path: ~/tools
           key: cmp-tools-${{ env.COMPARATOR_REV }}-${{ env.LEAN4EXPORT_REV }}-${{ env.NANODA_REV }}-${{ env.LANDRUN_REV }}
@@ -82,7 +89,7 @@ jobs:
 
       - name: Set up Go (for landrun)
         if: steps.tools-cache.outputs.cache-hit != 'true'
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v7
         with:
           go-version: '1.24'
 
@@ -128,7 +135,7 @@ jobs:
 
       - name: Save project and dependency build artifacts
         if: always() && steps.cache-restore.outputs.cache-hit != 'true'
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6.1.0
         with:
           path: |
             .lake/build
@@ -137,14 +144,14 @@ jobs:
 
       - name: Save verification tools
         if: always() && steps.tools-cache.outputs.cache-hit != 'true'
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6.1.0
         with:
           path: ~/tools
           key: cmp-tools-${{ env.COMPARATOR_REV }}-${{ env.LEAN4EXPORT_REV }}-${{ env.NANODA_REV }}-${{ env.LANDRUN_REV }}
 
       - name: Upload comparator logs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: comparator-logs
           path: /tmp/comparator-*.log

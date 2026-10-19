@@ -1,7 +1,7 @@
 """Tests for the source reader.
 
-Two of these guard relaxations made on 2026-09-23 after a first run produced
-226 spurious failures in Manhattan-Transience and 208 in GMC. A relaxed check
+Two of these guard relaxations were made after a first run produced
+hundreds of spurious failures on real repositories. A relaxed check
 has to be proven still to catch the thing it bans.
 """
 
@@ -39,7 +39,7 @@ class TestCommentMasking(unittest.TestCase):
 class TestAxiomBan(unittest.TestCase):
     def test_print_axioms_is_legal(self):
         """Every Certificate.lean asks Lean for a closure this way."""
-        src = "#print axioms Rotor.Frozen.main\n#print axioms Foo.bar\n"
+        src = "#print axioms Example.Frozen.main\n#print axioms Foo.bar\n"
         self.assertEqual(ls.axiom_declarations(src), [])
         self.assertEqual(ls.token_hits(src, ("admit", "sorryAx")), [])
 
@@ -98,7 +98,7 @@ class TestFrozenBlocks(unittest.TestCase):
 
 class TestTruncation(unittest.TestCase):
     def test_ascii_truncation_of_a_subscripted_name_is_flagged(self):
-        """Manhattan's copy matched `e` against `e₁`."""
+        """ASCII truncation of a subscripted name, `e` for `e₁`, is flagged."""
         self.assertTrue(ls.is_truncation("e", "e₁"))
 
     def test_an_exact_name_is_not_a_truncation(self):

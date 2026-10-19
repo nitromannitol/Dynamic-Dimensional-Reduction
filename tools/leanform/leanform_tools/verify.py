@@ -1,6 +1,6 @@
 """The pipeline. One command that either exits 0 or tells you exactly why not.
 
-Order is ORRW's, and it is deliberate: unit tests first (a broken checker
+The order is deliberate: unit tests first (a broken checker
 must not produce a verdict), then every pure-Python gate, then the three that
 invoke Lake, cheapest last-resort first. A failure short-circuits, because
 the later gates' verdicts are not meaningful once an earlier one has failed —

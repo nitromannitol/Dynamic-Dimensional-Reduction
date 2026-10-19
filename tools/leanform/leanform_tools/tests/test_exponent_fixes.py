@@ -1,7 +1,7 @@
-"""Regressions for defects found running the ported checkers against the fleet.
+"""Regressions for defects found running the ported checkers against other repositories.
 
-Each test here corresponds to a false failure the shared package produced on
-2026-09-23 against a repo whose incumbent checker passed. A port that is
+Each test here corresponds to a false failure the shared package produced
+against a repo whose incumbent checker passed. A port that is
 stricter than the tool it replaces is only useful if the extra strictness is
 real; these pin the cases where it was not.
 """
@@ -14,7 +14,7 @@ from leanform_tools.readings import drop_foreign_keys
 
 class TestCanon(unittest.TestCase):
     def test_frac_normalizes_to_slash(self):
-        """ORRW: paper `\\frac{d}{d+1}` vs Lean `d/(d+1)` are one exponent."""
+        """Paper `\\frac{d}{d+1}` vs Lean `d/(d+1)` are one exponent."""
         self.assertEqual(canon(r"\frac{d}{d+1}"), "d/(d+1)")
 
     def test_negated_frac(self):
@@ -24,7 +24,7 @@ class TestCanon(unittest.TestCase):
         self.assertEqual(canon(r"\frac{1}{2}"), "1/2")
 
     def test_type_ascription_stripped_for_any_type(self):
-        """rotor-23 `prop-circuit-clock`: `(3 : ℕ)` must equal the paper's `3`."""
+        """A type ascription on a numeral: `(3 : ℕ)` must equal the paper's `3`."""
         self.assertEqual(canon("(3 : ℕ)"), "3")
         self.assertEqual(canon("(2 / 3 : ℝ)"), "2/3")
 
@@ -37,7 +37,7 @@ class TestCanon(unittest.TestCase):
 
 
 class TestMultiplicityIsANoteNotAFailure(unittest.TestCase):
-    """rotor-23: `|R_t| = c t^{2/3} + o(t^{2/3})` names 2/3 twice; Lean once."""
+    """Paper `|R_t| = c t^{2/3} + o(t^{2/3})` names 2/3 twice; Lean once."""
 
     def test_fewer_occurrences_is_not_a_failure(self):
         from collections import Counter
@@ -62,7 +62,7 @@ class TestMultiplicityIsANoteNotAFailure(unittest.TestCase):
 
 
 class TestPerRepoNoise(unittest.TestCase):
-    """ORRW's `c`, `M`, `R` are named constants, not exponents."""
+    """Named constants `c`, `M`, `R` are, not exponents."""
 
     def test_bare_symbol_is_an_exponent_by_default(self):
         counts, _ = paper_exponents("$x^c$")
@@ -78,12 +78,12 @@ class TestPerRepoNoise(unittest.TestCase):
 
 
 class TestForeignKeyGuard(unittest.TestCase):
-    """The migration trap: DimRed/Exploding's REVIEWED dict is rotor-23's."""
+    """A REVIEWED dict copied from another repository carries that repository's keys."""
 
     def test_foreign_keys_are_dropped_and_counted(self):
         data = {
-            "clauses": {"mine": "ok", "lem-least-action": "rotor's"},
-            "constants": {"prop-path-reduction": "rotor's"},
+            "clauses": {"mine": "ok", "foreign-node": "other repo's"},
+            "constants": {"foreign-constant": "other repo's"},
             "exponents": {},
         }
         cleaned, refused = drop_foreign_keys(data, {"mine"})

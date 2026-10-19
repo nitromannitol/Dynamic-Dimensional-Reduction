@@ -2,8 +2,8 @@
 
 `check_manifest` counts `sorry` tokens, which is not enough: a file can
 contain no `sorry` and still depend on one transitively through an import.
-`Exploding.Frozen.insertion_inequality` was exactly that — zero sorrys of its
-own, `sorryAx` in its closure. A node may be SEALED only if `#print axioms` on
+A declaration can have no sorry of its own and still carry `sorryAx`
+in its closure. A node may be SEALED only if `#print axioms` on
 its export shows no `sorryAx`.
 
 Fail-closed, in three places, because a probe that does not run must never

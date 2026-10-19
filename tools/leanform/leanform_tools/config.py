@@ -2,9 +2,8 @@
 
 Every per-repo string that used to be embedded in a checker's regex lives
 here and is read from `ledger/manifest.yaml`. That is the whole point of the
-package: nine checkers across four repos passed vacuously because a regex
-still said `rotor.tex` after the file had been copied into a repo whose paper
-is `exploding.tex`.
+package: a regex still naming another repository's paper made its checker
+pass vacuously, having inspected nothing.
 
 Nothing in this module may contain a paper name, a library name, or a Frozen
 directory path as a literal.
@@ -24,7 +23,7 @@ END = "-- FROZEN-STATEMENT-END"
 # The only axioms a sealed declaration may depend on.
 ALLOWED_AXIOMS = frozenset({"propext", "Classical.choice", "Quot.sound"})
 
-# States a node may carry. See BEST_PRACTICES.md §1.
+# States a node may carry.
 STATES = frozenset({"FROZEN", "SEALED", "DRAFT_SORRY", "CONDITIONAL", "PROVED"})
 
 # States whose axiom closure is allowed to contain sorryAx.
@@ -42,13 +41,13 @@ class ConfigError(Exception):
 class Node:
     """One manifest node, normalized across the two schemas in use.
 
-    The released repos write `export: Rotor.Frozen.least_action` (exactly one
-    declaration per block). `IDLA-Cylinder-GFF` writes
-    `decls: [a_spectral, ...]`, allowing several declarations per block so a
+    One convention writes `export: Lib.Frozen.name` (exactly one
+    declaration per block). The other writes
+    `decls: [a, ...]`, allowing several declarations per block so a
     theorem is sealed together with the definitions carrying its content.
 
-    Both are readable here. Which one is *correct* is a protocol question
-    settled in audit/PLAN.md: one declaration per block is the rule, and the
+    Both are readable here. Which one is *correct* is a protocol question:
+    one declaration per block is the rule, and the
     multi-declaration block is a stand-in for the semantic fingerprint that
     does not exist yet. Until the fingerprint lands, multi-declaration nodes
     are tolerated and reported, not rejected.
@@ -114,7 +113,7 @@ class RepoConfig:
 
     @property
     def paper_rel(self) -> str:
-        """`paper/rotor.tex` — as written in `source_pin.file`."""
+        """`paper/<name>.tex` — as written in `source_pin.file`."""
         pin = self.raw.get("source_pin") or {}
         f = pin.get("file")
         if not f:
@@ -130,7 +129,7 @@ class RepoConfig:
 
     @property
     def paper_stem(self) -> str:
-        """`rotor.tex` — the basename the Lean citations and `source:` use."""
+        """`<name>.tex` — the basename the Lean citations and `source:` use."""
         return Path(self.paper_rel).name
 
     @property
@@ -156,7 +155,7 @@ class RepoConfig:
 
     @property
     def lib_name(self) -> str:
-        """`Rotor`. Declared in the manifest, else inferred from the exports."""
+        """`Lib`. Declared in the manifest, else inferred from the exports."""
         name = self.raw.get("library")
         if name:
             return name
@@ -167,9 +166,9 @@ class RepoConfig:
         }
         if len(prefixes) == 1:
             return next(iter(prefixes))
-        # Fall back to the `file:` column: `IdlaCyl/Frozen/X.lean` -> `IdlaCyl`.
-        # IDLA records unqualified declaration names, so the export prefix
-        # trick cannot work there.
+        # Fall back to the `file:` column: `Lib/Frozen/X.lean` -> `Lib`.
+        # Some manifests record unqualified declaration names, so the export
+        # prefix trick cannot work there.
         roots = {
             Path(n.file).parts[0]
             for n in self.nodes

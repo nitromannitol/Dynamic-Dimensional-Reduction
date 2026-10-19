@@ -1,10 +1,20 @@
 name: CI
 
-# Manual dispatch only until the public release: these builds are Mathlib-scale, so they run
-# on request and pushes to the private repository do not start them.  The release adds
-# `push: branches: [main]`.  There is no `pull_request` trigger: the cached `.lake` trees are
-# the artifacts every later gate trusts.
+permissions:
+  contents: read
+
+# Runs on GitHub-hosted runners (`ubuntu-24.04`: 4 vCPU, 16 GB RAM, 6 h per
+# job).  No `pull_request` trigger: a fork's pull request would run with this
+# repository's Actions cache in scope, and the cached `.lake` trees are the
+# artifacts every later check trusts.
 on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '**/*.md'
+      - 'paper/**'
+      - 'formalization.yaml'
+      - 'CITATION.cff'
   workflow_dispatch:
 
 # Cancel superseded runs on the same ref.
@@ -13,40 +23,114 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Mathlib's oleans come from its public cache (`lake exe cache get`).  Lake builds the
+  # Lattice-Probability modules this library imports, at the commit pinned in
+  # `lake-manifest.json`, together with the library; both build directories are cached.
   build:
-    runs-on: ubuntu-latest
+    name: Build and axiom audit
+    runs-on: ubuntu-24.04
+    timeout-minutes: 330
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
-      - name: Install elan
+      - name: Reclaim runner disk space
+        shell: bash
         run: |
-          curl https://elan.lean-lang.org/elan-init.sh -sSf | sh -s -- -y --default-toolchain none
-          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc \
+                      /usr/local/.ghcup /usr/local/share/powershell \
+                      /usr/share/swift /usr/local/share/boost || true
+          sudo docker image prune --all --force >/dev/null 2>&1 || true
+          df -h /
 
-      - name: Get the Mathlib cache
-        run: lake exe cache get
+      - name: Enlarge swap
+        shell: bash
+        run: |
+          sudo swapoff -a || true
+          swapdir=/mnt
+          [ -d "$swapdir" ] || swapdir="${RUNNER_TEMP:-/tmp}"
+          sudo rm -f "$swapdir/lean-swapfile"
+          sudo fallocate -l 16G "$swapdir/lean-swapfile"
+          sudo chmod 600 "$swapdir/lean-swapfile"
+          sudo mkswap "$swapdir/lean-swapfile"
+          sudo swapon "$swapdir/lean-swapfile"
+          free -h
 
-      # Every registered statement is proved, so the build emits no warning
-      # and no "declaration uses sorry" message.  The check_warnings gate
-      # (run by tools/verify.py below) fails on any warning, and on any sorry
-      # the manifest does not register.
-      - name: Build
-        run: lake build
+      # elan retries a failed toolchain download only once; this step retries the pinned
+      # release asset with backoff and checks its SHA-256, so that the next step finds the
+      # toolchain already installed.
+      - name: Prefetch the pinned Lean toolchain with retries
+        run: python3 tools/prefetch_toolchain.py
 
-      # Build the axiom audit and surface its `#print axioms` output in the log,
-      # confirming the proved results use only the standard Mathlib axioms.
+      # Installs the toolchain named in `lean-toolchain`, materialises every package in
+      # `lake-manifest.json` and downloads the Mathlib oleans.
+      - name: Set up Lean and fetch the Mathlib cache
+        uses: leanprover/lean-action@v1
+        with:
+          build: false
+          use-mathlib-cache: true
+
+      # Restore and save are split so that the save runs even when a later step fails: an
+      # interrupted build still banks its completed modules.  The restore key has no sha, so
+      # it matches the most recent entry with the same toolchain and manifest, which makes an
+      # ordinary push incremental.
+      - name: Restore build artifacts
+        id: cache-restore
+        uses: actions/cache/restore@v6.1.0
+        with:
+          path: |
+            .lake/build
+            .lake/packages/lattice-probability/.lake/build
+          key: lake-build-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}-${{ github.sha }}
+          restore-keys: |
+            lake-build-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}-
+
+      - name: Build the library and enforce zero warnings
+        shell: bash
+        run: |
+          set -o pipefail
+          lake build 2>&1 | tee production-build.log
+          echo "Warnings: $(grep -ic 'warning:' production-build.log || true)"
+          if grep -iE '(^|[[:space:]])warning:|declaration uses .sorry|sorryAx' production-build.log; then
+            echo "The production build must have zero warnings and no incomplete proofs."
+            exit 1
+          fi
+
+      # `DimRed.Meta.AxiomsAudit` prints the axiom report of every result restated in
+      # `DimRed/MainTheorems.lean` and of the definitional statements; it is not imported by
+      # the library root.  `scripts/check_axioms.py` requires exactly the three standard axioms
+      # for each theorem of its explicit list and fails on a missing, unexpected or repeated
+      # report.
       - name: Axiom audit
         shell: bash
         run: |
           set -o pipefail
           lake build DimRed.Meta.AxiomsAudit 2>&1 | tee axioms-audit.log
-          if grep 'depends on axioms' axioms-audit.log | grep -vE 'depends on axioms: \[propext, Classical.choice, Quot.sound\]$'; then
-            echo "A proved result depends on an axiom other than the three standard ones."
-            exit 1
-          fi
+          python3 scripts/check_axioms.py axioms-audit.log
 
-      - name: Frozen statements, paper correspondence and axiom closures
+      - name: Statement hashes, paper correspondence and axiom closures
         run: |
           python3 -m pip install -r tools/requirements.txt
           python3 tools/verify.py
+
+      - name: Retain build logs
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: build-logs-${{ github.sha }}
+          path: |
+            production-build.log
+            axioms-audit.log
+          if-no-files-found: warn
+
+
+      - name: Save build artifacts
+        if: always() && steps.cache-restore.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v6.1.0
+        with:
+          path: |
+            .lake/build
+            .lake/packages/lattice-probability/.lake/build
+          key: lake-build-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}-${{ github.sha }}

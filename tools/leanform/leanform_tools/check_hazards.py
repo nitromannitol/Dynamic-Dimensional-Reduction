@@ -1,4 +1,4 @@
-"""Probability lints on frozen blocks — BEST_PRACTICES.md §3, new gate 6.
+"""Probability lints on frozen blocks.
 
 A junk value is what a Lean function returns on input the paper never
 considers. `sInf ∅ = 0` in the reals, `Set.ncard` of an infinite set is `0`,
@@ -20,9 +20,8 @@ So it is a `REVIEWED` obligation, in the sense §3 asks for: not "this is
 wrong", but "nobody has said why this is right".
 
 Matching is whole-identifier. A naive substring scan for `sInf` also matches
-`IsInfPath`, `HasInfLivePath` and `HasInfiniteComponent`; measured over the
-574 frozen blocks in this fleet that was 12 false positives out of 54 for the
-affected classes — a 22% noise rate that would have buried the real hits.
+`IsInfPath`, `HasInfLivePath` and `HasInfiniteComponent`: substring matches
+there are false positives that would bury the real hits.
 """
 
 from __future__ import annotations
@@ -115,9 +114,8 @@ def _load_readings(cfg: RepoConfig) -> dict:
 
 
 # `(2 : ℂ)⁻¹`, `(3:ℝ)⁻¹`, `2⁻¹` — the inverse of a numeric literal is never
-# the junk value, because the literal is never zero. Manhattan-Transience has
-# five hits of exactly this shape and two independent model lanes called all
-# five unguarded; all five are harmless. Excluded here rather than waived
+# the junk value, because the literal is never zero. Hits of exactly this
+# shape have been reported as unguarded; they are harmless. Excluded here rather than waived
 # one-by-one in readings.yaml, because it is a property of the syntax.
 _LITERAL_INV = re.compile(r"(?:\(\s*[0-9]+(?:\.[0-9]+)?\s*(?::[^)]*)?\)|(?<![A-Za-z0-9_])[0-9]+)$")
 

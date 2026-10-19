@@ -10,15 +10,9 @@ The comparison itself lives in `audit_warnings`, a pure function of the raw
 build output and the manifest nodes, so it is testable without ever running
 Lake -- the same separation `check_axioms.audit_closures` uses.
 
-BUG NOT REPRODUCED HERE: every vendored copy of this script (rotor-23,
-ORRW-Lower-Bound, Divisible-Sandpile-Percolation, and IDLA-Cylinder-GFF's
-byte-identical, unadapted copy of rotor-23's) hardcodes the build target as
-a literal -- `lake build Rotor`, `lake build ORRW`, `lake build Sandpile`.
-IDLA-Cylinder-GFF's copy still says `lake build Rotor`
-(tools/check_warnings.py:68), which is not a target in that repo at all: it
-is rotor-23's library name, left over from a copy-paste. `check()` below
-derives the target from `cfg.lib_name`, which comes from the manifest (see
-config.py), so this class of bug cannot recur by construction.
+The build target is derived from `cfg.lib_name`, which comes from the manifest
+(see config.py) and is never a copied literal, so a library name carried over
+from another repository cannot build the wrong target.
 """
 
 from __future__ import annotations

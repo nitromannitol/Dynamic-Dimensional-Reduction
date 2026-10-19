@@ -1,4 +1,4 @@
-# Contributing / Building notes
+# Contributing and building
 
 This repository is primarily a finished artifact rather than an actively solicited
 collaborative project, but issues and pull requests are welcome.
@@ -22,8 +22,8 @@ The production build is required to emit no Lean or linter warnings.  The only `
 the ten intentional statement-level ones in the `Challenge.lean` files under `DimRedAudit/`,
 each checked against its completed `Solution.lean` by `leanprover/comparator`; see
 [`DimRedAudit/README.md`](DimRedAudit/README.md).  Run `python3 tools/verify.py` from the
-repository root for every gate (`--skip-lake` for the pure-Python ones), or
-`cd tools/leanform && python3 -m leanform_tools.<gate> ../..` for one.
+repository root for every check (`--skip-lake` for the pure-Python ones), or
+`cd tools/leanform && python3 -m leanform_tools.<check> ../..` for one.
 
 A few practical notes for working with this development:
 
@@ -64,4 +64,41 @@ These rules keep the build fast and predictable.
   warm tree, with `-Dprofiler.threshold=1` to expose diffuse costs.  Do not split a file or
   narrow its imports "for performance" without a profile before and after.
 - Keep Lean files under 1500 lines.
-- Never run `lake clean`.
+
+## Checks
+
+The checks are in `tools/leanform/`, a vendored copy of a shared checker package; they need
+Python 3.10 or newer and PyYAML (`python3 -m pip install -r tools/requirements.txt`).
+`python3 tools/verify.py` runs all of them and fails on the first failure.
+
+| check (`python3 -m leanform_tools.<check> <repo-path>`, from `tools/leanform/`) | what it verifies |
+|---|---|
+| `check_manifest` | every statement file in `DimRed/Frozen/` holds exactly one block whose SHA-256 equals the one in `ledger/manifest.yaml` and which declares exactly the recorded declaration; `DimRed/` contains no `axiom`, `admit` or `sorryAx` and no `sorry` |
+| `check_axioms` | prints the axiom closure of every recorded declaration and fails if one contains `sorryAx` |
+| `check_warnings` | `lake build DimRed` emits no warning |
+| `check_constants` | in a statement whose conclusion has an existential constant, the constant is bound before the paper's parameters |
+| `check_coverage` | every theorem, lemma, proposition and corollary of the corrected edition is named in the `source` of some statement |
+| `check_clauses` | compares the number of assertions of each paper statement with the conjuncts of its Lean statement, against the reading in `ledger/readings.yaml` |
+| `check_exponents` | compares the exponents of a paper statement with those of its Lean statement, against `ledger/readings.yaml` |
+| `paper_anchors`, `paper_citations` | the `<file>.tex:<lines>` references in the manifest and in the Lean docstrings point at the cited labels |
+| `sync_docs` | the generated status block of `README.md` and the statement table of `CORRESPONDENCE.md` agree with the manifest (`--write` regenerates them) |
+| `assumptions`, `certificate` | `ASSUMPTIONS.md` and `CERTIFICATE.md` are current (`--check`) |
+
+`scripts/check_axioms.py` checks the output of `lake build DimRed.Meta.AxiomsAudit` against an
+explicit list of theorems: each must depend on exactly `propext`, `Classical.choice` and
+`Quot.sound`, and a missing, unexpected or repeated report fails.
+
+## Comparators
+
+Each pair under `DimRedAudit/` has a Mathlib-only `Challenge.lean`, a `SolutionBasic.lean` with
+its vocabulary, a `Solution.lean` that proves the same statements from the library, and a
+`comparator.json` that permits exactly `propext`, `Classical.choice` and `Quot.sound`. Do not
+change a challenge without checking it against the paper's statement. Run the comparator as
+described in the README; a missing pair, a missing tool or a failed kernel check is a failure.
+
+## Continuous integration
+
+`.github/workflows/build.yml` runs on pushes to `main` that change code or build configuration,
+and on manual dispatch: it builds the library with zero warnings, checks the axiom report
+against the explicit list and runs `tools/verify.py`. `.github/workflows/comparator.yml` runs
+the four comparator pairs on manual dispatch.

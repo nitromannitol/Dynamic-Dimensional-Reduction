@@ -1,7 +1,7 @@
 """Tests for the three document generators: sync_docs, assumptions, linkcheck.
 
 Every repo here is synthetic, built fresh in `tempfile.mkdtemp()`; nothing
-depends on `~/lean`.
+depends on a local checkout.
 """
 
 from __future__ import annotations
@@ -101,10 +101,10 @@ class _TempRepoTestCase(unittest.TestCase):
         return root
 
 
-# ---- sync_docs: the Exploding-Sandpiles bug -------------------------------
+# ---- sync_docs: status counts by state -------------------------------
 
 
-class ExplodingSandpilesCase(_TempRepoTestCase):
+class StatusCountsCase(_TempRepoTestCase):
     """4 SEALED + 2 CONDITIONAL + 2 FROZEN + 16 DRAFT_SORRY must not read '8 sealed'.
 
     The incumbent `status_block` computed sealed as `len(nodes) - len(draft)`
@@ -115,18 +115,18 @@ class ExplodingSandpilesCase(_TempRepoTestCase):
     def test_exact_counts_not_8_sealed(self) -> None:
         nodes = []
         for i in range(1, 5):
-            nodes.append(_node(f"sealed-{i}", "SEALED", export=f"Exploding.Frozen.sealed_{i}"))
+            nodes.append(_node(f"sealed-{i}", "SEALED", export=f"ExampleRepo.Frozen.sealed_{i}"))
         for i in range(1, 3):
-            nodes.append(_node(f"cond-{i}", "CONDITIONAL", export=f"Exploding.Frozen.cond_{i}"))
+            nodes.append(_node(f"cond-{i}", "CONDITIONAL", export=f"ExampleRepo.Frozen.cond_{i}"))
         for i in range(1, 3):
             nodes.append(
-                _node(f"ext-{i}", "FROZEN", export=f"Exploding.External.ext_{i}", kind="definition")
+                _node(f"ext-{i}", "FROZEN", export=f"ExampleRepo.External.ext_{i}", kind="definition")
             )
         for i in range(1, 17):
-            nodes.append(_node(f"draft-{i}", "DRAFT_SORRY", export=f"Exploding.Frozen.draft_{i}"))
+            nodes.append(_node(f"draft-{i}", "DRAFT_SORRY", export=f"ExampleRepo.Frozen.draft_{i}"))
         self.assertEqual(len(nodes), 24)
 
-        root = self.track(make_repo(nodes, library="Exploding"))
+        root = self.track(make_repo(nodes, library="ExampleRepo"))
         cfg = load(root)
         text = sync_docs.status_block(cfg)
 

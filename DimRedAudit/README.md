@@ -1,4 +1,4 @@
-# DimRedAudit Comparator Surface
+# The comparator challenges
 
 This directory contains Mathlib-only comparator challenges for the main results of the
 formalization of *Dynamic dimensional reduction in the Abelian sandpile* (Ahmed Bou-Rabee):
@@ -19,7 +19,7 @@ Proposition 4.1.  Each comparator lives in its own subdirectory:
 | | Proposition 4.1, strong topple | `DimRed.StatementAudit.Regularity.base_dimension_strong_topple` | `DimRed.base_dimension_strong_topple` |
 
 The library theorems are those of [`DimRed/MainTheorems.lean`](../DimRed/MainTheorems.lean),
-which restate the certified statements `DimRed.Frozen.*` unchanged.  Each directory's
+which restate the statements `DimRed.Frozen.*` unchanged.  Each directory's
 `comparator.json` lists the theorems of its challenge.
 
 ## The Pattern
@@ -61,10 +61,10 @@ the paper.  The readings a reader has to accept are these, each recorded in the 
 the corresponding frozen statement and in [`CORRESPONDENCE.md`](../CORRESPONDENCE.md):
 
 1. The hypercube of side `N` is the box `[1 - ⌊N/2⌋, ⌈N/2⌉]^d`, which is the paper's
-   embedding for both parities (`dimred.tex:277`), and `M = ⌈N/2⌉` is `sideHalf N`.
+   embedding for both parities (`dimred-corrected-arxiv.tex:279`), and `M = ⌈N/2⌉` is `sideHalf N`.
 2. The odometer is defined by the closed recursion
    `v_{t+1}(x) = v_t(x) + 1{s₀(x) + Δ v_t(x) ≥ 2d}` on the cube, `0` off it, which is the
-   paper's two-line recursion (`dimred.tex:93-97`) with `s_t` replaced by `s₀ + Δ v_t`; the
+   paper's two-line recursion (`dimred-corrected-arxiv.tex:93-97`) with `s_t` replaced by `s₀ + Δ v_t`; the
    sandpile is `s_t = s₀ + Δ v_t`.
 3. The terminal odometer `v_∞` is the supremum of `v_t` in `ℕ∞`, and the terminal sandpile
    is the integer `2d + Δ v_∞`, `v_∞` read through `ℕ∞ → ℕ`.  The topple time `τ_j` is an
@@ -72,11 +72,14 @@ the corresponding frozen statement and in [`CORRESPONDENCE.md`](../CORRESPONDENC
 4. In the dimensional reduction statements the dimension is written `d + 1` in place of the
    paper's `d`, so the paper's `d ≥ 2` is `1 ≤ d`; `(x_{d-1}, c)` is `Fin.snoc x c`.
    Vector inequalities and the subtraction of a scalar from a vector are coordinatewise
-   (`dimred.tex:273`).
+   (`dimred-corrected-arxiv.tex:275`).
 
-Relative to the theorems of `DimRed/MainTheorems.lean` there are no presentation deltas:
-each challenge theorem is the library statement with every repository name replaced by its
-vocabulary copy.
+Relative to the theorems of `DimRed/MainTheorems.lean`, each challenge theorem is the library
+statement with every repository name replaced by its vocabulary copy, with one difference of
+presentation: Corollary 1.1 and the strong topple control clause of Proposition 4.1 are stated
+over `sandpInfUnif`, `sandpUnif` and `simplexMax`, where the library statements use
+`DimRed.Corrected.terminalPile`, `DimRed.Corrected.pile` and `DimRed.Corrected.maximum` on
+subtype carriers. The two agree by `rfl` and by `DimRed.Corrected.maximum_eq_simplexMax`.
 
 ## Solutions
 
@@ -183,6 +186,8 @@ kernel and Lean's default kernel.
 | --- | --- |
 | Lean and nanoda kernels | passed (59 s) |
 
-**Status.**  The four solutions build, each solution theorem has the elaborated type of its
-challenge theorem and mentions no repository constant, and each depends only on `propext`,
-`Classical.choice` and `Quot.sound`.
+**Status.**  All 23 theorem-level statements of the corrected edition, the 20 statement clauses
+of the published paper and three added lemmas, are proved in Lean, with no `sorry` and only the
+standard axioms; Theorem 1.1 and Corollary 1.1 are stated as published. The four pairs here
+check Theorem 1.1, Corollary 1.1 and Proposition 4.1; the other results (Sections 2 and 3 and
+Lemmas 4.1 and 5.1) have no comparator pair.

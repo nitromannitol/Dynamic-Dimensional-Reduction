@@ -32,19 +32,16 @@ import DimRed.Support.DifferenceStep
 import DimRed.Support.Recursion
 import DimRed.Support.BaseCase
 import DimRed.Support.BaseStep
-import DimRed.Support.BaseDimension
 import DimRed.Support.BaseInduction
 import DimRed.Support.DimRedCritical
 import DimRed.Support.DimRedStep
 import DimRed.Support.EarlyTimes
 import DimRed.Support.FacetLap
 import DimRed.Support.FacetNbr
-import DimRed.Support.OneDim
 import DimRed.Support.OneDimConsist
 import DimRed.Support.OneDimStrongDeriv
 import DimRed.Support.OneDimStrongFacet
 import DimRed.Support.OneDimTerminal
-import DimRed.Support.OneDimTopple
 import DimRed.Support.OneDimWeak
 import DimRed.Support.SandpileFromOdo
 import DimRed.Support.SnocSimplex
@@ -56,15 +53,11 @@ import DimRed.Support.StrongDerivPure
 import DimRed.Support.Downset
 import DimRed.Support.FacetNormal
 import DimRed.Support.StrongDerivRaw
-import DimRed.Support.SecondDiff
 import DimRed.Support.SelfSimilarityMain
 import DimRed.Support.TerminalReduction
 import DimRed.Support.ToppleGeneral
-import DimRed.Support.WeakFacetGeneral
 import DimRed.Support.CornerBound
 import DimRed.Support.CornerReaches
-import DimRed.Support.CornerTerminal
-import DimRed.Support.FacetHeadSum
 import DimRed.Support.StrongRawLe
 import DimRed.Support.FacetLapUncond
 import DimRed.Support.WeakFacetLower
@@ -73,10 +66,6 @@ import DimRed.Support.StrongDerivEarly
 import DimRed.Support.StrongDerivStep
 import DimRed.Support.RegBridges
 import DimRed.Support.RegSteps
-import DimRed.Support.RegFacetTime
-import DimRed.Support.RegFacetStep
-import DimRed.Support.HeadTermSub
-import DimRed.Support.FacetTermBounds
 import DimRed.Support.SimplexFold
 import DimRed.MainTheorems
 

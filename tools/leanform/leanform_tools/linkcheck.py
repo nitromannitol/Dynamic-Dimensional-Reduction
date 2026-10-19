@@ -1,4 +1,4 @@
-"""The dangling-link lint (BEST_PRACTICES.md section 3, new-gate 8).
+"""The dangling-link lint.
 
 For every Markdown file in the repo, extract inline links `[text](target)`
 and report each target that does not exist on disk.  `http(s)`/`mailto`
@@ -14,8 +14,7 @@ Markdown allows this) but not across a blank line, matching CommonMark.
 
     python3 -m leanform_tools.linkcheck <repo>
 
-Manhattan-Transience's README links two files that no longer exist
-(`ledger/ERRATA.md`, `CONTRIBUTING.md`); this must fail there.
+A README that links to a file that no longer exists must fail here.
 """
 
 from __future__ import annotations

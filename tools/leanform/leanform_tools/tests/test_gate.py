@@ -1,8 +1,7 @@
 """Regression tests for the meta-check.
 
-Each test encodes a real silent vacuous pass observed on 2026-09-23 (see
-audit/EVIDENCE-2026-09-23.md, rows V1-V9). Before this package, every one of
-these exited 0.
+Each test pins a silent vacuous pass: a checker that inspected nothing and
+still exited 0 before the meta-check existed.
 """
 
 import io
@@ -14,8 +13,7 @@ from leanform_tools.gate import Result, run
 
 class TestMetaCheck(unittest.TestCase):
     def test_zero_processed_is_exit_2_not_0(self):
-        """V1: Parking-Sharpness paper_citations reported 0/0/0/0 and exited 0
-        while 426 parking.tex citations sat in the tree."""
+        """paper_citations reported 0/0/0/0 and exited 0 while 426 citations sat in the tree."""
         r = Result(name="paper_citations", total=426)
         buf = io.StringIO()
         with redirect_stdout(buf):

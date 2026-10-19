@@ -1,7 +1,7 @@
 /-
 Nonempty-maximum clause of the topple-limit statement in the corrected
 arXiv-format draft, frozen. `dimred-corrected-arxiv.tex:561-568` (label
-`topple_limit`, nonempty-maximum semantic unit):
+`topple_limit`, the finite maximum over the sorted domain):
 
   "For all $t \geq t_0$ and $j \geq 0$, \max_{z \in \mathcal{S}} \left(
    v_{t+j}(z) - v_t(z) \right) \leq \max_{z \in \mathcal{S}} \left(

@@ -9,11 +9,7 @@ newline dropped -- exactly what `check_manifest.py` recomputes. An existing
 node with the same ID is replaced and its `version` bumped, so a statement
 change is visible in the manifest history.
 
-This is a port of the vendored `tools/freeze.py`, byte-identical (sha256
-`994be60d...`, 51 lines, zero per-repo literals) across rotor-23,
-Parking-Sharpness, Divisible-Sandpile-Percolation, Divisible-Sandpile-RWRS,
-Dynamic-Dimensional-Reduction, Exploding-Sandpiles, and
-Unique-Continuation-Planar. The port is faithful except for:
+This is a port of the original `tools/freeze.py` recipe. The port is faithful except for:
 
 * `ROOT`/`MAN` are no longer derived from `__file__` (there is no single
   repo this file lives inside anymore) -- they come from `config.load`,

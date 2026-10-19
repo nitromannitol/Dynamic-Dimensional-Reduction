@@ -5,7 +5,7 @@ These three replace per-repo copies whose embedded literals (a paper name, a
 label-syntax assumption, a `\\proposition` spelling) made them pass vacuously
 or blindly on at least one real repo -- see the module docstrings for the
 specific incidents. Every synthetic repo here is built from scratch in
-`tempfile.mkdtemp()`; nothing depends on `~/lean`.
+`tempfile.mkdtemp()`; nothing depends on a local checkout.
 """
 
 from __future__ import annotations

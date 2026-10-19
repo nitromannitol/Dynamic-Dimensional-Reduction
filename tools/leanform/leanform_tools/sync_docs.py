@@ -3,9 +3,8 @@
 
 Every one of these files restates something `ledger/manifest.yaml` already
 records: how many nodes exist, what state each is in, and where in the paper
-each one comes from.  Restated facts go stale — three of the surveyed repos
-prove it (GMC's README, Parking's PROOF.md, Manhattan's stale `sealed` rows;
-see BEST_PRACTICES.md section 0).  Everything between a BEGIN/END marker pair
+each one comes from.  Restated facts go stale: a README can keep a count that the manifest has
+since changed.  Everything between a BEGIN/END marker pair
 below is generated from the manifest, so the prose in those files can never
 disagree with the checker again, and a hand-edited number inside a marker
 pair is a failure, not a correction.
@@ -13,16 +12,10 @@ pair is a failure, not a correction.
     python3 -m leanform_tools.sync_docs <repo>            # check
     python3 -m leanform_tools.sync_docs <repo> --write    # regenerate in place
 
-Bug this module exists to not reproduce: the incumbent `status_block` in
-three vendored copies computed the sealed count as ``len(nodes) - len(draft)``
-(or simply reported `counts["SEALED"]` while dropping `CONDITIONAL` from the
-header entirely).  Both undercount or overcount the moment a repo has
-`CONDITIONAL` or `PROVED` nodes, because `len(nodes) - len(draft)` folds
-`CONDITIONAL` and `FROZEN` nodes into "sealed".  On Exploding-Sandpiles'
-manifest (4 SEALED, 2 CONDITIONAL, 2 FROZEN, 16 DRAFT_SORRY, 24 total) that
-formula prints "8 sealed" — double the true count.  Every state below is
-counted exactly and separately from `collections.Counter`, never derived by
-subtraction, and named explicitly in the generated prose.
+Counts are never derived by subtraction: `len(nodes) - len(draft)` folds
+`CONDITIONAL` and `FROZEN` nodes into "sealed", and reporting only one state
+drops the others from the header. Every state below is counted exactly and
+separately from `collections.Counter`, and named explicitly in the generated prose.
 """
 
 from __future__ import annotations
@@ -55,7 +48,7 @@ LABEL_RE = re.compile(r"label ([A-Za-z][A-Za-z0-9:_-]*)")
 
 # Canonical, exact, separate-per-state vocabulary used in generated prose.
 # FROZEN is named "assumed" here, never "frozen": section 1 of
-# BEST_PRACTICES.md is explicit that "Frozen" always means hash-pinned, while
+# "Frozen" always means hash-pinned, while
 # the *state* `FROZEN` means assumed-not-proved, and both must be said.
 STATE_LABEL = {
     "SEALED": "sealed",
@@ -129,18 +122,18 @@ def status_block(cfg: RepoConfig) -> str:
         if proved:
             parts.append(f"{proved} proved")
         sentences.append(
-            "The " + " and ".join(parts) + " node(s) are machine-checked: "
-            "complete proofs whose axiom closure contains no `sorryAx`."
+            "The " + " and ".join(parts) + " statement(s) have complete proofs "
+            "whose axiom closure contains no `sorryAx`."
         )
     if conditional:
         sentences.append(
-            f"The {conditional} conditional node(s) have a complete proof of "
+            f"The {conditional} conditional statement(s) have a complete proof of "
             "their own that applies a `DRAFT_SORRY` predecessor, so their "
             "axiom closure carries `sorryAx` until that predecessor is sealed."
         )
     if frozen:
         sentences.append(
-            f"The {frozen} assumed (`FROZEN`) node(s) are cited results, "
+            f"The {frozen} assumed (`FROZEN`) statement(s) are cited results, "
             f"stated in `{cfg.lib_name}/External/` and carried as explicit "
             "hypotheses by the theorems that use them; they are assumed here, "
             "not proved."
@@ -149,23 +142,21 @@ def status_block(cfg: RepoConfig) -> str:
         if draft_ids and len(draft_ids) <= 8:
             which = ", ".join(f"`{i}`" for i in draft_ids)
             sentences.append(
-                f"The {draft} draft node(s) — {which} — have frozen "
+                f"The {draft} draft statement(s) — {which} — have frozen "
                 "statements and a single registered `sorry` each; nothing "
                 "else is open."
             )
         else:
             sentences.append(
-                f"The {draft} draft node(s) have frozen statements and a "
+                f"The {draft} draft statement(s) have frozen statements and a "
                 "single registered `sorry` each; the table below says which."
             )
 
     body = "  ".join(sentences)
     return (
-        f"Status: **{total} registered statements — {tally}.**  {body}  Run\n"
-        "`python3 -m leanform_tools.check_manifest` to confirm. Counts here\n"
-        "are generated from `ledger/manifest.yaml` by\n"
-        "`python3 -m leanform_tools.sync_docs`; do not edit them by hand — a\n"
-        "hand-edited number inside this block is a failure, not a correction."
+        f"Status: **{total} registered statements — {tally}.**  {body}  These\n"
+        "counts are generated from `ledger/manifest.yaml` by\n"
+        "`python3 -m leanform_tools.sync_docs`, which fails when they disagree with it."
     )
 
 
@@ -220,7 +211,7 @@ def _sync_markdown_file(
             res.fail(
                 f"{rel} exists with no generated STATUS/FROZEN-SURFACE marker; "
                 "its status paragraph is hand-maintained and will drift "
-                "(BEST_PRACTICES.md section 3, new-gate 7) — wrap it in "
+                "to fix it, wrap it in "
                 f"{STATUS_BEGIN!r} / {STATUS_END!r} so sync_docs can own it"
             )
         else:
@@ -239,10 +230,9 @@ def _sync_markdown_file(
         )
 
 
-# ---- formalization.yaml tallies (BEST_PRACTICES section 3, new-gate 7) -----
+# ---- formalization.yaml tallies -----
 
-# Vocabulary observed in the corpus (Manhattan-Transience, GMC-formalization-
-# private): a `status:` field under `alignment.statements` uses one of these
+# Vocabulary observed in the corpus of surveyed formalizations: a `status:` field under `alignment.statements` uses one of these
 # words per manifest state.  `FROZEN`/`CONDITIONAL` synonyms are not attested
 # in the surveyed corpus (neither repo has a live row for them here) and are
 # filled in by analogy with `STATE_LABEL` above, documented so a reviewer can
