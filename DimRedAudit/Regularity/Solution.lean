@@ -78,6 +78,8 @@ theorem base_dimension_strong_topple (d M : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
     simplexMax d M (fun x => odoUnif d (2 * M) (t + 2) x - odoUnif d (2 * M) t x) ≤ 1 := by
   rw [Bridge.toppleTime_eq] at ht
   simp only [Bridge.simplexMax_eq, Bridge.odoUnif_eq]
+  rw [← DimRed.Corrected.maximum_eq_simplexMax d M
+    (DimRed.Corrected.simplexNonempty d M (by omega))]
   exact DimRed.base_dimension_strong_topple d M hd hM t ht
 
 end DimRed.StatementAudit.Regularity

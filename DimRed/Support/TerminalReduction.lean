@@ -197,7 +197,7 @@ private theorem terminal_finset_common_stable {d : ℕ}
           _ = g (max Ta Ts) y := by exact (congrArg (fun k => g k y) e2).symm
 
 theorem odoInf_finite (d N : ℕ) (hd : 1 ≤ d) (s₀ : Site d → ℤ)
-    (hs0 : ∀ y, inCube d N y → 0 ≤ s₀ y)
+    (_hs0 : ∀ y, inCube d N y → 0 ≤ s₀ y)
     (hs1 : ∀ y, inCube d N y → s₀ y ≤ 2 * (2 * (d : ℤ)) - 1) :
     ∃ T, odo d N s₀ (T + 1) = odo d N s₀ T := by
   let u : ℕ → Site d → ℤ := fun _ x => terminalBarrier d N x
@@ -220,7 +220,7 @@ theorem odoInf_finite (d N : ℕ) (hd : 1 ≤ d) (s₀ : Site d → ℤ)
     rw [← hq]
     have hs := hs1 y hy
     linarith
-  have hcomp := Frozen.parabolic_comparison d N hd s₀ hs0 hs1
+  have hcomp := Frozen.parabolic_comparison d N hd s₀ hs1
   have hupper : ∀ t y, odo d N s₀ t y ≤ u t y :=
     hcomp.2 u hu0 hu1 hcon
   have hsite : ∀ y ∈ cube d N, ∃ T, ∀ n,

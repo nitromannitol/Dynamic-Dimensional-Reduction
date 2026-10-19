@@ -1,6 +1,6 @@
 import DimRed.Support.EarlyTimes
 import DimRed.Support.AxisStep
-import DimRed.Frozen.Prelim.PtInd
+import DimRed.Support.NonnegativeUpdate
 
 namespace DimRed
 
@@ -50,7 +50,7 @@ theorem case2_floor_update (d M t : ℕ) (hd : 1 ≤ d) (x : Site d)
   change odo d (2 * M) (fun _ => 2 * (d : ℤ)) (t + 1) x =
     (2 * (d : ℤ) + nbrSum (odo d (2 * M) (fun _ => 2 * (d : ℤ)) t) x) /
       (2 * (d : ℤ))
-  exact Frozen.pt_ind_lemma d (2 * M) hd (fun _ => 2 * (d : ℤ)) h0 h1 t x hx
+  exact DimRed.bounded_point_update d (2 * M) hd (fun _ => 2 * (d : ℤ)) h0 h1 t x hx
 
 private theorem case2_maxCoord_le {d M : ℕ} {x : Site d} (hx : case2Pos d M x) :
     case2MaxCoord x ≤ M := by

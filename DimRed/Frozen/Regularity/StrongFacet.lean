@@ -1,16 +1,20 @@
 /-
-The strong facet compatibility clause of Proposition 4.1 of `dimred.tex`,
-frozen.  `dimred.tex:932-940` (display `base_dimension:strong_compatability`):
+The strong facet compatibility clause of Proposition 4.1 of the corrected
+arXiv-format draft, frozen. `dimred-corrected-arxiv.tex:747-755` (label
+`base_dimension`, display `base_dimension:strong_compatability`):
 
-  "For all $\mathbf{x}_i \geq 2$, $j \geq 0$, $i < d$, ($t < \tau_M$ and
-   $i \geq 0$) or ($i \geq 1$ and $t \geq \tau_M$),
-   $v_t^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j) =
-    v_t^{(M)}(\mathbf{x}_i, 2, \mathbf{1}_j)+ 1$
-   $\implies$
-   $v_{t+1}^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j) =
-    v_{t}^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j)$ and
-   $v_{t+1}^{(M)}(\mathbf{x}_i, 2, \mathbf{1}_j) =
-    v_{t}^{(M)}(\mathbf{x}_i, 2, \mathbf{1}_j)+1$."
+  "\item[Strong facet compatibility] Let $i,j\geq0$, $i+1+j=d$, and put
+   $p=(\mathbf{x}_i,1,\mathbf{1}_j)\in\mathcal S_M^{(d)}$ with
+   $\mathbf{x}_i\geq2$. If $t<\tau_M$, or if $i\geq1$ and $t\geq\tau_M$, then
+
+  v_t^{(M)}(\mathbf{x}_i,1,\mathbf{1}_j)
+   &=v_t^{(M)}(\mathbf{x}_i,2,\mathbf{1}_j)+1\\ & \implies \\
+   v_{t+1}^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j) &= v_{t}^{(M)}(\mathbf{x}_i,
+   1, \mathbf{1}_j) \\ v_{t+1}^{(M)}(\mathbf{x}_i, 2, \mathbf{1}_j) &=
+   v_{t}^{(M)}(\mathbf{x}_i, 2, \mathbf{1}_j)+1."
+
+`(x_i, c, 1_j)` is `facetPoint`, as in the weak clause, and the dimension is
+`d = i + 1 + j`.
 -/
 import DimRed.Support.RegProved
 

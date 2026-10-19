@@ -1,5 +1,5 @@
 import DimRed.Support.AxisStep
-import DimRed.Frozen.Prelim.PtInd
+import DimRed.Support.NonnegativeUpdate
 
 /-
 The one-dimensional inductive self-similarity step in Proposition 4.1:
@@ -161,9 +161,9 @@ theorem odo_one_consist_step
         inCube_one_two_mul M (y 0) (by omega) hyM
       have hsmall : inCube 1 (2 * (M - 1)) (fun _ => y 0 - 1) :=
         inCube_one_two_mul_sub M hM (y 0) hy2 hyM
-      have hptbig := Frozen.pt_ind_lemma 1 (2 * M) (by omega) (fun _ => (2 : ℤ))
+      have hptbig := DimRed.bounded_point_update 1 (2 * M) (by omega) (fun _ => (2 : ℤ))
         (fun _ _ => by omega) (fun _ _ => by omega) s (fun _ => y 0) hbig
-      have hptsmall := Frozen.pt_ind_lemma 1 (2 * (M - 1)) (by omega) (fun _ => (2 : ℤ))
+      have hptsmall := DimRed.bounded_point_update 1 (2 * (M - 1)) (by omega) (fun _ => (2 : ℤ))
         (fun _ _ => by omega) (fun _ _ => by omega) s
         (fun _ => y 0 - 1) hsmall
       rw [hst] at hptbig hptsmall

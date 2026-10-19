@@ -166,10 +166,9 @@ theorem topple_general (d M : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
       have hmax := hlower (T - 1) hlowerTpred
       rw [show T - 1 + 2 = T + 1 by omega] at hpoint hmax
       linarith
-  have hbase' := Frozen.topple_limit (d + 1) M (by omega)
-    (fun _ => 2 * ((d + 1 : ℕ) : ℤ))
-    (fun _ _ => by omega) (fun _ _ => by omega)
-    (isSymmetricPile_const' (d + 1) (2 * M) (2 * ((d + 1 : ℕ) : ℤ))) T t 2 hTt
+  have hbase' := Frozen.topple_limit (d + 1) M (by omega) (by omega)
+    (fun _ => 2 * ((d + 1 : ℕ) : ℤ)) (fun _ _ _ _ => rfl) T t 2 hTt
+  simp only [Corrected.maximum_eq_simplexMax] at hbase'
   have hbase'' : simplexMax (d + 1) M (fun x =>
       odoUnif (d + 1) (2 * M) (t + 2) x -
         odoUnif (d + 1) (2 * M) t x) ≤

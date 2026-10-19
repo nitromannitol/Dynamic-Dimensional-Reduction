@@ -1,11 +1,15 @@
-# Correspondence between the paper and the formalization
+# Correspondence between the corrected source and the formalization
 
-The current Lean manifest pins corrected local text `paper/dimred.tex`. This file records
-its intended correspondence with the registered Lean statements. The final source for
-the paper formalization is the author's [arXiv v2 text](https://arxiv.org/abs/2009.05968v2),
-preserved as `paper/dimred-arxiv.tex`. The local corrections are listed in
-[`paper/CHANGES_FROM_ARXIV.md`](paper/CHANGES_FROM_ARXIV.md). This table records a claimed
-mapping for the local text, not a completed source-fidelity audit of arXiv v2.
+The manifest selects [the corrected arXiv-format draft](paper/corrected-arxiv/dimred-corrected-arxiv.tex).
+The [source note](paper/corrected-arxiv/SOURCE_NOTE.md) records C01–C25 and the C18 narrative
+refinement. Both historical source files remain byte-identical. The integration is recorded in
+[ledger/audits/2026-10-19-corrected-source-integration.md](ledger/audits/2026-10-19-corrected-source-integration.md).
+
+The weak topple-control row now has its unrestricted cube-local statement, with a
+nonempty maximum and no height bounds. All inherited clauses, the three added
+theorem clauses and six definition-characterization units have Frozen declarations.
+Generated proof counts describe exact Lean declarations; definition units add no
+numbered-theorem coverage.
 
 ## The frozen surface
 
@@ -13,131 +17,74 @@ mapping for the local text, not a completed source-fidelity audit of arXiv v2.
 
 | id | Lean | paper | state |
 |---|---|---|---|
-| `prop-base-dimension-weak` | `DimRed.Frozen.base_dimension_weak_compatibility` | `dimred.tex:919-926`, `base_dimension` | PROVED |
-| `thm-dimensional-reduction` | `DimRed.Frozen.dimensional_reduction` | `dimred.tex:109-140`, `the_theorem` | PROVED |
-| `thm-terminal-reduction` | `DimRed.Frozen.terminal_dimensional_reduction` | `dimred.tex:109-140`, `the_theorem` | PROVED |
-| `cor-sandpile-reduction` | `DimRed.Frozen.sandpile_dimensional_reduction` | `dimred.tex:143-159`, `sandpile_corollary` | PROVED |
-| `lem-symmetry` | `DimRed.Frozen.symmetry_lemma` | `dimred.tex:415-417`, `symmetry_lemma` | PROVED |
-| `prop-no-reduction` | `DimRed.Frozen.no_reduction_at_critical_dimension` | `dimred.tex:706-708`, `no_reduction` | PROVED |
-| `lem-radial-laplacian` | `DimRed.Frozen.radial_laplacian` | `dimred.tex:728-734`, `radial_laplacian` | PROVED |
-| `lem-pt-ind` | `DimRed.Frozen.pt_ind_lemma` | `dimred.tex:289-294`, `pt_ind_lemma` | PROVED |
-| `lem-parabolic-comparison` | `DimRed.Frozen.parabolic_comparison` | `dimred.tex:311-316`, `parabolic_comparison` | PROVED |
-| `lem-topple-limit` | `DimRed.Frozen.topple_limit` | `dimred.tex:669-676`, `topple_limit` | PROVED |
-| `lem-difference-comparison` | `DimRed.Frozen.general_difference_comparison` | `dimred.tex:473-492`, `general_difference_comparison` | PROVED |
-| `prop-base-case` | `DimRed.Frozen.base_case` | `dimred.tex:789-813`, `prop-base_case` | PROVED |
-| `prop-base-dimension-consistency` | `DimRed.Frozen.base_dimension_consistency` | `dimred.tex:915-918`, `base_dimension` | PROVED |
-| `prop-base-dimension-strong-derivative` | `DimRed.Frozen.base_dimension_strong_derivative` | `dimred.tex:927-931`, `base_dimension` | PROVED |
-| `prop-base-dimension-strong-facet` | `DimRed.Frozen.base_dimension_strong_compatibility` | `dimred.tex:932-940`, `base_dimension` | PROVED |
-| `prop-base-dimension-strong-topple` | `DimRed.Frozen.base_dimension_strong_topple` | `dimred.tex:944-948`, `base_dimension` | PROVED |
-| `thm-self-similarity` | `DimRed.Frozen.self_similarity` | `dimred.tex:109-140`, `the_theorem` | PROVED |
-| `cor-sandpile-self-similarity` | `DimRed.Frozen.sandpile_self_similarity` | `dimred.tex:143-159`, `sandpile_corollary` | PROVED |
-| `cor-axis-monotonicity` | `DimRed.Frozen.axis_monotonicity` | `dimred.tex:513-527`, `axis_monotonicity` | PROVED |
-| `cor-derivative-bound` | `DimRed.Frozen.derivative_bound` | `dimred.tex:531-538`, `cor-derivative_bound` | PROVED |
+| `prop-base-dimension-weak` | `DimRed.Frozen.base_dimension_weak_compatibility` | `dimred-corrected-arxiv.tex:731-738`, `base_dimension` | PROVED |
+| `thm-dimensional-reduction` | `DimRed.Frozen.dimensional_reduction` | `dimred-corrected-arxiv.tex:109-118`, `the_theorem` | PROVED |
+| `thm-terminal-reduction` | `DimRed.Frozen.terminal_dimensional_reduction` | `dimred-corrected-arxiv.tex:119-121`, `the_theorem` | PROVED |
+| `cor-sandpile-reduction` | `DimRed.Frozen.sandpile_dimensional_reduction` | `dimred-corrected-arxiv.tex:147-154`, `sandpile_corollary` | PROVED |
+| `lem-symmetry` | `DimRed.Frozen.symmetry_lemma` | `dimred-corrected-arxiv.tex:399-401`, `symmetry_lemma` | PROVED |
+| `prop-no-reduction` | `DimRed.Frozen.no_reduction_at_critical_dimension` | `dimred-corrected-arxiv.tex:596-598`, `no_reduction` | PROVED |
+| `lem-radial-laplacian` | `DimRed.Frozen.radial_laplacian` | `dimred-corrected-arxiv.tex:618-624`, `radial_laplacian` | PROVED |
+| `lem-pt-ind` | `DimRed.Frozen.pt_ind_lemma` | `dimred-corrected-arxiv.tex:291-297`, `pt_ind_lemma` | PROVED |
+| `lem-parabolic-comparison` | `DimRed.Frozen.parabolic_comparison` | `dimred-corrected-arxiv.tex:314-319`, `parabolic_comparison` | PROVED |
+| `lem-difference-comparison` | `DimRed.Frozen.general_difference_comparison` | `dimred-corrected-arxiv.tex:459-480`, `general_difference_comparison` | PROVED |
+| `prop-base-case` | `DimRed.Frozen.base_case` | `dimred-corrected-arxiv.tex:660-684`, `prop:base_case` | PROVED |
+| `prop-base-dimension-consistency` | `DimRed.Frozen.base_dimension_consistency` | `dimred-corrected-arxiv.tex:727-729`, `base_dimension` | PROVED |
+| `prop-base-dimension-strong-derivative` | `DimRed.Frozen.base_dimension_strong_derivative` | `dimred-corrected-arxiv.tex:743-745`, `base_dimension` | PROVED |
+| `prop-base-dimension-strong-facet` | `DimRed.Frozen.base_dimension_strong_compatibility` | `dimred-corrected-arxiv.tex:747-755`, `base_dimension` | PROVED |
+| `prop-base-dimension-strong-topple` | `DimRed.Frozen.base_dimension_strong_topple` | `dimred-corrected-arxiv.tex:761-763`, `base_dimension` | PROVED |
+| `thm-self-similarity` | `DimRed.Frozen.self_similarity` | `dimred-corrected-arxiv.tex:122-133`, `the_theorem` | PROVED |
+| `cor-sandpile-self-similarity` | `DimRed.Frozen.sandpile_self_similarity` | `dimred-corrected-arxiv.tex:155-158`, `sandpile_corollary` | PROVED |
+| `cor-axis-monotonicity` | `DimRed.Frozen.axis_monotonicity` | `dimred-corrected-arxiv.tex:503-513`, `axis_monotonicity` | PROVED |
+| `cor-derivative-bound` | `DimRed.Frozen.derivative_bound` | `dimred-corrected-arxiv.tex:527-534`, `cor:derivative_bound` | PROVED |
+| `lem-strict-head-facet` | `DimRed.Frozen.strict_head_facet` | `dimred-corrected-arxiv.tex:1127-1137`, `lem:strict-head-facet` | PROVED |
+| `lem-one-terminal-profile` | `DimRed.Frozen.one_terminal_profile` | `dimred-corrected-arxiv.tex:920-927`, `lem:one-terminal-profile` | PROVED |
+| `lem-one-terminal-derivative` | `DimRed.Frozen.one_terminal_derivative` | `dimred-corrected-arxiv.tex:920-927`, `lem:one-terminal-profile` | PROVED |
+| `char-folded-lift` | `DimRed.Frozen.folded_lift_definition` | dimred-corrected-arxiv.tex:370-377 (literal lifted-value definition; context subsec:symmetry) | PROVED |
+| `char-folded-neighbors` | `DimRed.Frozen.folded_neighbors_definition` | dimred-corrected-arxiv.tex:378-380 (literal directed-neighbor definition; context subsec:symmetry) | PROVED |
+| `char-folded-odometer` | `DimRed.Frozen.folded_odometer_definition` | dimred-corrected-arxiv.tex:380-389 (literal initial value and threshold recursion; context subsec:symmetry) | PROVED |
+| `char-physical-pile` | `DimRed.Frozen.pile_definition` | dimred-corrected-arxiv.tex:93-98 (finite-pile conservation; physical carrier at 278-284) | PROVED |
+| `char-terminal-pile` | `DimRed.Frozen.terminal_pile_characterization` | `dimred-corrected-arxiv.tex:145-161`, `sandpile_corollary` | PROVED |
+| `char-nonempty-maximum` | `DimRed.Frozen.maximum_definition` | `dimred-corrected-arxiv.tex:561-568`, `topple_limit` | PROVED |
+| `lem-topple-limit` | `DimRed.Frozen.topple_limit` | `dimred-corrected-arxiv.tex:561-568`, `topple_limit` | PROVED |
 
 <!-- FROZEN-SURFACE-END -->
 
-## The vocabulary
+## Objects and carriers
 
-| paper | Lean | notes |
+| Source object | Lean representation | Domain and meaning |
 |---|---|---|
-| `C_N^{(d)}`, `dimred.tex:277` | `DimRed.inCube d N` | the paper embeds the cube two ways depending on the parity of `N`; both are the box with coordinates in `[1 - ⌊N/2⌋, ⌈N/2⌉]`, which is the single definition used here |
-| `M = ⌈N/2⌉` | `DimRed.hiCoord N` | |
-| `S_M^{(d)}`, `dimred.tex:363-366` | `DimRed.inSimplex d M`, `DimRed.simplex d M` | the predicate is decidable; the `Finset` is used where the paper takes a maximum over the domain |
-| `∂C_N^{(d)}`, `dimred.tex:130` | `DimRed.innerBoundary d N` | |
-| `Δ^{(d)}`, `dimred.tex:275-281` | `DimRed.lap` | every function in the development vanishes off the cube, so the paper's padding `f(y) := 0` for `y ∉ C` is automatic |
-| `∑_{y ∼ x}` | `DimRed.nbrSum` | the sum over the `2d` neighbours, direction by direction |
-| `v_t`, `dimred.tex:100-107` | `DimRed.odo d N s₀ t` | |
-| `s_t`, `dimred.tex:100-107` | `DimRed.sandp d N s₀ t` | |
-| `v_t^{(d,N)}` for `s_0 ≡ 2d` | `DimRed.odoUnif d N t` | |
-| `s_t^{(d,N)}` for `s_0 ≡ 2d` | `DimRed.sandpUnif d N t` | |
-| `v_∞` | `DimRed.odoInf` | valued in `ℕ∞`; see "junk values" below |
-| `τ_j`, `dimred.tex:130-133` | `DimRed.toppleTime d j` | valued in `ℕ∞`; see "junk values" below |
-| `max_{z ∈ S_M}` | `DimRed.simplexMax` | |
+| physical cube | `inCube d N` / `Corrected.CubeSite d N` | Coordinates from `1-N/2` through `(N+1)/2`; the site subtype is used for piles. |
+| sorted fundamental domain | `inSimplex d M` / `Corrected.SimplexSite d M` | `M >= x_1 >= ... >= x_d >= 1`. |
+| physical odometer | `odo d N s₀ t` | Literal threshold recursion, zero outside the cube. Uniform specialization is `odoUnif`. |
+| physical pile | `Corrected.pile d N s₀ t` | `s₀ + lap(odo)` evaluated only on a physical cube site; `sandp_succ` proves the source mutual recursion. |
+| terminal odometer | `odoInf` / `odoInfUnif` | Supremum in ENat; infinity is retained. Uniform positive-dimensional finiteness is proved. |
+| terminal pile | `Corrected.terminalPile d N hd` | Positive dimension and physical cube carrier; eventual finite-time pile equality justifies every integer conversion. |
+| cube-local symmetry | `Corrected.CubeSymmetric` | Only initial values inside the physical cube must be symmetric. |
+| folded process | `Corrected.foldedOdo` | Independent threshold recursion using `foldedNbrSum` and the source zero-extended `foldedLift`. |
+| directed folded sum | `Corrected.foldedNbrSum` | Both signs for each coordinate, including repeated representatives and exterior zero contributions. |
+| boundary hitting time | `toppleTime d j` | First positive time some inner-boundary site reaches j; an empty hitting set gives infinity. |
+| finite nonempty maximum | `Corrected.maximum d M hne` | Actual `Finset.sup'`; no empty-domain branch. |
 
-## How the odometer is defined
+The symmetry theorem includes both invariance and folded-process identification, for
+arbitrary integer heights and both cube parities. Even reflection sends 0 to 1; odd
+reflection sends 0 to 2. The point formula has the signed `max(0,floor(...))` conclusion.
+Axis monotonicity and the derivative/difference bounds retain every constant integer height.
+The derivative corner cap is a source premise; no other cap or compatibility premise is added.
 
-The paper defines the pair `(v_t, s_t)` by the mutual recursion
-`v_0 ≡ 0`, `v_{t+1} = v_t + 1{s_t ≥ 2d}`, `s_{t+1} = s_t + Δ(v_{t+1} - v_t)`
-(`dimred.tex:100-107`).  Since `s_t = s_0 + Δ v_t` for every `t`, `DimRed.odo`
-is defined by the single recursion in which `s_t` is written out, and
-`DimRed.sandp` by the closed form `s₀ + Δ v_t`.  The paper's two displays are
-then theorems, `DimRed.odo_succ_eq` and `DimRed.sandp_succ`, so nothing is
-assumed by the choice.
+The main reduction/regularity proofs reuse the audited dimension–side–time joint induction.
+The closed strict-head C/S wrapper sits above that result. Three source-facing conclusions
+use the repaired pile/maximum carriers; their constructors retain the exact source coordinates.
+The added one-dimensional terminal derivative includes x=M. Literal defining equations and
+the terminal-pile characterization are separately manifested semantic units, not new numbered
+paper theorems. Exact clause readings are in [ledger/readings.yaml](ledger/readings.yaml).
 
-## The symmetrized odometer
+## Marker identity
 
-Sections 2.5 onward of the paper work with the symmetrized odometer `v^S` on
-`S_M^{(d)}` with reflecting boundary conditions.  Lemma 2.3 (`symmetry_lemma`)
-shows `v^S = v` on `S_M^{(d)}`, and the paper then says "Henceforth, we
-consider `v_t^S` in `S_M^{(d)}` and drop all `S` superscripts".  Every frozen
-statement here is therefore written with the cube odometer `DimRed.odo`
-restricted to `S_M^{(d)}`, which is the same function.  No separate
-symmetrized Laplacian is defined.
+The SHA-256 recipe hashes exactly the UTF-8 bytes between the statement markers, dropping
+one initial newline. Definitions in Support are bound semantically by the full defining-equation
+or characterization declarations and their identification consumer; changing a meaning-carrying
+body requires fresh review even when a wrapper's printed type remains unchanged.
 
-## Junk values
-
-- `v_∞` is `⨆ t, (v_t x).toNat` in `ℕ∞`.  A site that never stops toppling has
-  the value `⊤`, not a junk integer.  That the value is finite is a theorem of
-  the development, not an assumption.
-- `τ_j` is an `sInf` in `ℕ∞`, so a `j` for which no such time exists would give
-  `⊤`.  As in the paper, the time asks for some inner boundary site to reach
-  height `j`; `toppleTime_eq_corner` shows it is the first time the corner
-  `(j, 1_{d-1})` does.
-- `simplexMax d M f` is `0` on an empty domain; `simplex_nonempty` shows the
-  domain is nonempty when `1 ≤ M`.
-- Integer division `a / b` on `ℤ` is floor division for `b > 0`, so the paper's
-  `⌊·/2d⌋` is written directly as `· / (2 * d)`.
-
-## The domain of the regularity statements
-
-From `dimred.tex:434-436` ("Henceforth, we consider `v_t^S` in `S_M^{(d)}` and
-drop all `S` superscripts ... we only consider `N = 2M`") every point named in
-Sections 2.5 onward, in Proposition 4.1 and in Section 5 is a point of the
-sorted fundamental domain.  The frozen statements therefore carry
-`inSimplex d M x` (or `inSimplex (i+1+j) M (facetPoint x 1 j)`) alongside the
-paper's explicit conditions `x > M-j` and `x_i ≥ 2`.  These are not extra
-hypotheses: they say which points the paper is talking about.
-
-## Hypotheses the development does NOT carry
-
-`lem-symmetry` carries only the symmetry of the initial sandpile
-(`dimred.tex:369`) and not the bound `0 ≤ s₀ ≤ 2(2d) - 1`, which its proof
-does not use.  The statement is therefore stronger than the paper's.
-
-## Nodes carrying cited inputs
-
-None.  The paper cites Babai-Gorodezky for the attribution of Corollary
-2.1 but proves it, and cites the comparison principle only in a remark.
-
-## Hypotheses written out from the paper's standing assumptions
-
-| node | added hypothesis | why |
-|---|---|---|
-| `lem-topple-limit` | `IsSymmetricPile d (2M) s₀` | the standing hypothesis of `dimred.tex:369`, that the initial sandpile is symmetric, is in force from Section 2.4 onward and is what makes a maximum over the fundamental domain a maximum over the whole hypercube; the bound of `dimred.tex:286-288` alone does not give it.  Without it the statement is not the paper's |
-| `lem-pt-ind`, `lem-parabolic-comparison`, `lem-topple-limit` | the bounds `0 ≤ s₀ ≤ 2(2d) - 1` are hypotheses only ON the hypercube | `dimred.tex:286-288` constrains the initial sandpile on `C`, not on all of `ℤ^d`; the odometer never reads `s₀` off the cube, so the restricted hypothesis is the paper's and gives the stronger statement |
-
-The statements whose text differs from the arXiv version (Lemma 2.1, Lemma 2.4,
-Corollary 2.1, Proposition 3.2, the definition of `τ_j` in Theorem 1.1 and two
-displays of Proposition 4.1) are frozen as `paper/dimred.tex` states them;
-[`paper/CHANGES_FROM_ARXIV.md`](paper/CHANGES_FROM_ARXIV.md) lists each change and
-the reason for it.
-
-## Main results
-
-The five registered Lean declarations assigned to the main-result labels have proofs
-(state `PROVED`). This registration does not establish their exact correspondence to the
-selected arXiv v2 source. [`DimRed/MainTheorems.lean`](DimRed/MainTheorems.lean) states
-the registered declarations in full, together with the other fifteen declarations.
-
-| Source | Frozen statement | State |
-|---|---|---|
-| Theorem 1.1(i), first display | `DimRed.Frozen.dimensional_reduction` | proved |
-| Theorem 1.1(i), second display | `DimRed.Frozen.terminal_dimensional_reduction` | proved |
-| Theorem 1.1(ii) | `DimRed.Frozen.self_similarity` | proved |
-| Corollary 1.1(i) | `DimRed.Frozen.sandpile_dimensional_reduction` | proved |
-| Corollary 1.1(ii) | `DimRed.Frozen.sandpile_self_similarity` | proved |
-
-The current Lean proofs use one induction over dimension, side length and time
-(`DimRed.reg_proved` in `DimRed/Support/RegProved.lean`). Each of the five registered
-main-result declarations and Proposition 4.1 also has a
-Mathlib-only comparator challenge; see [`DimRedAudit/README.md`](DimRedAudit/README.md).
+The old nonnegative floor formula is retained as `bounded_point_update` below the source
+anchors. Internal bounded proofs consume that specialization. It is not a new premise of
+the signed source theorem. Public restatements match the Frozen declarations.

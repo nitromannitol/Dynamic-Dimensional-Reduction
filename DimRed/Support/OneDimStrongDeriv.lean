@@ -1,3 +1,5 @@
+import DimRed.Support.DifferenceStep
+import DimRed.Support.NonnegativeUpdate
 /-
 The finite-time strong derivative estimate in dimension one, using the
 two-step comparison function from `dimred.tex:1012-1029`.
@@ -89,8 +91,8 @@ theorem odo_deriv_bound_until (d M : ℕ) (c : ℤ)
             simp [Finset.sum_const, Finset.card_univ]
             ring_nf
             exact le_rfl
-          rw [Frozen.pt_ind_lemma d (2 * M) hd _ (fun _ _ => hc0) (fun _ _ => hc1) n _ hx,
-            Frozen.pt_ind_lemma d (2 * M) hd _ (fun _ _ => hc0) (fun _ _ => hc1) n _ hxa]
+          rw [DimRed.bounded_point_update d (2 * M) hd _ (fun _ _ => hc0) (fun _ _ => hc1) n _ hx,
+            DimRed.bounded_point_update d (2 * M) hd _ (fun _ _ => hc0) (fun _ _ => hc1) n _ hxa]
           have h1 : (c + nbrSum (odo d (2 * M) (fun _ => c) n) x) / (2 * (d : ℤ))
               ≤ (c + nbrSum (odo d (2 * M) (fun _ => c) n) (x + unit j)
                   + 2 * (d : ℤ) * ((k : ℤ) * x j)) / (2 * (d : ℤ)) := by

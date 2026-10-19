@@ -1,26 +1,27 @@
 /-
-Proposition 3.2 of `dimred.tex`, frozen.  `dimred.tex:789-813`
-(label `prop:base_case`):
+Proposition 3.2 of the corrected arXiv-format draft, frozen.
+`dimred-corrected-arxiv.tex:660-684` (label `prop:base_case`):
 
   "For all $d \geq 1$, when $s_0^{(d)} = 2 d + (d-1)$, the radially
-   reparameterized parallel toppling odometer has the following form.  For all
-   $t \geq 1$,
-   $v_t(x) = v_{t-1}(x)+1$ for $x \leq a_{t}$ and $v_t(x) = v_{t-1}(x)$ for
-   $a_{t} < x \leq a_{t-1}$.
-   And for each $t' < t \leq t' + x$ and $a_{t'-1} \geq x > a_{t'}$,
-   $v_{t}(x) = v_{t'}(x - (t - t'))$."
+   reparameterized parallel toppling odometer has the following form. For all
+   $t \geq 1$, v_t(x) = \begin{cases} v_{t-1}(x) + 1 &\mbox{ for $x \leq
+   a_{t}$} \\ v_{t-1}(x) &\mbox{ for $a_{t} < x \leq a_{t-1}$}. \end{cases}
+   And for each $1\leq t'<t\leq t'+x$ and $a_{t'-1}\geq x>a_{t'}$,
+   v_t(x)=v_{t'}(x-(t-t'))."
+
+The setting is `M = 2` (`dimred-corrected-arxiv.tex:613-615`), hence the
+hypercube `C_4^{(d)}` since `N = 2M` (`dimred-corrected-arxiv.tex:420-422`),
+and `x` is the radial coordinate of `dimred-corrected-arxiv.tex:614-615`, so
+`v_t(x)` is the odometer at `radial d x`. `a_t` is `blockEdge`,
+`dimred-corrected-arxiv.tex:649-657`. Time is written `t + 1` so that `t ≥ 1`
+and `t - 1` need no truncated subtraction, and the ripple's `t'` is written `s
++ 1` for the same reason.
 
 Outside the firing block the profile at time `t` is the profile at time `t'`
-shifted outward by `t - t'`: for `t' = s + 1` and `t' < t ≤ t' + x`, the
-odometer at `radial d x` at time `t + 1` equals the odometer at
-`radial d (x - (t - s))` at time `s + 1`.
-
-The setting is `M = 2`, hence the hypercube `C_4^{(d)}` (`dimred.tex:722-723`
-and `dimred.tex:434-436`), and `x` is the radial coordinate of
-`dimred.tex:724-727`, so `v_t(x)` is the odometer at `radial d x`.  `a_t` is
-`blockEdge`, `dimred.tex:784-790`.  Time is written `t + 1` so that `t ≥ 1` and
-`t - 1` need no truncated subtraction, and the ripple's `t'` is written `s + 1`
-for the same reason.
+shifted outward by `t - t'`: for `t' = s + 1`, the ripple range `t' < t ≤ t' +
+x` of the statement, with its time `t` written `t + 1`, is `s + 1 ≤ t` and `t
+- s ≤ x`, and the odometer at `radial d x` at time `t + 1` equals the odometer
+at `radial d (x - (t - s))` at time `s + 1`.
 -/
 import DimRed.Support.Recursion
 import DimRed.Support.BaseInduction

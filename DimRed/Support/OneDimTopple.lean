@@ -132,9 +132,9 @@ theorem odo_one_strong_topple (M t : ℕ) (hM : 2 ≤ M)
   obtain ⟨T, hT, hTt⟩ := (WithTop.le_coe_iff).mp ht
   have hbase := odo_one_strong_topple_at M hM T hT
     (hconsist T hT) htopple hweak htau (hcase_y_le_two T hT)
-  have hlimit := Frozen.topple_limit 1 M (by norm_num) (fun _ => 2)
-    (fun _ _ => by norm_num) (fun _ _ => by norm_num)
-    (isSymmetricPile_const' 1 (2 * M) 2) T t 2 hTt
+  have hlimit := Frozen.topple_limit 1 M (by norm_num) (by omega) (fun _ => 2)
+    (fun _ _ _ _ => rfl) T t 2 hTt
+  simp only [Corrected.maximum_eq_simplexMax] at hlimit
   exact le_trans hlimit hbase
 
 end DimRed

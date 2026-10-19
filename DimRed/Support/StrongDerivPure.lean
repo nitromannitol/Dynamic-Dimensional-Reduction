@@ -1,3 +1,4 @@
+import DimRed.Support.NonnegativeUpdate
 import DimRed.Support.RegInduction
 import DimRed.Support.DerivBound
 import DimRed.Support.AxisStep
@@ -127,9 +128,9 @@ theorem floor_step (d M : ℕ) (hd : 1 ≤ d) (s s' : ℕ) (x w : Site d)
   have hdZ : (1 : ℤ) ≤ (d : ℤ) := by exact_mod_cast hd
   have h' : nbrSum (odo d (2 * M) (fun _ => 2 * (d : ℤ)) s) x
       - nbrSum (odo d (2 * M) (fun _ => 2 * (d : ℤ)) s') (x + w) ≤ 2 * (d : ℤ) * g := h
-  have h1 := Frozen.pt_ind_lemma d (2 * M) hd (fun _ => 2 * (d : ℤ))
+  have h1 := DimRed.bounded_point_update d (2 * M) hd (fun _ => 2 * (d : ℤ))
     (fun _ _ => by positivity) (fun _ _ => by linarith) s x hx
-  have h2 := Frozen.pt_ind_lemma d (2 * M) hd (fun _ => 2 * (d : ℤ))
+  have h2 := DimRed.bounded_point_update d (2 * M) hd (fun _ => 2 * (d : ℤ))
     (fun _ _ => by positivity) (fun _ _ => by linarith) s' (x + w) hxw
   have hA : (2 * (d : ℤ) + nbrSum (odo d (2 * M) (fun _ => 2 * (d : ℤ)) s) x)
         / (2 * (d : ℤ))
@@ -193,7 +194,7 @@ theorem nbrSum_sub_le_of_terms {d : ℕ} (u u' : Site d → ℤ) (x w : Site d) 
 theorem oneDim_nbr_le (M t : ℕ) (y : Site 1) (hy : inCube 1 (2 * M) y) :
     odoUnif 1 (2 * M) t (y + unit 0) + odoUnif 1 (2 * M) t (y - unit 0)
       ≤ 2 * odoUnif 1 (2 * M) (t + 1) y - 1 := by
-  have h := Frozen.pt_ind_lemma 1 (2 * M) (by omega) (fun _ => 2)
+  have h := DimRed.bounded_point_update 1 (2 * M) (by omega) (fun _ => 2)
     (fun _ _ => by norm_num) (fun _ _ => by norm_num) t y hy
   simp only [nbrSum, Fin.sum_univ_one] at h
   have hq : (2 + (odo 1 (2 * M) (fun _ => 2) t (y + unit 0)
@@ -320,7 +321,7 @@ theorem odo_le_oneDim (d M : ℕ) (hd : 1 ≤ d) (l : Fin d) (t : ℕ) (x : Site
     odoUnif d (2 * M) t x ≤ odoUnif 1 (2 * M) t (fun _ => x l) := by
   have hdZ : (1 : ℤ) ≤ (d : ℤ) := by exact_mod_cast hd
   have hpar := (Frozen.parabolic_comparison d (2 * M) hd (fun _ => 2 * (d : ℤ))
-    (fun _ _ => by positivity)
+
     (fun _ _ => by linarith)).2
   have hmain := hpar (oneDimComp d M l)
     (fun t z => by

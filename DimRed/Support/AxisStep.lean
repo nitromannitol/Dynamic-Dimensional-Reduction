@@ -16,7 +16,7 @@ site's own mirror image, and the two terms are equal.
 -/
 import DimRed.Support.Fundamental
 import DimRed.Support.Stabilize
-import DimRed.Frozen.Prelim.PtInd
+import DimRed.Support.NonnegativeUpdate
 
 namespace DimRed
 
@@ -125,8 +125,8 @@ theorem odo_axis_refl (hd : 1 ≤ d) (c : ℤ) (hc0 : 0 ≤ c)
         · have h1 := (odo_succ_sub_bounds d (2 * M) (fun _ => c) n (u + unit i)).2
           have h2 := odo_mono d (2 * M) (fun _ => c) (show n ≤ n + 1 by omega) u
           omega
-        · rw [Frozen.pt_ind_lemma d (2 * M) hd _ (fun _ _ => hc0) (fun _ _ => hc1) n _ ha,
-            Frozen.pt_ind_lemma d (2 * M) hd _ (fun _ _ => hc0) (fun _ _ => hc1) n _ hb]
+        · rw [DimRed.bounded_point_update d (2 * M) hd _ (fun _ _ => hc0) (fun _ _ => hc1) n _ ha,
+            DimRed.bounded_point_update d (2 * M) hd _ (fun _ _ => hc0) (fun _ _ => hc1) n _ hb]
           refine Int.ediv_le_ediv hdpos ?_
           have hnb : nbrSum (odo d (2 * M) (fun _ => c) n) (u + unit i)
               ≤ nbrSum (odo d (2 * M) (fun _ => c) n) u := by
@@ -271,8 +271,8 @@ theorem odo_axis_rot (hd : 1 ≤ d) (c : ℤ) (hc0 : 0 ≤ c)
               (u + unit i - unit j)).2
             have h2 := odo_mono d (2 * M) (fun _ => c) (show n ≤ n + 1 by omega) u
             omega
-          · rw [Frozen.pt_ind_lemma d (2 * M) hd _ (fun _ _ => hc0) (fun _ _ => hc1) n _ ha,
-              Frozen.pt_ind_lemma d (2 * M) hd _ (fun _ _ => hc0) (fun _ _ => hc1) n _ hb]
+          · rw [DimRed.bounded_point_update d (2 * M) hd _ (fun _ _ => hc0) (fun _ _ => hc1) n _ ha,
+              DimRed.bounded_point_update d (2 * M) hd _ (fun _ _ => hc0) (fun _ _ => hc1) n _ hb]
             refine Int.ediv_le_ediv hdpos ?_
             have hnb : nbrSum (odo d (2 * M) (fun _ => c) n) (u + unit i - unit j)
                 ≤ nbrSum (odo d (2 * M) (fun _ => c) n) u := by

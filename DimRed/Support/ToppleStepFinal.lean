@@ -11,7 +11,7 @@ import DimRed.Support.FoldIdentity
 import DimRed.Support.ReflectShift
 import DimRed.Support.ToppleTimeScale
 import DimRed.Support.SnocSimplex
-import DimRed.Frozen.Prelim.PtInd
+import DimRed.Support.NonnegativeUpdate
 import DimRed.Frozen.Prelim.AxisMonotonicity
 import DimRed.Frozen.Prelim.ParabolicComparison
 import DimRed.Frozen.Prelim.ToppleLimit
@@ -219,8 +219,8 @@ theorem odoUnif_dim_one_two_le_one (M s : ℕ) (hM : 2 ≤ M) :
     rw [he]
     refine ⟨fun _ => ⟨by norm_num, show (2 : ℤ) ≤ (M : ℤ) by exact_mod_cast hM⟩,
       fun _ _ _ => le_refl _⟩
-  have h := Frozen.axis_monotonicity 1 M (le_refl 1) (2 * ((1 : ℕ) : ℤ)) (by norm_num)
-    (by norm_num) s hs (fun _ => (1 : ℤ)) hx 0 ∅ (by simp) (by simp) hmem
+  have h := Frozen.axis_monotonicity 1 M (le_refl 1) (2 * ((1 : ℕ) : ℤ))
+    s hs (fun _ => (1 : ℤ)) hx 0 ∅ (by simp) (by simp) hmem
   rw [he] at h
   exact h
 
@@ -250,7 +250,7 @@ theorem odoUnif_dim_one_rise_two_nbr (M s : ℕ) (hs : 1 ≤ s) (c : ℤ)
   push Not at hcon
   obtain ⟨h1, h2⟩ := hcon
   by_cases hin : inCube 1 (2 * M) (fun _ => c)
-  · have hp := Frozen.pt_ind_lemma 1 (2 * M) (le_refl 1) (fun _ => 2 * ((1 : ℕ) : ℤ))
+  · have hp := DimRed.bounded_point_update 1 (2 * M) (le_refl 1) (fun _ => 2 * ((1 : ℕ) : ℤ))
       (fun _ _ => by norm_num) (fun _ _ => by norm_num)
     have hA := hp (s + 1) (fun _ => c) hin
     have hB := hp (s - 1) (fun _ => c) hin
@@ -489,7 +489,7 @@ theorem odoUnif_snoc_one_le (e N s : ℕ) (he : 1 ≤ e) (x : Site e) :
     · rw [Fin.init_snoc]
     · exact hvnn _ _
   have hpc_e := (Frozen.parabolic_comparison e N he (fun _ => 2 * (e : ℤ))
-    (fun _ _ => by positivity) (fun _ _ => by linarith)).1
+    (fun _ _ => by linarith)).1
   have hsup : ∀ (t : ℕ) (y : Site (e + 1)), inCube (e + 1) N y →
       (-(2 * ((e + 1 : ℕ) : ℤ)) * u (t + 1) y + nbrSum (u t) y) +
         2 * ((e + 1 : ℕ) : ℤ) ≤ 2 * ((e + 1 : ℕ) : ℤ) - 1 := by
@@ -515,7 +515,7 @@ theorem odoUnif_snoc_one_le (e N s : ℕ) (he : 1 ≤ e) (x : Site e) :
     push_cast
     nlinarith
   have hpc := (Frozen.parabolic_comparison (e + 1) N (by omega)
-    (fun _ => 2 * ((e + 1 : ℕ) : ℤ)) (fun _ _ => by positivity)
+    (fun _ => 2 * ((e + 1 : ℕ) : ℤ))
     (fun _ _ => by push_cast; linarith)).2 u hu0 hu1 hsup s (Fin.snoc x 1)
   exact le_trans hpc (hu_le s x 1)
 
@@ -668,7 +668,7 @@ theorem topple_dim_succ_at {e M T : ℕ} (he : 1 ≤ e) (hM : 2 ≤ M)
         (Fin.snoc y 1 + unit (Fin.last e) - ∑ j ∈ (∅ : Finset (Fin (e + 1))), unit j) := by
       rw [he2]; exact hx
     have hax := Frozen.axis_monotonicity (e + 1) M (by omega) (2 * ((e + 1 : ℕ) : ℤ))
-      (by positivity) (by push_cast; linarith) (T + 2) (by omega) (Fin.snoc y 1) hy1
+        (T + 2) (by omega) (Fin.snoc y 1) hy1
       (Fin.last e) ∅ (by simp) (by simp) hmem
     rw [he2] at hax
     have hr := hsnoc y hcy
@@ -895,12 +895,9 @@ theorem topple_step_of_earlier (d M t : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
         exact (hprior (e + 1) (M - 1) T (Or.inr (Or.inl ⟨rfl, by omega⟩)) (by omega)
           (by omega)).1.2.2.2.2 hle
       exact topple_dim_succ_at he hM (hCs T le_rfl) hsnoc hred hlow hW
-  have hs1 : ∀ y : Site d, inCube d (2 * M) y → 2 * (d : ℤ) ≤ 2 * (2 * (d : ℤ)) - 1 := by
-    intro _ _
-    have : (1 : ℤ) ≤ (d : ℤ) := by exact_mod_cast hd
-    linarith
-  have hlim := Frozen.topple_limit d M hd (fun _ => 2 * (d : ℤ)) (fun _ _ => by positivity)
-    hs1 (isSymmetricPile_const' d (2 * M) (2 * (d : ℤ))) T t 2 hTt
+  have hlim := Frozen.topple_limit d M hd (by omega) (fun _ => 2 * (d : ℤ))
+    (fun _ _ _ _ => rfl) T t 2 hTt
+  simp only [Corrected.maximum_eq_simplexMax] at hlim
   exact le_trans hlim hbase
 
 end DimRed

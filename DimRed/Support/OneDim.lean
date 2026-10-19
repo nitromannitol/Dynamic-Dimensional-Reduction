@@ -1,3 +1,4 @@
+import DimRed.Support.NonnegativeUpdate
 /-
 The one-dimensional odometer recursion and its first two time slices for the
 uniform sandpile on `C_{2M}^{(1)}`, together with the `M = 2` table of
@@ -23,7 +24,7 @@ theorem odo_one_succ (M t : ℕ) (y : Site 1) (hy0 : 2 ≤ y 0) (hyM : y 0 ≤ (
   change odo 1 (2 * M) (fun _ => 2) (t + 1) y =
     1 + (odo 1 (2 * M) (fun _ => 2) t (y + unit 0) +
       odo 1 (2 * M) (fun _ => 2) t (y - unit 0)) / 2
-  rw [Frozen.pt_ind_lemma 1 (2 * M) (by norm_num) (fun _ => 2) (by
+  rw [DimRed.bounded_point_update 1 (2 * M) (by norm_num) (fun _ => 2) (by
     intro z _
     norm_num) (by
     intro z _
@@ -55,7 +56,7 @@ theorem odo_one_succ_at_one (M t : ℕ) (y : Site 1) (hM : 1 ≤ M) (hy : y 0 = 
   change odo 1 (2 * M) (fun _ => 2) (t + 1) y =
     1 + (odo 1 (2 * M) (fun _ => 2) t (y + unit 0) +
       odo 1 (2 * M) (fun _ => 2) t y) / 2
-  rw [Frozen.pt_ind_lemma 1 (2 * M) (by norm_num) (fun _ => 2) (by
+  rw [DimRed.bounded_point_update 1 (2 * M) (by norm_num) (fun _ => 2) (by
     intro z _
     norm_num) (by
     intro z _

@@ -12,226 +12,326 @@
 
 version: 1
 source_pin:
-  file: paper/dimred.tex
-  sha256: 1423810fa6c1469dbec2a1ba633652946a467297bfab3ea4d89cbd3b1e12b3ef
+  file: paper/corrected-arxiv/dimred-corrected-arxiv.tex
+  sha256: 217e1e34369afdd0342c47560d04e85042a67da8a6b2f397e0644cd2dc9fc121
 
 nodes:
   - id: prop-base-dimension-weak
-    version: 1
+    version: 2
     kind: theorem
-    source: dimred.tex:919-926 (label base_dimension, weak facet compatibility clause,
-      display base_dimension:weak_compatability)
+    source: dimred-corrected-arxiv.tex:731-738 (label base_dimension, clause weak facet compatibility)
     file: DimRed/Frozen/Regularity/WeakFacet.lean
     export: DimRed.Frozen.base_dimension_weak_compatibility
     state: PROVED
     frozen_sha256: 8d83f40bd08a3563bd882a497d128677d2f86010ac267040f350bf28d38ba777
     provider: DimRed.Frozen.base_dimension_weak_compatibility
-    approved: "2026-09-10"
+    approved: "2026-10-18"
 
   - id: thm-dimensional-reduction
-    version: 1
+    version: 2
     kind: theorem
-    source: dimred.tex:109-140 (label the_theorem)
+    source: dimred-corrected-arxiv.tex:109-118 (label the_theorem, clause finite dimensional reduction)
     file: DimRed/Frozen/Main/DimensionalReduction.lean
     export: DimRed.Frozen.dimensional_reduction
     state: PROVED
     frozen_sha256: 9fe0f7c9422f71c5bd7f7480b39f189a2ea7d2ba3c3b02a7290c39a1c8e29ac1
     provider: DimRed.Frozen.dimensional_reduction
-    approved: "2026-09-10"
+    approved: "2026-10-18"
 
   - id: thm-terminal-reduction
-    version: 1
+    version: 2
     kind: theorem
-    source: dimred.tex:109-140 (label the_theorem)
+    source: dimred-corrected-arxiv.tex:119-121 (label the_theorem, clause terminal dimensional reduction)
     file: DimRed/Frozen/Main/TerminalReduction.lean
     export: DimRed.Frozen.terminal_dimensional_reduction
     state: PROVED
     frozen_sha256: 6ef9769b333edd6780d067930cfc94dfd08b31f9a55b5fa4020015cdafe9361d
     provider: DimRed.Frozen.terminal_dimensional_reduction
-    approved: "2026-09-10"
+    approved: "2026-10-18"
 
   - id: cor-sandpile-reduction
-    version: 1
+    version: 2
     kind: theorem
-    source: dimred.tex:143-159 (label sandpile_corollary)
+    source: dimred-corrected-arxiv.tex:147-154 (label sandpile_corollary, clause terminal pile reduction)
     file: DimRed/Frozen/Main/SandpileReduction.lean
     export: DimRed.Frozen.sandpile_dimensional_reduction
     state: PROVED
-    frozen_sha256: f41347bf5b06a5babee9b9cdffb2f8bf86bb8726d42b7d7176a2faeaf0f4c98c
+    frozen_sha256: 660e680737a62c5930bddaa559aacc66d1dead7414ba2076a8bc2e9d21818398
     provider: DimRed.Frozen.sandpile_dimensional_reduction
-    approved: "2026-09-10"
+    approved: "2026-10-18"
 
   - id: lem-symmetry
-    version: 2
+    version: 3
     kind: theorem
-    source: dimred.tex:415-417 (label symmetry_lemma)
+    source: dimred-corrected-arxiv.tex:399-401 (label symmetry_lemma)
     file: DimRed/Frozen/Prelim/Symmetry.lean
     export: DimRed.Frozen.symmetry_lemma
     state: PROVED
-    frozen_sha256: d86cd2519d7fb6613a7fe3a4297cd4a42d9f880e39ab08b6462fb1fc2a317575
+    frozen_sha256: efd887216c050289ccd772583aeaa8cb938a3aa0757f46f4e17071133e17533f
     provider: DimRed.Frozen.symmetry_lemma
-    approved: "2026-09-10"
+    approved: "2026-10-18"
 
   - id: prop-no-reduction
-    version: 2
+    version: 3
     kind: theorem
-    source: dimred.tex:706-708 (label no_reduction)
+    source: dimred-corrected-arxiv.tex:596-598 (label no_reduction)
     file: DimRed/Frozen/BaseCase/NoReduction.lean
     export: DimRed.Frozen.no_reduction_at_critical_dimension
     state: PROVED
     frozen_sha256: a990c5792ff04650c236520aff8bfbd4ce2721602d2aa703698e1c457fb89984
     provider: DimRed.Frozen.no_reduction_at_critical_dimension
-    approved: "2026-09-10"
+    approved: "2026-10-18"
 
   - id: lem-radial-laplacian
-    version: 2
+    version: 3
     kind: theorem
-    source: dimred.tex:728-734 (label radial_laplacian)
+    source: dimred-corrected-arxiv.tex:618-624 (label radial_laplacian)
     file: DimRed/Frozen/BaseCase/RadialLaplacian.lean
     export: DimRed.Frozen.radial_laplacian
     state: PROVED
     frozen_sha256: f47be9537d444c7e06c4279bf657446596c6da58ed0fd5c1b60acf26c2b8678f
     provider: DimRed.Frozen.radial_laplacian
-    approved: "2026-09-10"
+    approved: "2026-10-18"
 
   - id: lem-pt-ind
-    version: 3
+    version: 4
     kind: theorem
-    source: dimred.tex:289-294 (label pt_ind_lemma)
+    source: dimred-corrected-arxiv.tex:291-297 (label pt_ind_lemma)
     file: DimRed/Frozen/Prelim/PtInd.lean
     export: DimRed.Frozen.pt_ind_lemma
     state: PROVED
-    frozen_sha256: a9fa10f453a9aef3d327706a1c3cefc971924334b653d5e5bf9e6d301d379b72
+    frozen_sha256: eac741e8917a3509cdf9aeb9741d47c4f10f2f29b5d5a7cb76d554fa44e11198
     provider: DimRed.Frozen.pt_ind_lemma
-    approved: "2026-09-10"
+    approved: "2026-10-18"
 
   - id: lem-parabolic-comparison
-    version: 3
+    version: 4
     kind: theorem
-    source: dimred.tex:311-316 (label parabolic_comparison)
+    source: dimred-corrected-arxiv.tex:314-319 (label parabolic_comparison)
     file: DimRed/Frozen/Prelim/ParabolicComparison.lean
     export: DimRed.Frozen.parabolic_comparison
     state: PROVED
-    frozen_sha256: 1c91f16518f7adfe1e3810d6350945fcf946ec98fbd8dfa7b6d15feb5d1c2824
+    frozen_sha256: fd092d0a7f5dc687106b8e528152fab83828585d102202ceee199693b886816d
     provider: DimRed.Frozen.parabolic_comparison
-    approved: "2026-09-10"
-
-  - id: lem-topple-limit
-    version: 3
-    kind: theorem
-    source: dimred.tex:669-676 (label topple_limit)
-    file: DimRed/Frozen/Prelim/ToppleLimit.lean
-    export: DimRed.Frozen.topple_limit
-    state: PROVED
-    frozen_sha256: 0bbd15507ea50c6417b51f510c9d3397a562a3099100a24bd0913058800c0d00
-    provider: DimRed.Frozen.topple_limit
-    approved: "2026-09-10"
+    approved: "2026-10-18"
 
   - id: lem-difference-comparison
-    version: 3
+    version: 4
     kind: theorem
-    source: dimred.tex:473-492 (label general_difference_comparison)
+    source: dimred-corrected-arxiv.tex:459-480 (label general_difference_comparison)
     file: DimRed/Frozen/Prelim/DifferenceComparison.lean
     export: DimRed.Frozen.general_difference_comparison
     state: PROVED
-    frozen_sha256: 8df9468a4519b9d37dc904e8e87a53fa46d94ecbc02cec46b87dbb55905c88cc
+    frozen_sha256: 9f8d04051024c1033d522248cc4ced24ec2ad9e1e40129ac5288d597a533bc54
     provider: DimRed.Frozen.general_difference_comparison
+    approved: "2026-10-18"
+
   - id: prop-base-case
-    version: 5
+    version: 6
     kind: theorem
-    source: dimred.tex:789-813 (label prop-base_case)
+    source: dimred-corrected-arxiv.tex:660-684 (label prop:base_case)
     file: DimRed/Frozen/BaseCase/ExplicitOdometer.lean
     export: DimRed.Frozen.base_case
     state: PROVED
     frozen_sha256: 14fc3681f7a5134bd0d4ce6f9f3df2996463ef59ff071ba4874c358ae21ca0e8
     provider: DimRed.Frozen.base_case
-    approved: "2026-09-16"
+    approved: "2026-10-18"
 
   - id: prop-base-dimension-consistency
-    version: 2
+    version: 3
     kind: theorem
-    source: dimred.tex:915-918 (label base_dimension, self-similarity clause, display base_dimension:consistency)
+    source: dimred-corrected-arxiv.tex:727-729 (label base_dimension, clause self-similarity)
     file: DimRed/Frozen/Regularity/Consistency.lean
     export: DimRed.Frozen.base_dimension_consistency
     state: PROVED
     frozen_sha256: 25139976eb1809f86cb7168efaa341b5c2ac54d3e6f9bf035a38ab17aba39b4a
     provider: DimRed.Frozen.base_dimension_consistency
-    approved: "2026-09-19"
+    approved: "2026-10-18"
 
   - id: prop-base-dimension-strong-derivative
-    version: 2
+    version: 3
     kind: theorem
-    source: dimred.tex:927-931 (label base_dimension, strong facet compatibility clause, display base_dimension:strong_derivative)
+    source: dimred-corrected-arxiv.tex:743-745 (label base_dimension, clause strong derivative)
     file: DimRed/Frozen/Regularity/StrongDerivative.lean
     export: DimRed.Frozen.base_dimension_strong_derivative
     state: PROVED
     frozen_sha256: f0338a0534e4d09cd58d1e2fabcca505d5eaebaf61f635ddb34ffe1c943d9f68
     provider: DimRed.Frozen.base_dimension_strong_derivative
-    approved: "2026-09-19"
+    approved: "2026-10-18"
 
   - id: prop-base-dimension-strong-facet
-    version: 2
+    version: 3
     kind: theorem
-    source: dimred.tex:932-940 (label base_dimension, strong facet compatibility clause, display base_dimension:strong_compatability)
+    source: dimred-corrected-arxiv.tex:747-755 (label base_dimension, clause both strong compatibility conclusions)
     file: DimRed/Frozen/Regularity/StrongFacet.lean
     export: DimRed.Frozen.base_dimension_strong_compatibility
     state: PROVED
     frozen_sha256: 6ae5164e2903adedfa944dd582892a6bf64031eb7cca92f267e852321f13439d
     provider: DimRed.Frozen.base_dimension_strong_compatibility
-    approved: "2026-09-19"
+    approved: "2026-10-18"
 
   - id: prop-base-dimension-strong-topple
-    version: 2
+    version: 3
     kind: theorem
-    source: dimred.tex:944-948 (label base_dimension, strong topple control clause, display base_dimension:strong_topple)
+    source: dimred-corrected-arxiv.tex:761-763 (label base_dimension, clause strong topple control)
     file: DimRed/Frozen/Regularity/StrongTopple.lean
     export: DimRed.Frozen.base_dimension_strong_topple
     state: PROVED
-    frozen_sha256: eb005193ccb41c5889268c78b53f1bd9de8eb7226bfd63650b7a71fc1719766d
+    frozen_sha256: 3d7d44bd45a303ae1907a1ac84570eda48efd8a53d7f0217f05b72390ce305dd
     provider: DimRed.Frozen.base_dimension_strong_topple
-    approved: "2026-09-19"
+    approved: "2026-10-18"
 
   - id: thm-self-similarity
-    version: 2
+    version: 3
     kind: theorem
-    source: dimred.tex:109-140 (label the_theorem)
+    source: dimred-corrected-arxiv.tex:122-133 (label the_theorem, clause self-similarity and hitting time)
     file: DimRed/Frozen/Main/SelfSimilarity.lean
     export: DimRed.Frozen.self_similarity
     state: PROVED
     frozen_sha256: b72203098094a44d143221e9469b34568bcd06702ba43c624a4cc3b02f9351fa
     provider: DimRed.Frozen.self_similarity
-    approved: "2026-09-19"
+    approved: "2026-10-18"
 
   - id: cor-sandpile-self-similarity
-    version: 2
+    version: 3
     kind: theorem
-    source: dimred.tex:143-159 (label sandpile_corollary)
+    source: dimred-corrected-arxiv.tex:155-158 (label sandpile_corollary, clause finite pile self-similarity)
     file: DimRed/Frozen/Main/SandpileSelfSimilarity.lean
     export: DimRed.Frozen.sandpile_self_similarity
     state: PROVED
-    frozen_sha256: 046f74527cc908725e8da207018a211d5586c6570513b8db86237bd05d36d31d
+    frozen_sha256: 157069e0b1800fe68b2bb9fb9d7d0276870bb52fc03918aee68349b1df00943e
     provider: DimRed.Frozen.sandpile_self_similarity
-    approved: "2026-09-19"
+    approved: "2026-10-18"
 
   - id: cor-axis-monotonicity
-    version: 3
+    version: 4
     kind: theorem
-    source: dimred.tex:513-527 (label axis_monotonicity)
+    source: dimred-corrected-arxiv.tex:503-513 (label axis_monotonicity)
     file: DimRed/Frozen/Prelim/AxisMonotonicity.lean
     export: DimRed.Frozen.axis_monotonicity
     state: PROVED
-    frozen_sha256: cfa95855f853634cbdb7dd0985a093eaa665661f0aae5a6348180b168ae8450d
+    frozen_sha256: 4013dfbfc08b04dca186db2ec7d773c4a57c96fecc9b17e9eea23f1a3360b3fa
     provider: DimRed.Frozen.axis_monotonicity
-    approved: "2026-09-19"
+    approved: "2026-10-18"
 
   - id: cor-derivative-bound
-    version: 2
+    version: 3
     kind: theorem
-    source: dimred.tex:531-538 (label cor-derivative_bound)
+    source: dimred-corrected-arxiv.tex:527-534 (label cor:derivative_bound)
     file: DimRed/Frozen/Prelim/DerivativeBound.lean
     export: DimRed.Frozen.derivative_bound
     state: PROVED
-    frozen_sha256: 067ced74199b326b11ab228fcbaa5311a086ae4bcbe284cf4b258c0c5b71a680
+    frozen_sha256: 7d9c370536899075d0f30fdebdb440ac1e43b9b69ee0d785ab1498755299a081
     provider: DimRed.Frozen.derivative_bound
-    approved: "2026-09-19"
+    approved: "2026-10-18"
+
+  - id: lem-strict-head-facet
+    version: 1
+    kind: theorem
+    source: dimred-corrected-arxiv.tex:1127-1137 (label lem:strict-head-facet)
+    file: DimRed/Frozen/Regularity/StrictHeadFacet.lean
+    export: DimRed.Frozen.strict_head_facet
+    state: PROVED
+    frozen_sha256: a83d8619695bc6987632ad3a805c51d4865de2311ef530f32ea5c4e42b17c154
+    provider: DimRed.Frozen.strict_head_facet
+    approved: "2026-10-18"
+
+  - id: lem-one-terminal-profile
+    version: 1
+    kind: theorem
+    source: dimred-corrected-arxiv.tex:920-927 (label lem:one-terminal-profile, clause quadratic profile)
+    file: DimRed/Frozen/Regularity/OneTerminalProfile.lean
+    export: DimRed.Frozen.one_terminal_profile
+    state: PROVED
+    frozen_sha256: 0e2fe5702bd59d727d04d6bfb762cf38a249cb0f29fc48412394594558c4d796
+    provider: DimRed.Frozen.one_terminal_profile
+    approved: "2026-10-18"
+
+  - id: lem-one-terminal-derivative
+    version: 1
+    kind: theorem
+    source: dimred-corrected-arxiv.tex:920-927 (label lem:one-terminal-profile, clause full derivative including endpoint)
+    file: DimRed/Frozen/Regularity/OneTerminalDerivative.lean
+    export: DimRed.Frozen.one_terminal_derivative
+    state: PROVED
+    frozen_sha256: 943c691865d4247507d0f1cfd66660a3bce248fc68da8fd1134df8f6d4dc310c
+    provider: DimRed.Frozen.one_terminal_derivative
+    approved: "2026-10-18"
+
+  - id: char-folded-lift
+    version: 1
+    kind: theorem
+    source: dimred-corrected-arxiv.tex:370-377 (literal lifted-value definition; context subsec:symmetry)
+    file: DimRed/Frozen/Definitions/FoldedLift.lean
+    export: DimRed.Frozen.folded_lift_definition
+    state: PROVED
+    frozen_sha256: 8a8a052757ba1c8d55240faee11960642668772fe5b8aba9ea915a6a8f1d9c81
+    provider: DimRed.Frozen.folded_lift_definition
+    approved: "2026-10-18"
+
+  - id: char-folded-neighbors
+    version: 1
+    kind: theorem
+    source: dimred-corrected-arxiv.tex:378-380 (literal directed-neighbor definition; context subsec:symmetry)
+    file: DimRed/Frozen/Definitions/FoldedNeighbors.lean
+    export: DimRed.Frozen.folded_neighbors_definition
+    state: PROVED
+    frozen_sha256: a6b32e26d2f9b9584845e9d1194d26c5eb15ac06f253157b77658d9ad4835f60
+    provider: DimRed.Frozen.folded_neighbors_definition
+    approved: "2026-10-18"
+
+  - id: char-folded-odometer
+    version: 1
+    kind: theorem
+    source: dimred-corrected-arxiv.tex:380-389 (literal initial value and threshold recursion; context subsec:symmetry)
+    file: DimRed/Frozen/Definitions/FoldedOdometer.lean
+    export: DimRed.Frozen.folded_odometer_definition
+    state: PROVED
+    frozen_sha256: 6343276043e67de5e80742837854d3b0a60973f880e6fca19d874172c87c335e
+    provider: DimRed.Frozen.folded_odometer_definition
+    approved: "2026-10-18"
+
+  - id: char-physical-pile
+    version: 1
+    kind: theorem
+    source: dimred-corrected-arxiv.tex:93-98 (finite-pile conservation; physical carrier at 278-284)
+    file: DimRed/Frozen/Definitions/Pile.lean
+    export: DimRed.Frozen.pile_definition
+    state: PROVED
+    frozen_sha256: d696202fea9e31fddc3c98a9b78ab92cf6d9ddf1c2d24ceaf77adecec97a7de3
+    provider: DimRed.Frozen.pile_definition
+    approved: "2026-10-18"
+
+  - id: char-terminal-pile
+    version: 1
+    kind: theorem
+    source: dimred-corrected-arxiv.tex:145-161 (label sandpile_corollary, clause terminal pile s_infinity as the literal 2d plus Laplacian of the final odometer)
+    file: DimRed/Frozen/Definitions/TerminalPile.lean
+    export: DimRed.Frozen.terminal_pile_characterization
+    state: PROVED
+    frozen_sha256: 14e9d26e307fc58027c72e4e28f9bccebe4a90eb869a3e3e35652d52ad838f2f
+    provider: DimRed.Frozen.terminal_pile_characterization
+    approved: "2026-10-18"
+
+  - id: char-nonempty-maximum
+    version: 1
+    kind: theorem
+    source: dimred-corrected-arxiv.tex:561-568 (label topple_limit, clause nonempty-maximum semantic unit)
+    file: DimRed/Frozen/Definitions/Maximum.lean
+    export: DimRed.Frozen.maximum_definition
+    state: PROVED
+    frozen_sha256: de6e7cf8edeb007389f2b95ec1c51d95533e166abfe10b432b47b3939beb0913
+    provider: DimRed.Frozen.maximum_definition
+    approved: "2026-10-18"
+
+  - id: lem-topple-limit
+    version: 4
+    kind: theorem
+    source: dimred-corrected-arxiv.tex:561-568 (label topple_limit)
+    file: DimRed/Frozen/Prelim/ToppleLimit.lean
+    export: DimRed.Frozen.topple_limit
+    state: PROVED
+    frozen_sha256: 160a6c158aad3abe2f9f023faa8955d943d22efbbf6bfb8daea00a61805f5a5c
+    provider: DimRed.Frozen.topple_limit
+    approved: "2026-10-18"
 

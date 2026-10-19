@@ -1,3 +1,4 @@
+import DimRed.Support.DifferenceStep
 import DimRed.Support.OneDimStrongDeriv
 import DimRed.Support.OneDimWeak
 import DimRed.Support.OneDimStrongFacet
