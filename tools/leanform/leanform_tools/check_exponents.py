@@ -47,8 +47,8 @@ one canonical spelling rather than by fragile textual equality.
 
 The paper's basename and the library directory searched for named
 definitions come from `cfg.paper_path`/`cfg.paper_stem`/`cfg.lib_dir`, never
-from a literal — the same `rotor\\.tex`-shaped bug that made `check_clauses`
-inspect 0 nodes in two repos would do the same thing here.
+from a literal: a hardcoded paper name would make this checker match nothing
+in any other repository.
 
     python3 -m leanform_tools.check_exponents <repo>
 """
@@ -69,7 +69,7 @@ from .gate import Result, run
 # with `Real.exp` rather than `^` on the Lean side. This is the shared
 # floor; each repo adds its own vocabulary under `noise:` in
 # ledger/readings.yaml, because which bare symbols are decorative is a
-# property of the paper (ORRW's `c`, `M`, `R`, `d` are named constants).
+# property of the paper (a named constant such as `c` is not an exponent).
 NOISE = {"2", "+", "-1", "\\Z", "\\R", "\\infty", "\\ast", "\\star",
          "j", "n", "m", "k", "i"}
 
@@ -117,9 +117,9 @@ def canon(e: str) -> str:
         e = e.replace(k, v)
     e = re.sub(r"\\(cdot|times|,|!|;|\s)", "", e)
     e = re.sub(r"[\s*]", "", e)
-    # `\frac{d}{d+1}` and Lean's `d/(d+1)` are the same exponent. ORRW's own
-    # checker carried a \frac normalizer; without it every fractional
-    # exponent in that repo reads as "present in the paper, absent in Lean".
+    # `\frac{d}{d+1}` and Lean's `d/(d+1)` are the same exponent. Without a
+    # `\frac` normalizer every fractional exponent reads as "present in the
+    # paper, absent in Lean".
     # Parenthesize a compound denominator so `\frac{d}{d+1}` becomes
     # `d/(d+1)` and not `d/d+1`, which would be a different number.
     for _ in range(3):
@@ -232,9 +232,8 @@ def paper_exponents(seg: str, extra_noise: set[str] | None = None) -> tuple[Coun
             cleaned.append(canon(e))
     counts = Counter(cleaned)
     # Which bare symbols are decorative rather than genuine exponents is a
-    # property of the paper, not of the tooling: ORRW writes `n^c`, `2^M` and
-    # `\cdot^R` with `c`, `M`, `R` as named constants its Lean statement
-    # binds differently, and its own checker listed exactly those four in
+    # property of the paper, not of the tooling: a named constant written in an
+    # exponent position (e.g. `n^c`) is not a genuine exponent, so the symbols
     # NOISE. So the vocabulary is per-repo data in ledger/readings.yaml,
     # unioned with the shared default — never a literal edited into shared code.
     for noise in NOISE | (extra_noise or set()):

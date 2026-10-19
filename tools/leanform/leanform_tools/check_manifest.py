@@ -6,7 +6,7 @@ meta-check wired in.
 
 What this gate does NOT do: it counts `sorry` tokens, which is not enough,
 because a file can contain no `sorry` and still depend on one transitively
-through an import. `Exploding.Frozen.insertion_inequality` was exactly that.
+through an import.
 The axiom closure is the authority; see `check_axioms.py`. This is the fast
 prefilter.
 """
@@ -129,7 +129,7 @@ def check(res: Result, cfg: RepoConfig) -> None:
         if node.is_multi_decl:
             res.note(
                 f"{nid}: {len(recorded)} declarations in one block "
-                "(tolerated pending the semantic fingerprint; see PLAN.md)"
+                "(tolerated pending the semantic fingerprint)"
             )
 
         # 5. `sorry` only as a registered draft body, once, after the marker.

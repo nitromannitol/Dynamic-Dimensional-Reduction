@@ -40,16 +40,13 @@ per node because one node can have several independent expected differences
 (a notational respelling *and* a split with a sibling node, say). `noise`
 is the one section that is NOT keyed by node id: which bare symbols a paper
 uses as decoration rather than as a genuine exponent is a property of the
-*paper*, not of any one statement — ORRW's `(A^+)^c` (set-complement
-notation) makes `c` decorative everywhere that paper writes it, the same
-way `check_exponents.py`'s shared `NOISE` constant already treats `j`, `n`,
-`k`, `m`, `i` as decorative everywhere in the repos that share that
-vocabulary. `noise` entries are unioned with the shared default at runtime;
-they are never merged into the shared constant itself, because a symbol
-that is decoration in one paper (ORRW's `d`) is a load-bearing exponent in
-another (Dynamic-Dimensional-Reduction's `prop-no-reduction` genuinely
-needs `d` tracked) — widening `NOISE` globally to fix one repo would
-silently blind every other repo to a real gap in exactly that repo's own
+*paper*, not of any one statement: a notation can make a letter decorative
+everywhere that paper writes it. `noise` entries are unioned with the shared
+default at runtime; they are never merged into the shared constant, because a
+symbol that is decoration in one paper may be a load-bearing exponent in
+another. Widening `NOISE` globally would silently blind every other repo to a
+real gap in its own vocabulary.
+
 vocabulary.
 
 ### Waiver granularity is per node, not per offending item
@@ -101,7 +98,7 @@ discarded even though the schema does not give it its own field.
 
 `check_exponents.py`'s own module-level `NOISE` set (if the incumbent has
 one) is read the same way and written to the top-level `noise` list — this
-is what recovers ORRW's `{d, c, M, R, ...}` vocabulary of decorative bare
+is what recovers a paper's vocabulary of decorative bare
 symbols without ever merging it into this package's own shared `NOISE`
 constant (see the schema section above for why that distinction matters).
 
@@ -110,20 +107,16 @@ constant (see the schema section above for why that distinction matters).
 Before writing, every `clauses`/`constants`/`exponents` entry is checked
 against the *target* repo's own `ledger/manifest.yaml` node ids
 (`drop_foreign_keys`); an entry whose key is not one of that repo's own
-nodes is refused and counted, never written. This exists because
-Dynamic-Dimensional-Reduction and Exploding-Sandpiles each carry a
-`REVIEWED`/`EXPECTED_ABSENT` dict that was never updated when their
-`tools/check_*.py` were copied out of rotor-23: every key in both dicts is
-a rotor-23 node id, and not one matches either repo's own manifest.
-Migrating that verbatim would be strictly worse than the vacuous pass it
-replaces: instead of a checker that visibly inspected nothing, it would be
-one that reports real-looking, confidently-wrong readings about a
+nodes is refused and counted, never written. A copied `REVIEWED`/`EXPECTED_ABSENT` dict can hold node ids from another
+repository's manifest. Migrating that verbatim would be strictly worse than the
+vacuous pass it replaces: instead of a checker that visibly inspected nothing, it
+would be one that reports real-looking, confidently-wrong readings about a
 different paper. The refusal is loud (`REFUSED <n> entr(ies) ...`, printed
 to stdout) so a repo in this state is left with an empty `readings.yaml`
 and an explicit todo, not a silently wrong one.
 
 Writes `<out-dir>/ledger/readings.yaml` (default `<repo-path>/ledger/`).
-Never writes anywhere under `~/lean`; run it against a copy.
+Run it against a copy of the repository, not the original.
 """
 
 from __future__ import annotations
@@ -252,8 +245,8 @@ def extract_repo(repo: Path) -> dict:
 
     # Which bare symbols the paper uses decoratively rather than as real
     # exponents is per-paper vocabulary, and the incumbents kept it as a
-    # module-level NOISE set. ORRW's is {d, c, M, R, …}; without carrying it
-    # over, four of its nodes read as having unmatched exponents.
+    # module-level NOISE set. that paper's decorative symbols are carried over; without it, nodes read as
+    # having unmatched exponents.
     noise = sorted(_literal_set(tools / "check_exponents.py", "NOISE"))
 
     out = {"clauses": clauses, "constants": constants, "exponents": exponents}
@@ -291,13 +284,10 @@ def _literal_set(path: Path, name: str) -> set:
 def drop_foreign_keys(data: dict, node_ids: set[str]) -> tuple[dict, dict[str, int]]:
     """Remove any per-node entry whose key is not a node of THIS repo.
 
-    Dynamic-Dimensional-Reduction and Exploding-Sandpiles carry a `REVIEWED`
-    dict that was never updated when the checker was copied out of rotor-23:
-    all 26 keys are rotor-23 node ids and none is their own. Migrating that
-    verbatim would replace a checker that inspected nothing with one that
-    inspects 26 readings describing a different paper — a vacuous pass
-    upgraded into a confidently wrong one. So the migration refuses, loudly,
-    and those repos' readings get written from scratch instead.
+    A `REVIEWED` dict copied from another repository's checker can hold that
+    repository's node ids. Migrating that verbatim would replace a checker that
+    inspected nothing with one that inspects readings describing a different
+    paper, so the migration refuses, loudly, and and those repos' readings get written from scratch instead.
     """
     refused: dict[str, int] = {}
     cleaned = dict(data)

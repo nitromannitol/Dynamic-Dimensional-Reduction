@@ -1,23 +1,13 @@
 # leanform_tools
 
 The deterministic gates for the `lean-form` protocol, in one package, shared
-by every paper repository instead of vendored per repo.
+by every paper repository.
 
 ## Why this exists
 
-Each repository used to carry its own copy of roughly a dozen checkers. The
-copies drifted, and the drift was invisible, because a checker whose regex no
-longer matches its repo does not fail — it passes, having inspected nothing.
-Measured on 2026-09-23 across the fleet:
-
-- **nine checkers in four repositories exited 0 having inspected zero items**,
-  two of those repositories being released work. `Parking-Sharpness`'s
-  citation checker reported `0 correct, 0 stale` over 426 real citations,
-  because line 37 still read `re.compile(r"rotor\.tex:(\d+)…")`.
-- **four repositories' axiom gate failed open**: no return-code check, so a
-  Lean probe that crashed read as a clean axiom closure.
-- two repositories' entire `REVIEWED` audit table still held **another
-  paper's node ids** — 26 of 26 foreign.
+Per-repository copies of checkers drift, and the drift is invisible: a checker
+whose regex no longer matches its repo does not fail, it passes, having
+inspected nothing. Each gate below is written to refuse that outcome.
 
 So the rule this package enforces on itself: **no paper name, library name or
 `Frozen/` path may appear as a literal anywhere in it.** Every one of those is
@@ -90,7 +80,7 @@ migration from importing another paper's readings wholesale.
 python3 -m unittest discover -s leanform_tools/tests -t .
 ```
 
-159 tests. Most encode a specific false success observed in the fleet: a
+159 tests. Most encode a specific false success a checker has produced: a
 checker that inspected nothing, an axiom probe that crashed and read as clean,
 `Set.ncard` on an infinite set, a manifest name that is an ASCII truncation of
 a non-ASCII identifier, a certificate that overwrote a good file on failure.

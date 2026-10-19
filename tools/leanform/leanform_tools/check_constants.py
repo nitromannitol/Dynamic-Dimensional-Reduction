@@ -36,8 +36,7 @@ depth one or more, and the first depth-zero `:` is the one separating the
 binders from the conclusion. Taking the *last* depth-zero `:` would run past
 an existential's own `∃ c : ℝ` in the conclusion and read `c` as hidden away
 in what this checker treats as "binders", exactly hiding the dependency this
-check exists to catch. One vendored copy (`Unique-Continuation-Planar`) also
-found parameters with a bracket-oblivious regex that reads any `(name : T)`
+check exists to catch. A bracket-oblivious regex would also find parameters that read any `(name : T)`
 substring anywhere in the block, including a type ascription or a `Var(...)`
 nested two brackets deep inside a hypothesis's *body* — reporting a
 dependence the statement does not have. `parameters()` here tracks bracket
@@ -60,13 +59,10 @@ from . import readings as rd
 from .config import RepoConfig, load
 from .gate import Result, run
 
-# The union of the forbidden-name lists used by the surveyed repos' vendored
-# copies of this checker: generic scale/point/error letters (six of the
-# seven target repos share this exact list) plus ORRW-Lower-Bound's smaller,
-# differently-lettered convention (β, k, h; ORRW does not use R/t/m/r/s/L/
-# x/y/u/v/e/z/ε/η/δ as varying-parameter names at all). Neither list is a
-# superset of the other, so the union is what makes one fixed vocabulary
-# work for both without a per-repo literal.
+# A generic set of scale/point/error letters, plus a smaller set of
+# differently-lettered names (β, k, h). Neither group is a superset of the
+# other, so their union is one fixed vocabulary that works for every paper
+# without a per-repo literal.
 FORBIDDEN = frozenset({
     "R", "n", "t", "m", "r", "s", "L", "x", "y", "u", "v", "e", "z",
     "ε", "η", "δ", "β", "k", "h",

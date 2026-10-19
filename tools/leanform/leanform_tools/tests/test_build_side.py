@@ -2,7 +2,7 @@
 certificate, freeze.
 
 Every repo here is synthetic, built fresh in `tempfile.mkdtemp()`; nothing
-depends on `~/lean` and nothing here invokes `lake`. The Lake-touching
+depends on a local checkout and nothing here invokes `lake`. The Lake-touching
 functions in `certificate.py` (`_run_build`, `_probe_axioms`) and in
 `check_warnings.py` (`subprocess.run`) are monkeypatched where a test needs
 to exercise the code around them.
@@ -144,13 +144,13 @@ class TestAuditWarnings(unittest.TestCase):
 
 
 class TestCheckWarningsBuildTarget(unittest.TestCase):
-    """BUG NOT REPRODUCED: IDLA-Cylinder-GFF/tools/check_warnings.py:68 runs
-    `lake build Rotor` regardless of the repo it is copied into. The target
+    """A copied checker must not hard-code its build target: a fixed
+    `lake build <name>` is wrong for any repo but the one it came from. The target
     must come from `cfg.lib_name`, derived from the manifest."""
 
     def test_build_target_is_derived_from_lib_name_not_hardcoded(self):
-        nodes = [_node("thm-a", "SEALED", export="ExplodingSandpiles.Frozen.a")]
-        root = make_repo(nodes, library="ExplodingSandpiles")
+        nodes = [_node("thm-a", "SEALED", export="ExampleRepo.Frozen.a")]
+        root = make_repo(nodes, library="ExampleRepo")
         self.addCleanup(shutil.rmtree, root, ignore_errors=True)
         cfg = load(root)
 
@@ -166,8 +166,8 @@ class TestCheckWarningsBuildTarget(unittest.TestCase):
             res = Result(name="check_warnings")
             check_warnings.check(res, cfg)
 
-        self.assertEqual(calls, [["lake", "build", "ExplodingSandpiles"]])
-        self.assertNotIn("Rotor", calls[0])
+        self.assertEqual(calls, [["lake", "build", "ExampleRepo"]])
+        self.assertNotIn("OtherRepo", calls[0])
 
 
 # ---- check_progress -----------------------------------------------------
@@ -262,15 +262,15 @@ class TestClaimSummary(unittest.TestCase):
         self.assertIn("is `SEALED`", text)
 
     def test_sealed_and_frozen_mix_never_claims_all_sealed(self):
-        """Pins the Divisible-Sandpile-Percolation bug: certificate.py:170
-        printed "Every node's state in `ledger/manifest.yaml` is `SEALED`."
-        unconditionally on a manifest with 78 SEALED and 26 FROZEN nodes."""
+        """A status line printed regardless of the counts would be false;
+        `claim_summary` counts every state. A manifest with 78 SEALED and 26 FROZEN
+        nodes must not be reported as all SEALED."""
         nodes = [FakeNode(f"s{i}", "SEALED") for i in range(78)] + [
             FakeNode(f"f{i}", "FROZEN") for i in range(26)
         ]
         text = certificate.claim_summary(nodes)
         self.assertNotIn(
-            "Every node's state in `ledger/manifest.yaml` is `SEALED`.", text
+            "Every statement's state in `ledger/manifest.yaml` is `SEALED`.", text
         )
         self.assertIn("78", text)
         self.assertIn("26", text)

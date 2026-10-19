@@ -11,19 +11,10 @@ mechanically; those are listed so they can be checked by hand or dropped.
     python3 -m leanform_tools.paper_citations <repo> --fix       # repair
     python3 -m leanform_tools.paper_citations <repo> --list-unanchored
 
-This is a port of the vendored `tools/paper_citations.py`, generalized to the
-union of what the seven surveyed repos need:
-
 * The citation regex (`cfg.cite_re`) and the library directory (`cfg.lib_dir`)
-  come from `cfg`. The Parking-Sharpness and Divisible-Sandpile-RWRS
-  vendored copies both hardcoded `CITE_RE = re.compile(r"rotor\\.tex:...")`
-  -- a leftover from whichever repo the file was first copied from -- so
-  neither ever matched a real citation in its own tree and both exited 0
-  having inspected nothing: Parking has 426 `parking.tex:` citations sitting
-  unchecked, RWRS has 145 `rwrs.tex:` citations. DimRed's and Exploding's
-  copies carried the identical literal, with the identical effect (94 and 24
-  citations respectively, unchecked). Deriving the regex from
-  `cfg.paper_stem` is the entire fix.
+  come from `cfg`. The regex is derived from `cfg.paper_stem`, never a literal: a
+  hardcoded paper name matches nothing in any other repository, and a checker
+  that matches nothing still exits 0.
 * Only a Frozen file's header docstring is ever eligible for repair -- never
   `External/`, whose header cites another paper's or source's line numbers,
   and never a citation elsewhere in the file, which points into a proof and
@@ -31,8 +22,8 @@ union of what the seven surveyed repos need:
   restriction is preserved exactly as the vendored copies had it; see
   `_is_frozen_header` below.
 * A frozen file's header may cite one *part* of the label's full span
-  (Sandpile has several Frozen files, one per part of a multi-part theorem,
-  each citing only its own part's lines). When the manifest itself records
+  (a multi-part theorem may have several Frozen files, one per part, each
+  citing only its own part's lines). When the manifest itself records
   that exact citation for that file, it is trusted over the recomputed full
   span of the label -- otherwise every one of those headers would be
   reported as perpetually "stale" against a span it never claimed to equal.

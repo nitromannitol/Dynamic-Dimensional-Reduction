@@ -5,8 +5,7 @@ import DimRed.Support.FacetNormal
 /-!
 # Raw forms of weak and strong facet compatibility
 
-The second half of the strong-derivative route of
-`scratch/case2-2026-09-24/lean-plan.md`: the raw forms of weak and strong facet
+The second half of the strong-derivative route: the raw forms of weak and strong facet
 compatibility at a point of the positive orthant, obtained from the facet normal
 form, and the estimates that consume them.
 -/

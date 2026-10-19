@@ -1,13 +1,12 @@
 """The checker harness, and the meta-check that makes a green meaningful.
 
-BEST_PRACTICES.md §3 new-gate 5: *every checker asserts it processed at least
-one node and that its paper regex matched the `source_pin.file` stem.*
+Every checker asserts it processed at least one node and that its paper regex
+matched the `source_pin.file` stem.
 
-Nine checkers across four repos — two of them released — exited 0 having
-processed nothing, because a vendored copy still carried another repo's paper
-name in a regex. A checker that reports `OK (0 statements)` is not a passing
-checker; it is a checker that did not run. `Result.done()` makes that a
-failure by construction, so a future copy-paste cannot reintroduce the class.
+A checker that exits 0 having processed nothing, typically because a copied regex
+names another repository's paper, is a checker that did not run. A checker that
+reports `OK (0 statements)` is not a passing checker. `Result.done()` makes that
+a failure by construction, so a copy-paste cannot reintroduce the class.
 """
 
 from __future__ import annotations

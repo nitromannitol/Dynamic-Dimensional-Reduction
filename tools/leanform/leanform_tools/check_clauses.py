@@ -29,9 +29,7 @@ heuristic; it still needs a clauses reading like every other node.
 
 The paper's basename and its line-range regex come from `cfg.source_re`,
 built in `config.py` from `ledger/manifest.yaml`'s `source_pin.file` —
-**never** a literal paper name. A hardcoded `rotor\\.tex` regex in two
-vendored copies of this checker (used in repos whose paper was not
-`rotor.tex`) made it match zero of either repo's nodes and exit 0 anyway;
+**never** a literal paper name. A hardcoded paper-name regex once matched zero nodes and exited 0 anyway;made it match zero of either repo's nodes and exit 0 anyway;
 that silent vacuous pass is exactly what `gate.py`'s meta-check exists to
 turn into exit 2, and is why every node here counts as "inspected" (via
 `res.count()`) whether or not its `source:` happens to resolve a line range —

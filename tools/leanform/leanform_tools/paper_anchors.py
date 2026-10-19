@@ -12,38 +12,26 @@ stable, so this tool recomputes every range from its label and reports drift.
     python3 -m leanform_tools.paper_anchors <repo>            # check
     python3 -m leanform_tools.paper_anchors <repo> --fix      # repair ranges
 
-This is a port of the vendored `tools/paper_anchors.py` copied across
-rotor-23, Parking-Sharpness, Divisible-Sandpile-Percolation, ORRW-Lower-Bound,
-Divisible-Sandpile-RWRS, Dynamic-Dimensional-Reduction and Exploding-Sandpiles,
-generalized to the union of what those seven repos actually need:
+The checker covers every paper in the repository's manifest. Its rules:
 
 * `<paper>.tex`, the library directory and the citation regex all come from
   `cfg`, never from a literal — that is the point of the package.
-* The label a node names is not always spelled `label <lab>`.  RWRS's
-  manifest writes the bare token `(lem:fuk-nagaev)` with no `label` keyword
-  at all; the vendored copy's `label\\s+...` regex found nothing for any of
-  RWRS's 57 nodes and reported "0 anchors resolved, 57 carry no paper label"
-  -- wrong, since the bare-token spelling is a real convention, not an
-  absence of one.  `extract_label` recognizes both.
+* The label a node names is not always spelled `label <lab>`. A node may write
+  the bare token `(lem:name)` with no `label` keyword at all; `extract_label`
+  recognizes both spellings.
 * A label may be spelled with a hyphen in the manifest and a colon in the
-  paper (`thm-RW` vs `\\label{thm:RW}`, both observed in Sandpile and
-  DimRed).  `label_variants` tries both.
-* DimRed and Exploding define their proposition environment as `\\prop`, not
-  `\\proposition` (`\\newtheorem{prop}{Proposition}`).  Every vendored copy's
-  `ANCHORABLE` set said `proposition`, so every `prop:`-labelled statement in
-  those two papers -- nine of them in Exploding alone -- was invisible to
-  this tool.  `ANCHORABLE` here includes `prop`.
-* A node citing `(cited in lem:fuk-nagaev)` (RWRS) names a label whose
-  statement environment does NOT contain the node's own line range -- the
-  citation is to the proof that follows the environment, not to the
-  environment itself.  Recomputing this node's range from that label would
-  silently retarget it, exactly the failure `paper_citations.py` already
-  guards against for Lean-source citations.  Such nodes are reported as
-  carrying no anchoring label, not resolved and not flagged as drift.
-* Sandpile has several nodes that formalize one *part* of a single labelled
-  multi-part theorem (`(label thm-main-explosion, part (iii)(a))`); several
-  nodes share one label, each recording its own sub-range.  These are
-  checked for containment in the label's full span, not equality.
+  paper (`thm-name` vs `\\label{thm:name}`). `label_variants` tries both.
+* A proposition environment may be spelled `\\prop` rather than `\\proposition`.
+  `ANCHORABLE` includes `prop`, so those statements are not invisible.
+* A node citing a label whose statement environment does NOT contain the node's
+  own line range (e.g. `(cited in lem:name)`) names the proof that follows the
+  environment, not the environment itself. Recomputing this node's range from
+  that label would silently retarget it, so such nodes are reported as carrying
+  no anchoring label, not resolved and not flagged as drift.
+* Several nodes may formalize one *part* of a single labelled multi-part theorem
+  (`(label thm-main, part (iii)(a))`), and several nodes may share one label,
+  each recording its own sub-range. These are checked for containment in the
+  label's full span, not equality.
 """
 
 from __future__ import annotations
@@ -54,9 +42,8 @@ import sys
 from .config import ConfigError, RepoConfig, load
 from .gate import Result, run
 
-# A node's `source:` names its label either as `label <lab>` (rotor,
-# Parking, Sandpile, ORRW, DimRed, Exploding) or, in RWRS, as a bare token
-# with no keyword at all: `(lem:fuk-nagaev)`.
+# A node's `source:` names its label either as `label <lab>` or as a bare
+# token with no keyword at all: `(lem:name)`.
 _LABEL_KEYWORD_RE = re.compile(r"\blabel\s+([A-Za-z][A-Za-z0-9:_-]*)")
 _PLAIN_TOKEN_RE = re.compile(r"^[A-Za-z][A-Za-z0-9:_-]*$")
 
@@ -72,9 +59,8 @@ _BEGIN_RE = re.compile(r"\\begin\{([A-Za-z*]+)\}")
 _END_RE = re.compile(r"\\end\{([A-Za-z*]+)\}")
 
 # Environments that carry a statement (or a display) we would ever anchor
-# to. Superset of every vendored copy's list: `prop` (DimRed's and
-# Exploding's spelling of `proposition`) and `remark`/`remark*` (Sandpile's
-# addition) are folded in alongside the rest.
+# to. `prop` is a common spelling of `proposition`, and `remark`/`remark*` are
+# folded in alongside the rest.
 ANCHORABLE = {
     "theorem", "lemma", "proposition", "prop", "corollary", "definition",
     "problem", "remark", "remark*",
@@ -88,25 +74,19 @@ def extract_label(rest: str) -> str | None:
     Two conventions are in use across the surveyed repos:
 
     1. `(label thm:main, ...)` -- explicit keyword, tried first.
-    2. `(lem:fuk-nagaev)` -- RWRS's bare token, no keyword at all: the
+    2. `(lem:name)` -- a bare token, no keyword at all: the
        *entire* parenthetical, with no trailing comment at all, is a single
        identifier with no internal whitespace.
 
     That second rule is deliberately narrow, and deliberately requires the
-    parenthetical to hold nothing but the token. It must accept
-    `(prop:iid-stationary)` and reject `(cited in lem:fuk-nagaev)`, `(Carne
-    1985, Varopoulos 1985, Lyons-Peres Theorem 13.4)` and `(Corollary 1.1)`:
-    all three are prose, not a label. It must also reject Parking's
-    `(prop:spatial-scaling, quoted from BP Theorem 1.3(i)(b))`: the label
-    named there is real, but the range on this particular node is a step of
-    *that statement's proof*, not the statement itself, and recomputing this
-    node's range from `prop:spatial-scaling`'s span would silently retarget
-    it exactly the way a mid-file Lean citation would. A first version of
-    this rule took just the leading comma-separated clause and so treated
-    `prop:spatial-scaling` as this node's primary anchor too, which produced
-    seven false "stale anchor" reports on Parking-Sharpness (the vendored
-    `label\\s+...`-only regex never had this bug, precisely because it never
-    recognized the bare-token convention at all).
+    parenthetical to hold nothing but the token. It must accept `(prop:name)`
+    and reject `(cited in lem:name)`, `(Author 1985, Other 1985)` and
+    `(Corollary 1.1)`: all of these are prose, not a label. It must also reject
+    a parenthetical that names a real label while the range on this node is a
+    step of *that statement's proof*, since recomputing this node's range from
+    that label would silently retarget it. A first version of this rule took
+    just the leading comma-separated clause, which treated such a label as this
+    node's primary anchor and produced false "stale anchor" reports.
     """
     m = _LABEL_KEYWORD_RE.search(rest)
     if m:
@@ -125,8 +105,8 @@ def label_variants(label: str) -> list[str]:
     A manifest may write a label with a hyphen where the paper's `\\label`
     uses a colon, or vice versa (`thm-RW` / `\\label{thm:RW}`, `prop-
     base_case` / `\\label{prop:base_case}`): both are observed, in both
-    directions, across Sandpile and DimRed. Only the *first* separator is
-    swapped -- the rest of the label (`fuk-nagaev`, `base_case`) keeps
+    directions, across the surveyed papers. Only the *first* separator is
+    swapped -- the rest of the label (`name`, `base_case`) keeps
     whatever punctuation it already has.
     """
     out = [label]

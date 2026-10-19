@@ -4,7 +4,7 @@ Formalizes statements pinned in `paper/corrected-arxiv/dimred-corrected-arxiv.te
 
 ## What is claimed
 
-Every node's state in `ledger/manifest.yaml` is `SEALED` or `PROVED` (0 SEALED, 29 PROVED, 29 total): all are proved with no added axiom and no `sorry`.
+Every statement's state in `ledger/manifest.yaml` is `SEALED` or `PROVED` (0 SEALED, 29 PROVED, 29 total): all are proved with no added axiom and no `sorry`.
 
 ## Environment
 
@@ -12,10 +12,10 @@ Every node's state in `ledger/manifest.yaml` is `SEALED` or `PROVED` (0 SEALED, 
 |---|---|
 | Lean toolchain | `leanprover/lean4:v4.32.0` |
 | Mathlib revision | `81a5d257c8e410db227a6665ed08f64fea08e997` |
-| Paper (`paper/corrected-arxiv/dimred-corrected-arxiv.tex`) SHA-256 | `217e1e34369afdd0342c47560d04e85042a67da8a6b2f397e0644cd2dc9fc121` |
-| Build | succeeded, 8784 jobs |
+| Paper (`paper/corrected-arxiv/dimred-corrected-arxiv.tex`) SHA-256 | `d8926b8e4c2aa53203ed63a0c88092671f5488ee76cf033a07b6881e7776a16c` |
+| Build | succeeded, 8769 jobs |
 | Build warnings | 0 |
-| Generated | 2026-10-18 |
+| Generated | 2026-10-19 |
 
 ## Reproducing it
 

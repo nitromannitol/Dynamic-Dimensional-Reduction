@@ -1,11 +1,22 @@
-version: v0.4
+version: "v0.4"
+
 project:
-  name: Dynamic-Dimensional-Reduction
-  description: Lean 4 formalization of Dynamic dimensional reduction in the Abelian sandpile, against a
-    separate corrected arXiv-format draft.
+  name: "Dynamic dimensional reduction in the Abelian sandpile"
+  description: >-
+    A Lean 4 formalization of the paper "Dynamic dimensional reduction in the Abelian sandpile"
+    by Bou-Rabee (Comm. Math. Phys. 390 (2022); arXiv:2009.05968), in a corrected edition of
+    the arXiv source: dimensional reduction and self-similarity of the parallel toppling
+    odometer (Theorem 1.1), the corresponding statements for the sandpile (Corollary 1.1) and
+    the regularity proposition (Proposition 4.1) proved with them by one joint induction over
+    dimension, side length and time, together with every lemma, corollary and proposition of
+    Sections 2 and 3. The main results are stated as published. The four Mathlib-only
+    comparator pairs under DimRedAudit/ check Theorem 1.1, Corollary 1.1 and Proposition 4.1.
   authors:
   - Ahmed Bou-Rabee
+  responsible_maintainers:
+  - Ahmed Bou-Rabee
   license: Apache-2.0
+
 classification:
   arxiv:
   - math.PR
@@ -14,6 +25,7 @@ classification:
   - 82C27
   - 37B15
   - 39A12
+
 sources:
 - title: Dynamic dimensional reduction in the Abelian sandpile
   authors:
@@ -21,148 +33,234 @@ sources:
   id: arXiv:2009.05968
   url: https://arxiv.org/abs/2009.05968
   type: journal article
-  license: ''
-  author_contacted: n/a
-  prior_work: ''
+  location: paper/dimred-arxiv.tex
+  relationship: formalizes
+  note: >-
+    Comm. Math. Phys. 390 (2022), 933-958. The unmodified arXiv source (v2) is
+    paper/dimred-arxiv.tex.
+  author_endorsement: participated
+- title: Dynamic dimensional reduction in the Abelian sandpile, corrected edition
+  authors:
+  - Ahmed Bou-Rabee
+  type: corrected source
+  location: paper/corrected-arxiv/dimred-corrected-arxiv.tex
+  relationship: formalizes
+  note: >-
+    The text the Lean statements follow, pinned by its SHA-256 in ledger/manifest.yaml. Its
+    section "Corrections to the published version" lists every change from arXiv v2.
+  author_endorsement: participated
+
+related_formalizations:
+- id: https://github.com/nitromannitol/Lattice-Probability
+  relationship: builds-on
+  note: Lattice-Probability, a git dependency pinned to commit bbe0b90a7cf0517db0578139aaab7f152edbc45e.
+
 status:
-  scope: 'Corrected source: 20 inherited successors, 3 added theorem clauses and 6 definition units.
-    Exact registered proofs are not a certificate against the unchanged arXiv v2 text.'
+  scope: >-
+    All 23 theorem-level statements of the corrected edition, the 20 statement clauses of the published paper and three added lemmas, are proved in Lean, with no sorry and only the standard axioms; Theorem 1.1 and Corollary 1.1 are stated as published.
   sorry_count: 0
+  sorry_count_scope: "the DimRed library"
+  comparator_challenge_sorry_count: 10
   sorry_in_definitions: 0
   axioms:
   - propext
   - Classical.choice
   - Quot.sound
   main_results:
-  - declaration: DimRed.Frozen.dimensional_reduction
-    file: DimRed/Frozen/Main/DimensionalReduction.lean
-    sorry_count: 0
-    axioms:
-    - propext
-    - Classical.choice
-    - Quot.sound
-    comparator_config: DimRedAudit/DimensionalReduction/comparator.json
-    literature_dependencies: []
-  - declaration: DimRed.Frozen.terminal_dimensional_reduction
-    file: DimRed/Frozen/Main/TerminalReduction.lean
-    sorry_count: 0
-    axioms:
-    - propext
-    - Classical.choice
-    - Quot.sound
-    comparator_config: DimRedAudit/DimensionalReduction/comparator.json
-    literature_dependencies: []
-  - declaration: DimRed.Frozen.self_similarity
-    file: DimRed/Frozen/Main/SelfSimilarity.lean
-    sorry_count: 0
-    axioms:
-    - propext
-    - Classical.choice
-    - Quot.sound
-    comparator_config: DimRedAudit/SelfSimilarity/comparator.json
-    literature_dependencies: []
-  - declaration: DimRed.Frozen.sandpile_dimensional_reduction
-    file: DimRed/Frozen/Main/SandpileReduction.lean
-    sorry_count: 0
-    axioms:
-    - propext
-    - Classical.choice
-    - Quot.sound
-    comparator_config: DimRedAudit/Sandpile/comparator.json
-    literature_dependencies: []
-  - declaration: DimRed.Frozen.sandpile_self_similarity
-    file: DimRed/Frozen/Main/SandpileSelfSimilarity.lean
-    sorry_count: 0
-    axioms:
-    - propext
-    - Classical.choice
-    - Quot.sound
-    comparator_config: DimRedAudit/Sandpile/comparator.json
-    literature_dependencies: []
-  - declaration: DimRed.Frozen.base_dimension_consistency
-    file: DimRed/Frozen/Regularity/Consistency.lean
-    sorry_count: 0
-    axioms:
-    - propext
-    - Classical.choice
-    - Quot.sound
-    comparator_config: DimRedAudit/Regularity/comparator.json
-    literature_dependencies: []
-  - declaration: DimRed.Frozen.base_dimension_weak_compatibility
-    file: DimRed/Frozen/Regularity/WeakFacet.lean
-    sorry_count: 0
-    axioms:
-    - propext
-    - Classical.choice
-    - Quot.sound
-    comparator_config: DimRedAudit/Regularity/comparator.json
-    literature_dependencies: []
-  - declaration: DimRed.Frozen.base_dimension_strong_derivative
-    file: DimRed/Frozen/Regularity/StrongDerivative.lean
-    sorry_count: 0
-    axioms:
-    - propext
-    - Classical.choice
-    - Quot.sound
-    comparator_config: DimRedAudit/Regularity/comparator.json
-    literature_dependencies: []
-  - declaration: DimRed.Frozen.base_dimension_strong_compatibility
-    file: DimRed/Frozen/Regularity/StrongFacet.lean
-    sorry_count: 0
-    axioms:
-    - propext
-    - Classical.choice
-    - Quot.sound
-    comparator_config: DimRedAudit/Regularity/comparator.json
-    literature_dependencies: []
-  - declaration: DimRed.Frozen.base_dimension_strong_topple
-    file: DimRed/Frozen/Regularity/StrongTopple.lean
-    sorry_count: 0
-    axioms:
-    - propext
-    - Classical.choice
-    - Quot.sound
-    comparator_config: DimRedAudit/Regularity/comparator.json
-    literature_dependencies: []
+    - declaration: "DimRed.dimensional_reduction"
+      file: "DimRed/MainTheorems.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "DimRedAudit/DimensionalReduction/comparator.json"
+      literature_dependencies: []
+    - declaration: "DimRed.terminal_dimensional_reduction"
+      file: "DimRed/MainTheorems.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "DimRedAudit/DimensionalReduction/comparator.json"
+      literature_dependencies: []
+    - declaration: "DimRed.self_similarity"
+      file: "DimRed/MainTheorems.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "DimRedAudit/SelfSimilarity/comparator.json"
+      literature_dependencies: []
+    - declaration: "DimRed.sandpile_dimensional_reduction"
+      file: "DimRed/MainTheorems.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "DimRedAudit/Sandpile/comparator.json"
+      literature_dependencies: []
+    - declaration: "DimRed.sandpile_self_similarity"
+      file: "DimRed/MainTheorems.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "DimRedAudit/Sandpile/comparator.json"
+      literature_dependencies: []
+    - declaration: "DimRed.base_dimension_consistency"
+      file: "DimRed/MainTheorems.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "DimRedAudit/Regularity/comparator.json"
+      literature_dependencies: []
+    - declaration: "DimRed.base_dimension_weak_compatibility"
+      file: "DimRed/MainTheorems.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "DimRedAudit/Regularity/comparator.json"
+      literature_dependencies: []
+    - declaration: "DimRed.base_dimension_strong_derivative"
+      file: "DimRed/MainTheorems.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "DimRedAudit/Regularity/comparator.json"
+      literature_dependencies: []
+    - declaration: "DimRed.base_dimension_strong_compatibility"
+      file: "DimRed/MainTheorems.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "DimRedAudit/Regularity/comparator.json"
+      literature_dependencies: []
+    - declaration: "DimRed.base_dimension_strong_topple"
+      file: "DimRed/MainTheorems.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "DimRedAudit/Regularity/comparator.json"
+      literature_dependencies: []
+
+automation:
+  methods:
+    - method: "agent"
+      models:
+        - "claude-opus-5"
+        - "claude-sonnet-5"
+        - "claude-opus-5-5"
+        - "claude-haiku-5-5"
+      framework: "Claude Code (Anthropic)"
+      tool_setup: >-
+        Lean proof development, review and release preparation with Lake builds under the pinned
+        Lean toolchain, Mathlib and Lattice-Probability revisions; every change was checked by the
+        statement-hash, axiom-closure and warning-free-build checks of tools/verify.py.
+      cost:
+        wall_time: "not tracked"
+        spend_usd: "not tracked"
+        hardware: "local Linux machine"
+      prompting_notes: >-
+        Human-directed work, closely supervised by the author, on author-specified statements.
+    - method: "agent"
+      models:
+        - "gpt-6.1-sol"
+      framework: "Codex CLI (OpenAI)"
+      tool_setup: >-
+        Lean proof development under the same toolchain and pins.
+      cost:
+        wall_time: "not tracked"
+        spend_usd: "not tracked"
+        hardware: "local Linux machine"
+      prompting_notes: >-
+        Human-directed work; each task fixed the statements to be proved and forbade changing them.
+    - method: "agent"
+      models:
+        - "deepseek-v4.1-flash"
+      framework: "API-hosted model driven by project scripts"
+      tool_setup: >-
+        Auxiliary proof search on small typed proof obligations.
+      cost:
+        wall_time: "not tracked"
+        spend_usd: "not tracked"
+        hardware: "API-only"
+  spend_usd: "not tracked"
+  notes: >-
+    The Lean code was written by AI coding agents under the close supervision of the author, who
+    fixed the statements to be formalized. Every proof is checked by the Lean kernel; the library
+    contains no sorry and no custom axiom. The model versions listed are those recorded during
+    the work.
+
 fidelity:
-  divergences: The manifest selects the separate corrected arXiv-format draft, whose surgical C01-C25
-    changes and C18 proof-description refinement are recorded in paper/corrected-arxiv/SOURCE_NOTE.md.
-    All source-facing rows have Frozen declarations with repaired signed-height scope, folded-process identification
-    and physical pile/nonempty-maximum carriers. The official arXiv extraction and historical local text
-    are preserved. This is not a certificate against unchanged arXiv v2.
+  divergences: >-
+    The Lean statements follow the corrected edition in paper/corrected-arxiv/. Theorem 1.1 and
+    Corollary 1.1 are stated as published, with the hitting time of Theorem 1.1(ii) defined
+    through some inner-boundary site (C01). The changes C01-C25 to lemmas, corollaries, a
+    proposition, definitions and proofs are listed with the published text, the corrected text
+    and a reason in the corrected edition's section "Corrections to the published version" and
+    in README.md.
+
 review:
-  status: independently-reviewed
+  status: "author-reviewed"
   reviewers:
   - Ahmed Bou-Rabee
-  notes: The corrected-source statements, definitions and consumers were reviewed independently against the
-    corrected draft; see ledger/audits/2026-10-19-corrected-source-integration.md. The integrated tree builds and
-    passes tools/verify.py. Historical comparator receipts apply only at their exact original statements and
-    source pins.
+  notes: >-
+    The statements were compared with the corrected edition by the author and by a separate
+    read-only model review. Not external peer review.
+
 alignment:
   namespace: DimRed
   statements:
-  - source: Theorem 1.1 (the_theorem), three displays
-    lean: DimRed.Frozen.dimensional_reduction, DimRed.Frozen.terminal_dimensional_reduction, DimRed.Frozen.self_similarity
-    module: DimRed.Frozen.Main
-    status: proved
-    note: Frozen statements, proved by the joint induction of Sections 4 and 5 (DimRed.reg_proved); each
-      restates its frozen counterpart DimRed.Frozen.* unchanged in DimRed/MainTheorems.lean.
-  - source: Corollary 1.1, two clauses
-    lean: DimRed.Frozen.sandpile_dimensional_reduction, DimRed.Frozen.sandpile_self_similarity
-    module: DimRed.Frozen.Main
-    status: proved
-    note: Frozen statements, proved by the joint induction of Sections 4 and 5 (DimRed.reg_proved); each
-      restates its frozen counterpart DimRed.Frozen.* unchanged in DimRed/MainTheorems.lean.
-  - source: Proposition 4.1 (base_dimension), five clauses
-    lean: DimRed.Frozen.base_dimension_*
-    module: DimRed.Frozen.Regularity
-    status: proved
-    note: Frozen statements, proved by the joint induction of Sections 4 and 5 (DimRed.reg_proved); each
-      restates its frozen counterpart DimRed.Frozen.* unchanged in DimRed/MainTheorems.lean.
-  - source: 'Sections 2 and 3: every lemma, corollary and proposition'
-    lean: DimRed.* in DimRed/MainTheorems.lean
-    module: DimRed.MainTheorems
-    status: proved
-    note: Each restates its frozen counterpart DimRed.Frozen.* unchanged; the full map is in
-      README.md and CORRESPONDENCE.md.
-acknowledgements: Built on Lean 4, Mathlib, Lake and the shared library Lattice-Probability.
+  - source: "Theorem 1.1(i), first display"
+    lean: "DimRed.Frozen.dimensional_reduction"
+    status: "proved"
+  - source: "Theorem 1.1(i), second display"
+    lean: "DimRed.Frozen.terminal_dimensional_reduction"
+    status: "proved"
+  - source: "Theorem 1.1(ii)"
+    lean: "DimRed.Frozen.self_similarity"
+    status: "proved"
+  - source: "Corollary 1.1(i)"
+    lean: "DimRed.Frozen.sandpile_dimensional_reduction"
+    status: "proved"
+  - source: "Corollary 1.1(ii)"
+    lean: "DimRed.Frozen.sandpile_self_similarity"
+    status: "proved"
+  - source: "Lemma 2.1"
+    lean: "DimRed.Frozen.pt_ind_lemma"
+    status: "proved"
+  - source: "Lemma 2.2"
+    lean: "DimRed.Frozen.parabolic_comparison"
+    status: "proved"
+  - source: "Lemma 2.3"
+    lean: "DimRed.Frozen.symmetry_lemma"
+    status: "proved"
+  - source: "Lemma 2.4"
+    lean: "DimRed.Frozen.general_difference_comparison"
+    status: "proved"
+  - source: "Corollary 2.1"
+    lean: "DimRed.Frozen.axis_monotonicity"
+    status: "proved"
+  - source: "Corollary 2.2"
+    lean: "DimRed.Frozen.derivative_bound"
+    status: "proved"
+  - source: "Lemma 2.5"
+    lean: "DimRed.Frozen.topple_limit"
+    status: "proved"
+  - source: "Proposition 3.1"
+    lean: "DimRed.Frozen.no_reduction_at_critical_dimension"
+    status: "proved"
+  - source: "Lemma 3.1"
+    lean: "DimRed.Frozen.radial_laplacian"
+    status: "proved"
+  - source: "Proposition 3.2"
+    lean: "DimRed.Frozen.base_case"
+    status: "proved"
+  - source: "Proposition 4.1, self-similarity"
+    lean: "DimRed.Frozen.base_dimension_consistency"
+    status: "proved"
+  - source: "Proposition 4.1, weak facet compatibility"
+    lean: "DimRed.Frozen.base_dimension_weak_compatibility"
+    status: "proved"
+  - source: "Proposition 4.1, strong derivative"
+    lean: "DimRed.Frozen.base_dimension_strong_derivative"
+    status: "proved"
+  - source: "Proposition 4.1, strong facet compatibility"
+    lean: "DimRed.Frozen.base_dimension_strong_compatibility"
+    status: "proved"
+  - source: "Proposition 4.1, strong topple control"
+    lean: "DimRed.Frozen.base_dimension_strong_topple"
+    status: "proved"
+  - source: "Lemma 4.1 of the corrected edition"
+    lean: "DimRed.Frozen.one_terminal_profile; DimRed.Frozen.one_terminal_derivative"
+    status: "proved"
+  - source: "Lemma 5.1 of the corrected edition"
+    lean: "DimRed.Frozen.strict_head_facet"
+    status: "proved"
+
+acknowledgements: Built on Lean 4, Mathlib, Lake and the library Lattice-Probability.

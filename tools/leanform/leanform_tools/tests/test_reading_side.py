@@ -2,7 +2,7 @@
 check_exponents) and the readings.py migration/loading module.
 
 Every repo here is synthetic, built fresh in `tempfile.mkdtemp()`; nothing
-depends on `~/lean`. Each test double-checks one concrete failure mode these
+depends on a local checkout. Each test double-checks one concrete failure mode these
 checkers exist to catch:
 
 * a node with no recorded reading must fail check_clauses, unconditionally;
@@ -20,7 +20,7 @@ checkers exist to catch:
 * a manifest with no nodes at all must exit 2 (the meta-check), never 0 —
   this is the class of bug that let two repos' vendored copies of
   check_clauses/check_exponents report "OK (0 statements)" against 24 real
-  nodes, because a literal `rotor\\.tex` regex never matched their paper.
+  nodes, because a literal paper-name regex never matched their paper.
 """
 
 from __future__ import annotations
@@ -164,10 +164,10 @@ class TestCheckClauses(_TempRepoTestCase):
     def test_paper_name_is_never_hardcoded(self):
         """Same structure, two different paper basenames: behavior must not change.
 
-        This is the regression for the literal `rotor\\.tex` regex that made
+        This is the regression for the literal paper-name regex that made
         two vendored copies of this checker inspect 0 of 24 real nodes.
         """
-        for paper_rel in ("paper/rotor.tex", "paper/totally_unrelated_name.tex"):
+        for paper_rel in ("paper/example.tex", "paper/totally_unrelated_name.tex"):
             stem = Path(paper_rel).name
             paper_text = (
                 "preamble\n"
@@ -240,8 +240,8 @@ class TestCheckConstants(_TempRepoTestCase):
         self.assertNotIn("m", params)
         self.assertIn("hb", params)
 
-        # Contrast: the naive bracket-oblivious regex (as vendored in
-        # Unique-Continuation-Planar and Parking-Sharpness) DOES pick up the
+        # Contrast: the naive bracket-oblivious regex (as an earlier
+        # copy of this checker had it) DOES pick up the
         # nested "m" as if it were a top-level parameter.
         import re
         naive = {tok for m in re.finditer(r"[({\[]([^:()\[\]{}]+):", binders)
@@ -330,8 +330,8 @@ class TestCheckExponents(_TempRepoTestCase):
         change is deliberate: the shape that produces it is
         `|R_t| = c t^{2/3} + o(t^{2/3})`, where the paper necessarily names
         the exponent twice and any faithful Lean rendering — a single
-        `Tendsto (… / t ^ (2/3))` — names it once. rotor-23's
-        `prop-path-reduction` and `prop-circuit-clock` are exactly this, and
+        `Tendsto (… / t ^ (2/3))` — names it once. Two real nodes
+        elsewhere are exactly this, and
         their incumbent checker passed. Failing here fires on a universal
         idiom and pushes a reviewer toward a blanket waiver, which would cost
         the real check.
@@ -378,7 +378,7 @@ class TestCheckExponents(_TempRepoTestCase):
         self.assertIn("META-CHECK FAILED", out)
 
     def test_lean_exponents_handles_spaced_fraction_with_type_ascription(self):
-        """rotor-23's `Rotor/Frozen/Shape/PathReduction.lean:64` writes the
+        """A Lean statement elsewhere writes the
         exponent as `^ (2 / 3 : ℝ)` — spaces around `/` and a trailing type
         ascription inside the same parens. This must read as `2/3`, not be
         dropped."""
@@ -386,7 +386,7 @@ class TestCheckExponents(_TempRepoTestCase):
         self.assertEqual(check_exponents.lean_exponents(frag), {"2/3": 1})
 
     def test_frac_macro_normalizes_to_match_leans_division(self):
-        """ORRW's paper writes `\\beta^{-\\frac{d}{d+1}} n^{\\frac{d}{d+1}}`;
+        """A paper writes `\\beta^{-\\frac{d}{d+1}} n^{\\frac{d}{d+1}}`;
         its Lean statement writes the same quantity as
         `β ^ (-((d:ℝ)/((d:ℝ)+1)))` and `n ^ ((d:ℝ)/((d:ℝ)+1))`. Without a
         `\\frac` normalizer every fractional exponent in that repo reads as
@@ -403,15 +403,14 @@ class TestCheckExponents(_TempRepoTestCase):
         self.assertEqual(le.get("d/(d+1)"), 1)
 
     def test_bare_identifier_is_not_an_exponent_only_when_declared_as_repo_noise(self):
-        """ORRW's `lem:schur` writes `(A^+)^c` (set-complement notation);
+        """A paper's `lem:schur` writes `(A^+)^c` (set-complement notation);
         `c` is not an exponent there. But `c` is a real exponent letter in
         general (these papers reserve `c`/`C` for constants, never for a
         genuine power, so this is safe) and must NOT be filtered by
         default — only when the repo's own `readings.yaml['noise']` says so,
-        the way ORRW's own incumbent NOISE set did. A blanket addition to
-        the shared NOISE set would hide a real gap elsewhere (Dynamic-
-        Dimensional-Reduction's `prop-no-reduction` genuinely needs a bare
-        `d` to be tracked, for instance) — so the vocabulary must be
+        the way an earlier incumbent NOISE set did. A blanket addition to
+        the shared NOISE set would hide a real gap elsewhere (a bare `d` must
+        be tracked in some repos, for instance) — so the vocabulary must be
         per-repo, not global.
         """
         paper = (
@@ -536,8 +535,8 @@ class TestExtractRepo(unittest.TestCase):
 
 
 class TestMigrationGuardAgainstForeignKeys(_TempRepoTestCase):
-    """Dynamic-Dimensional-Reduction and Exploding-Sandpiles copy-pasted
-    rotor-23's tools/ verbatim: `REVIEWED`'s 26 keys are rotor-23 node ids,
+    """Two repositories copied another repository's tools/ verbatim:
+    `REVIEWED`'s 26 keys are that repository's node ids,
     and none is either repo's own. Migrating that verbatim would trade a
     checker that inspected nothing for one that inspects real-looking
     readings that describe a different paper — worse than the original bug,
@@ -555,8 +554,8 @@ class TestMigrationGuardAgainstForeignKeys(_TempRepoTestCase):
         tools.mkdir()
         (tools / "check_clauses.py").write_text(
             "REVIEWED = {\n"
-            "    'lem-least-action': 'a rotor-23 reading, not this repo\\'s',\n"
-            "    'lem-boundary-routing': 'another rotor-23 reading',\n"
+            "    'foreign-node-a': 'a reading from elsewhere, not this repo\\'s',\n"
+            "    'foreign-node-b': 'another foreign reading',\n"
             "}\n",
             encoding="utf-8",
         )
@@ -578,7 +577,7 @@ class TestMigrationGuardAgainstForeignKeys(_TempRepoTestCase):
         (tools / "check_clauses.py").write_text(
             "REVIEWED = {\n"
             "    'cor-axis-monotonicity': 'a real reading against THIS paper',\n"
-            "    'lem-least-action': 'a rotor-23 reading, foreign to this repo',\n"
+            "    'foreign-node-a': 'a foreign reading, not this repo',\n"
             "}\n",
             encoding="utf-8",
         )

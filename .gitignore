@@ -1,7 +1,3 @@
-.lake/
-scratch/
+/.lake/
 __pycache__/
-*.olean
-*.ilean
-*.trace
-*.log
+*.pyc

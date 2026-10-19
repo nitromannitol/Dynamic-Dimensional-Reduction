@@ -4,9 +4,9 @@ import Mathlib
 # Theorem 1.1(i) (`the_theorem`, clause 1): comparator challenge
 
 Mathlib-only comparator challenge for the two displays of Theorem 1.1(i) (`the_theorem`,
-`dimred.tex:109-140`) of Bou-Rabee, *Dynamic dimensional reduction in the Abelian
+`dimred-corrected-arxiv.tex:109-133`) of Bou-Rabee, *Dynamic dimensional reduction in the Abelian
 sandpile*: dimensional reduction on the centre slice at every time `t ≥ 1`, and dimensional
-reduction of the terminal odometer on the slice `x_d = 2`.  The certified statements are
+reduction of the terminal odometer on the slice `x_d = 2`.  The library statements are
 `DimRed.Frozen.dimensional_reduction` and `DimRed.Frozen.terminal_dimensional_reduction`,
 restated in `DimRed/MainTheorems.lean` as `DimRed.dimensional_reduction` and
 `DimRed.terminal_dimensional_reduction`.
@@ -33,7 +33,7 @@ odometer `v_∞` is valued in `ℕ∞`.
 -- VOCABULARY-BEGIN
 namespace DimRed.StatementAudit
 
-/-! ## 1. The lattice, the hypercube and the fundamental domain (`dimred.tex:110-130`, `277`) -/
+/-! ## 1. The lattice, the hypercube and the fundamental domain (`dimred-corrected-arxiv.tex:110-132`, `279`) -/
 
 /-- A site of the lattice `ℤ^d`. -/
 abbrev Site (d : ℕ) : Type := Fin d → ℤ
@@ -44,13 +44,13 @@ def unit {d : ℕ} (i : Fin d) : Site d := Pi.single i 1
 /-- The smallest coordinate of the hypercube of side `N`, `1 - ⌊N/2⌋`. -/
 def loCoord (N : ℕ) : ℤ := 1 - (N / 2 : ℕ)
 
-/-- `M = ⌈N/2⌉`, `dimred.tex:110`. -/
+/-- `M = ⌈N/2⌉`, `dimred-corrected-arxiv.tex:110`. -/
 def sideHalf (N : ℕ) : ℕ := (N + 1) / 2
 
 /-- The largest coordinate of the hypercube of side `N`, `M = ⌈N/2⌉`. -/
 def hiCoord (N : ℕ) : ℤ := (sideHalf N : ℤ)
 
-/-- `x` lies in the hypercube `C_N^{(d)}` of side length `N`: `dimred.tex:277` embeds it
+/-- `x` lies in the hypercube `C_N^{(d)}` of side length `N`: `dimred-corrected-arxiv.tex:279` embeds it
 as `{x - k : 1 ≤ x_i ≤ 2k}` when `N = 2k` and as `{x + 1 : |x_i| ≤ k}` when `N = 2k + 1`,
 the box whose coordinates run from `1 - ⌊N/2⌋` to `⌈N/2⌉`. -/
 def inCube (d N : ℕ) (x : Site d) : Prop := ∀ i : Fin d, loCoord N ≤ x i ∧ x i ≤ hiCoord N
@@ -58,7 +58,7 @@ def inCube (d N : ℕ) (x : Site d) : Prop := ∀ i : Fin d, loCoord N ≤ x i �
 instance (d N : ℕ) : DecidablePred (inCube d N) := fun _ => Fintype.decidableForallFintype
 
 /-- `x` lies in the sorted fundamental domain
-`S_M^{(d)} = {M ≥ x_1 ≥ ⋯ ≥ x_d ≥ 1}`, `dimred.tex:110-111`. -/
+`S_M^{(d)} = {M ≥ x_1 ≥ ⋯ ≥ x_d ≥ 1}`, `dimred-corrected-arxiv.tex:110-111`. -/
 def inSimplex (d M : ℕ) (x : Site d) : Prop :=
   (∀ i : Fin d, 1 ≤ x i ∧ x i ≤ (M : ℤ)) ∧ ∀ i j : Fin d, i ≤ j → x j ≤ x i
 
@@ -67,26 +67,26 @@ noncomputable def cube (d N : ℕ) : Finset (Site d) :=
   Finset.Icc (fun _ => loCoord N) (fun _ => hiCoord N)
 
 /-- The inner boundary `∂C_N^{(d)}`, the sites of the hypercube with a nearest neighbour
-outside it, `dimred.tex:130`. -/
+outside it, `dimred-corrected-arxiv.tex:132`. -/
 noncomputable def innerBoundary (d N : ℕ) : Finset (Site d) :=
   letI := Classical.decPred fun x : Site d =>
     ∃ i : Fin d, ¬ inCube d N (x + unit i) ∨ ¬ inCube d N (x - unit i)
   (cube d N).filter fun x => ∃ i : Fin d, ¬ inCube d N (x + unit i) ∨ ¬ inCube d N (x - unit i)
 
-/-! ## 2. Parallel toppling (`dimred.tex:38`, `93-97`, `278-284`) -/
+/-! ## 2. Parallel toppling (`dimred-corrected-arxiv.tex:38`, `93-97`, `278-284`) -/
 
 /-- `∑_{y ∼ x} u(y)`, the sum over the `2d` nearest neighbours of `x`. -/
 def nbrSum {d : ℕ} (u : Site d → ℤ) (x : Site d) : ℤ :=
   ∑ i : Fin d, (u (x + unit i) + u (x - unit i))
 
-/-- The graph Laplacian `Δ^{(d)} u(x) = -2d u(x) + ∑_{y ∼ x} u(y)`, `dimred.tex:278-284`.
+/-- The graph Laplacian `Δ^{(d)} u(x) = -2d u(x) + ∑_{y ∼ x} u(y)`, `dimred-corrected-arxiv.tex:280-286`.
 Every function it is applied to below vanishes off the hypercube, which is the paper's
 padding `f(y) := 0` for `y ∉ C_N^{(d)}` (dissipating boundary conditions). -/
 def lap {d : ℕ} (u : Site d → ℤ) (x : Site d) : ℤ :=
   -(2 * (d : ℤ)) * u x + nbrSum u x
 
 /-- The parallel toppling odometer `v_t` of the initial sandpile `s₀` on `C_N^{(d)}`,
-extended by zero off the hypercube.  `dimred.tex:93-97` defines it by `v_0 ≡ 0`,
+extended by zero off the hypercube.  `dimred-corrected-arxiv.tex:93-97` defines it by `v_0 ≡ 0`,
 `v_{t+1} = v_t + 1{s_t ≥ 2d}`, `s_{t+1} = s_t + Δ(v_{t+1} - v_t)`; this is the equivalent
 closed recursion in which `s_t` is replaced by `s₀ + Δ v_t`. -/
 def odo (d N : ℕ) (s₀ : Site d → ℤ) : ℕ → Site d → ℤ
@@ -101,7 +101,7 @@ def sandp (d N : ℕ) (s₀ : Site d → ℤ) (t : ℕ) (x : Site d) : ℤ :=
   s₀ x + lap (odo d N s₀ t) x
 
 /-- The odometer `v_t^{(d,N)}` of the paper's initial condition `s_0^{(d)} ≡ 2d`
-(`dimred.tex:38`). -/
+(`dimred-corrected-arxiv.tex:38`). -/
 def odoUnif (d N t : ℕ) (x : Site d) : ℤ := odo d N (fun _ => 2 * (d : ℤ)) t x
 
 /-- The sandpile `s_t^{(d,N)}` of the paper's initial condition `s_0^{(d)} ≡ 2d`. -/
@@ -122,7 +122,7 @@ noncomputable def sandpInfUnif (d N : ℕ) (x : Site d) : ℤ :=
   2 * (d : ℤ) + lap (fun y => ((odoInfUnif d N y).toNat : ℤ)) x
 
 /-- `τ_j = min{t ≥ 1 : v_t^{(d,2j)}(x) ≥ j for some x ∈ ∂C_{2j}^{(d)}}`,
-`dimred.tex:128-130`, valued in `ℕ∞` so that `⊤` records that no such time exists. -/
+`dimred-corrected-arxiv.tex:128-131`, valued in `ℕ∞` so that `⊤` records that no such time exists. -/
 noncomputable def toppleTime (d j : ℕ) : ℕ∞ :=
   sInf ((fun n : ℕ => (n : ℕ∞)) ''
     {n : ℕ | 1 ≤ n ∧ ∃ x ∈ innerBoundary d (2 * j), (j : ℤ) ≤ odoUnif d (2 * j) n x})
@@ -137,7 +137,7 @@ noncomputable def simplexMax (d M : ℕ) (f : Site d → ℤ) : ℤ :=
   if h : (simplex d M).Nonempty then (simplex d M).sup' h f else 0
 
 /-- The facet point `(x, c, 1_j)`, the paper's `(\mathbf{x}_i, c, \mathbf{1}_j)`,
-`dimred.tex:915`. -/
+`dimred-corrected-arxiv.tex:726`. -/
 def facetPoint {i : ℕ} (x : Fin i → ℤ) (c : ℤ) (j : ℕ) : Site (i + 1 + j) :=
   Fin.append (Fin.snoc x c) (fun _ : Fin j => (1 : ℤ))
 
@@ -146,7 +146,7 @@ end DimRed.StatementAudit
 
 namespace DimRed.StatementAudit.DimensionalReduction
 
-/-- **Theorem 1.1(i)** (`the_theorem`, `dimred.tex:114-117`), first display: dimensional
+/-- **Theorem 1.1(i)** (`the_theorem`, `dimred-corrected-arxiv.tex:114-117`), first display: dimensional
 reduction on the centre slice, `v_t^{(d,N)}(x_{d-1}, 1) = v_t^{(d-1,N)}(x_{d-1})` for every
 `t ≥ 1` and `x_{d-1} ∈ S_M^{(d-1)}`. -/
 theorem dimensional_reduction (N d : ℕ) (hN : 1 ≤ N) (hd : 1 ≤ d)
@@ -154,7 +154,7 @@ theorem dimensional_reduction (N d : ℕ) (hN : 1 ≤ N) (hd : 1 ≤ d)
     odoUnif (d + 1) N t (Fin.snoc x 1) = odoUnif d N t x := by
   sorry
 
-/-- **Theorem 1.1(i)** (`the_theorem`, `dimred.tex:118-121`), second display: terminal
+/-- **Theorem 1.1(i)** (`the_theorem`, `dimred-corrected-arxiv.tex:118-121`), second display: terminal
 dimensional reduction, `v_∞^{(d,N)}(x_{d-1}, 2) = v_∞^{(d-1,N)}(x_{d-1})` for
 `x_{d-1} ∈ S_M^{(d-1)}` with `x_{d-1} ≥ 2`. -/
 theorem terminal_dimensional_reduction (N d : ℕ) (hN : 1 ≤ N) (hd : 1 ≤ d)

@@ -10,37 +10,23 @@ claims. They are excluded simply by never appearing in `STATEMENT_ENVS`.
 
     python3 -m leanform_tools.check_coverage <repo>
 
-This is a port of the vendored `tools/check_coverage.py`, generalized to the
-union of what the seven surveyed repos need:
+The statement environments are the union of the spellings used by the surveyed
+papers, and each rule below is enforced:
 
 * The paper path, its basename and the claim regex all come from `cfg`.
-* `STATEMENT_ENVS` includes `definition` (the task this package exists for)
-  and `prop` -- DimRed and Exploding define their proposition environment as
-  `\\prop`, not `\\proposition`. The rotor/Parking/ORRW/RWRS/Sandpile vendored
-  copies never noticed because none of those five papers use the alias; the
-  DimRed and Exploding copies used the same `STATEMENT_ENVS` regardless, so
-  every `\\begin{prop}` statement in those two papers -- corollaries and
-  propositions alike, nine of them in Exploding -- was invisible to
-  `check_coverage.py` even though it exited 0 having "covered" every
-  statement it looked at.
-* An unlabeled statement environment is a hard error, reported distinctly
-  from an uncovered one (only Sandpile's vendored copy did this; rotor,
-  Parking, ORRW, RWRS, DimRed and Exploding's copies required a `\\label`
-  immediately after `\\begin{env}` to even recognize the environment as a
-  statement, so an unlabeled one was silently invisible rather than
-  flagged). Running this rule against DimRed and Exploding turns up real,
-  previously invisible unlabeled statements: DimRed has an unlabeled
-  corollary at dimred.tex:143 and an unlabeled lemma at dimred.tex:728;
-  Exploding has an unlabeled `\\prop` at exploding.tex:1965.
-* A node's claim on a label is recognized by substring search over the
-  node's whole `source:` text (canonicalized for the hyphen/colon ambiguity
+* `STATEMENT_ENVS` includes `definition` and `prop`. A paper may define its
+  proposition environment as `\\prop` rather than `\\proposition`; if the checker
+  knew only one spelling, every `\\begin{prop}` statement would be invisible
+  while the check still exited 0.
+* An unlabeled statement environment is a hard error, reported distinctly from an
+  uncovered one. A checker that needs a `\\label` to recognize an environment
+  silently skips an unlabeled statement, so this rule reports it instead.
+* A node's claim on a label is recognized by substring search over the node's
+  whole `source:` text (canonicalized for the hyphen/colon ambiguity
   `paper_anchors.label_variants` already handles), not by requiring a
-  `label <lab>` keyword or a `thm:`/`lem:`-style prefix. This is what lets a
-  claim that never carries a paper line citation at all still count --
-  Sandpile's `thm-RW` node is later "discharged by thm-optimal-stopping-
-  proved" in prose, with no `sandpile.tex:` citation anywhere on that line,
-  and DimRed's and RWRS's labels (`the_theorem`, `axis_monotonicity`,
-  `prop:iid-stationary`) do not share a common prefix family at all.
+  `label <lab>` keyword or a `thm:`/`lem:`-style prefix. This lets a claim that
+  carries no paper line citation, or a label outside any common prefix family,
+  still count.
 """
 
 from __future__ import annotations
@@ -76,8 +62,8 @@ def check(res: Result, cfg: RepoConfig) -> None:
     text = _strip_comments(cfg.paper_path.read_text(encoding="utf-8"))
 
     # The corpus a claim is searched in: every node's whole `source:` text,
-    # not just the primary label slot, so a prose mention (Sandpile's
-    # "discharged by thm-optimal-stopping-proved") counts as a claim.
+    # not just the primary label slot, so a prose mention ("discharged by
+    # <label>") counts as a claim.
     claimed_blob = "\n".join(n.source for n in cfg.nodes if n.source)
 
     statements: list[tuple[str, str, int]] = []

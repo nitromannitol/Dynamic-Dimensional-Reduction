@@ -23,15 +23,10 @@ raises, `check` never reaches the write, so a broken generation cannot
 overwrite a good CERTIFICATE.md already on disk -- see
 `tests/test_build_side.py`'s regression test for this property.
 
-BUG NOT REPRODUCED HERE: ~/lean/Divisible-Sandpile-Percolation/tools/
-certificate.py:170 prints "Every node's state in `ledger/manifest.yaml` is
-`SEALED`." unconditionally -- literally always, regardless of the actual
-mix of states. That repo's manifest has 78 SEALED and 26 FROZEN nodes (104
-total), so the sentence is false every time it is printed: 26 nodes are not
-SEALED. `claim_summary()` below counts every state with
-`collections.Counter` and only ever states what the counts actually show,
-the same discipline `sync_docs.status_block` already uses for the README
-status line.
+A status line printed regardless of the counts would be false, so
+`claim_summary()` below counts every state with `collections.Counter` and only
+ever states what the counts actually show, the same discipline
+`sync_docs.status_block` already uses for the README status line.
 """
 
 from __future__ import annotations
@@ -246,12 +241,12 @@ def claim_summary(nodes) -> str:
 
     if total and sealed == total:
         return (
-            f"Every node's state in `ledger/manifest.yaml` is `SEALED`: all "
+            f"Every statement's state in `ledger/manifest.yaml` is `SEALED`: all "
             f"{total} are proved with no added axiom and no `sorry`."
         )
     if total and sealed + proved == total:
         return (
-            f"Every node's state in `ledger/manifest.yaml` is `SEALED` or "
+            f"Every statement's state in `ledger/manifest.yaml` is `SEALED` or "
             f"`PROVED` ({sealed} SEALED, {proved} PROVED, {total} total): "
             "all are proved with no added axiom and no `sorry`."
         )

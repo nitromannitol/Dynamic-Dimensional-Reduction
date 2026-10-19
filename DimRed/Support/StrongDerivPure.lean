@@ -15,7 +15,7 @@ time.  The paper's Case 2 (`dimred.tex:1334-1362`) proves the bound
 `k`-th coordinate is not the largest, and the clause follows because the facet
 point `(x_i, 1, 1_j)` has `i ≥ 1` and its `(i+1)`-st coordinate is `1 < x_1`.
 
-The route is the one of `scratch/case2-2026-09-24/PROOF.md`: a floor step that
+The route is a floor step that
 turns a bound on the neighbour sums into a bound on the odometer, applied to
 four families of differences (first differences, first differences with a
 one-step time shift, mixed second differences, and pure second differences off

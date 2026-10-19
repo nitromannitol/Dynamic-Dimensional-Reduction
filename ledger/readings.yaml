@@ -1,4 +1,4 @@
-# Corrected-source candidate readings; independent Root review remains required.
+# Readings of the statements of the corrected edition, used by the clause, constant and exponent checks.
 clauses:
   prop-base-dimension-weak: dimred-corrected-arxiv.tex:731-738 (label base_dimension, clause weak facet
     compatibility). M>=2; every legal facet p=(head,1,ones) with head coordinates >=2, including an empty
