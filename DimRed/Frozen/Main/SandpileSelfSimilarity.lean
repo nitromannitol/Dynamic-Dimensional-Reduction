@@ -1,5 +1,5 @@
 /-
-Corollary to Theorem 1.1 of the corrected arXiv-format draft, frozen.
+Corollary to Theorem 1.1 of the corrected edition.
 `dimred-corrected-arxiv.tex:155-158` (label `sandpile_corollary`), clause 2:
 
   "\item{Self-similarity:} for all $j < M$, $t \leq \tau_j$, and $\mathbf{x}

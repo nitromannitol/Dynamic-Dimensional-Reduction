@@ -3,7 +3,7 @@ import DimRed.Support.DerivBound
 /-!
 The toppling time and its corner reduction, including the strict pre-toppling
 bound used at the dissipating boundary in Section 4 of the paper,
-`dimred.tex:1003-1005`.
+`dimred-corrected-arxiv.tex`.
 -/
 namespace DimRed
 

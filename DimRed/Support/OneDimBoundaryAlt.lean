@@ -6,7 +6,7 @@ import DimRed.Support.OneDimStrongFacet
 /-!
 The one-dimensional strong derivative bound and strong facet compatibility with
 the reflecting-end boundary alternative discharged from weak facet compatibility,
-following `dimred.tex:1012-1029`.
+following `dimred-corrected-arxiv.tex`.
 -/
 
 set_option autoImplicit false

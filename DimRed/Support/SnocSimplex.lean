@@ -2,7 +2,7 @@ import DimRed.Support.Basic
 
 /-
 The coordinate and simplex identities for appending a trailing coordinate,
-`dimred.tex:1003-1005`.
+`dimred-corrected-arxiv.tex`.
 -/
 namespace DimRed
 

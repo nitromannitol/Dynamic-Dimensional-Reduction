@@ -1,6 +1,5 @@
 /-
-The first display of Theorem 1.1(i) of the corrected arXiv-format draft,
-frozen. `dimred-corrected-arxiv.tex:109-118` (label `the_theorem`), clause 1:
+The first display of Theorem 1.1(i) of the corrected edition. `dimred-corrected-arxiv.tex:109-118` (label `the_theorem`), clause 1:
 
   "Let $N \geq 1$, $d \geq 2$, and $M = \lceil N/2 \rceil$. Denote the
    fundamental domain of $\mathcal{C}_N^{(d)}$ consisting of sorted

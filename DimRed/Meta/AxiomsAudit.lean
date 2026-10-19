@@ -15,8 +15,8 @@ Each must report exactly the three standard foundational axioms of Mathlib: `pro
 `Classical.choice`, `Quot.sound`; `scripts/check_axioms.py` checks the report against an explicit
 list of theorems.
 
-`python3 tools/verify.py` (the check_axioms gate) prints the axiom closure of all
-registered statements.
+`python3 tools/verify.py`, through its axiom check, prints the axiom closure of every
+statement recorded in `ledger/manifest.yaml`.
 
 Nothing is assumed in this development: no theorem takes a cited result as a hypothesis,
 and no `axiom` is declared.

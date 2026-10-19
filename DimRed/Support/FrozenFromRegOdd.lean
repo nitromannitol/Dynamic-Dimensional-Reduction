@@ -12,7 +12,7 @@ time, provided weak facet compatibility holds at side `M` and dimension `d`: the
 differ only at a site with a coordinate equal to `1`, where the lower neighbour is the site itself
 in the even cube and the upper neighbour in the odd cube, and weak facet compatibility says that
 when these two values differ the site does not topple.  This is the boundary adjustment for odd
-`N` that `dimred.tex:433-436` leaves to the reader.
+`N` that `dimred-corrected-arxiv.tex:419-422` leaves to the reader.
 -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

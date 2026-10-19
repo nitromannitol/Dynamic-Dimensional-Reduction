@@ -1,5 +1,5 @@
 /-
-Lemma 2.3 of the corrected arXiv-format draft, frozen.
+Lemma 2.3 of the corrected edition.
 `dimred-corrected-arxiv.tex:399-401` (label `symmetry_lemma`):
 
   "For each $t \geq 0$ and each $ \sigma \in

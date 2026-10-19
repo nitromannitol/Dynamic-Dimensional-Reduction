@@ -1,5 +1,5 @@
 /-
-Theorem 1.1(ii) of the corrected arXiv-format draft, frozen.
+Theorem 1.1(ii) of the corrected edition.
 `dimred-corrected-arxiv.tex:122-133` (label `the_theorem`), clause 2:
 
   "\item{Self-similarity:} for all $j < M$, $t \leq \tau_j$, and $\mathbf{x}

@@ -1,6 +1,6 @@
 /-
 The simultaneous induction bookkeeping for odometer regularity and dimensional
-reduction, `dimred.tex:1117-1128`.  The six predicates below are the five
+reduction, `dimred-corrected-arxiv.tex:943-954`.  The six predicates below are the five
 time-slice clauses of Proposition 4.1 together with the reduction identity.
 The transition predicates in `DimRed.Support.DimRedStep` are reused by the
 arguments which discharge the six induction-step hypotheses; they are not
@@ -20,7 +20,7 @@ namespace DimRed
 
 open LatticeProb
 
-/-- A triple is earlier in the dimension-side-time order of `dimred.tex:1120-1126`. -/
+/-- A triple is earlier in the dimension-side-time order of the section labelled `sec:dim_reduction` in `dimred-corrected-arxiv.tex`. -/
 def regEarlier (d M t d' M' t' : ℕ) : Prop :=
   d' < d ∨ d' = d ∧ M' < M ∨ d' = d ∧ M' = M ∧ t' < t
 
@@ -78,7 +78,7 @@ on the centre slice of the last coordinate agrees with the odometer in dimension
 The larger dimension is the index.  Indexing by the smaller one instead would put the
 statement out of reach of the induction: proving the reduction from `d + 1` down to `d` needs
 regularity in dimension `d + 1` at earlier times, and `d + 1` is not earlier than `d` in the
-order of `dimred.tex:1120-1126`. -/
+order of the section labelled `sec:dim_reduction` in `dimred-corrected-arxiv.tex`. -/
 def DimRedAt (d M t : ℕ) : Prop :=
   ∀ e : ℕ, 1 ≤ e → d = e + 1 → ∀ x : Site e, inSimplex e M x →
     odoUnif (e + 1) (2 * M) t (Fin.snoc x 1) = odoUnif e (2 * M) t x

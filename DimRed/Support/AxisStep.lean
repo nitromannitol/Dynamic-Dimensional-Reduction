@@ -10,7 +10,7 @@ rotations `u_i = u_j`, whose perpendicular step is `e_i - e_j`.  `odo_axis_refl`
 and `odo_axis_rot` are the two monotonicity statements, each proved by the
 induction of Babai and Gorodezky's Lemma 5.3: the odometer gains at most one per
 step, so the only case to treat is a site whose value has caught up, and there
-the recursion of `dimred.tex:289-294` compares the two neighbour sums term by
+the recursion of the statement labelled `pt_ind_lemma` in `dimred-corrected-arxiv.tex` compares the two neighbour sums term by
 term.  A term where the step would leave the mirror on the wrong side is the
 site's own mirror image, and the two terms are equal.
 -/

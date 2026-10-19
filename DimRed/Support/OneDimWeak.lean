@@ -2,8 +2,8 @@ import DimRed.Support.DerivBound
 
 /-
 Weak compatibility at the all-ones facet: a height difference of one forces
-the facet site not to topple at the next parallel step, as in
-`dimred.tex:1003-1005` and `dimred.tex:1436-1445`.
+the facet site not to topple at the next parallel step, as in the weak facet
+compatibility clauses (`base_dimension:weak_compatability`) of `dimred-corrected-arxiv.tex`.
 -/
 namespace DimRed
 

@@ -8,9 +8,8 @@ Theorem 1.1(ii) is defined with its quantifier made explicit. Every change is li
 published text, the corrected text and the reason, in the section "Corrections to the published
 version" at the end of the corrected edition, and in the repository README.
 
-The Lean statements follow this edition, which `ledger/manifest.yaml` pins by its SHA-256.
-[`../dimred.tex`](../dimred.tex) is an earlier revision of the source; the line references
-`dimred.tex:<lines>` in comments of `DimRed/Support/` refer to it.
+The Lean statements follow this edition, whose SHA-256 is recorded in `ledger/manifest.yaml`.
+Line references in the comments of `DimRed/` are to this file.
 
 The bibliography and the figures are included. Build from this directory:
 

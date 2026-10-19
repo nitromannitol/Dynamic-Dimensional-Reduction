@@ -186,8 +186,6 @@ kernel and Lean's default kernel.
 | --- | --- |
 | Lean and nanoda kernels | passed (59 s) |
 
-**Status.**  All 23 theorem-level statements of the corrected edition, the 20 statement clauses
-of the published paper and three added lemmas, are proved in Lean, with no `sorry` and only the
-standard axioms; Theorem 1.1 and Corollary 1.1 are stated as published. The four pairs here
+**Status.**  All 23 theorem-level statements of the corrected edition (its versions of the 20 statement clauses of the published paper, and three added lemmas) are proved in Lean, with no `sorry` and only the standard axioms. Theorem 1.1 and Corollary 1.1 are stated as published, with the quantifier in the definition of `τ_j` made explicit. The four pairs here
 check Theorem 1.1, Corollary 1.1 and Proposition 4.1; the other results (Sections 2 and 3 and
 Lemmas 4.1 and 5.1) have no comparator pair.

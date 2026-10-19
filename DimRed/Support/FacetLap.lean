@@ -1,8 +1,9 @@
 import DimRed.Support.Recursion
 
 /-
-The Laplacian at a facet point, `dimred.tex:1136-1140` and
-`dimred.tex:1442-1445`, after the neighbour terms are supplied by symmetry.
+The Laplacian at a facet point, `dimred-corrected-arxiv.tex:962-966` and the weak facet
+compatibility clause of `dimred-corrected-arxiv.tex`, after the neighbour terms are supplied by
+symmetry.
 -/
 
 namespace DimRed

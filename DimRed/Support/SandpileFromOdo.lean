@@ -1,7 +1,7 @@
 import DimRed.Support.AxisStep
 
 /-
-The two sandpile consequences of the odometer identities, `dimred.tex:143-160`.
+The two sandpile consequences of the odometer identities, the statement labelled `sandpile_corollary` in `dimred-corrected-arxiv.tex`.
 The proofs expand the terminal or time-t odometer through the Laplacian and
 cancel the corresponding neighbour terms.
 -/

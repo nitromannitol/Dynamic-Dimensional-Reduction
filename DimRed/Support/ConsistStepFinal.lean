@@ -1,5 +1,5 @@
 /-
-The self-similarity step of the joint induction, `dimred.tex:1191-1256`.
+The self-similarity step of the joint induction, `dimred-corrected-arxiv.tex`.
 
 `consist_step_of_earlier` discharges the `hconsist_step` hypothesis of
 `reg_induction`.  In dimension one it is `odo_one_consist_all`.  In dimension
@@ -161,7 +161,7 @@ theorem consist_step_dim_one (M t : ℕ) (hM : 2 ≤ M)
       exact hres
 
 /-- The reflecting-boundary identity `eq:reflecting_boundaries`,
-`dimred.tex:1169-1182`: at a coordinate equal to two, the odometer does not see
+`dimred-corrected-arxiv.tex:995-1008`: at a coordinate equal to two, the odometer does not see
 the step down to one.  Dimensional reduction at both scales and the one-step
 self-similarity in dimensions `e` and `e + 1` identify both values with the
 odometer of the smaller cube in dimension `e`. -/
@@ -240,7 +240,7 @@ theorem odo_gap_zero (e m s : ℕ) (he : 1 ≤ e) (hm : 2 ≤ m)
     ← hself]
 
 /-- The neighbour-sum identity of the one-step self-similarity at a point of
-`S_m` with every coordinate above one, `dimred.tex:1195-1256`: coordinates above
+`S_m` with every coordinate above one, `dimred-corrected-arxiv.tex:1021-1082`: coordinates above
 two are handled by the fold as in `nbrSum_selfsim_step`, and coordinates equal
 to two by the reflecting-boundary identity `hgap`. -/
 theorem nbrSum_selfsim_gen (d m t : ℕ) (hm : 2 ≤ m)
@@ -520,7 +520,7 @@ theorem consist_step_ge_two (e M t : ℕ) (he : 1 ≤ e) (hM : 2 ≤ M)
   push_cast
   ring
 
-/-- The self-similarity clause at one triple, `dimred.tex:915-918`, from the
+/-- The self-similarity clause at one triple, `dimred-corrected-arxiv.tex:726-729`, from the
 earlier instances of the joint induction. -/
 theorem consist_step_of_earlier (d M t : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
     (hprior : ∀ d' M' t' : ℕ, regEarlier d M t d' M' t' →

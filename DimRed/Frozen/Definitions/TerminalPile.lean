@@ -1,6 +1,5 @@
 /-
-Terminal-pile definition of the sandpile corollary in the corrected
-arXiv-format draft, frozen. `dimred-corrected-arxiv.tex:145-161` (label
+Terminal-pile definition of the sandpile corollary in the corrected edition. `dimred-corrected-arxiv.tex:145-161` (label
 `sandpile_corollary`), where the terminal pile `s_\infty` is used; its defining
 equation is the telescoped form of the recursion at
 `dimred-corrected-arxiv.tex:95-96` with `s_0 = 2d` and `v_0 = 0`:

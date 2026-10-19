@@ -1,5 +1,5 @@
 /-
-The invariant profile of the parallel toppling odometer for `dimred.tex:812-881`
+The invariant profile of the parallel toppling odometer for the statement labelled `prop:base_case` in `dimred-corrected-arxiv.tex`
 (Proposition 3.2's proof): the closed value in the firing block (`block_eq`),
 the frozen value immediately beyond it (`beyond_block_eq`), and the
 front-shifted ripple relation (`ripple_shift`) that together prove
@@ -19,7 +19,7 @@ theorem ediv_add_one_mul_gt (a b : ℤ) (hb : 0 < b) : a < (a / b + 1) * b := by
   nlinarith [h, he]
 
 /-- `blockEdge` drops by exactly `1` per step from `tCrit d` onward,
-`dimred.tex:784-790`. -/
+`dimred-corrected-arxiv.tex:655-661`. -/
 theorem blockEdge_succ_eq_pred_sub_one (d s : ℕ) (hs : tCrit d ≤ s) :
     blockEdge d (s + 1) = blockEdge d s - 1 := by
   have h1 : blockEdge d (s + 1) = blockEdge d (tCrit d) - (((s + 1 : ℕ) : ℤ) - (tCrit d : ℤ)) :=
@@ -33,7 +33,7 @@ theorem blockEdge_succ_eq_pred_sub_one (d s : ℕ) (hs : tCrit d ≤ s) :
     rw [h1, h2]; push_cast; ring
 
 /-- Inside the firing block, the odometer equals the elapsed time,
-`dimred.tex:816` (iterating the block clause from `v_1 ≡ 1`). -/
+the proof of the statement labelled `prop:base_case` in `dimred-corrected-arxiv.tex` (iterating the block clause from `v_1 ≡ 1`). -/
 theorem block_eq (d : ℕ) (hd : 1 ≤ d) :
     ∀ T x : ℕ, x ≤ d → (x : ℤ) ≤ blockEdge d T →
       odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) T (radial d x) = (T : ℤ) := by
@@ -74,7 +74,7 @@ theorem block_eq (d : ℕ) (hd : 1 ≤ d) :
       push_cast; ring
 
 /-- Just beyond the firing block, the odometer stays frozen for one more
-step, `dimred.tex:830-846`. -/
+step, the proof of the statement labelled `prop:base_case` in `dimred-corrected-arxiv.tex`. -/
 theorem beyond_block_eq (d : ℕ) (hd : 1 ≤ d) :
     ∀ t x : ℕ, 1 ≤ t → x ≤ d → blockEdge d (t + 1) < (x : ℤ) → (x : ℤ) ≤ blockEdge d t →
       odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (t + 1) (radial d x)
@@ -156,7 +156,7 @@ theorem beyond_block_eq (d : ℕ) (hd : 1 ≤ d) :
         rw [hstep, if_neg hnf, hvx]; ring
 
 /-- Inside a window of length at least `2`, the front times the position
-exceeds `d - 1`; this is the paper's bound `dimred.tex:830-846` applied at
+exceeds `d - 1`; this is the paper's bound the proof of the statement labelled `prop:base_case` in `dimred-corrected-arxiv.tex` applied at
 the window's own right edge, not only its interior. -/
 theorem window_mul_gt (d s x : ℕ) (_hd : 1 ≤ d) (hx : x ≤ d)
     (h1 : blockEdge d (s + 1) < (x : ℤ)) (h2 : (x : ℤ) ≤ blockEdge d s)
@@ -205,7 +205,7 @@ theorem shifted_value (d : ℕ) (hd : 1 ≤ d) (s : ℕ) (hs1 : 1 ≤ s) (z : �
     exact block_eq d hd s z hz hzs
 
 /-- The base case's ripple clause for shift `1` (the front's first step
-after formation), `dimred.tex:850-882`: proved by strong induction on the
+after formation), the proof of the statement labelled `prop:base_case` in `dimred-corrected-arxiv.tex`: proved by strong induction on the
 front `s` alone, since the only cross-front fact it needs (the previous
 front's own first step) is at a strictly smaller front. General shifts
 (`ripple_shift`, shift `k ≥ 2`) need `s + 1` as well as `s - 1`, so they
@@ -327,7 +327,7 @@ theorem ripple_one_step (d : ℕ) (hd : 1 ≤ d) :
         simpa using hlt
 
 /-- `blockEdge d 2 = d - 1` unconditionally: both branches of the definition
-agree, `dimred.tex:784-790`. -/
+agree, `dimred-corrected-arxiv.tex:655-661`. -/
 theorem blockEdge_two (d : ℕ) : blockEdge d 2 = (d : ℤ) - 1 := by
   have hdef : blockEdge d 2 = if 2 ≤ tCrit d then ((d : ℤ) - 1) / 1 else blockEdge d 1 - 1 := rfl
   have h1 : blockEdge d 1 = (d : ℤ) := rfl
@@ -339,7 +339,7 @@ theorem blockEdge_two (d : ℕ) : blockEdge d 2 = (d : ℤ) - 1 := by
 -- the strong induction over the shift unfolds the ripple relation at two smaller
 -- shifts at every step, which needs the extra budget
 set_option maxHeartbeats 4000000 in
-/-- The general-shift ripple relation, `dimred.tex:850-882`:
+/-- The general-shift ripple relation, the proof of the statement labelled `prop:base_case` in `dimred-corrected-arxiv.tex`:
 the profile at absolute time `s + k + 1` is the profile at time `s + 1`, shifted
 outward by the whole shift `k`, for every `k`, not only `k = 1`
 (`ripple_one_step`). Proved by strong induction on `k`, using the smaller shift

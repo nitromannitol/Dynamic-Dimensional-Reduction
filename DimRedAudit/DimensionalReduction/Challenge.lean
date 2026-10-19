@@ -137,7 +137,7 @@ noncomputable def simplexMax (d M : ℕ) (f : Site d → ℤ) : ℤ :=
   if h : (simplex d M).Nonempty then (simplex d M).sup' h f else 0
 
 /-- The facet point `(x, c, 1_j)`, the paper's `(\mathbf{x}_i, c, \mathbf{1}_j)`,
-`dimred-corrected-arxiv.tex:726`. -/
+`dimred-corrected-arxiv.tex:733`. -/
 def facetPoint {i : ℕ} (x : Fin i → ℤ) (c : ℤ) (j : ℕ) : Site (i + 1 + j) :=
   Fin.append (Fin.snoc x c) (fun _ : Fin j => (1 : ℤ))
 

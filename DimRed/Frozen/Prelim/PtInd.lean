@@ -1,5 +1,5 @@
 /-
-Lemma 2.1 of the corrected arXiv-format draft, frozen.
+Lemma 2.1 of the corrected edition.
 `dimred-corrected-arxiv.tex:291-297` (label `pt_ind_lemma`):
 
   "For each $x \in \mathcal{C}$ and all $t \geq 0$, v_{t+1}(x) =

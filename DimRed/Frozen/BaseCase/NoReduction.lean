@@ -1,5 +1,5 @@
 /-
-Proposition 3.1 of the corrected arXiv-format draft, frozen.
+Proposition 3.1 of the corrected edition.
 `dimred-corrected-arxiv.tex:596-598` (label `no_reduction`):
 
   "When $s_0^{(d)} \equiv 2 d + (d_0-1)$, $v_\infty^{(d_0)} \equiv 1$ but

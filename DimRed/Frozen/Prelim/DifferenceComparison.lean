@@ -1,5 +1,5 @@
 /-
-Lemma 2.4 of the corrected arXiv-format draft, frozen.
+Lemma 2.4 of the corrected edition.
 `dimred-corrected-arxiv.tex:459-480` (label `general_difference_comparison`):
 
   "Let $\mathbf{w} := \{w_1, \ldots, w_n\}$ be a set of points in $\Z^d$ each

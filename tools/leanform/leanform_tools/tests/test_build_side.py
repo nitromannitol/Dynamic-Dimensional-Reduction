@@ -259,7 +259,7 @@ class TestClaimSummary(unittest.TestCase):
     def test_all_sealed_emits_the_unconditional_sentence(self):
         nodes = [FakeNode(f"n{i}", "SEALED") for i in range(3)]
         text = certificate.claim_summary(nodes)
-        self.assertIn("is `SEALED`", text)
+        self.assertIn("All 3 statements in `ledger/manifest.yaml` are proved", text)
 
     def test_sealed_and_frozen_mix_never_claims_all_sealed(self):
         """A status line printed regardless of the counts would be false;
@@ -269,9 +269,7 @@ class TestClaimSummary(unittest.TestCase):
             FakeNode(f"f{i}", "FROZEN") for i in range(26)
         ]
         text = certificate.claim_summary(nodes)
-        self.assertNotIn(
-            "Every statement's state in `ledger/manifest.yaml` is `SEALED`.", text
-        )
+        self.assertNotIn("are proved, with no added axiom", text)
         self.assertIn("78", text)
         self.assertIn("26", text)
         self.assertIn("FROZEN", text)

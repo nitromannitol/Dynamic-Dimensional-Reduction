@@ -1,19 +1,17 @@
-# DimRed frozen-statement manifest.
+# DimRed statement manifest.
 #
-# One entry per frozen declaration.  The bytes between the FROZEN-STATEMENT
-# markers are the contract: a proof attempt may fill in the proof after the end
-# marker, never touch the statement.  `frozen_sha256` is the SHA-256 of exactly
-# those bytes.
+# One entry per statement.  The bytes between the FROZEN-STATEMENT markers fix
+# the statement: a proof follows the end marker and never changes it.
+# `frozen_sha256` is the SHA-256 of exactly those bytes.
 #
-# States: FROZEN (a statement with no proof obligation here, such as a cited
-#           result taken as a hypothesis),
-#         DRAFT_SORRY (a statement whose proof is still open),
-#         SEALED (a proof exists and its axiom closure is clean).
+# State: PROVED (a complete proof exists and its axiom closure contains only
+# the standard axioms).  The checkers also accept the states FROZEN, DRAFT_SORRY
+# and SEALED, which no entry here uses.
 
 version: 1
 source_pin:
   file: paper/corrected-arxiv/dimred-corrected-arxiv.tex
-  sha256: d8926b8e4c2aa53203ed63a0c88092671f5488ee76cf033a07b6881e7776a16c
+  sha256: 6eafca0dc9599bfe0b1f1b9069b3b5f4c52004e6703686b183189ee0b7b69241
 
 nodes:
   - id: prop-base-dimension-weak

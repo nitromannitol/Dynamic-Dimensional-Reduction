@@ -1,17 +1,17 @@
 /-
 The vocabulary of the paper.
 
-`dimred.tex:277` embeds the hypercube of side `N` into `ℤ^d` as
+`dimred-corrected-arxiv.tex:279` embeds the hypercube of side `N` into `ℤ^d` as
 `{x - k : 1 ≤ x_i ≤ 2k}` when `N = 2k` and as `{x + 1 : |x_i| ≤ k}` when
 `N = 2k + 1`; both are the box whose coordinates run from `1 - ⌊N/2⌋` to
 `⌈N/2⌉`, which is how `inCube` is written here.
 
-`dimred.tex:275-281` is the graph Laplacian with dissipating boundary
+`dimred-corrected-arxiv.tex:277-283` is the graph Laplacian with dissipating boundary
 conditions, `Δ^{(d)} f(x) = -2d f(x) + ∑_{y ∼ x} f(y)`, where `f(y) := 0` for
 `y ∉ C_N^{(d)}`.  Every function below is a function on all of `ℤ^d` which
 vanishes off the hypercube, so the padding is automatic.
 
-`dimred.tex:100-107` defines the parallel toppling odometer by
+`dimred-corrected-arxiv.tex:100-107` defines the parallel toppling odometer by
 `v_0 ≡ 0`, `v_{t+1} = v_t + 1{s_t ≥ 2d}`, `s_{t+1} = s_t + Δ(v_{t+1} - v_t)`.
 Here `odo` is defined by the equivalent closed recursion in which `s_t` is
 replaced by `s₀ + Δ v_t`; the paper's two displays are `odo_succ_eq` and
@@ -28,7 +28,7 @@ variable {d : ℕ}
 /-- The smallest coordinate of the hypercube of side `N`, `1 - ⌊N/2⌋`. -/
 def loCoord (N : ℕ) : ℤ := 1 - (N / 2 : ℕ)
 
-/-- `M = ⌈N/2⌉`, `dimred.tex:110`. -/
+/-- `M = ⌈N/2⌉`, `dimred-corrected-arxiv.tex:110`. -/
 def sideHalf (N : ℕ) : ℕ := (N + 1) / 2
 
 /-- The largest coordinate of the hypercube of side `N`, `M = ⌈N/2⌉`. -/
@@ -108,7 +108,7 @@ noncomputable def simplexMax (d M : ℕ) (f : Site d → ℤ) : ℤ :=
   if h : (simplex d M).Nonempty then (simplex d M).sup' h f else 0
 
 /-- `τ_j = min{t ≥ 1 : v_t^{(d,2j)}(x) ≥ j for some x ∈ ∂C_{2j}^{(d)}}`,
-`dimred.tex:130-133`, valued in `ℕ∞` so that `⊤` records that no such time
+`dimred-corrected-arxiv.tex:132-135`, valued in `ℕ∞` so that `⊤` records that no such time
 exists.  By `toppleTime_eq_corner` it is the first time `v_t(j, 1_{d-1}) ≥ j`,
 since the maximum of `v_t` over the inner boundary is attained there. -/
 noncomputable def toppleTime (d j : ℕ) : ℕ∞ :=
@@ -118,7 +118,7 @@ noncomputable def toppleTime (d j : ℕ) : ℕ∞ :=
 /-- The action on `ℤ^d` of a symmetry of the hypercube of side `N`: a permutation
 of the coordinates followed by the reflections `x_i ↦ (lo + hi) - x_i`.  This is
 the paper's `Aut_{C_d}` acting by matrix-vector multiplication followed by the
-translation which preserves `C_N^{(d)}` (`dimred.tex:348-349`); `lo + hi` is `1`
+translation which preserves `C_N^{(d)}` (`dimred-corrected-arxiv.tex:349-350`); `lo + hi` is `1`
 for even `N` and `2` for odd `N`. -/
 def cubeSym (d N : ℕ) (π : Equiv.Perm (Fin d)) (ε : Fin d → Bool) (x : Site d) : Site d :=
   fun i => if ε i then x (π i) else (loCoord N + hiCoord N) - x (π i)
@@ -129,10 +129,10 @@ def IsSymmetricPile (d N : ℕ) (s₀ : Site d → ℤ) : Prop :=
     s₀ (cubeSym d N π ε x) = s₀ x
 
 /-- The point `(2_k, 1_{d-k})` of the radial reparameterization of `S_2^{(d)}`,
-`dimred.tex:724-726`. -/
+`dimred-corrected-arxiv.tex:614-616`. -/
 def radial (d k : ℕ) : Site d := fun i => if (i : ℕ) < k then 2 else 1
 
-/-- The point `(x_i, c, 1_j)` of `dimred.tex:918-943`: the `i` coordinates of
+/-- The point `(x_i, c, 1_j)` of the statement labelled `base_dimension` in `dimred-corrected-arxiv.tex`: the `i` coordinates of
 `x`, then `c`, then `j` coordinates equal to `1`. -/
 def facetPoint {i : ℕ} (x : Fin i → ℤ) (c : ℤ) (j : ℕ) : Site (i + 1 + j) :=
   Fin.append (Fin.snoc x c) (fun _ : Fin j => (1 : ℤ))
@@ -140,10 +140,10 @@ def facetPoint {i : ℕ} (x : Fin i → ℤ) (c : ℤ) (j : ℕ) : Site (i + 1 +
 /-- `⌈√n⌉`. -/
 def ceilSqrt (n : ℕ) : ℕ := if n = 0 then 0 else Nat.sqrt (n - 1) + 1
 
-/-- `t_d = ⌈√(d-1)⌉ + 1`, `dimred.tex:781-783`. -/
+/-- `t_d = ⌈√(d-1)⌉ + 1`, `dimred-corrected-arxiv.tex:652-654`. -/
 def tCrit (d : ℕ) : ℕ := ceilSqrt (d - 1) + 1
 
-/-- The right edge `a_t` of the firing block, `dimred.tex:784-790`:
+/-- The right edge `a_t` of the firing block, `dimred-corrected-arxiv.tex:655-661`:
 `a_1 = d`, `a_t = ⌊(d-1)/(t-1)⌋` for `t ≤ t_d` and `a_t = a_{t-1} - 1` after. -/
 def blockEdge (d : ℕ) : ℕ → ℤ
   | 0 => (d : ℤ)
@@ -151,19 +151,19 @@ def blockEdge (d : ℕ) : ℕ → ℤ
   | (t + 2) =>
       if t + 2 ≤ tCrit d then ((d : ℤ) - 1) / ((t : ℤ) + 1) else blockEdge d (t + 1) - 1
 
-/-- The point `(M, 1_{d-1})` of `dimred.tex:531`. -/
+/-- The point `(M, 1_{d-1})` of `dimred-corrected-arxiv.tex:527`. -/
 def cornerPoint (d M : ℕ) : Site d := fun i => if (i : ℕ) = 0 then (M : ℤ) else 1
 
-/-- The dissipating boundary `B_w^{(disp)} S_M`, `dimred.tex:453-455`. -/
+/-- The dissipating boundary `B_w^{(disp)} S_M`, `dimred-corrected-arxiv.tex:439-441`. -/
 def dispBoundary (M : ℕ) (w x : Site d) : Prop := ∃ i : Fin d, (M : ℤ) ≤ (x + w) i
 
-/-- The reflecting boundary `B_w^{(ref)} S_M`, `dimred.tex:457-459`. -/
+/-- The reflecting boundary `B_w^{(ref)} S_M`, `dimred-corrected-arxiv.tex:443-445`. -/
 def refBoundary (w x : Site d) : Prop := ∃ i : Fin d, (x + w) i ≤ 1
 
-/-- The rotating boundary `B_w^{(rot)} S_M`, `dimred.tex:461-463`. -/
+/-- The rotating boundary `B_w^{(rot)} S_M`, the section titled `Derivative comparison` in `dimred-corrected-arxiv.tex`. -/
 def rotBoundary (w x : Site d) : Prop := ∃ i j : Fin d, i < j ∧ (x + w) i ≤ (x + w) j
 
-/-- `B_w`, the union of the three boundaries, `dimred.tex:465-467`. -/
+/-- `B_w`, the union of the three boundaries, `dimred-corrected-arxiv.tex:451-453`. -/
 def bdry (M : ℕ) (w x : Site d) : Prop :=
   dispBoundary M w x ∨ refBoundary w x ∨ rotBoundary w x
 

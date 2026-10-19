@@ -9,8 +9,8 @@ The formalized text is a corrected edition of the arXiv source (v2), in
 [`paper/corrected-arxiv/`](paper/corrected-arxiv/). The main results, Theorem 1.1 and
 Corollary 1.1, are stated as published; in Theorem 1.1(ii) the hitting time `τ_j` is the first
 time some inner boundary site has toppled `j` times, the quantifier the published definition
-leaves unstated. The other changes are surgical corrections of lemmas, corollaries, a
-proposition, definitions and proofs; each is listed below and in the section "Corrections to
+leaves unstated. The other changes are surgical corrections of lemmas, corollaries, two
+propositions (3.2 and 4.1), definitions and proofs; each is listed below and in the section "Corrections to
 the published version" of the corrected edition. The unmodified arXiv source is
 [`paper/dimred-arxiv.tex`](paper/dimred-arxiv.tex).
 
@@ -39,7 +39,7 @@ Every result is stated in [`DimRed/MainTheorems.lean`](DimRed/MainTheorems.lean)
 | Corollary 1.1 | `DimRed.sandpile_dimensional_reduction`, `DimRed.sandpile_self_similarity` | as published |
 | Lemma 2.1 | `DimRed.pt_ind_lemma` | corrected (C02) |
 | Lemma 2.2 | `DimRed.parabolic_comparison` | as published |
-| Lemma 2.3 | `DimRed.symmetry_lemma` | corrected definition of the folded process (C04) |
+| Lemma 2.3 | `DimRed.symmetry_lemma` | corrected definition of the process $v^{\mathcal S}$ (C04) |
 | Lemma 2.4 | `DimRed.general_difference_comparison` | corrected (C06) |
 | Corollary 2.1 | `DimRed.axis_monotonicity` | corrected: elementary moves (C08) |
 | Corollary 2.2, Lemma 2.5 | `DimRed.derivative_bound`, `DimRed.topple_limit` | as published |
@@ -62,26 +62,26 @@ Each change from arXiv v2 is listed with the published text, the corrected text 
 | C01 | Definition of $\tau_j$ in Theorem 1.1(ii) (line 128) | $\tau_{j} := \min\{ t \geq 1: v_t^{(d,2 j)}(\mathbf{x}) \geq j \text{ for } \mathbf{x} \in \partial \mathcal{C}^{(d)}_{2 j} \}$ | Same, with "for some $\mathbf{x}$", and $\min\varnothing := +\infty$ | The published quantifier is unstated; the discussion after the statements reads it as "a boundary site". |
 | C02 | Lemma 2.1, point formula (line 292) | $v_{t+1}(x) = \lfloor (s_0(x) + \sum_{y \sim x} v_t(y))/2d \rfloor$ | $v_{t+1}(x) = \max\{0, \lfloor (s_0(x) + \sum_{y \sim x} v_t(y))/2d \rfloor\}$ | Signed initial values can make the untruncated formula negative. |
 | C03 | Proof of Lemma 2.2, parabolic least action (lines 317–333); proof only | The proof identifies $v$ with the right-hand side $w$ and concludes by minimality of $w$ | The proof shows that $v$ is admissible and compares it with every nonnegative competitor, by induction on time | The published proof does not treat the zero truncation; the corrected comparison covers all nonnegative competitors, including arbitrary initial values. |
-| C04 | Definition of the folded threshold process, Lemma 2.3 (lines 369–404) | $v_{t+1}^{\mathcal S}(x) = \lfloor (s_0(x) + \sum_{y \overset{\mathcal S}{\sim} x} v_t^{\mathcal S}(y))/2d \rfloor$, with the sum over $\{\sigma_y y : y \sim x\}$; the chain $M = x_{l_0} = x_{r_0} < \cdots < x_{l_n} = x_{r_n} = 1$ has reversed inequalities | $v_{t+1}^{\mathcal S}(x) = v_t^{\mathcal S}(x) + \mathbf{1}\{ s_0(x) + R v_t^{\mathcal S}(x) - 2d\, v_t^{\mathcal S}(x) \geq 2d \}$, where $R u(x) = \sum_{i=1}^d (\widetilde u(x+e_i) + \widetilde u(x-e_i))$ | The published sum drops repeated reflected neighbours, and its floor update fails for initial piles outside $[0,4d-1]$; the corrected definition agrees with it where that is well posed. |
-| C05 | Proof of Lemma 2.3, symmetry (lines 419–429); proof only | Induction proving symmetry of $v_t$ | Invariance under the cube symmetries by induction on time, then identification with the folded process for symmetric initial piles of every height | The published proof gives only symmetry and does not identify the folded process. |
+| C04 | Definition of the process $v^{\mathcal S}$ of Lemma 2.3 on the sorted fundamental domain (lines 369–404) | $v_{t+1}^{\mathcal S}(x) = \lfloor (s_0(x) + \sum_{y \overset{\mathcal S}{\sim} x} v_t^{\mathcal S}(y))/2d \rfloor$, with the sum over the set $\{\sigma_y y : y \sim x\}$ | $v_{t+1}^{\mathcal S}(x) = v_t^{\mathcal S}(x) + \mathbf{1}\{ s_0(x) + R v_t^{\mathcal S}(x) - 2d\, v_t^{\mathcal S}(x) \geq 2d \}$, where $R u(x) = \sum_{i=1}^d (\widetilde u(x+e_i) + \widetilde u(x-e_i))$ | The published sum drops repeated reflected neighbours, its chain $M = x_{l_0} = x_{r_0} < \cdots < x_{l_n} = x_{r_n} = 1$ has reversed inequalities, and its floor update fails for initial piles outside $[0,4d-1]$; the corrected sum runs over the $2d$ lattice neighbours with multiplicity and agrees with the published block-index formula (lines 391–404) when $0 \le s_0 \le 4d-1$. |
+| C05 | Proof of Lemma 2.3, symmetry (lines 419–429); proof only | Induction proving symmetry of $v_t$ | Invariance under the cube symmetries by induction on time, then identification of the physical odometer with $v^{\mathcal S}$ for symmetric initial piles of every height | The published proof gives only symmetry and does not identify $v^{\mathcal S}$. |
 | C06 | Statement of Lemma 2.4 (line 481) | $\sup_{j} ( \sum_{y \sim x} v_t(y) - \sum_{y' \sim (x+w_j)} v_t(y') - 2d\, g_j(x) ) \leq 0$ | The same, with the first boundary alternative also requiring $x+w_j \in \mathcal C_N^{(d)}$ for every $j$ | The published statement fails for $d=1$, $N=4$, $s_0 \equiv 2$, $w=2$, $g \equiv 2$, $t_0=0$, at $t=3$ and $x=1$. |
 | C07 | Proof of Lemma 2.4 (lines 494–508); proof only | Induction using a floor estimate and the superharmonicity of $g_j$ | Induction splitting each difference into strict and equality cases, with the boundary handled by the two alternatives | The strict and equality split covers every constant integer height. |
-| C08 | Statement of Corollary 2.1, axis monotonicity (lines 514–526) | Mixed moves for index sets $\mathcal I$ and $\mathcal J$ of arbitrary size, with $i_n < j_1$ | Elementary moves: $1 \leq i \leq d$ and $\mathcal J = \varnothing$ or $\mathcal J = \{j\}$ with $i < j \leq d$ | The published statement is false when $\lvert\mathcal J\rvert > \lvert\mathcal I\rvert$, for example for $d=3$, $N=8$, $s_0 \equiv 8$, $t=8$, $\mathcal I=\{1\}$, $\mathcal J=\{2,3\}$. |
-| C09 | Proof of Corollary 2.1 (lines 529–530); proof only | No proof is given | Induction on time for the two families of elementary comparisons, pairing the neighbour occurrences at equality | Elementary axis moves need a direct threshold proof. |
-| C10 | Proof of Corollary 2.2, derivative bound (lines 540–663); proof only | Case analysis through the index sets $\mathbf I^{(M,d)}(x)$ | Terminal-corner bound, axis monotonicity and symmetry on the top faces, and direct firing comparisons at the boundaries, for all constant integer heights | The published case analysis depends on the index algorithm that the corrected folded definition replaces. |
+| C08 | Statement of Corollary 2.1, axis monotonicity (lines 514–526) | Mixed moves for index sets $\mathcal I$ and $\mathcal J$ of arbitrary size, with $i_n < j_1$ | Elementary moves: $1 \leq i \leq d$ and $\mathcal J = \varnothing$ or $\mathcal J = \{j\}$ with $i < j \leq d$ | The published statement is false when $\lvert\mathcal J\rvert > \lvert\mathcal I\rvert$, for example for $d=3$, $N=8$, $s_0 \equiv 8$, $t=8$, $\mathcal I=\{1\}$, $\mathcal J=\{2,3\}$; the proofs use only the elementary moves. |
+| C09 | Proof of Corollary 2.1 (lines 529–530); proof only | No proof is given | Induction on time for the two families of elementary comparisons, pairing at equality the $2d$ lattice neighbours with multiplicity, by reflection or by coordinate interchange | Elementary axis moves need a direct threshold proof. |
+| C10 | Proof of Corollary 2.2, derivative bound (lines 540–663); proof only | Case analysis through the index sets $\mathbf I^{(M,d)}(x)$ | Terminal-corner bound, axis monotonicity and symmetry on the top faces, and direct firing comparisons at the boundaries, for all constant integer heights | The published case analysis depends on the index algorithm that the corrected definition of $v^{\mathcal S}$ replaces. |
 | C11 | Proof of Lemma 2.5, weak topple control (lines 679–692); proof only | Induction bounding $v_{t+j}(x) - v_t(x)$ by the floor update and the maximum over $\mathcal S$ | Contraction of the physical threshold update, using cube symmetry and the nonempty maximum $C$ | The unrestricted floor argument is replaced by a contraction argument. |
 | C12 | Definition of $a_t$, before Proposition 3.2 (line 779) | $a_1 = d$ | $a_0 = a_1 = d$ | Gives the first ripple window a left endpoint; no firing assertion is added at time zero. |
 | C13 | Ripple clause of Proposition 3.2 (lines 798–800) | For each $t' < t$ and $a_{t'-1} \geq x > a_{t'}$: $v_{t}(x) = v_{t-1}(x-1)$ | For each $1 \leq t' < t \leq t'+x$ and $a_{t'-1} \geq x > a_{t'}$: $v_t(x) = v_{t'}(x-(t-t'))$ | The published clause is false (for example $d=2$, $s_0 \equiv 5$, $t'=2$, $x=2$, $t=6$); the shifted index must be nonnegative. |
-| C14 | Proof of Proposition 3.2 (lines 816–896); proof only | Induction with the affine function $g(x) = (d-1) - tx$ and the ripple step | Keeps the block-edge term $-(d-x)$, includes the moving-front positions and adjacent windows, and uses the radial Laplacian | The published induction omits the block-edge term and the moving-front positions, and states the affine monotonicity in the wrong direction. |
+| C14 | Proof of Proposition 3.2 (lines 816–896); proof only | Induction with the affine function $g(x) = (d-1) - tx$ and the ripple step | Keeps the block-edge term $-(d-x)$, treats a site behind the ripple front, immediately in front of it and further ahead, includes the adjacent windows, and uses the radial Laplacian | The published induction omits the block-edge term and these cases of the ripple front, and states the affine monotonicity in the wrong direction. |
 | C15 | Weak facet compatibility, Proposition 4.1 (line 924) | $v_{t+1}^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j) = v_{t+1}^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j)$ | $v_{t+1}^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j) = v_t^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j)$ | The published equation is a tautology; the corrected no-fire conclusion is the one the induction uses. |
 | C16 | Strong facet compatibility, Proposition 4.1 (lines 927–930) | For $\mathbf{x}_i \geq 2$, $j \geq 0$, $i < d$ and the two time regimes: $v_t^{(M)}(\mathbf{x}) - v_t^{(M)}(\mathbf{x}+2e_{i+1}) \leq 2$ | For $i, j \geq 0$ with $i+1+j = d$ and $p = (\mathbf{x}_i, 1, \mathbf{1}_j)$ with $\mathbf{x}_i \geq 2$: $v_t^{(M)}(p) - v_t^{(M)}(p+2e_{i+1}) \leq 2$ in the same regimes | The published point is unbound; read broadly, the constant-two bound is false. |
 | C17 | Strong compatibility equation, Proposition 4.1 (line 935) | $v_t^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j) = v_t^{(M)}(\mathbf{x}_i, 2, \mathbf{1}) + 1$ | $v_t^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j) = v_t^{(M)}(\mathbf{x}_i, 2, \mathbf{1}_j) + 1$ | The tail subscript is missing. |
-| C18 | Proof of Proposition 4.1 for $d \geq 2$, strong facet compatibility (lines 1262–1318); proof only | Derivation from the two-step bound and a Laplacian comparison, with a head-neighbour inference | Joint induction in lexicographic order of dimension, side length and time; a nonempty head is covered by the strict-head lemma and an empty head by the generic facet comparison | The published head-neighbour inference is false. |
-| C19 | Proof of Proposition 4.1 for $d \geq 2$, early times (lines 1319–1333); proof only | Bound stated for all $d \leq i \leq 1$, and a two-step estimate | Bound stated for all $1 \leq k \leq d$, with the two-step estimate counting every directed boundary occurrence; the restriction $t < \tau_M$ is kept | The published index range is empty, and the estimate omits some boundary occurrences. |
-| C20 | Proof of Proposition 4.1 for $d \geq 2$, later times (lines 1334–1362); proof only | Full-domain Case 2 estimate, dissipating cap, and a contradiction at the reflecting point | Full-domain estimate and dissipating cap withdrawn; strict-head and nonempty-head conclusions stated at every time; no-fire kept at the all-ones exception | The published full-domain estimate is false. |
+| C18 | Proof of Proposition 4.1 for $d \geq 2$, strong facet compatibility (lines 1262–1318); proof only | Derivation of the compatibility from the two-step bound $v_t(\mathbf{x}_{i-1}, 1, \mathbf{1}_j) - v_t(\mathbf{x}_{i-1}, 3, \mathbf{1}_j) \leq 2$ and a comparison of Laplacians | Joint induction in lexicographic order of dimension, side length and time; a nonempty head is covered by the strict-head lemma of Section 5, and an empty head by comparing the current and preceding neighbour sums at the raised site, with the early two-step bound and the earlier compatibility assertions | The published derivation of the compatibility from the two-step bound is false, so nonempty and empty heads are treated separately. |
+| C19 | Proof of Proposition 4.1 for $d \geq 2$, early times (lines 1319–1333); proof only | Bound stated for all $d \leq i \leq 1$, and a two-step estimate | Bound stated for all $1 \leq k \leq d$, with the two-step estimate counting each boundary neighbour with its multiplicity; the restriction $t < \tau_M$ is kept | The published index range is empty, and the estimate omits some boundary neighbours counted with multiplicity. |
+| C20 | Proof of Proposition 4.1 for $d \geq 2$, later times (lines 1334–1362); proof only | Full-domain Case 2 estimate, the dissipating boundary shrunk to $\mathcal B^{(disp)}$, and a contradiction at the reflecting point | Full-domain estimate and the shrinking to $\mathcal B^{(disp)}$ withdrawn; strict-head and nonempty-head conclusions stated at every time; at $\mathbf 1$ (all coordinates one) only the no-fire fact is kept | The published full-domain estimate is false. |
 | C21 | One-dimensional terminal profile, proof of Proposition 4.1 for $d=1$ (lines 1105–1110) | Unlabelled remark: $v_\infty(x) = \frac12(M(M+1)-x(x-1))$ and $v_\infty(x)-v_\infty(x+1) = x$ | Labelled lemma for $1 \leq x \leq M$ with $v_\infty(M+1) = 0$, and its proof | The profile is correct but unlabelled, and the difference omits the dissipating endpoint $x=M$. |
 | C22–C24 | Labels on Corollary 1.1 (line 143), the no-reduction proposition in Section 3 (line 706) and the radial Laplacian lemma in Section 3 (line 728) | Unlabelled environments | Labelled; statements unchanged | A label is needed for citation, and the assertions do not change. |
-| C25 | Proof of the radial Laplacian lemma (lines 735–768); proof only | Laplacian written through the index sets $\mathbf I^{(2,d)}(\mathbf x)$ | Exact count of directed radial neighbours: $\Delta v_t(x) = -2d\, v_t(x) + x\, v_t(x-1) + (d-x)(v_t(x)+v_t(x+1))$, with zero endpoint coefficients | The published proof uses the index algorithm that the corrected definitions remove. |
+| C25 | Proof of the radial Laplacian lemma (lines 735–768); proof only | Laplacian written through the index sets $\mathbf I^{(2,d)}(\mathbf x)$ | Exact count of the radial neighbours with multiplicities: $\Delta v_t(x) = -2d\, v_t(x) + x\, v_t(x-1) + (d-x)(v_t(x)+v_t(x+1))$, with zero endpoint coefficients | The published proof uses the index algorithm that the corrected definitions remove. |
 
 ## Standing assumptions and scope
 
@@ -102,11 +102,14 @@ Each change from arXiv v2 is listed with the published text, the corrected text 
 
 ## Guarantees
 
-All 23 theorem-level statements of the corrected edition, the 20 statement clauses of the published paper and three added lemmas, are proved in Lean, with no `sorry` and only the standard axioms; Theorem 1.1 and Corollary 1.1 are stated as published.
+All 23 theorem-level statements of the corrected edition (its versions of the 20 statement clauses of the published paper, and three added lemmas) are proved in Lean, with no `sorry` and only the standard axioms. Theorem 1.1 and Corollary 1.1 are stated as published, with the quantifier in the definition of `τ_j` made explicit.
 
-<!-- STATUS-BEGIN (generated by tools/sync_docs.py) -->
+[`ledger/manifest.yaml`](ledger/manifest.yaml) records these 23 statements together with six statements
+that characterize the definitions they use, 29 in all; the block below is generated from it.
 
-Status: **29 registered statements — 29 proved.**  The 29 proved statement(s) have complete proofs whose axiom closure contains no `sorryAx`.  These
+<!-- STATUS-BEGIN (generated by python3 -m leanform_tools.sync_docs) -->
+
+Status: **29 statements in `ledger/manifest.yaml`: 29 proved.**  The 29 proved statements have complete proofs whose axiom closures contain no `sorryAx`.  These
 counts are generated from `ledger/manifest.yaml` by
 `python3 -m leanform_tools.sync_docs`, which fails when they disagree with it.
 
@@ -140,7 +143,7 @@ counts are generated from `ledger/manifest.yaml` by
 
 `DimRed/` and `DimRed.lean`: 112 Lean files with 21,311 lines (17,871 lines of code once
 comments and blank lines are removed). The comparator surface `DimRedAudit/` is counted
-separately: 16 files with 1,599 lines.
+separately: 16 files with 1,601 lines.
 
 ## Building
 
@@ -165,12 +168,12 @@ dimred-corrected-arxiv.tex` in [`paper/corrected-arxiv/`](paper/corrected-arxiv/
 Each pair `DimRedAudit/<X>/`, for `<X>` in `DimensionalReduction`, `SelfSimilarity`,
 `Sandpile` and `Regularity`, has a configuration `comparator.json` that permits exactly
 `propext`, `Classical.choice` and `Quot.sound` and enables the nanoda kernel. Build
-`leanprover/comparator`, `lean4export` and `landrun` at the revisions pinned in
+`leanprover/comparator`, `lean4export`, `nanoda` and `landrun` at the revisions pinned in
 [`.github/workflows/comparator.yml`](.github/workflows/comparator.yml), and run from the
 repository root
 
 ```bash
-COMPARATOR_LANDRUN=<landrun> COMPARATOR_LEAN4EXPORT=<lean4export> \
+COMPARATOR_LANDRUN=<landrun> COMPARATOR_LEAN4EXPORT=<lean4export> COMPARATOR_NANODA=<nanoda_bin> \
   lake env <comparator>/.lake/build/bin/comparator DimRedAudit/<X>/comparator.json
 ```
 
@@ -193,10 +196,9 @@ DimRed.lean           the root module
 DimRedAudit/          the Mathlib-only comparator challenges, solutions and bridges
 paper/corrected-arxiv/  the corrected edition: source, bibliography, figures, source note
 paper/dimred-arxiv.tex  the unmodified arXiv source (v2)
-paper/dimred.tex      an earlier revision of the source, cited by line in comments of
-                      DimRed/Support/
 ledger/               the statement manifest (manifest.yaml), the clause and exponent
-                      readings (readings.yaml) and the hole baseline (holes.json)
+                      readings (readings.yaml) and the list of open proofs used by the progress
+                      check (holes.json, empty)
 CORRESPONDENCE.md     paper ↔ Lean: vocabulary, standing hypotheses, statement table
 ASSUMPTIONS.md        the cited results assumed (none; generated)
 CERTIFICATE.md        the axiom closures and statement hashes (generated)
@@ -209,7 +211,9 @@ tools/                verify.py and the vendored checker package tools/leanform/
 
 The Lean code was written by AI coding agents (Anthropic Claude models through Claude Code,
 OpenAI GPT models through the Codex CLI, and DeepSeek models for auxiliary proof search) under
-the close supervision of the author. Every proof is checked by the Lean kernel. The models and
+the close supervision of the author. The changes of the corrected edition, its corrections
+section and its new proofs were also drafted by these agents and checked by the author; the
+corrected edition ends with a statement on the use of artificial intelligence. Every proof is checked by the Lean kernel. The models and
 tools are listed in [`formalization.yaml`](formalization.yaml), following the
 [mathlib-initiative](https://github.com/mathlib-initiative/formalization.yaml) standard.
 

@@ -35,7 +35,7 @@ joint induction over dimension, side length and time (Sections 4 and 5):
 * `DimRed.terminal_dimensional_reduction`: Theorem 1.1(i), second display,
   `v_∞^{(d,N)}(x_{d-1}, 2) = v_∞^{(d-1,N)}(x_{d-1})` for `x_{d-1} ≥ 2`.
 * `DimRed.self_similarity`: Theorem 1.1(ii), self-similarity for `t ≤ τ_j`, with
-  the topple time `τ_j` the first time some inner boundary site reaches height `j`.
+  the topple time `τ_j` the first time some inner boundary site has toppled `j` times.
 * `DimRed.sandpile_dimensional_reduction`: Corollary 1.1(i), dimensional
   reduction of the terminal sandpile.
 * `DimRed.sandpile_self_similarity`: Corollary 1.1(ii), self-similarity of the
@@ -45,8 +45,10 @@ and the five clauses of Proposition 4.1: `DimRed.base_dimension_consistency`,
 `DimRed.base_dimension_weak_compatibility`, `DimRed.base_dimension_strong_derivative`,
 `DimRed.base_dimension_strong_compatibility`, `DimRed.base_dimension_strong_topple`.
 
-Every theorem in this file restates, unchanged, a statement of `DimRed/Frozen/`, whose text
-is fixed by its hash in `ledger/manifest.yaml`, and is proved by applying it. No theorem takes
+Every theorem in this file except `DimRed.terminal_odometer_finite` restates, unchanged, a
+statement of `DimRed/Frozen/`, whose text is fixed by its hash in `ledger/manifest.yaml`, and is
+proved by applying it; `DimRed.terminal_odometer_finite` records that the terminal odometer is
+finite. No theorem takes
 a result from the literature as a hypothesis.
 
 The model is that of `DimRed/Support/Basic.lean`.  `DimRed.odo d N s₀ t` is the parallel
@@ -76,7 +78,7 @@ theorem DimRed.terminal_dimensional_reduction (N d : ℕ) (hN : 1 ≤ N) (hd : 1
     odoInfUnif (d + 1) N (Fin.snoc x 2) = odoInfUnif d N x := DimRed.Frozen.terminal_dimensional_reduction N d hN hd x hx hx2
 
 /-- **Theorem 1.1(ii)** (`the_theorem`): self-similarity for `t ≤ τ_j`, with the topple
-time `τ_j` the first time some inner boundary site reaches height `j`.  It restates `DimRed.Frozen.self_similarity`. -/
+time `τ_j` the first time some inner boundary site has toppled `j` times.  It restates `DimRed.Frozen.self_similarity`. -/
 theorem DimRed.self_similarity (N d : ℕ) (hN : 1 ≤ N) (hd : 2 ≤ d)
     (j : ℕ) (hj : j < sideHalf N) (t : ℕ) (ht : (t : ℕ∞) ≤ toppleTime d j)
     (x : Site d) (hx : inSimplex d (sideHalf N) x)
@@ -297,8 +299,8 @@ theorem DimRed.one_terminal_derivative (M : ℕ) (hM : 1 ≤ M)
       ((odoInfUnif 1 (2 * M) (x + unit (0 : Fin 1))).toNat : ℤ) = x 0 := DimRed.Frozen.one_terminal_derivative M hM x hx1 hxM
 
 /-- The terminal odometer of the uniform sandpile `s_0 ≡ 2d` is finite at every site: the
-parallel toppling process stabilizes. Theorem 1.1(i), Corollary 1.1(i) and Lemma 4.1 read
-`v_∞` through `ENat.toNat`, which this makes exact. -/
+parallel toppling process stabilizes. Corollary 1.1(i) and Lemma 4.1 read `v_∞` through
+`ENat.toNat`, which this makes exact; Theorem 1.1(i) states it in `ℕ∞`. -/
 theorem DimRed.terminal_odometer_finite (d N : ℕ) (hd : 1 ≤ d) (y : Site d) :
     odoInfUnif d N y ≠ ⊤ :=
   DimRed.Corrected.odoInfUnif_ne_top d N hd y

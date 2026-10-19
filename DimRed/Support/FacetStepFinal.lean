@@ -26,7 +26,7 @@ the second did not (`facet_prev`).
   `eq:laplace_21`-`eq:laplace_23`, carried out termwise under the gap
   hypothesis; a head neighbour whose coordinate drops to one is handled by the
   swap symmetry, the first-difference bound and the toppling of the first point
-  at `t - 1`, not by the paper's axis comparison (see `ledger/decisions.md`, D1).
+  at `t - 1`, not by the paper's axis comparison.
 * The first point does not topple at `t`.  With an empty head its Laplacian is
   `-(j+1)` (`odo_succ_facetPoint_zero_of`).  With a nonempty head, once `t - 1`
   has reached `τ_{M-1}`, strong topple control at `t - 1` freezes it, since it

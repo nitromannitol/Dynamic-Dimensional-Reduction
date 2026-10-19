@@ -1,5 +1,5 @@
 /-
-Corollary 2.2 of the corrected arXiv-format draft, frozen.
+Corollary 2.2 of the corrected edition.
 `dimred-corrected-arxiv.tex:527-534` (label `cor:derivative_bound`,
 "Derivative bound"):
 
