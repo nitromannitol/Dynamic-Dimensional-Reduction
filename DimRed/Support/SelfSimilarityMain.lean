@@ -1,10 +1,11 @@
 /-
 The general-scale iteration for Theorem 1.1(ii), together with the odd-side
 coordinate reflection.  The self-similarity argument is the iteration of the
-consecutive-scale step in `dimred.tex:109-140`; its scale bridge and its
+consecutive-scale step in the statement labelled `the_theorem` in `dimred-corrected-arxiv.tex`; its scale bridge and its
 `toppleTime` bounds are explicit because the consecutive step is stated only
 for even side lengths.  The odd reflection is the boundary adjustment
-described in `dimred.tex:277-281,349-402,433-436`.
+described in `dimred-corrected-arxiv.tex:279-283`, in the section labelled `subsec:symmetry` of
+`dimred-corrected-arxiv.tex`, and in `dimred-corrected-arxiv.tex:419-422`.
 -/
 import DimRed.Support.AxisStep
 

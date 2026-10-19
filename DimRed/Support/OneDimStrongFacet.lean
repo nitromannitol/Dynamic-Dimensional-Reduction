@@ -1,7 +1,7 @@
 import DimRed.Support.AxisStep
 
 /-!
-The strong facet compatibility clause in dimension one, `dimred.tex:1024-1029`.
+The strong facet compatibility clause in dimension one, `dimred-corrected-arxiv.tex:839-844`.
 At the first facet site reflection identifies the left neighbour with the site
 itself, while the derivative bound forces the adjacent site to topple.
 -/

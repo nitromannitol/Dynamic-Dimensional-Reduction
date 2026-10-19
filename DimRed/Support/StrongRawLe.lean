@@ -7,7 +7,7 @@ namespace DimRed
 /-- Strong facet compatibility at time `t` gives the one-step comparison
 `v_t(z) ≤ v_{t+1}(z + unit k)` at a point `z` with a coordinate equal to one and
 another at least two.  This is the paper's `v_t(y_i, 2, 1_j) ≥ v_{t-1}(y_i, 1, 1_j)`,
-`dimred.tex:1345-1348`. -/
+`dimred-corrected-arxiv.tex`. -/
 theorem strong_raw_le (d M t : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M) (hS : RegStrongFacet d M t)
     (z : Site d) (hz : inPos d M z) (k : Fin d) (hk : z k = 1) (h2 : ∃ l, 2 ≤ z l) :
     odoUnif d (2 * M) t z ≤ odoUnif d (2 * M) (t + 1) (z + unit k) := by

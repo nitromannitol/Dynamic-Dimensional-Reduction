@@ -1,5 +1,5 @@
 /-
-The radial reparameterization of `S_2^{(d)}`, `dimred.tex:722-733`: the
+The radial reparameterization of `S_2^{(d)}`, the statement labelled `no_reduction` in `dimred-corrected-arxiv.tex`: the
 hypercube of side `4`, the points `(2_k, 1_{d-k})`, and how the neighbours of
 such a point are carried back to the radial family by a symmetry of the cube.
 The last theorem is the Laplacian of Lemma 3.1.

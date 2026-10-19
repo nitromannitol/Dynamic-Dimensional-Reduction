@@ -1,5 +1,5 @@
 /-
-The elementary properties of the block edge `a_t` of `dimred.tex:784-790`:
+The elementary properties of the block edge `a_t` of `dimred-corrected-arxiv.tex:655-661`:
 it is nonincreasing in `t`.
 -/
 import DimRed.Support.Radial
@@ -201,7 +201,7 @@ theorem blockEdge_mul_le (d t : ℕ) (hd : 1 ≤ d) (ht : 1 ≤ t) :
       nlinarith [hu, htq, hqle]
     linarith
 
-/-- The sandpile on the block, `dimred.tex:821-826`: if the odometer is `t` at
+/-- The sandpile on the block, the proof of the statement labelled `prop:base_case` in `dimred-corrected-arxiv.tex`: if the odometer is `t` at
 the radial sites `x-1`, `x`, `x+1`, then the sandpile at `x` is
 `2d + (d-1) - t x`. -/
 theorem sandp_block (d t : ℕ) (_hd : 1 ≤ d) (_ht : 1 ≤ t) (x : ℕ) (hx : x ≤ d)
@@ -213,7 +213,7 @@ theorem sandp_block (d t : ℕ) (_hd : 1 ≤ d) (_ht : 1 ≤ t) (x : ℕ) (hx : 
   rw [sandp, lap_radial d (2 * (d:ℤ) + ((d:ℤ) - 1)) t x hx, h0, h1, hm]; ring
 
 /-- Inside the firing block at time `t + 1` the excess `(d-1) - t x` is
-nonnegative, `dimred.tex:830-846`. -/
+nonnegative, the proof of the statement labelled `prop:base_case` in `dimred-corrected-arxiv.tex`. -/
 theorem blockEdge_window_le (d t x : ℕ) (hd : 1 ≤ d) (ht : 1 ≤ t) (_hx : x ≤ d)
     (h : (x : ℤ) ≤ blockEdge d (t + 1)) : (x : ℤ) * (t : ℤ) ≤ (d : ℤ) - 1 := by
   have h1 : (x : ℤ) * (t : ℤ) ≤ blockEdge d (t + 1) * (t : ℤ) :=
@@ -237,7 +237,7 @@ theorem ediv_strict_succ (a : ℤ) (t : ℕ) (ht : 1 ≤ t) (h : (t : ℤ) * (t 
   rw [Int.ediv_lt_iff_lt_mul ht1_pos]
   exact key
 
-/-- The block edge strictly decreases, `dimred.tex:784-790`. -/
+/-- The block edge strictly decreases, `dimred-corrected-arxiv.tex:655-661`. -/
 theorem blockEdge_strict (d t : ℕ) (hd : 1 ≤ d) (ht : 1 ≤ t) :
     blockEdge d (t + 1) < blockEdge d t := by
   obtain ⟨u, rfl⟩ : ∃ u, t = u + 1 := ⟨t - 1, by omega⟩
@@ -333,7 +333,7 @@ theorem blockEdge_antitone_le (d : ℕ) {m n : ℕ} (h : m ≤ n) : blockEdge d 
   | step hk ih => exact le_trans (blockEdge_antitone d _) ih
 
 /-- The excess bound read at the front `s`: `x ≤ a_s` gives
-`x (s-1) ≤ d-1`, `dimred.tex:850-874`. -/
+`x (s-1) ≤ d-1`, the proof of the statement labelled `prop:base_case` in `dimred-corrected-arxiv.tex`. -/
 theorem blockEdge_window_le' (d s x : ℕ) (hd : 1 ≤ d) (_hx : x ≤ d)
     (h : (x : ℤ) ≤ blockEdge d s) : (x : ℤ) * ((s : ℤ) - 1) ≤ (d : ℤ) - 1 := by
   by_cases hs0 : s = 0
@@ -354,7 +354,7 @@ theorem blockEdge_window_le' (d s x : ℕ) (hd : 1 ≤ d) (_hx : x ≤ d)
       rw [hsub, hcast] at hm
       nlinarith [h, hm]
 
-/-- The paper's first displayed chain of Step 2, `dimred.tex:850-874`: if the
+/-- The paper's first displayed chain of Step 2, the proof of the statement labelled `prop:base_case` in `dimred-corrected-arxiv.tex`: if the
 odometer at time `t` is `s+1` at `x-1` and `s` at `x` and `x+1`, then the
 sandpile at `x` is at least `2d`. -/
 theorem sandp_ge_two_d (d t s x : ℕ) (hd : 1 ≤ d) (_hs : s + 1 ≤ t) (_hx : t - s ≤ x) (hxd : x ≤ d)
@@ -372,7 +372,7 @@ theorem sandp_ge_two_d (d t s x : ℕ) (hd : 1 ≤ d) (_hs : s + 1 ≤ t) (_hx :
   nlinarith [hw]
 
 /-- The sandpile at a site of the firing block is at least `2d`, so the site
-fires, `dimred.tex:821-846`. -/
+fires, the proof of the statement labelled `prop:base_case` in `dimred-corrected-arxiv.tex`. -/
 theorem sandp_block_ge (d n x : ℕ) (hd : 1 ≤ d) (hn : 1 ≤ n) (hx : x ≤ d)
     (h1 : (x : ℤ) ≤ blockEdge d (n + 1))
     (hAn : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) n (radial d x) = (n : ℤ))
@@ -398,7 +398,7 @@ theorem sandp_block_ge (d n x : ℕ) (hd : 1 ≤ d) (hn : 1 ≤ n) (hx : x ≤ d
     have hw := blockEdge_window_le d n x hd hn hx h1
     nlinarith [hw]
 
-/-- The block edge never exceeds `d`, `dimred.tex:784-790`. -/
+/-- The block edge never exceeds `d`, `dimred-corrected-arxiv.tex:655-661`. -/
 theorem blockEdge_le_self (d m : ℕ) (hd : 1 ≤ d) : blockEdge d m ≤ (d : ℤ) := by
   induction m using Nat.strong_induction_on with
   | _ m ih =>
@@ -424,7 +424,7 @@ theorem blockEdge_le_self (d m : ℕ) (hd : 1 ≤ d) : blockEdge d m ≤ (d : �
         linarith
 
 /-- The ripple step when the site fires: `v_{t+1}(x) = v_t(x-1)` follows from
-`odo_succ_eq` and the hypothesis `v_t(x-1) = v_t(x) + 1`, `dimred.tex:850-874`. -/
+`odo_succ_eq` and the hypothesis `v_t(x-1) = v_t(x) + 1`, the proof of the statement labelled `prop:base_case` in `dimred-corrected-arxiv.tex`. -/
 theorem ripple_step_ge (d t x : ℕ) (_hd : 1 ≤ d) (_hx : x ≤ d)
     (h : 2 * (d : ℤ) ≤ sandp d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x))
     (hx1 : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x - 1))
@@ -436,7 +436,7 @@ theorem ripple_step_ge (d t x : ℕ) (_hd : 1 ≤ d) (_hx : x ≤ d)
   omega
 
 /-- The ripple step when the site does not fire: `v_{t+1}(x) = v_t(x-1)` follows
-from `odo_succ_eq` and the hypothesis `v_t(x-1) = v_t(x)`, `dimred.tex:850-874`. -/
+from `odo_succ_eq` and the hypothesis `v_t(x-1) = v_t(x)`, the proof of the statement labelled `prop:base_case` in `dimred-corrected-arxiv.tex`. -/
 theorem ripple_step_lt (d t x : ℕ) (_hd : 1 ≤ d) (_hx : x ≤ d)
     (h : ¬ 2 * (d : ℤ) ≤ sandp d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x))
     (hx1 : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x - 1))
@@ -447,7 +447,7 @@ theorem ripple_step_lt (d t x : ℕ) (_hd : 1 ≤ d) (_hx : x ≤ d)
   rw [if_neg h]
   omega
 
-/-- The ripple step, split on whether the site fires, `dimred.tex:850-874`. -/
+/-- The ripple step, split on whether the site fires, the proof of the statement labelled `prop:base_case` in `dimred-corrected-arxiv.tex`. -/
 theorem ripple_window_step (d t x : ℕ) (_hd : 1 ≤ d) (_hx : x ≤ d)
     (hge : 2 * (d : ℤ) ≤ sandp d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x) →
       odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x - 1))
@@ -464,7 +464,7 @@ theorem ripple_window_step (d t x : ℕ) (_hd : 1 ≤ d) (_hx : x ≤ d)
   · rw [if_neg h]
     omega
 
-/-- The paper's first displayed chain of Step 2, `dimred.tex:850-874`: if the
+/-- The paper's first displayed chain of Step 2, the proof of the statement labelled `prop:base_case` in `dimred-corrected-arxiv.tex`: if the
 odometer at time `t` is `s` at `x-2` and `x-1` and `s-1` at `x` and `x+1`, and
 `x ≤ a_s`, then the sandpile at `x` is at least `2d`. -/
 theorem sandp_ge_two_d' (d t s x : ℕ) (hd : 1 ≤ d) (hx : x ≤ d) (h2 : 2 ≤ x)

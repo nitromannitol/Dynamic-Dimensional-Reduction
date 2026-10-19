@@ -3,7 +3,7 @@ import DimRed.Support.Difference
 
 /-
 The coordinate evaluations and neighbour identities at a facet point
-`(x_i, 1, 1_j)` from `dimred.tex:918-943`.
+`(x_i, 1, 1_j)` from the statement labelled `base_dimension` in `dimred-corrected-arxiv.tex`.
 -/
 namespace DimRed
 

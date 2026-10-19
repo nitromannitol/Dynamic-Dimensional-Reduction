@@ -3,7 +3,7 @@ import DimRed.Support.RegInduction
 /-!
 # The regularity clauses of Proposition 4.1 from the joint induction
 
-Each theorem below states a frozen regularity clause of Proposition 4.1 (`dimred.tex:912-953`)
+Each theorem below states a frozen regularity clause of Proposition 4.1 (the statement labelled `base_dimension` in `dimred-corrected-arxiv.tex`)
 verbatim, with the conclusion of the joint induction `reg_all` as its only hypothesis.  The
 frozen proofs are then `exact X_of_reg (reg_all ...)`.
 -/

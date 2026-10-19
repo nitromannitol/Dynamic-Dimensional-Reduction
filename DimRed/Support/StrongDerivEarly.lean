@@ -4,7 +4,7 @@ import DimRed.Support.CornerBound
 /-!
 # The strong derivative clause below the topple time
 
-Case 1 of the strong derivative clause, `dimred.tex:1322-1332`: below the topple
+Case 1 of the strong derivative clause, `dimred-corrected-arxiv.tex`: below the topple
 time `τ_M` the two-step difference `v_t(x) - v_t(x + 2 e_k)` is at most `2 x_k`
 at every point of the positive orthant, for every direction `k`.
 

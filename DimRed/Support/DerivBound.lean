@@ -1,6 +1,6 @@
 import DimRed.Support.NonnegativeUpdate
 /-
-The derivative bound of `dimred.tex:531-538`: if the odometer at the corner
+The derivative bound of `dimred-corrected-arxiv.tex:527-534`: if the odometer at the corner
 `(M, 1_{d-1})` never exceeds `k M`, then `v_t(x) - v_t(x + e_j) ≤ k x_j`
 everywhere.
 
@@ -9,7 +9,7 @@ the coordinatewise order on the sorted domain, by walking from the larger point
 to the smaller one along single reflection steps, always lowering the last
 coordinate at which the two differ; that step stays inside the domain exactly
 because the smaller point is sorted.  `odo_deriv_bound` is then the induction of
-`dimred.tex:289-294` again: the difference grows by at most one per step, so the
+the statement labelled `pt_ind_lemma` in `dimred-corrected-arxiv.tex` again: the difference grows by at most one per step, so the
 only case is a difference that has already reached `k x_j`, and there the
 recursion compares the two neighbour sums term by term.  The `2d` terms pair up
 as `d - 1` copies of `2 k x_j` and one copy of `k (x_j + 1) + k (x_j - 1)`.
@@ -183,7 +183,7 @@ section Derivative
 
 variable (d M : ℕ)
 
-/-- `dimred.tex:531-538`.  Given a bound `k M` on the corner value, the
+/-- `dimred-corrected-arxiv.tex:527-534`.  Given a bound `k M` on the corner value, the
 first difference of the odometer in direction `j` is at most `k x_j`. -/
 theorem odo_deriv_bound (hd : 1 ≤ d) (c : ℤ) (hc0 : 0 ≤ c)
     (hc1 : c ≤ 2 * (2 * (d : ℤ)) - 1) (k : ℕ) (hk : 1 ≤ k)

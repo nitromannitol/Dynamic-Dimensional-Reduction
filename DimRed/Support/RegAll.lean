@@ -6,7 +6,7 @@ import DimRed.Support.StrongDerivStep
 # The joint induction with the three open steps as hypotheses
 
 `reg_all` closes the simultaneous induction for odometer regularity and dimensional reduction
-(`dimred.tex:1117-1128`) modulo the three induction steps that are not yet proved: the
+(`dimred-corrected-arxiv.tex:943-954`) modulo the three induction steps that are not yet proved: the
 self-similarity step, the strong facet step and the strong topple step.  The weak facet step and
 the strong derivative step are discharged by `weak_step_of_earlier` and `deriv_step_of_earlier`,
 and the dimensional-reduction step by `reg_induction_dimred`.
