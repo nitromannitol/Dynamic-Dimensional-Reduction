@@ -1,5 +1,5 @@
 /-
-Corollary to Theorem 1.1 of the corrected arXiv-format draft, frozen.
+Corollary to Theorem 1.1 of the corrected edition.
 `dimred-corrected-arxiv.tex:147-154` (label `sandpile_corollary`), clause 1:
 
   "The results in Theorem \ref{the_theorem}, using the same notation, extend

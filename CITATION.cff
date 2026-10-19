@@ -6,7 +6,7 @@ abstract: >-
   reduction in the Abelian sandpile" (Bou-Rabee), in a corrected edition of its arXiv
   source: dimensional reduction and self-similarity of the parallel toppling odometer,
   the corollary for the sandpile, and the regularity proposition proved with them by one
-  joint induction over dimension, side length and time. All 23 theorem-level statements of the corrected edition, the 20 statement clauses of the published paper and three added lemmas, are proved in Lean, with no sorry and only the standard axioms; Theorem 1.1 and Corollary 1.1 are stated as published.
+  joint induction over dimension, side length and time. All 23 theorem-level statements of the corrected edition (its versions of the 20 statement clauses of the published paper, and three added lemmas) are proved in Lean, with no `sorry` and only the standard axioms. Theorem 1.1 and Corollary 1.1 are stated as published, with the quantifier in the definition of `τ_j` made explicit.
   Each of the four Mathlib-only comparator challenges contains intentional
   statement-level sorrys, whose solutions are checked separately.
 type: software

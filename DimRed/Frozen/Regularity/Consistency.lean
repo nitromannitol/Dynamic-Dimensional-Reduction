@@ -1,6 +1,5 @@
 /-
-The self-similarity clause of Proposition 4.1 of the corrected arXiv-format
-draft, frozen. `dimred-corrected-arxiv.tex:727-729` (label `base_dimension`,
+The self-similarity clause of Proposition 4.1 of the corrected edition. `dimred-corrected-arxiv.tex:727-729` (label `base_dimension`,
 display `base_dimension:consistency`):
 
   "Recall the definition of $\tau_{j}$ from Theorem \ref{the_theorem}. For all

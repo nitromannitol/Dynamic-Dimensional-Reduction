@@ -1,6 +1,5 @@
 /-
-The strong derivative clause of Proposition 4.1 of the corrected arXiv-format
-draft, frozen. `dimred-corrected-arxiv.tex:743-745` (label `base_dimension`,
+The strong derivative clause of Proposition 4.1 of the corrected edition. `dimred-corrected-arxiv.tex:743-745` (label `base_dimension`,
 display `base_dimension:strong_derivative`):
 
   "\item[Strong facet compatibility] Let $i,j\geq0$, $i+1+j=d$, and put
@@ -10,7 +9,7 @@ display `base_dimension:strong_derivative`):
 
 `p = (x_i, 1, 1_j)` is defined in the statement (line 740), so `p + 2 e_{i+1}`
 is `(x_i, 3, 1_j)`, and `i < d` is automatic once `d = i + 1 + j`. `τ_M` is
-`toppleTime d M`, valued in `ℕ∞`. For a nonempty head the corrected draft
+`toppleTime d M`, valued in `ℕ∞`. For a nonempty head the corrected edition
 states the same bound, at every time, as the first conclusion of
 `lem:strict-head-facet` (`dimred-corrected-arxiv.tex:1127-1132`, with `x_k =
 1`).

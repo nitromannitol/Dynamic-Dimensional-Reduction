@@ -1,5 +1,5 @@
 /-
-Symmetrized-odometer definition of the corrected arXiv-format draft, frozen.
+Symmetrized-odometer definition of the corrected edition.
 `dimred-corrected-arxiv.tex:380-389` (literal initial value and threshold
 recursion; context `subsec:symmetry`):
 

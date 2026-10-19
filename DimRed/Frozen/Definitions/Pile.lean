@@ -1,5 +1,5 @@
 /-
-Finite-pile conservation of the corrected arXiv-format draft, frozen.
+Finite-pile conservation of the corrected edition.
 `dimred-corrected-arxiv.tex:93-98` (physical carrier at
 `dimred-corrected-arxiv.tex:278-284`):
 

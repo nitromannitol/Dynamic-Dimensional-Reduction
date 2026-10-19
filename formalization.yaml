@@ -57,7 +57,7 @@ related_formalizations:
 
 status:
   scope: >-
-    All 23 theorem-level statements of the corrected edition, the 20 statement clauses of the published paper and three added lemmas, are proved in Lean, with no sorry and only the standard axioms; Theorem 1.1 and Corollary 1.1 are stated as published.
+    All 23 theorem-level statements of the corrected edition (its versions of the 20 statement clauses of the published paper, and three added lemmas) are proved in Lean, with no `sorry` and only the standard axioms. Theorem 1.1 and Corollary 1.1 are stated as published, with the quantifier in the definition of `τ_j` made explicit.
   sorry_count: 0
   sorry_count_scope: "the DimRed library"
   comparator_challenge_sorry_count: 10
@@ -135,10 +135,13 @@ automation:
         - "claude-opus-5"
         - "claude-sonnet-5"
         - "claude-opus-5-5"
+        - "claude-sonnet-5-5"
         - "claude-haiku-5-5"
+        - "claude-fable-5-1"
       framework: "Claude Code (Anthropic)"
       tool_setup: >-
-        Lean proof development, review and release preparation with Lake builds under the pinned
+        Lean proof development, review, the drafting of the corrected edition's changes and its
+        corrections section, and release preparation, with Lake builds under the pinned
         Lean toolchain, Mathlib and Lattice-Probability revisions; every change was checked by the
         statement-hash, axiom-closure and warning-free-build checks of tools/verify.py.
       cost:
@@ -149,6 +152,8 @@ automation:
         Human-directed work, closely supervised by the author, on author-specified statements.
     - method: "agent"
       models:
+        - "gpt-6-sol"
+        - "gpt-6-luna"
         - "gpt-6.1-sol"
       framework: "Codex CLI (OpenAI)"
       tool_setup: >-
@@ -159,6 +164,16 @@ automation:
         hardware: "local Linux machine"
       prompting_notes: >-
         Human-directed work; each task fixed the statements to be proved and forbade changing them.
+    - method: "agent"
+      models:
+        - "gpt-6-astra"
+      framework: "Codex CLI (OpenAI)"
+      tool_setup: >-
+        A written proof of one case of the regularity induction of Section 4; no Lean work.
+      cost:
+        wall_time: "not tracked"
+        spend_usd: "not tracked"
+        hardware: "local Linux machine"
     - method: "agent"
       models:
         - "deepseek-v4.1-flash"
@@ -172,7 +187,8 @@ automation:
   spend_usd: "not tracked"
   notes: >-
     The Lean code was written by AI coding agents under the close supervision of the author, who
-    fixed the statements to be formalized. Every proof is checked by the Lean kernel; the library
+    fixed the statements to be formalized. The changes of the corrected edition, its corrections
+    section and its new proofs were also drafted by these agents and checked by the author. Every proof is checked by the Lean kernel; the library
     contains no sorry and no custom axiom. The model versions listed are those recorded during
     the work.
 
@@ -180,8 +196,8 @@ fidelity:
   divergences: >-
     The Lean statements follow the corrected edition in paper/corrected-arxiv/. Theorem 1.1 and
     Corollary 1.1 are stated as published, with the hitting time of Theorem 1.1(ii) defined
-    through some inner-boundary site (C01). The changes C01-C25 to lemmas, corollaries, a
-    proposition, definitions and proofs are listed with the published text, the corrected text
+    through some inner-boundary site (C01). The changes C01-C25 to lemmas, corollaries, two
+    propositions (3.2 and 4.1), definitions and proofs are listed with the published text, the corrected text
     and a reason in the corrected edition's section "Corrections to the published version" and
     in README.md.
 

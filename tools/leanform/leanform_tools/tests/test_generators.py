@@ -133,7 +133,7 @@ class StatusCountsCase(_TempRepoTestCase):
         self.assertNotIn("8 sealed", text)
         self.assertNotIn("8 `SEALED`", text)
         self.assertIn("4 sealed, 2 conditional, 2 assumed, 16 draft", text)
-        self.assertIn("24 registered statements", text)
+        self.assertIn("24 statements in `ledger/manifest.yaml`", text)
 
 
 # ---- sync_docs: hand-edited number inside a generated block --------------

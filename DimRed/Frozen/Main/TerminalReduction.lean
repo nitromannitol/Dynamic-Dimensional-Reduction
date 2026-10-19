@@ -1,6 +1,5 @@
 /-
-The second display of Theorem 1.1(i) of the corrected arXiv-format draft,
-frozen. `dimred-corrected-arxiv.tex:119-121` (label `the_theorem`), clause 1:
+The second display of Theorem 1.1(i) of the corrected edition. `dimred-corrected-arxiv.tex:119-121` (label `the_theorem`), clause 1:
 
   "and for $\mathbf{x}_{d-1} \geq 2$ v_{\infty}^{(d,N)}(\mathbf{x}_{d-1}, 2) =
    v_{\infty}^{(d-1,N)}(\mathbf{x}_{d-1})."

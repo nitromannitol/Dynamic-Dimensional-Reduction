@@ -70,7 +70,7 @@ def render(cfg: RepoConfig) -> str:
 
     if not assumed:
         out += [
-            "Nothing.  Every registered statement in this repository is "
+            "Nothing.  Every statement in this repository is "
             "proved here, from Mathlib and the libraries this development "
             "builds on; no result is carried as an assumed hypothesis.",
             "",

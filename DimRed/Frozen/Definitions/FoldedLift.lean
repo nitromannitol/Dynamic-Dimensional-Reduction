@@ -1,5 +1,5 @@
 /-
-Lifted-value definition of the corrected arXiv-format draft, frozen.
+Lifted-value definition of the corrected edition.
 `dimred-corrected-arxiv.tex:370-377` (literal lifted-value definition; context
 `subsec:symmetry`):
 

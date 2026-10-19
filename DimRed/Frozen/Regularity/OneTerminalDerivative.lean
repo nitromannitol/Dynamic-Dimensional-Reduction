@@ -1,6 +1,6 @@
 /-
 Derivative clause of the one-dimensional terminal lemma (Lemma 4.1) of the
-corrected arXiv-format draft, frozen. `dimred-corrected-arxiv.tex:920-927`
+corrected edition. `dimred-corrected-arxiv.tex:920-927`
 (label `lem:one-terminal-profile`, clause full derivative including endpoint):
 
   "In dimension one, with $s_0\equiv2$ and $1\leq x\leq M$,

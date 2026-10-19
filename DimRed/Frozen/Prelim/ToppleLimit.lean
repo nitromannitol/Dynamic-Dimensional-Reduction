@@ -1,5 +1,5 @@
 /-
-Lemma 2.5 of the corrected arXiv-format draft, frozen.
+Lemma 2.5 of the corrected edition.
 `dimred-corrected-arxiv.tex:561-568` (label `topple_limit`):
 
   "For all $t \geq t_0$ and $j \geq 0$, \max_{z \in \mathcal{S}} \left(

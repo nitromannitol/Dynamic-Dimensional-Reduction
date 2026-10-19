@@ -1,5 +1,5 @@
 /-
-Directed-neighbour definition of the corrected arXiv-format draft, frozen.
+Directed-neighbour definition of the corrected edition.
 `dimred-corrected-arxiv.tex:378-380` (literal directed-neighbor definition;
 context `subsec:symmetry`):
 

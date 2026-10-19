@@ -1,5 +1,5 @@
 /-
-Lemma 2.2 of the corrected arXiv-format draft, frozen.
+Lemma 2.2 of the corrected edition.
 `dimred-corrected-arxiv.tex:314-319` (label `parabolic_comparison`, display
 `eq:parabolic_leastaction`):
 
