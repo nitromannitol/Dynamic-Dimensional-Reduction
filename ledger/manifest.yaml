@@ -11,7 +11,7 @@
 version: 1
 source_pin:
   file: paper/corrected-arxiv/dimred-corrected-arxiv.tex
-  sha256: 552df607187681ee8080674a76798eb64ec4829a89a032770a009c9d73cc8585
+  sha256: 24b3ec19f8cce1b06f89a8a50d914dc6f075debdd0d37c5c418b00f002f5388f
 
 nodes:
   - id: prop-base-dimension-weak
