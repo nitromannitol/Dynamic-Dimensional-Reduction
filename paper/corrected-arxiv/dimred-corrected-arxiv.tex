@@ -480,22 +480,44 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 	\end{lemma}
 	
 	\begin{proof}
-        Induct on $t$ from the initial inequalities. Fix an index $j$ and
-        write $D=v_t(x)-v_t(x+w_j)$ and $g=g_j(x)$. If $D<g$, integrality
-        gives $D\leq g-1$, and one-fire increments give $D_{w_j}v_{t+1}(x)\leq g$.
-        If $D=g$ and both endpoints are in the cube, the neighbor inequality
-        \[
-        \sum_{y\sim x}v_t(y)-\sum_{y'\sim(x+w_j)}v_t(y')\leq2d g
-        \]
-        says that the height at $x$ is at most the height at $x+w_j$:
-        the constant initial heights cancel and the center difference is $g$.
-        Thus firing of $x$ forces firing of $x+w_j$, preserving the bound.
-        At an interior point the displayed neighbor inequality follows by
-        summing the previous difference inequalities and using superharmonicity
-        of $g_j$. At a boundary point the first alternative supplies that
-        inequality and both in-cube endpoints; the second supplies the desired
-        next-time inequalities directly. This proves all indices together.
-    \end{proof}
+	We induct on $t\geq t_0$. The case $t=t_0$ is \eqref{eq:initial_cond}. Fix $t\geq t_0$ and assume $D_{w_j}v_t\leq g_j$ on $\mathcal S$ for every $j$. We prove the same inequality at time $t+1$ in three steps. Step 1 is a one-step estimate for a pair of sites. Steps 2 and 3 treat the interior and boundary points of $\mathcal S$, and each applies Step 1.
+	
+	\emph{Step 1.} We show that if $x,y\in\mathcal C_N^{(d)}$ and $a\in\Z$ satisfy
+	\begin{equation*}
+	v_t(x)-v_t(y)\leq a
+	\quad\mbox{and}\quad
+	\sum_{x'\sim x}v_t(x')-\sum_{y'\sim y}v_t(y')\leq 2d\,a\,,
+	\end{equation*}
+	then $v_{t+1}(x)-v_{t+1}(y)\leq a$.
+	
+	For $z\in\mathcal C_N^{(d)}$, the height of $z$ at time $t$ is
+	\begin{equation*}
+	s_t(z)=s_0(z)-2d\,v_t(z)+\sum_{y\sim z}v_t(y)\,.
+	\end{equation*}
+	The odometer rule $v_{t+1}(z)=v_t(z)+\mathbf{1}\{s_t(z)\geq 2d\}$ says that $z$ topples at step $t+1$ exactly when $s_t(z)\geq 2d$. In particular, $v_{t+1}(z)-v_t(z)\in\{0,1\}$.
+	
+	Suppose first that $v_t(x)-v_t(y)<a$. Both sides are integers, so $v_t(x)-v_t(y)\leq a-1$. Since $v_{t+1}(x)-v_t(x)\leq 1$ and $v_{t+1}(y)-v_t(y)\geq 0$, we get $v_{t+1}(x)-v_{t+1}(y)\leq v_t(x)-v_t(y)+1\leq a$.
+	
+	Suppose next that $v_t(x)-v_t(y)=a$. The initial sandpile $s_0$ is constant, so $s_0(x)=s_0(y)$. The heights therefore satisfy
+	\begin{equation*}
+	s_t(x)-s_t(y)=\Big(\sum_{x'\sim x}v_t(x')-\sum_{y'\sim y}v_t(y')\Big)-2d\,\big(v_t(x)-v_t(y)\big)\leq 2d\,a-2d\,a=0\,.
+	\end{equation*}
+	Hence $s_t(x)\leq s_t(y)$, so if $x$ topples at step $t+1$, then $s_t(y)\geq s_t(x)\geq 2d$ and $y$ topples at step $t+1$ too. Thus $v_{t+1}(x)-v_t(x)\leq v_{t+1}(y)-v_t(y)$, and
+	\begin{equation*}
+	v_{t+1}(x)-v_{t+1}(y)=\big(v_t(x)-v_t(y)\big)+\big(v_{t+1}(x)-v_t(x)\big)-\big(v_{t+1}(y)-v_t(y)\big)\leq a\,.
+	\end{equation*}
+	This proves Step 1.
+	
+	\emph{Step 2.} We show the inequality at every $x\in\mathcal S$ with $x\notin\mathcal B_0\cup\mathcal B_{\mathbf w}$. Fix such an $x$ and an index $j$. Since $x\notin\mathcal B_0$, we have $1<x_i<M$ for all $i$ and $x_j<x_i$ for $i<j$, which gives $x\pm e_i\in\mathcal S$ for every $i$. Since $x\notin\mathcal B_{\mathbf w}$, the same strict inequalities hold at $x+w_j$, so $x+w_j\in\mathcal S$. Summing the induction hypothesis $D_{w_j}v_t(y)\leq g_j(y)$ over the neighbours $y$ of $x$ gives
+	\begin{equation*}
+	\sum_{y\sim x}v_t(y)-\sum_{y'\sim x+w_j}v_t(y')=\sum_{y\sim x}\big(v_t(y)-v_t(y+w_j)\big)\leq\sum_{y\sim x}g_j(y)\leq 2d\,g_j(x)\,.
+	\end{equation*}
+	The equality substitutes $y'=y+w_j$, which runs over the neighbours of $x+w_j$ as $y$ runs over the neighbours of $x$. The last inequality is the superharmonicity of $g_j$ at $x$. Now Step 1 applies with $y=x+w_j$ and $a=g_j(x)$. Its first hypothesis is the induction hypothesis at $x$, and its second is the display above. Hence $D_{w_j}v_{t+1}(x)\leq g_j(x)$.
+	
+	\emph{Step 3.} We show the inequality at every $x\in\mathcal S\cap(\mathcal B_0\cup\mathcal B_{\mathbf w})$. The hypothesis \eqref{eq:boundaries_ref} at time $t$ gives one of its two alternatives. If the second alternative holds, the inequality at time $t+1$ is part of the hypothesis. If the first holds, then $x+w_j\in\mathcal C_N^{(d)}$ for every $j$, and the neighbour inequality holds with $2d\,g_j(x)$ on the right. Step 1 with $y=x+w_j$ and $a=g_j(x)$, together with the induction hypothesis at $x$, gives $D_{w_j}v_{t+1}(x)\leq g_j(x)$ for every $j$.
+	
+	Steps 2 and 3 cover all of $\mathcal S$, which completes the induction.
+	\end{proof}
 	
 	\noindent As a corollary, we deduce the following discrete quasiconcavity property of $v_t$ on a hypercube, which was proved in \cite{babai2007sandpile}
 	for axis monotonic initial sandpiles on $\Z^2$.  (Note that Aleksanyan and Shahgholian, using a discrete analogue of the method of moving planes, proved axis monotonicity
