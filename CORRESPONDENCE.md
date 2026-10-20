@@ -17,35 +17,35 @@ and 5.1.
 
 | id | Lean | paper | state |
 |---|---|---|---|
-| `prop-base-dimension-weak` | `DimRed.Frozen.base_dimension_weak_compatibility` | `dimred-corrected-arxiv.tex:731-738`, `base_dimension` | PROVED |
+| `prop-base-dimension-weak` | `DimRed.Frozen.base_dimension_weak_compatibility` | `dimred-corrected-arxiv.tex:817-824`, `base_dimension` | PROVED |
 | `thm-dimensional-reduction` | `DimRed.Frozen.dimensional_reduction` | `dimred-corrected-arxiv.tex:109-118`, `the_theorem` | PROVED |
 | `thm-terminal-reduction` | `DimRed.Frozen.terminal_dimensional_reduction` | `dimred-corrected-arxiv.tex:119-121`, `the_theorem` | PROVED |
 | `cor-sandpile-reduction` | `DimRed.Frozen.sandpile_dimensional_reduction` | `dimred-corrected-arxiv.tex:147-154`, `sandpile_corollary` | PROVED |
-| `lem-symmetry` | `DimRed.Frozen.symmetry_lemma` | `dimred-corrected-arxiv.tex:399-401`, `symmetry_lemma` | PROVED |
-| `prop-no-reduction` | `DimRed.Frozen.no_reduction_at_critical_dimension` | `dimred-corrected-arxiv.tex:596-598`, `no_reduction` | PROVED |
-| `lem-radial-laplacian` | `DimRed.Frozen.radial_laplacian` | `dimred-corrected-arxiv.tex:618-624`, `radial_laplacian` | PROVED |
+| `lem-symmetry` | `DimRed.Frozen.symmetry_lemma` | `dimred-corrected-arxiv.tex:395-397`, `symmetry_lemma` | PROVED |
+| `prop-no-reduction` | `DimRed.Frozen.no_reduction_at_critical_dimension` | `dimred-corrected-arxiv.tex:645-647`, `no_reduction` | PROVED |
+| `lem-radial-laplacian` | `DimRed.Frozen.radial_laplacian` | `dimred-corrected-arxiv.tex:667-673`, `radial_laplacian` | PROVED |
 | `lem-pt-ind` | `DimRed.Frozen.pt_ind_lemma` | `dimred-corrected-arxiv.tex:291-297`, `pt_ind_lemma` | PROVED |
 | `lem-parabolic-comparison` | `DimRed.Frozen.parabolic_comparison` | `dimred-corrected-arxiv.tex:314-319`, `parabolic_comparison` | PROVED |
 | `lem-difference-comparison` | `DimRed.Frozen.general_difference_comparison` | `dimred-corrected-arxiv.tex:459-480`, `general_difference_comparison` | PROVED |
-| `prop-base-case` | `DimRed.Frozen.base_case` | `dimred-corrected-arxiv.tex:660-684`, `prop:base_case` | PROVED |
-| `prop-base-dimension-consistency` | `DimRed.Frozen.base_dimension_consistency` | `dimred-corrected-arxiv.tex:727-729`, `base_dimension` | PROVED |
-| `prop-base-dimension-strong-derivative` | `DimRed.Frozen.base_dimension_strong_derivative` | `dimred-corrected-arxiv.tex:743-745`, `base_dimension` | PROVED |
-| `prop-base-dimension-strong-facet` | `DimRed.Frozen.base_dimension_strong_compatibility` | `dimred-corrected-arxiv.tex:747-755`, `base_dimension` | PROVED |
-| `prop-base-dimension-strong-topple` | `DimRed.Frozen.base_dimension_strong_topple` | `dimred-corrected-arxiv.tex:761-763`, `base_dimension` | PROVED |
+| `prop-base-case` | `DimRed.Frozen.base_case` | `dimred-corrected-arxiv.tex:701-725`, `prop:base_case` | PROVED |
+| `prop-base-dimension-consistency` | `DimRed.Frozen.base_dimension_consistency` | `dimred-corrected-arxiv.tex:813-815`, `base_dimension` | PROVED |
+| `prop-base-dimension-strong-derivative` | `DimRed.Frozen.base_dimension_strong_derivative` | `dimred-corrected-arxiv.tex:829-831`, `base_dimension` | PROVED |
+| `prop-base-dimension-strong-facet` | `DimRed.Frozen.base_dimension_strong_compatibility` | `dimred-corrected-arxiv.tex:833-841`, `base_dimension` | PROVED |
+| `prop-base-dimension-strong-topple` | `DimRed.Frozen.base_dimension_strong_topple` | `dimred-corrected-arxiv.tex:847-849`, `base_dimension` | PROVED |
 | `thm-self-similarity` | `DimRed.Frozen.self_similarity` | `dimred-corrected-arxiv.tex:122-133`, `the_theorem` | PROVED |
 | `cor-sandpile-self-similarity` | `DimRed.Frozen.sandpile_self_similarity` | `dimred-corrected-arxiv.tex:155-158`, `sandpile_corollary` | PROVED |
-| `cor-axis-monotonicity` | `DimRed.Frozen.axis_monotonicity` | `dimred-corrected-arxiv.tex:503-513`, `axis_monotonicity` | PROVED |
-| `cor-derivative-bound` | `DimRed.Frozen.derivative_bound` | `dimred-corrected-arxiv.tex:527-534`, `cor:derivative_bound` | PROVED |
-| `lem-strict-head-facet` | `DimRed.Frozen.strict_head_facet` | `dimred-corrected-arxiv.tex:1127-1137`, `lem:strict-head-facet` | PROVED |
-| `lem-one-terminal-profile` | `DimRed.Frozen.one_terminal_profile` | `dimred-corrected-arxiv.tex:920-927`, `lem:one-terminal-profile` | PROVED |
-| `lem-one-terminal-derivative` | `DimRed.Frozen.one_terminal_derivative` | `dimred-corrected-arxiv.tex:920-927`, `lem:one-terminal-profile` | PROVED |
-| `char-folded-lift` | `DimRed.Frozen.folded_lift_definition` | dimred-corrected-arxiv.tex:370-377 (literal lifted-value definition; context subsec:symmetry) | PROVED |
-| `char-folded-neighbors` | `DimRed.Frozen.folded_neighbors_definition` | dimred-corrected-arxiv.tex:378-380 (literal directed-neighbor definition; context subsec:symmetry) | PROVED |
-| `char-folded-odometer` | `DimRed.Frozen.folded_odometer_definition` | dimred-corrected-arxiv.tex:380-389 (literal initial value and threshold recursion; context subsec:symmetry) | PROVED |
+| `cor-axis-monotonicity` | `DimRed.Frozen.axis_monotonicity` | `dimred-corrected-arxiv.tex:525-535`, `axis_monotonicity` | PROVED |
+| `cor-derivative-bound` | `DimRed.Frozen.derivative_bound` | `dimred-corrected-arxiv.tex:554-561`, `cor:derivative_bound` | PROVED |
+| `lem-strict-head-facet` | `DimRed.Frozen.strict_head_facet` | `dimred-corrected-arxiv.tex:1218-1228`, `lem:strict-head-facet` | PROVED |
+| `lem-one-terminal-profile` | `DimRed.Frozen.one_terminal_profile` | `dimred-corrected-arxiv.tex:1006-1013`, `lem:one-terminal-profile` | PROVED |
+| `lem-one-terminal-derivative` | `DimRed.Frozen.one_terminal_derivative` | `dimred-corrected-arxiv.tex:1006-1013`, `lem:one-terminal-profile` | PROVED |
+| `char-folded-lift` | `DimRed.Frozen.folded_lift_definition` | dimred-corrected-arxiv.tex:372-375 (literal lifted-value definition; context subsec:symmetry) | PROVED |
+| `char-folded-neighbors` | `DimRed.Frozen.folded_neighbors_definition` | dimred-corrected-arxiv.tex:376-380 (literal neighbour-sum definition; context subsec:symmetry) | PROVED |
+| `char-folded-odometer` | `DimRed.Frozen.folded_odometer_definition` | dimred-corrected-arxiv.tex:380-384 (literal initial value and threshold recursion; context subsec:symmetry) | PROVED |
 | `char-physical-pile` | `DimRed.Frozen.pile_definition` | dimred-corrected-arxiv.tex:93-98 (finite-pile conservation; physical carrier at 278-284) | PROVED |
 | `char-terminal-pile` | `DimRed.Frozen.terminal_pile_characterization` | `dimred-corrected-arxiv.tex:145-161`, `sandpile_corollary` | PROVED |
-| `char-nonempty-maximum` | `DimRed.Frozen.maximum_definition` | `dimred-corrected-arxiv.tex:561-568`, `topple_limit` | PROVED |
-| `lem-topple-limit` | `DimRed.Frozen.topple_limit` | `dimred-corrected-arxiv.tex:561-568`, `topple_limit` | PROVED |
+| `char-nonempty-maximum` | `DimRed.Frozen.maximum_definition` | `dimred-corrected-arxiv.tex:601-608`, `topple_limit` | PROVED |
+| `lem-topple-limit` | `DimRed.Frozen.topple_limit` | `dimred-corrected-arxiv.tex:601-608`, `topple_limit` | PROVED |
 
 <!-- FROZEN-SURFACE-END -->
 
