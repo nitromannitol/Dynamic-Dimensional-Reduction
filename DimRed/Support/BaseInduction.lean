@@ -19,7 +19,7 @@ theorem ediv_add_one_mul_gt (a b : ℤ) (hb : 0 < b) : a < (a / b + 1) * b := by
   nlinarith [h, he]
 
 /-- `blockEdge` drops by exactly `1` per step from `tCrit d` onward,
-The subsection titled `M=2` in `dimred-corrected-arxiv.tex`. -/
+The subsection labelled `subsec:M2` in `dimred-corrected-arxiv.tex`. -/
 theorem blockEdge_succ_eq_pred_sub_one (d s : ℕ) (hs : tCrit d ≤ s) :
     blockEdge d (s + 1) = blockEdge d s - 1 := by
   have h1 : blockEdge d (s + 1) = blockEdge d (tCrit d) - (((s + 1 : ℕ) : ℤ) - (tCrit d : ℤ)) :=
@@ -156,7 +156,7 @@ theorem beyond_block_eq (d : ℕ) (hd : 1 ≤ d) :
         rw [hstep, if_neg hnf, hvx]; ring
 
 /-- Inside a window of length at least `2`, the front times the position
-exceeds `d - 1`; this is the paper's bound the proof of the statement labelled `prop:base_case` in `dimred-corrected-arxiv.tex` applied at
+exceeds `d - 1`; this is the bound from the proof of the statement labelled `prop:base_case` in `dimred-corrected-arxiv.tex`, applied at
 the window's own right edge, not only its interior. -/
 theorem window_mul_gt (d s x : ℕ) (_hd : 1 ≤ d) (hx : x ≤ d)
     (h1 : blockEdge d (s + 1) < (x : ℤ)) (h2 : (x : ℤ) ≤ blockEdge d s)
@@ -327,7 +327,7 @@ theorem ripple_one_step (d : ℕ) (hd : 1 ≤ d) :
         simpa using hlt
 
 /-- `blockEdge d 2 = d - 1` unconditionally: both branches of the definition
-agree, the subsection titled `M=2` in `dimred-corrected-arxiv.tex`. -/
+agree, the subsection labelled `subsec:M2` in `dimred-corrected-arxiv.tex`. -/
 theorem blockEdge_two (d : ℕ) : blockEdge d 2 = (d : ℤ) - 1 := by
   have hdef : blockEdge d 2 = if 2 ≤ tCrit d then ((d : ℤ) - 1) / 1 else blockEdge d 1 - 1 := rfl
   have h1 : blockEdge d 1 = (d : ℤ) := rfl

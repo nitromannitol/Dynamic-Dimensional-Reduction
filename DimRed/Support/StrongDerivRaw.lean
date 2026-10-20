@@ -101,7 +101,7 @@ theorem odo_time_diff_one (d M T : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M)
     linarith
 
 
-/-- The time-shifted first difference `eq:time_difference`, `dimred-corrected-arxiv.tex`. -/
+/-- The time-shifted first difference, the assertion `A_t` in the proof of Lemma `lem:strict-head-facet` in `dimred-corrected-arxiv.tex`. -/
 theorem odo_time_diff (d M T : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M)
     (hW : ∀ s, 1 ≤ s → s < T → RegWeak d M s) :
     ∀ s, s + 1 ≤ T → ∀ (k : Fin d) (x : Site d), inPos d M x →
@@ -148,7 +148,7 @@ theorem odo_time_diff (d M T : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M)
 
 
 
-/-- The facet lag bound `eq:facet_lag`, `dimred-corrected-arxiv.tex`. -/
+/-- The facet lag bound, the assertion `L_t` in the proof of Lemma `lem:strict-head-facet` in `dimred-corrected-arxiv.tex`. -/
 theorem odo_facet_lag (d M T : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M)
     (hS : ∀ s, s < T → RegStrongFacet d M s) (s : ℕ) (hs : s + 1 ≤ T)
     (x : Site d) (hx : inPos d M x) (k : Fin d) (hk : x k = 1) (h2 : ∃ l, 2 ≤ x l) :
@@ -275,7 +275,7 @@ theorem mixed_hxw (d M : ℕ) (k l : Fin d) (hkl : k ≠ l) (x : Site d) (hx : i
     · simp only [if_neg hil, add_zero]
       omega
 
-/-- The mixed second difference `eq:mixed_difference`, `dimred-corrected-arxiv.tex`. -/
+/-- The mixed second difference, the assertion `B_t` in the proof of Lemma `lem:strict-head-facet` in `dimred-corrected-arxiv.tex`. -/
 theorem odo_mixed_diff (d M T : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M)
     (hW : ∀ s, 1 ≤ s → s < T → RegWeak d M s) (hS : ∀ s, s < T → RegStrongFacet d M s) :
     ∀ s, s ≤ T → ∀ (k l : Fin d), k ≠ l → ∀ x : Site d, inPos d M x →
@@ -540,7 +540,7 @@ theorem pure_floor_step (d M n : ℕ) (hd : 1 ≤ d) (k : Fin d) (x : Site d)
           rw [hc]
           exact ih k x hx hmax
 
-/-- The pure second difference off the top coordinate `eq:pure_difference`,
+/-- The pure second difference off the top coordinate, the assertion `C_t` in the proof of Lemma `lem:strict-head-facet` in
 `dimred-corrected-arxiv.tex`. -/
 theorem odo_pure_diff (d M T : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M)
     (hW : ∀ s, 1 ≤ s → s < T → RegWeak d M s) (hS : ∀ s, s < T → RegStrongFacet d M s) :

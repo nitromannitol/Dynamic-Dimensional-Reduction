@@ -9,7 +9,7 @@ namespace DimRed
 the same odometer at the smaller scale as the shifted point itself: the two are
 reflections of each other in the hyperplane `x_k = 1` of the smaller cube, and
 the odometer is invariant under that reflection (`odo_reflect_coord`).  This is
-the paper's reflectional-symmetry step, `dimred-corrected-arxiv.tex`. -/
+the paper's reflectional-symmetry step, `dimred-corrected-arxiv.tex`, label `subsubsec:higher_self_similarity`. -/
 theorem odoUnif_sub_unit_shift_eq (d m t : ℕ) (y : Site d) (k : Fin d)
     (hk : y k = 2) :
     odoUnif d (2 * (m - 1)) t (fun j => (y - unit k) j - 1)

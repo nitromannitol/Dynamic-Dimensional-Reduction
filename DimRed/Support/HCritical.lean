@@ -5,7 +5,7 @@ import DimRed.Support.GapTopple
 open LatticeProb DimRed
 namespace DimRed
 
-/-- The critical case of dimensional reduction, the subsection titled `Dimensional reduction` in `dimred-corrected-arxiv.tex`, from the
+/-- The critical case of dimensional reduction, the subsection labelled `subsec:dim_reduction` in `dimred-corrected-arxiv.tex`, from the
 earlier instances of the joint induction.  This is `hcritical` of
 `dimred_step_of_earlier`, discharged from `hprior` plus the committed
 `odo_dimred_critical`.

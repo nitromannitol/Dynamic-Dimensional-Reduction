@@ -1,17 +1,17 @@
 /-
 The vocabulary of the paper.
 
-The subsection titled `Notation and conventions` in `dimred-corrected-arxiv.tex` embeds the hypercube of side `N` into `ℤ^d` as
+The subsection labelled `subsec:notation` in `dimred-corrected-arxiv.tex` embeds the hypercube of side `N` into `ℤ^d` as
 `{x - k : 1 ≤ x_i ≤ 2k}` when `N = 2k` and as `{x + 1 : |x_i| ≤ k}` when
 `N = 2k + 1`; both are the box whose coordinates run from `1 - ⌊N/2⌋` to
 `⌈N/2⌉`, which is how `inCube` is written here.
 
-The subsection titled `Notation and conventions` in `dimred-corrected-arxiv.tex` is the graph Laplacian with dissipating boundary
+The subsection labelled `subsec:notation` in `dimred-corrected-arxiv.tex` is the graph Laplacian with dissipating boundary
 conditions, `Δ^{(d)} f(x) = -2d f(x) + ∑_{y ∼ x} f(y)`, where `f(y) := 0` for
 `y ∉ C_N^{(d)}`.  Every function below is a function on all of `ℤ^d` which
 vanishes off the hypercube, so the padding is automatic.
 
-The subsection titled `Main Result` in `dimred-corrected-arxiv.tex` defines the parallel toppling odometer by
+The subsection labelled `subsec:main_result` in `dimred-corrected-arxiv.tex` defines the parallel toppling odometer by
 `v_0 ≡ 0`, `v_{t+1} = v_t + 1{s_t ≥ 2d}`, `s_{t+1} = s_t + Δ(v_{t+1} - v_t)`.
 Here `odo` is defined by the equivalent closed recursion in which `s_t` is
 replaced by `s₀ + Δ v_t`; the paper's two displays are `odo_succ_eq` and
@@ -129,7 +129,7 @@ def IsSymmetricPile (d N : ℕ) (s₀ : Site d → ℤ) : Prop :=
     s₀ (cubeSym d N π ε x) = s₀ x
 
 /-- The point `(2_k, 1_{d-k})` of the radial reparameterization of `S_2^{(d)}`,
-The subsection titled `M=2` in `dimred-corrected-arxiv.tex`. -/
+The subsection labelled `subsec:M2` in `dimred-corrected-arxiv.tex`. -/
 def radial (d k : ℕ) : Site d := fun i => if (i : ℕ) < k then 2 else 1
 
 /-- The point `(x_i, c, 1_j)` of the statement labelled `base_dimension` in `dimred-corrected-arxiv.tex`: the `i` coordinates of
@@ -140,10 +140,10 @@ def facetPoint {i : ℕ} (x : Fin i → ℤ) (c : ℤ) (j : ℕ) : Site (i + 1 +
 /-- `⌈√n⌉`. -/
 def ceilSqrt (n : ℕ) : ℕ := if n = 0 then 0 else Nat.sqrt (n - 1) + 1
 
-/-- `t_d = ⌈√(d-1)⌉ + 1`, the subsection titled `M=2` in `dimred-corrected-arxiv.tex`. -/
+/-- `t_d = ⌈√(d-1)⌉ + 1`, the subsection labelled `subsec:M2` in `dimred-corrected-arxiv.tex`. -/
 def tCrit (d : ℕ) : ℕ := ceilSqrt (d - 1) + 1
 
-/-- The right edge `a_t` of the firing block, the subsection titled `M=2` in `dimred-corrected-arxiv.tex`:
+/-- The right edge `a_t` of the firing block, the subsection labelled `subsec:M2` in `dimred-corrected-arxiv.tex`:
 `a_1 = d`, `a_t = ⌊(d-1)/(t-1)⌋` for `t ≤ t_d` and `a_t = a_{t-1} - 1` after. -/
 def blockEdge (d : ℕ) : ℕ → ℤ
   | 0 => (d : ℤ)
@@ -154,16 +154,16 @@ def blockEdge (d : ℕ) : ℕ → ℤ
 /-- The point `(M, 1_{d-1})` of `dimred-corrected-arxiv.tex`, label `cor:derivative_bound`. -/
 def cornerPoint (d M : ℕ) : Site d := fun i => if (i : ℕ) = 0 then (M : ℤ) else 1
 
-/-- The dissipating boundary `B_w^{(disp)} S_M`, the subsection titled `Derivative comparison` in `dimred-corrected-arxiv.tex`. -/
+/-- The dissipating boundary `B_w^{(disp)} S_M`, the subsection labelled `subsec:derivative_comparison` in `dimred-corrected-arxiv.tex`. -/
 def dispBoundary (M : ℕ) (w x : Site d) : Prop := ∃ i : Fin d, (M : ℤ) ≤ (x + w) i
 
-/-- The reflecting boundary `B_w^{(ref)} S_M`, the subsection titled `Derivative comparison` in `dimred-corrected-arxiv.tex`. -/
+/-- The reflecting boundary `B_w^{(ref)} S_M`, the subsection labelled `subsec:derivative_comparison` in `dimred-corrected-arxiv.tex`. -/
 def refBoundary (w x : Site d) : Prop := ∃ i : Fin d, (x + w) i ≤ 1
 
-/-- The rotating boundary `B_w^{(rot)} S_M`, the section titled `Derivative comparison` in `dimred-corrected-arxiv.tex`. -/
+/-- The rotating boundary `B_w^{(rot)} S_M`, the subsection labelled `subsec:derivative_comparison` in `dimred-corrected-arxiv.tex`. -/
 def rotBoundary (w x : Site d) : Prop := ∃ i j : Fin d, i < j ∧ (x + w) i ≤ (x + w) j
 
-/-- `B_w`, the union of the three boundaries, the subsection titled `Derivative comparison` in `dimred-corrected-arxiv.tex`. -/
+/-- `B_w`, the union of the three boundaries, the subsection labelled `subsec:derivative_comparison` in `dimred-corrected-arxiv.tex`. -/
 def bdry (M : ℕ) (w x : Site d) : Prop :=
   dispBoundary M w x ∨ refBoundary w x ∨ rotBoundary w x
 
