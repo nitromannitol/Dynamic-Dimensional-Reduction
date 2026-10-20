@@ -1086,44 +1086,42 @@ we must have for each neighbor $(\mathbf{y}-e_i) \sim (\mathbf{x} - e_i)$, $v_{t
 
 \subsubsection*{Strong facet compatibility: \eqref{base_dimension:strong_derivative}
     and \eqref{base_dimension:strong_compatability}}
-The regularity clauses and finite dimensional reduction can be proved jointly
-in lexicographic order of dimension, side length and time. At a fixed triple,
-prove dimensional reduction first, then the strong derivative bound, then the
-two strong compatibility conclusions, followed by weak compatibility and
-self-similarity, and finally strong topple control. Any regularity assertion
-used to obtain the strong derivative bound is at an earlier time.
-For a nonempty head, Lemma~\ref{lem:strict-head-facet} below states both the
-constant-two bound and the two firing conclusions, at every time. Its closed
-conclusions also follow from the completed joint induction; they must not be
-fed back into that induction as additional assumptions. The independent
-argument below gives an alternative proof using first waits.
-For an empty head the point is $\mathbf1$ and the permitted regime is
-$t<\tau_M$. Case~1 gives the constant-two bound using earlier weak
-compatibility. The no-fire conclusion follows from the reflected Laplacian
-at $\mathbf1$: a unit gap gives $\Delta v_t(\mathbf1)=-d$.
-For the raised site's firing conclusion, compare its current neighbor sum
-with the preceding neighbor sum at $\mathbf1$, using the early two-step
-bound and the earlier compatibility assertions. This is the same generic
-facet comparison used in the joint induction, with its exceptional early
-subcases resolved by earlier dimensional reduction. No all-time raised-site
-firing is claimed at $\mathbf1$.
-{\bf Case 1: $t<\tau_M$} \\
-We prove $v_t(x)-v_t(x+2e_k)\leq2x_k$ for every $1\leq k\leq d$ on
-$P_M=\{1,\ldots,M\}^d$, by induction up to the indicated time. The first
-difference is bounded by $x_k$. Before $\tau_M$, every physical inner-boundary
-odometer is at most $M-1$. At $x_k=M$ this bounds the zero-extended two-step
-difference by $2M$; at $x_k=M-1$ the first-difference bound and the face bound
-give $2(M-1)$. In the remaining interior, sum the earlier two-step differences
-with affine weight $2y_k$ and use the exact uniform-height floor update.
-Transverse exterior occurrences give zero, transverse reflecting occurrences
-return the base pair, and selected negative reflection at $x_k=1$ has the
-previous facet gap. If this gap is one, earlier weak compatibility keeps the
-base site fixed and monotonicity of the far value transfers the previous
-bound. If the gap is zero, that reflected term has its required zero weight.
-This proves all directions on the unsorted orthant and thus on the sorted
-simplex; no rotating boundary is omitted. In particular it proves the needed
-empty-head facet inequality.
-{\bf Case 2: a nonempty head, at every time.}
+
+The strong derivative bound \eqref{base_dimension:strong_derivative} and the two strong compatibility conclusions \eqref{base_dimension:strong_compatability} are proved jointly with dimensional reduction \eqref{eq:reduction_gen_d}, in the lexicographic order of dimension, side length and time fixed above. At a fixed triple $(d,M,t)$ the route is: dimensional reduction; the strong derivative bound; the two strong compatibility conclusions; weak compatibility and self-similarity; and finally strong topple control. Every regularity assertion used to obtain the strong derivative bound is at an earlier time.
+
+Let $p=(\mathbf{x}_i,1,\mathbf{1}_j)$ be a facet point with $i+1+j=d$, and call $\mathbf{x}_i$ the head of $p$. The head is empty exactly when $i=0$, and then $p=\mathbf{1}$. Put $k=i+1$, so that $p_k=1$. The three conclusions at $p$ are the strong derivative bound $v_t(p)-v_t(p+2e_k)\leq 2$, and, under the unit gap $v_t(p)=v_t(p+e_k)+1$, the two strong compatibility conclusions $v_{t+1}(p)=v_t(p)$ and $v_{t+1}(p+e_k)=v_t(p+e_k)+1$.
+
+If the head is nonempty, Lemma~\ref{lem:strict-head-facet} below gives all three conclusions at every time. Its proof uses only the first-wait description of the odometer, a quadratic barrier, and the monotonicity of the odometer in space and time. It uses no assumption from the induction, so it applies at each triple directly.
+
+If the head is empty, $p=\mathbf{1}$, and the three conclusions are asserted only for $t<\tau_M$, where $\tau_M$ is the toppling time of the dissipating face defined in Theorem~\ref{the_theorem}. The argument below proves them in that regime.
+
+We first show that $v_t(x)-v_t(x+2e_k)\leq 2x_k$ for every $x\in P_M$, every $1\leq k\leq d$ and every $t<\tau_M$, by induction on $t$. The case $x=\mathbf{1}$ is the derivative bound at $\mathbf{1}$ that the empty head needs.
+
+Two facts are used. The first-difference bound $v_t(x)-v_t(x+e_k)\leq x_k$ holds on $P_M$ at every time, as recorded in the proof of Lemma~\ref{lem:strict-head-facet} below. Before $\tau_M$, every site of the inner boundary has odometer value at most $M-1$, by the definition of $\tau_M$.
+
+If $x_k=M$, the point $x+2e_k$ is exterior, so the two-step difference is $v_t(x)\leq M-1\leq 2M$. If $x_k=M-1$, the point $x+2e_k$ is again exterior, and the first-difference bound together with $v_t(x+e_k)\leq M-1$ gives $v_t(x)\leq 2(M-1)$.
+
+Now let $x_k\leq M-2$, so that $x+2e_k$ lies in the cube. The neighbours of $x+2e_k$ are the points $y+2e_k$ with $y$ a neighbour of $x$, so
+\begin{equation*}
+Nv_{t-1}(x)-Nv_{t-1}(x+2e_k)=\sum_{y\sim x}\big(v_{t-1}(y)-v_{t-1}(y+2e_k)\big)\,.
+\end{equation*}
+
+We bound each summand by its right-hand side $2y_k$ at time $t-1$. These right-hand sides add up to $4dx_k$, because the $2d$ neighbours of $x$ have coordinate sum $2d\,x_k$ in direction $k$.
+
+A transverse neighbour $y=x\pm e_j$ with $j\neq k$ that is exterior has $y+2e_k$ exterior too, so its summand is zero. A transverse neighbour that is reflected, which happens when $x_j=1$ and $y_j=0$, has the same values as $x$ and $x+2e_k$, so its summand is the summand at $x$ itself, with right-hand side $2x_k$. Every other transverse neighbour lies in $P_M$ and is bounded by the hypothesis at time $t-1$.
+
+The axial neighbour $x+e_k$ lies in $P_M$ and is bounded by the hypothesis at time $t-1$, with right-hand side $2(x_k+1)$. If $x_k\geq2$, the axial neighbour $x-e_k$ lies in $P_M$ and has right-hand side $2(x_k-1)$. If $x_k=1$, the neighbour $x-e_k$ is reflected to $x$, so its summand is the gap $g=v_{t-1}(x)-v_{t-1}(x+e_k)$ at time $t-1$, and its right-hand side is $0$. Axis monotonicity and the first-difference bound give $0\leq g\leq 1$.
+
+If $x_k=1$ and $g=0$, the summand of $x-e_k$ vanishes, and the sum bound below applies. If $x_k=1$ and $g=1$, the sum is not needed. Weak compatibility at time $t-1$ keeps $x$ fixed, so $v_t(x)=v_{t-1}(x)$. Since $v_t(x+2e_k)$ does not decrease in time, $v_t(x)-v_t(x+2e_k)\leq v_{t-1}(x)-v_{t-1}(x+2e_k)\leq 2$, which is the required bound.
+
+In all other cases the summands are bounded as above, so $Nv_{t-1}(x)-Nv_{t-1}(x+2e_k)\leq 4dx_k=K\cdot 2x_k$ with $K=2d$. The comparison rule (R) in the proof of Lemma~\ref{lem:strict-head-facet} then gives $v_t(x)-v_t(x+2e_k)\leq 2x_k$.
+
+The argument treats every direction and every neighbour of $x$ in $P_M$ without sorting. It therefore proves the bound on the unsorted orthant and hence on the sorted simplex, and the rotating boundary, the mirrors $x_i=x_j$, is covered by these neighbours rather than treated separately. This covers $x=\mathbf{1}$, which is the empty-head bound used above.
+
+For the raised site $q=\mathbf{1}+e_k$, the firing conclusion (that $q$ fires) is obtained by repeating the neighbour-sum comparison of the proof of Lemma~\ref{lem:strict-head-facet} at $p=\mathbf{1}$, for $t<\tau_M$. That comparison compares the neighbour sum of $q$ at time $t$ with the neighbour sum of $p$ at time $t-1$, using the two-step bound at $p$ just proved and the earlier compatibility assertions. The subcases of that comparison that these inputs do not cover are settled by dimensional reduction at an earlier time. No firing of $q$ is asserted for $t\geq\tau_M$.
+
+If $v_t(\mathbf{1})=v_t(\mathbf{1}+e_k)+1$, then $\mathbf{1}$ does not fire at time $t$. This is the no-fire fact (d) in the proof of Lemma~\ref{lem:strict-head-facet}.
+
 \begin{lemma}\label{lem:strict-head-facet}
 Let $d\geq1$, $M\geq2$, $P_M=\{1,\ldots,M\}^d$, and $s_0\equiv2d$.
 For every $t\geq0$, $x\in P_M$ and coordinate $k$ with $x_k<\max_l x_l$,
@@ -1136,100 +1134,53 @@ v_{t+1}(x)=v_t(x),\qquad v_{t+1}(x+e_k)=v_t(x+e_k)+1.
 \]
 \end{lemma}
 \begin{proof}
-Put $K=2d$, $Nu(x)=\sum_i(u(x+e_i)+u(x-e_i))$, and
-$f_t=v_{t+1}-v_t\in\{0,1\}$. All values are zero outside the physical cube.
-For in-cube sites the uniform-height update is
-$v_{t+1}(x)=1+\lfloor Nv_t(x)/K\rfloor$. Consequently
-$Nv_a(x)-Nv_b(z)\leq Kg$ implies $v_{a+1}(x)-v_{b+1}(z)\leq g$ for
-in-cube $x,z$ and integral $g$.
+Write $K=2d$ and $Nu(x)=\sum_{y\sim x}u(y)$ for the sum over the $K$ neighbours $y$ of $x$. Values vanish outside the cube $\{1-M,\ldots,M\}^d$, and a site outside this cube is exterior. On the cube the floor update of Lemma~\ref{pt_ind_lemma} with $s_0\equiv 2d$ reads $v_{t+1}(x)=1+\lfloor Nv_t(x)/K\rfloor$. The site $x$ fires at round $t$, meaning $v_{t+1}(x)=v_t(x)+1$, exactly when $\Delta v_t(x)=Nv_t(x)-Kv_t(x)\geq0$. We write $f_t(x)=v_{t+1}(x)-v_t(x)\in\{0,1\}$ for the firing indicator. We use the comparison rule (R): if $x$ and $z$ are cube sites and $g$ is an integer with $Nv_a(x)-Nv_b(z)\leq Kg$, then $v_{a+1}(x)-v_{b+1}(z)\leq g$. This holds because $\lfloor \beta/K\rfloor+g=\lfloor(\beta+Kg)/K\rfloor$ and the floor function is monotone.
 
-We first record three inputs directly from this process. With
-$\rho(x)=M+1-\max_i x_i$, every round before $\rho(x)$ fires at $x$, and
-round $\rho(x)$ waits. Indeed, before the exterior signal arrives all directed
-neighbor values equal the current time; at its arrival a neighbor in a
-maximizing direction has one less toppling, and all other values are at most
-the current time. The floor update gives $v_\rho(x)=v_{\rho+1}(x)=\rho$.
-After this first wait there is no later pair of consecutive firings. To see
-this, a first such pair, preceded by a wait, requires more than $K$ incoming
-firings over its two preceding rounds. Among the $K$ directed occurrences
-one must have fired in both rounds. An exterior occurrence cannot do so;
-a reflecting occurrence would be the original waiting site. For any other
-neighbor $y$, $\rho(y)\leq\rho(x)+1$, so its pair either contradicts its own
-first wait or gives an earlier forbidden pair. Strong time induction closes
-the argument.
+\emph{Step 1.} We record four facts about the process, which hold for every $t$.
 
-The zero-extended axial profile
-$U_M(z)=(M(M+1)-z(z-1))/2$, reflected by $z\mapsto1-z$, is a nonnegative
-barrier for the odometer. The selected axial neighbor pair is $2U_M-1$;
-every transverse pair is at most $2U_M$, including zero sinks. Thus
-$NU_M\leq KU_M-1$ and induction with the floor update gives $v_t(x)\leq U_M(x_k)$
-on the positive orthant. In particular $v_t(x)\leq M$ when $x_k=M$.
-The derivative bound and elementary axis monotonicity now give
-$0\leq v_t(x)-v_t(x+e_k)\leq x_k$.
+(a) First waits. For $x\in P_M$ let $\rho(x)=M+1-\max_i x_i$, which is the graph distance from $x$ to the exterior. Then $x$ fires in every round before $\rho(x)$ and waits in round $\rho(x)$, so $v_{\rho(x)}(x)=v_{\rho(x)+1}(x)=\rho(x)$. Before the exterior signal reaches $x$, every neighbour carries the current time, so $x$ fires. When the signal arrives, a neighbour in a maximising direction has one toppling fewer than the current time, and every other neighbour has at most the current time, so $x$ misses the threshold and waits.
 
-For $t\geq1$ maintain the assertions
-\[
-\begin{aligned}
- A_t(k,x)&:\ v_t(x)-v_{t-1}(x+e_k)\leq x_k,\\
- B_t(k,l,x)&:\ v_t(x)-v_t(x+e_k+e_l)\leq x_k+x_l-1\quad(k\ne l),\\
- C_t(k,x)&:\ v_t(x)-v_t(x+2e_k)\leq2x_k\quad(x_k<\max_l x_l),
-\end{aligned}
-\]
-together with the two firing conclusions $S_t$ of the lemma on its stated
-nonempty-head domain. Derive, rather than assume, the lag assertion
-$L_t(k,x):v_t(x+e_k)\geq v_{t-1}(x)$ when $x_k=1$ and $\max x\geq2$.
-At time zero B and C are immediate and S has no unit-gap premise; A at time
-one follows from $v_1=1$. At all ones retain only the separate no-fire fact:
-a unit gap there gives $\Delta v_t=-d$ by symmetry and reflection.
+(b) No later consecutive firing. If $s>\rho(x)$, then $f_s(x)+f_{s+1}(x)\leq1$. Take a first such pair $f_s(x)=f_{s+1}(x)=1$. It is preceded by a wait, and it requires more than $K$ incoming firings over its two preceding rounds, so one of the $K$ directed neighbours of $x$ fired in both of those rounds. An exterior neighbour never fires. A reflected occurrence would be the original waiting site $x$ itself. Any other neighbour $y$ satisfies $\rho(y)\leq\rho(x)+1$, so its pair either contradicts its own first wait or is an earlier forbidden pair. Strong induction in time excludes all such pairs.
 
-The order of the step is $A_t,L_t,B_t,C_t,S_t$, using the preceding-time
-assertions. At a selected top face A follows from $v_t\leq M$ and the exterior
-zero value. At $x_k=1$ its preceding gap is zero or one; in the latter case
-previous S keeps the site fixed, or at all ones the separate no-fire fact
-does so. For $2\leq x_k\leq M-1$ and $t\geq2$, sum previous A with affine
-weight $y_k$ and use the floor comparison at old times $t-1,t-2$.
-A transverse sink has both values zero; a transverse reflection is the base
-pair with unchanged weight. Selected neighbors remain in $P_M$, including
-the top face. L follows from previous S when the previous gap is one and
-from temporal monotonicity when it is zero; its head restriction is retained.
+(c) The quadratic barrier. Let $U_M(z)=\tfrac12\big(M(M+1)-z(z-1)\big)$ for $1\leq z\leq M+1$, let $U_M(z)=U_M(1-z)$ for $1-M\leq z\leq0$, and let $U_M(z)=0$ otherwise. Then $U_M(M+1)=0$ and $U_M(M)=M$. The profile satisfies $NU_M\leq KU_M-1$ at every cube site. The axial pair $x\pm e_k$ contributes $2U_M(x_k)-1$, because $U_M(z+1)+U_M(z-1)=2U_M(z)-1$. Each of the $d-1$ transverse pairs contributes at most $2U_M(x_k)$, and exterior occurrences contribute zero. Induction on $t$ through the floor update, using the comparison rule (R), gives $v_t(x)\leq U_M(x_k)$ for $x\in P_M$. In particular $v_t(x)\leq M$ when $x_k=M$. With the first-difference bound of Corollary~\ref{cor:derivative_bound} and axis monotonicity, this gives $0\leq v_t(x)-v_t(x+e_k)\leq x_k$ on $P_M$.
 
-For B a selected top face is bounded by $M\leq x_k+x_l-1$. If $x_k=1$,
-apply L at $x+e_l$ and then A at $x$ in direction $l$; that shifted point has
-a head. Treat $x_l=1$ symmetrically. Otherwise sum previous B with affine
-weight $y_k+y_l-1$ and apply the equal-time floor comparison. Each transverse
-sink gives two zero values; transverse reflection returns previous B at the
-base; all selected neighbors remain in $P_M$.
+(d) The no-fire fact at $\mathbf{1}$. Suppose $v_t(\mathbf{1})=v_t(\mathbf{1}+e_k)+1$ for some $k$. By the permutation symmetry, $v_t(\mathbf{1}+e_k)=v_t(2,\mathbf{1}_{d-1})$, and by the reflection $v_t(\mathbf{1}-e_j)=v_t(\mathbf{1})$. Hence $\Delta v_t(\mathbf{1})=d\big(v_t(2,\mathbf{1}_{d-1})-v_t(\mathbf{1})\big)=-d$, so $\mathbf{1}$ does not fire at round $t$.
 
-For C choose $l$ with $x_l>x_k=a$. If $x_l=a+1$, interchange those two
-coordinates at $x+e_k$: the two far values coincide, and same-time B gives
-$C_t$ with bound $a+(a+1)-1=2a$, including an exterior endpoint.
-Otherwise $x_l\geq a+2$ and the far endpoint is in the cube. Sum previous C
-with affine weight $2y_k$. Ordinary neighbors still have a strict head;
-transverse sinks are zero and transverse reflections return the base pair.
-The only exceptional occurrence is $x-e_k$ at $a=1$. A previous unit gap
-makes the base site wait by previous S, so monotonicity of the far value
-transfers previous C. A zero gap contributes its exact zero affine weight.
-Thus C follows without a full-domain second-difference claim.
+\emph{Step 2.} We now prove, by induction on $t$, the following assertions for $x\in P_M$ and $k\neq l$. The lag assertion is derived at each time rather than assumed.
 
-For S put $p=x$, $q=x+e_k$ and suppose the current gap is one. A previous unit
-gap would make $p$ stay and $q$ fire by previous S and erase this gap.
-Thus, for some $b$, the old values at $p,q$ were $b,b$ and the new values
-are $b+1,b$: their previous firing pair was $(1,0)$. The nonempty head gives
-$\rho(p)=\rho(q)$. That pair cannot occur before their first wait or at it,
-so the no-later-consecutive-firing result makes $p$ wait now.
-To force $q$ to fire compare $Nv_t(q)$ with $Nv_{t-1}(p)$; both center values
-are $b$. The selected pair contributes at least $(b+1)+(b-1)=2b$ by current C,
-whereas its old reflected pair was $b+b$. For a transverse positive direction,
-L at $p+e_h$ gives the comparison unless both sites are exterior, when both
-values vanish. In a transverse negative direction with $p_h=1$, reflection
-gives $b$ on both sides. If $p_h=2$, the new point is a permutation of $p$
-and has value $b+1$, while the old value is at most $b+1$ by first difference.
-If $p_h\geq3$, L at $p-e_h$ applies with a surviving head. Hence
-$Nv_t(q)\geq Nv_{t-1}(p)\geq Kb$, since $p$ fired in the previous round.
-The threshold at $q$ now makes it fire. This proves S and closes the induction.
+\begin{itemize}
+\item $A_t(k,x)$: $v_t(x)-v_{t-1}(x+e_k)\leq x_k$.
+\item $L_t(k,x)$: $v_t(x+e_k)\geq v_{t-1}(x)$, when $x_k=1$ and $\max_l x_l\geq2$.
+\item $B_t(k,l,x)$: $v_t(x)-v_t(x+e_k+e_l)\leq x_k+x_l-1$.
+\item $C_t(k,x)$: $v_t(x)-v_t(x+2e_k)\leq 2x_k$, when $x_k<\max_l x_l$.
+\item $S_t(k,x)$: if $v_t(x)=v_t(x+e_k)+1$, then $v_{t+1}(x)=v_t(x)$ and $v_{t+1}(x+e_k)=v_t(x+e_k)+1$, when $x_k=1$ and $\max_l x_l\geq2$.
+\end{itemize}
+
+The case $t=0$ holds because all values vanish: $B_0$ and $C_0$ are immediate, and $S_0$ has no premise. The case $t=1$ follows from $v_0\equiv0$ and $v_1\equiv1$ on the cube. Let $t\geq2$ and assume the assertions at all earlier times. At time $t$ we prove them in the order $A_t,L_t,B_t,C_t,S_t$, each step using the earlier assertions in this order.
+
+\emph{Step 3: $A_t$.} If $x_k=M$, then $x+e_k$ is exterior, so $v_{t-1}(x+e_k)=0$, and $v_t(x)\leq M$ by fact (c). Let $x_k=1$, and let $g=v_{t-1}(x)-v_{t-1}(x+e_k)\in\{0,1\}$. Then $v_t(x)-v_{t-1}(x+e_k)=\big(v_t(x)-v_{t-1}(x)\big)+g$, and the first term is at most $1$. If $g=0$ this is at most $1=x_k$. If $g=1$, the bound holds exactly when $x$ waits at round $t-1$. This holds by $S_{t-1}(k,x)$ when $x$ has a coordinate at least $2$, and at $\mathbf{1}$ by the no-fire fact (d). Let $2\leq x_k\leq M-1$. Then $x\pm e_k\in P_M$. Since $Nv_{t-1}(x)-Nv_{t-2}(x+e_k)=\sum_{y\sim x}\big(v_{t-1}(y)-v_{t-2}(y+e_k)\big)$, each summand is at most $y_k$ by $A_{t-1}(k,y)$. The right-hand sides are affine in $y$ and add up to $\sum_{y\sim x}y_k=2dx_k$. Exterior transverse occurrences contribute zero, and reflected transverse occurrences return the summand at $x$ with the same right-hand side $x_k$. All other neighbours remain in $P_M$, including the top face. So $Nv_{t-1}(x)-Nv_{t-2}(x+e_k)\leq Kx_k$, and rule (R) with $a=t-1$ and $b=t-2$ gives $A_t(k,x)$.
+
+\emph{Step 4: $L_t$.} Let $x_k=1$ and $\max_l x_l\geq2$, and let $g=v_{t-1}(x)-v_{t-1}(x+e_k)\in\{0,1\}$. If $g=0$, then $v_t(x+e_k)\geq v_{t-1}(x+e_k)=v_{t-1}(x)$ by monotonicity in time. If $g=1$, then $S_{t-1}(k,x)$ applies, because $x$ has a coordinate at least $2$, and it gives $v_t(x+e_k)=v_{t-1}(x+e_k)+1=v_{t-1}(x)$. In both cases $L_t(k,x)$ holds.
+
+\emph{Step 5: $B_t$.} If $x_k=M$ or $x_l=M$, the point $x+e_k+e_l$ is exterior, and $v_t(x)\leq M\leq x_k+x_l-1$ by fact (c). Suppose $x_k=1$, the case $x_l=1$ being symmetric. Then $L_t(k,x+e_l)$ applies, because $x+e_l$ has $k$-coordinate $1$ and $l$-coordinate $x_l+1\geq2$. It gives $v_t(x+e_l+e_k)\geq v_{t-1}(x+e_l)$. Together with $A_t(l,x)$, which gives $v_t(x)-v_{t-1}(x+e_l)\leq x_l$, this yields $v_t(x)-v_t(x+e_k+e_l)\leq x_l=x_k+x_l-1$. Otherwise $x_k,x_l\geq2$, and $x+e_k+e_l$ lies in the cube. The map $y\mapsto y+e_k+e_l$ is a bijection from the neighbours of $x$ to those of $x+e_k+e_l$, so $Nv_{t-1}(x)-Nv_{t-1}(x+e_k+e_l)=\sum_{y\sim x}\big(v_{t-1}(y)-v_{t-1}(y+e_k+e_l)\big)$. Each summand is at most $y_k+y_l-1$ by $B_{t-1}$, and these right-hand sides add up to $2d(x_k+x_l-1)$. Exterior occurrences give two zero values. Reflected occurrences return the base pair at $x$ with the same right-hand side. All selected neighbours remain in $P_M$. Rule (R) with $a=b=t-1$ then gives $B_t(k,l,x)$.
+
+\emph{Step 6: $C_t$.} Let $a=x_k$, and choose $l$ with $x_l>a$, which is possible because $a<\max_m x_m$. If $x_l=a+1$, interchanging coordinates $k$ and $l$ maps $x+2e_k$ to $x+e_k+e_l$. The odometer is symmetric under coordinate permutations, so $v_t(x+2e_k)=v_t(x+e_k+e_l)$, including when both are exterior. Then $B_t(k,l,x)$ gives $v_t(x)-v_t(x+2e_k)\leq a+(a+1)-1=2a$. Otherwise $x_l\geq a+2$, so $x+2e_k$ lies in the cube. The summands are $v_{t-1}(y)-v_{t-1}(y+2e_k)$ for $y\sim x$, with right-hand sides $2y_k$, which add up to $4da$. Transverse exterior occurrences contribute zero, and transverse reflected occurrences return the base pair with right-hand side $2a$. Every other transverse neighbour lies in $P_M$ and has a coordinate larger than $a$, namely $x_l$ or $x_l\pm1$, so it is bounded by $C_{t-1}$ with right-hand side $2a$. The axial neighbour $x+e_k$ has $(x+e_k)_k=a+1<x_l\leq\max$, so $C_{t-1}(k,x+e_k)$ applies with right-hand side $2(a+1)$. If $a\geq2$, the neighbour $x-e_k$ satisfies $C_{t-1}(k,x-e_k)$ with right-hand side $2(a-1)$. If $a=1$, the neighbour $x-e_k$ is reflected to $x$, and its summand is the gap $g=v_{t-1}(x)-v_{t-1}(x+e_k)$ with right-hand side $0$. If $g=0$, the summand is zero and the sum bound applies. If $g=1$, then $S_{t-1}(k,x)$ applies, because $x$ has $x_l\geq3$. It gives $v_t(x)=v_{t-1}(x)$, and since $v_t(x+2e_k)\geq v_{t-1}(x+2e_k)$, we get $v_t(x)-v_t(x+2e_k)\leq v_{t-1}(x)-v_{t-1}(x+2e_k)\leq 2$ by $C_{t-1}(k,x)$. In every case $C_t(k,x)$ holds. The argument uses $C_{t-1}$ at the neighbours of $x$, $S_{t-1}$ at $x$ in the single case $a=1$, $g=1$, and $B_t$ at $x$ in the case $x_l=a+1$.
+
+\emph{Step 7: $S_t$.} Let $p=x$ and $q=x+e_k$, with $p_k=1$, $\max_l p_l\geq2$, and $v_t(p)=v_t(q)+1$. We show that $p$ waits at round $t$ and that $q$ fires at round $t$.
+
+First, the gap at time $t-1$ is zero. If it were one, $S_{t-1}(k,p)$ would give $v_t(p)=v_{t-1}(p)$ and $v_t(q)=v_{t-1}(q)+1$, so the gap at time $t$ would be zero, contrary to the assumption. Let $b$ be the common value $v_{t-1}(p)=v_{t-1}(q)$. Monotonicity in time gives $v_t(q)\geq b$, and $v_t(p)\leq b+1$, so $v_t(p)=b+1$ and $v_t(q)=b$. Thus $p$ fired and $q$ did not fire at round $t-1$.
+
+Since the largest coordinate of $p$ is at least $2$ and $p_k=1$, the maximum is attained outside direction $k$. Hence $\max p=\max q$ and $\rho(p)=\rho(q)=:r$. If $t-1<r$, both sites fire at round $t-1$, which contradicts $f_{t-1}(q)=0$. If $t-1=r$, both sites wait, which contradicts $f_{t-1}(p)=1$. So $t-1>r$, and fact (b) gives $f_t(p)=0$. This is $v_{t+1}(p)=v_t(p)$.
+
+For $q$, we show $Nv_t(q)\geq Nv_{t-1}(p)$ direction by direction. In direction $k$, $Nv_t(q)$ contains $v_t(p+2e_k)+v_t(p)$, and $C_t(k,p)$ gives $v_t(p+2e_k)\geq (b+1)-2=b-1$, so this pair is at least $2b$. The corresponding pair in $Nv_{t-1}(p)$ is $v_{t-1}(q)+v_{t-1}(p-e_k)=b+b$, because $p-e_k$ is reflected to $p$. In a transverse positive direction $h$, $L_t(k,p+e_h)$ gives $v_t(q+e_h)\geq v_{t-1}(p+e_h)$. If $p+e_h$ is exterior, both sides vanish. In a transverse negative direction $h$, consider $q-e_h=p+e_k-e_h$ and $p-e_h$. If $p_h=1$, the reflections give $v_t(q-e_h)=v_t(q)=b$ and $v_{t-1}(p-e_h)=v_{t-1}(p)=b$. If $p_h=2$, the point $q-e_h$ is a coordinate permutation of $p$, so $v_t(q-e_h)=v_t(p)=b+1$, while $v_{t-1}(p-e_h)\leq v_{t-1}(p)+1=b+1$ by the first-difference bound. If $p_h\geq3$, $L_t(k,p-e_h)$ gives $v_t(q-e_h)\geq v_{t-1}(p-e_h)$, since $p-e_h$ has a coordinate at least $2$. Adding the directions gives $Nv_t(q)\geq Nv_{t-1}(p)$.
+
+Since $p$ fired at round $t-1$, we have $Nv_{t-1}(p)\geq Kb$. Hence $Nv_t(q)\geq Kb=Kv_t(q)$, so $\Delta v_t(q)\geq0$, and $q$ fires at round $t$. This is $v_{t+1}(q)=v_t(q)+1$, which proves $S_t(k,x)$ and completes the induction.
+
+Steps 3–7 prove $A_t$, $L_t$, $B_t$, $C_t$, $S_t$ for every $t$. The first clause of the lemma is $C_t$, and the second clause is $S_t$.
+
 \end{proof}
-For the required facet $p=(\mathbf{x}_i,1,\mathbf1_j)$ with $i\geq1$,
-choose its coordinate equal to one and a head coordinate at least two.
+
+For a facet point $p=(\mathbf{x}_i,1,\mathbf{1}_j)$ with $i\geq1$, the coordinate $k=i+1$ equals $1$ and the head $\mathbf{x}_i$ has a coordinate at least $2$. Lemma~\ref{lem:strict-head-facet} therefore gives $v_t(p)-v_t(p+2e_k)\leq 2$ and both firing conclusions at $p$, at every time. These are the strong derivative bound and the two strong compatibility conclusions at $p$.
 The lemma gives the constant-two bound and both compatibility conclusions.
 
 
