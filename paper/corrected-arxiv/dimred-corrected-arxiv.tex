@@ -318,19 +318,21 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 		%If $\Delta^{\mathcal{G}} w + s \leq 2d-1$, then $w(t, \cdot) \geq v_t(\cdot)$ for all $t \geq 1$.
 	\end{lemma}
 	\begin{proof}
-        Put $K=2d$ and $q_t(x)=\lfloor(s_0(x)+\sum_{y\sim x}v_t(y))/K\rfloor$.
-        Lemma \ref{pt_ind_lemma} gives $v_{t+1}(x)=\max\{0,q_t(x)\}$.
-        Thus $K v_{t+1}(x)\geq s_0(x)+\sum_{y\sim x}v_t(y)-(K-1)$,
-        which proves that $v$ belongs to the class in \eqref{eq:parabolic_leastaction}.
-        Let $u$ be any member of that class. At time zero, $v_0=0\leq u_0$.
-        If $v_t\leq u_t$, its defining inequality and $u_{t+1}\geq0$ give
-        \[
-        u_{t+1}(x)\geq\max\left\{0,\left\lfloor
-        \frac{s_0(x)+\sum_{y\sim x}u_t(y)}K\right\rfloor\right\}
-        \geq v_{t+1}(x).
-        \]
-        Zero padding supplies the comparison outside the cube. Induction proves
-        $v\leq u$, and feasibility of $v$ proves the attained pointwise minimum.
+Route: Step 1 shows that $v$ belongs to the class in \eqref{eq:parabolic_leastaction}. Step 2 shows that every member of the class lies above $v$.
+
+\emph{Step 1.} We show that $v$ belongs to the class. Put $K:=2d$ and $a_t(x):=s_0(x)+\sum_{y\sim x}v_t(y)$. The standing assumption is $s_0\leq 2K-1$, so Lemma \ref{pt_ind_lemma} gives $v_{t+1}(x)=\max\{0,\lfloor a_t(x)/K\rfloor\}$. For every integer $a$ we have $\lfloor a/K\rfloor>a/K-1$, so $K\lfloor a/K\rfloor\geq a-(K-1)$. Hence $K v_{t+1}(x)\geq a_t(x)-(K-1)$ for all $t\geq0$ and $x\in\mathcal C_N^{(d)}$. Rearranging gives
+\begin{equation*}
+-K\,v_{t+1}(x)+\sum_{y\sim x}v_t(y)+s_0(x)\leq K-1\,,
+\end{equation*}
+which is the constraint at time $t+1$. The values of $v$ are nonnegative integers, so $v$ belongs to the class.
+
+\emph{Step 2.} Let $u$ be any member of the class, and extend $u$ and $v$ by zero outside $\mathcal C_N^{(d)}$. This does not change the neighbour sums in the constraint at points of $\mathcal C_N^{(d)}$. We show by induction on $t$ that $v_t\leq u_t$. At $t=0$ this holds since $v_0=0$ and $u_0\geq0$. Assume $v_t\leq u_t$. Both functions vanish outside $\mathcal C_N^{(d)}$, so the inequality holds on all of $\mathbb Z^d$. Fix $y\in\mathcal C_N^{(d)}$ and put
+\begin{equation*}
+b:=s_0(y)+\sum_{y'\sim y}u_t(y')\,,\qquad a:=s_0(y)+\sum_{y'\sim y}v_t(y')\,.
+\end{equation*}
+The constraint for $u$ at time $t+1$ says $b\leq Ku_{t+1}(y)+K-1$, that is, $b<K\big(u_{t+1}(y)+1\big)$. Since $a\leq b$, we get $a<K\big(u_{t+1}(y)+1\big)$, and therefore $\lfloor a/K\rfloor\leq u_{t+1}(y)$. Together with $u_{t+1}(y)\geq0$, this gives $v_{t+1}(y)=\max\{0,\lfloor a/K\rfloor\}\leq u_{t+1}(y)$. This completes the induction.
+
+By Steps 1 and 2, $v$ belongs to the class and lies below each of its members. So $v$ is the pointwise minimum of the class, which is \eqref{eq:parabolic_leastaction}.
     \end{proof}
 	\noindent  
 	Our usage of the parabolic least action principle in the main argument is minimal
@@ -401,17 +403,21 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 	\end{lemma}
 	
 	\begin{proof}
-        Induct on $t$ using the simultaneous threshold update. The zero
-        odometer is invariant. Each cube symmetry preserves cube membership
-        and permutes the $2d$ directed neighbor occurrences. Therefore the
-        initial-height term, neighbor sum, center odometer and firing indicator
-        at $\sigma x$ equal the corresponding terms at $x$. This proves
-        invariance at time $t+1$, with zero odometer outside the cube.
-        For the identification, induct again from zero on $\mathcal S$.
-        Invariance replaces each in-cube neighbor by its orbit representative;
-        exterior neighbors contribute zero. The physical update is then
-        precisely the independent recursion defining $v^{\mathcal S}$.
-        Hence $v_t=v_t^{\mathcal S}$ on $\mathcal S$ for every $t\geq0$.
+Route: Step 1 proves the invariance $\sigma v_t=v_t$ by induction on $t$. Step 2 shows, again by induction on $t$, that the physical odometer on $\mathcal S$ follows the recursion defining $v^{\mathcal S}$.
+
+\emph{Step 1.} We show that $\sigma v_t=v_t$ for every $\sigma\in\operatorname{Aut}_{\mathcal C_d}$ and every $t\geq0$. The zero odometer is invariant. Assume $v_t(\sigma x)=v_t(x)$ for all $x$ and all $\sigma$. Each $\sigma$ maps $\mathcal C_N^{(d)}$ onto itself, and it carries the $2d$ directed neighbours of $x$ bijectively onto those of $\sigma x$, so $\sum_{y'\sim\sigma x}v_t(y')=\sum_{y\sim x}v_t(\sigma y)$. The initial pile is invariant, $s_0(\sigma x)=s_0(x)$. Hence the height at time $t$ satisfies
+\begin{equation*}
+s_t(\sigma x)=s_0(\sigma x)-2d\,v_t(\sigma x)+\sum_{y\sim x}v_t(\sigma y)=s_t(x)\,,
+\end{equation*}
+by the induction hypothesis. The odometer rule then gives $v_{t+1}(\sigma x)=v_{t+1}(x)$ for $x\in\mathcal C_N^{(d)}$. Outside the cube both values are zero.
+
+\emph{Step 2.} We show that $v_t(x)=v_t^{\mathcal S}(x)$ for every $x\in\mathcal S$ and every $t\geq0$. Both sides vanish at $t=0$. Assume the identity at time $t$. For $y\in\mathcal C_N^{(d)}$ let $r_N(y)\in\mathcal S$ be its orbit representative. By Step 1, $v_t(y)=v_t(r_N(y))=v_t^{\mathcal S}(r_N(y))$, and $v_t(y)=0$ outside the cube, so $v_t$ is the lift of $v_t^{\mathcal S}$ defined above. For $x\in\mathcal S$ the $2d$ neighbours of $x$ therefore contribute $\sum_{y\sim x}v_t(y)=R\,v_t^{\mathcal S}(x)$, and the exterior neighbours contribute zero. Thus the physical update at $x$ reads
+\begin{equation*}
+v_{t+1}(x)=v_t(x)+\mathbf 1\{s_0(x)+R\,v_t^{\mathcal S}(x)-2d\,v_t^{\mathcal S}(x)\geq 2d\}=v_{t+1}^{\mathcal S}(x)\,,
+\end{equation*}
+which is exactly the recursion defining $v^{\mathcal S}$. This completes the induction.
+
+Hence $v_t=v_t^{\mathcal S}$ on $\mathcal S$ for every $t\geq0$.
     \end{proof}
 	\noindent Note that the proof indicates that Lemma \ref{symmetry_lemma} can be extended in a natural way to 
 	other graphs and domains which are preserved under the automorphism group of the graph. 
@@ -535,16 +541,21 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 	\end{corollary}
 
 	\begin{proof}
-        Work on the physical cube with zero exterior. Induct on time for the
-        two families of comparisons perpendicular to a reflection mirror and
-        to a coordinate-interchange mirror. A strict previous comparison is
-        preserved by the one-fire bound. At equality, pair the directed
-        neighbor occurrences by reflection, respectively interchange of the
-        selected coordinates. The previous comparisons give the neighbor-sum
-        order; the equal center values and constant initial height give the
-        same order of firing indicators. A reflecting occurrence is identified
-        by symmetry and an exterior occurrence has zero value. This proves
-        each elementary comparison and hence its restriction to $\mathcal S$.
+Route: Step 1 proves the reflection comparison and Step 2 the interchange comparison, each for all $t\geq0$ and all $x\in\mathbb Z^d$, with $v_t$ extended by zero. Step 3 specialises them to the corollary. Throughout this subsection $s_0$ is constant.
+
+\emph{Step 1 (reflection comparison).} We show that $v_t(x+e_i)\leq v_t(x)$ whenever $x_i\geq1$. This holds at $t=0$, so assume it at time $t$ for all $x$. If $x\notin\mathcal C_N^{(d)}$, then $x+e_i\notin\mathcal C_N^{(d)}$, because $x_i\geq1$ and moving up in coordinate $i$ cannot bring an out-of-range coordinate back into range. Both values vanish at time $t+1$. If $x\in\mathcal C_N^{(d)}$ and $x+e_i\notin\mathcal C_N^{(d)}$, then $v_{t+1}(x+e_i)=0\leq v_{t+1}(x)$. Now let both points lie in the cube.
+
+If $v_t(x+e_i)<v_t(x)$, then integrality and $v_{t+1}(z)-v_t(z)\in\{0,1\}$ give $v_{t+1}(x+e_i)\leq v_t(x+e_i)+1\leq v_t(x)\leq v_{t+1}(x)$.
+
+If $v_t(x+e_i)=v_t(x)$, we compare heights. For each $k$, the two neighbours $x+e_i\pm e_k$ of $x+e_i$ are paired with $x+e_k$ and $x-e_k$. The induction hypothesis at $x+e_k$ gives $v_t(x+e_i+e_k)\leq v_t(x+e_k)$, and the hypothesis at $x-e_k$ gives $v_t(x+e_i-e_k)\leq v_t(x-e_k)$ when $x-e_k$ has $i$-th coordinate at least $1$. The only exception is $k=i$ with $x_i=1$. In that case $v_t(x-e_i)=v_t(x)$, by Lemma \ref{symmetry_lemma} applied to the reflection $y_i\mapsto 1-y_i$, which exchanges $x$ and $x-e_i$. So in all cases $v_t(x+e_i+e_k)+v_t(x+e_i-e_k)\leq v_t(x+e_k)+v_t(x-e_k)$. Summing over $k$ gives $\sum_{y\sim x+e_i}v_t(y)\leq\sum_{y\sim x}v_t(y)$. With $s_0$ constant and $v_t(x+e_i)=v_t(x)$, the heights satisfy $s_t(x+e_i)\leq s_t(x)$. So if $x+e_i$ topples at step $t+1$, then $x$ topples too, and $v_{t+1}(x+e_i)\leq v_{t+1}(x)$.
+
+\emph{Step 2 (interchange comparison).} We show that $v_t(x+e_i-e_j)\leq v_t(x)$ whenever $i\neq j$ and $x_j\leq x_i$. This holds at $t=0$, so assume it at time $t$ for all such $x$. Write $y:=x+e_i-e_j$. If $y\notin\mathcal C_N^{(d)}$, then $v_{t+1}(y)=0\leq v_{t+1}(x)$. If $y\in\mathcal C_N^{(d)}$, then $x\in\mathcal C_N^{(d)}$ as well, because $y_j<x_j\leq x_i<y_i$, so both coordinates of $x$ are in range. Now let both points lie in the cube.
+
+If $v_t(y)<v_t(x)$, the same integrality argument gives $v_{t+1}(y)\leq v_{t+1}(x)$.
+
+If $v_t(y)=v_t(x)$, we compare heights. For each $k$, the neighbours $y\pm e_k$ of $y$ are paired with $x+e_k$ and $x-e_k$. For $y+e_k$ and $x+e_k$ with $k\neq j$, the hypothesis at $x+e_k$ applies, because $(x+e_k)_j=x_j\leq x_i\leq(x+e_k)_i$. For $k=j$, the pair is $x+e_i$ and $x+e_j$. If $x_j<x_i$, the hypothesis at $x+e_j$ gives $v_t(x+e_i)\leq v_t(x+e_j)$. If $x_j=x_i$, the transposition of coordinates $i$ and $j$ fixes $x$ and carries $x+e_i$ to $x+e_j$, so Lemma \ref{symmetry_lemma} gives equality. For $y-e_k$ and $x-e_k$ with $k\neq i$, the hypothesis at $x-e_k$ applies, because $(x-e_k)_j\leq x_j\leq x_i=(x-e_k)_i$. For $k=i$, the pair is $x-e_j$ and $x-e_i$. If $x_j<x_i$, the hypothesis at $x-e_i$ gives $v_t(x-e_j)\leq v_t(x-e_i)$. If $x_j=x_i$, the transposition gives equality as before. Summing over $k$ shows $\sum_{y'\sim y}v_t(y')\leq\sum_{y'\sim x}v_t(y')$. Hence $s_t(y)\leq s_t(x)$, and the toppling argument of Step 1 gives $v_{t+1}(y)\leq v_{t+1}(x)$.
+
+\emph{Step 3.} Let $x\in\mathcal S$, $1\leq i\leq d$, and $\mathcal J=\varnothing$ or $\mathcal J=\{j\}$ with $i<j$. If $\mathcal J=\varnothing$, then $x_i\geq1$ and Step 1 gives the claim. If $\mathcal J=\{j\}$, then $x_i\geq x_j$ because $x\in\mathcal S$, and Step 2 gives the claim. This proves the corollary.
     \end{proof}
 		\begin{corollary}[Derivative bound] \label{cor:derivative_bound}
 		Suppose $v_{\infty}(M, \mathbf{1}_{d-1}) \leq k M$ for integer $k \geq 1$. 
@@ -556,24 +567,37 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 	\end{corollary}
 	
 	\begin{proof}
-        The terminal-corner hypothesis bounds the corner odometer by $kM$
-        at every finite time. Elementary axis monotonicity and symmetry then
-        bound $v_t$ by $kM$ on any selected top face $x_j=M$.
-        Prove the derivative inequality on the unsorted positive orthant by
-        induction on time. It is true at time zero. At the selected top face,
-        the shifted value is zero and the preceding face bound applies.
-        Else both selected endpoints lie in the cube. If their previous
-        difference is strictly less than the integer $kx_j$, the one-fire
-        bound closes the step. At equality, sum the preceding difference
-        inequalities over directed neighbors with affine weight $k y_j$;
-        their weights sum to $2d kx_j$. A selected negative occurrence at
-        $x_j=1$ has difference zero by reflection, equal to its zero weight.
-        A transverse negative reflecting occurrence has the base difference
-        and unchanged weight; a transverse positive exterior occurrence has
-        both values zero. All other occurrences are positive-orthant induction
-        instances, including selected top-face neighbors. The neighbor-sum
-        bound and equality of center differences therefore imply the firing
-        indicator at $x$ is at most that at $x+e_j$. This closes the induction.
+The proof has two parts. Step 1 bounds $v_t$ on the top face $\{x_j=M\}$ by the corner hypothesis. Steps 2 to 5 prove the inequality by induction on $t$ for all $x \in \mathbb{Z}^d$ with $x_j \geq 1$, not only for $x \in \mathcal{S}$, because the induction step uses neighbours that can leave $\mathcal{S}$ or the cube.
+
+\emph{Step 1.} We show that $v_t(x) \leq kM$ for all $t \geq 0$ and every $x \in \mathcal{C}_N^{(d)}$ with $x_j = M$. Put $\mathbf{c} = (M, \mathbf{1}_{d-1})$. The odometer is nondecreasing in time, so $v_t(\mathbf{c}) \leq v_\infty(\mathbf{c}) \leq kM$. Folding each coordinate $c \leq 0$ to $1-c$ and then sorting the coordinates in decreasing order gives a symmetry $\sigma$ with $y := \sigma x \in \mathcal{S}$, and Lemma \ref{symmetry_lemma} gives $v_t(x) = v_t(y)$. The folded value of $x_j$ is $M$, so $y_1 = M$.
+
+Now walk from $y$ to $\mathbf{c}$ inside $\mathcal{S}$. Let $z \in \mathcal{S}$ with $z \neq \mathbf{c}$, and let $l$ be the largest index with $z_l > 1$. Then $l \geq 2$, and $z - e_l \in \mathcal{S}$, because $z_{l-1} \geq z_l > z_l - 1 \geq 1 = z_{l+1}$ (the last comparison is void when $l = d$). Corollary \ref{axis_monotonicity} with $\mathcal{J} = \varnothing$ gives $v_t(z - e_l) \geq v_t(z)$ for $t \geq 1$, and both sides vanish at $t = 0$. So $v_t$ does not decrease along the walk, which ends at $\mathbf{c}$. Hence $v_t(x) = v_t(y) \leq v_t(\mathbf{c}) \leq kM$.
+
+\emph{Step 2.} For $t \geq 0$ let $P(t)$ be the statement that $v_t(x) - v_t(x+e_j) \leq k\,x_j$ for every $j \in \{1, \ldots, d\}$ and every $x \in \mathbb{Z}^d$ with $x_j \geq 1$, where $v_t$ is extended by zero outside $\mathcal{C}_N^{(d)}$. The statement $P(0)$ holds because $v_0 \equiv 0$ and $k\,x_j \geq 0$. Assume $P(t)$, fix $j$ and $x$ with $x_j \geq 1$, and put $D := v_t(x) - v_t(x+e_j)$. We show that $v_{t+1}(x) - v_{t+1}(x+e_j) \leq k\,x_j$.
+
+\emph{Step 3.} This step treats the cases in which $x$ or $x+e_j$ lies outside the cube. If $x \notin \mathcal{C}_N^{(d)}$, then $v_{t+1}(x) = 0$, and the difference is $-v_{t+1}(x+e_j) \leq 0 \leq k\,x_j$. If $x \in \mathcal{C}_N^{(d)}$ but $x+e_j \notin \mathcal{C}_N^{(d)}$, then $x_j = M$, so $v_{t+1}(x+e_j) = 0$ and Step 1 gives $v_{t+1}(x) \leq kM = k\,x_j$.
+
+\emph{Step 4.} Assume from now on that $x$ and $x+e_j$ both lie in the cube. The height of $z$ at time $t$ is $s_t(z) = s_0(z) - 2d\,v_t(z) + \sum_{y \sim z} v_t(y)$, and the odometer rule $v_{t+1}(z) = v_t(z) + \mathbf{1}\{s_t(z) \geq 2d\}$ gives $v_{t+1}(z) - v_t(z) \in \{0, 1\}$. The number $D$ is an integer with $D \leq k\,x_j$ by $P(t)$. If $D < k\,x_j$, then $D \leq k\,x_j - 1$, and therefore $v_{t+1}(x) - v_{t+1}(x+e_j) \leq D + 1 \leq k\,x_j$.
+
+\emph{Step 5.} Assume finally that $D = k\,x_j$. For $i \in \{1, \ldots, d\}$ put
+\begin{equation*}
+B_i := \big(v_t(x+e_i) - v_t(x+e_i+e_j)\big) + \big(v_t(x-e_i) - v_t(x-e_i+e_j)\big)\,.
+\end{equation*}
+We claim that $B_i \leq 2k\,x_j$. If $i \neq j$, then $P(t)$ at $x+e_i$ and at $x-e_i$, whose $j$-th coordinates are both $x_j \geq 1$, bounds each bracket by $k\,x_j$. If $i = j$ and $x_j \geq 2$, then $P(t)$ at $x+e_j$ and at $x-e_j$, whose $j$-th coordinates are $x_j+1$ and $x_j-1$, bounds the brackets by $k(x_j+1)$ and $k(x_j-1)$. If $i = j$ and $x_j = 1$, the reflection $y_j \mapsto 1-y_j$ fixes the cube and exchanges $x-e_j$ and $x$, so $v_t(x-e_j) = v_t(x)$ by Lemma \ref{symmetry_lemma}. The second bracket then vanishes, and $P(t)$ at $x+e_j$ bounds the first by $k(x_j+1) = 2k\,x_j$.
+
+The neighbours of $x$ are $x \pm e_i$, and the neighbours of $x+e_j$ are $x+e_j \pm e_i$. Hence
+\begin{equation*}
+\sum_{y \sim x} v_t(y) - \sum_{y \sim x+e_j} v_t(y) = \sum_{i=1}^d B_i \leq 2d\,k\,x_j\,.
+\end{equation*}
+Since $s_0$ is constant, the heights satisfy
+\begin{equation*}
+s_t(x) - s_t(x+e_j) = \Big(\sum_{y \sim x} v_t(y) - \sum_{y \sim x+e_j} v_t(y)\Big) - 2d\,D \leq 2d\,k\,x_j - 2d\,k\,x_j = 0\,.
+\end{equation*}
+So $s_t(x) \leq s_t(x+e_j)$. If $x$ topples at step $t+1$, that is $s_t(x) \geq 2d$, then $s_t(x+e_j) \geq 2d$ and $x+e_j$ topples at step $t+1$ too. Hence $\mathbf{1}\{s_t(x) \geq 2d\} \leq \mathbf{1}\{s_t(x+e_j) \geq 2d\}$, and
+\begin{equation*}
+v_{t+1}(x) - v_{t+1}(x+e_j) = D + \mathbf{1}\{s_t(x) \geq 2d\} - \mathbf{1}\{s_t(x+e_j) \geq 2d\} \leq D = k\,x_j\,.
+\end{equation*}
+This proves $P(t+1)$. Hence $P(t)$ holds for every $t$, which gives \eqref{eq:cor:derivative_bound} for all $x \in \mathbb{Z}^d$ with $x_j \geq 1$, in particular for all $x \in \mathcal{S}$.
     \end{proof}
 	
 	
@@ -591,16 +615,25 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 
 	
 	\begin{proof}
-        Let $C$ be the right-hand maximum. It exists on the nonempty finite
-        simplex and is nonnegative, since the odometer is nondecreasing in time.
-        Symmetry carries this bound to the whole cube. Suppose at two times
-        $a,b$ the pointwise bound $v_a\leq v_b+C$ holds. At a site where the
-        inequality is strict, integrality and one-fire increments preserve it
-        at the next times. At equality, the neighbor-sum difference is at most
-        $2dC$, so cancellation of equal initial heights and center difference
-        $C$ shows that firing at time $a$ forces firing at time $b$. Exterior
-        odometers are zero and $C\geq0$. Thus $v_{a+1}\leq v_{b+1}+C$.
-        Starting with $(a,b)=(t_0+j,t_0)$ and iterating proves the assertion.
+Route: Step 1 bounds the increment over the whole cube by the right-hand maximum $C$. Step 2 shows by induction on $n$ that this bound persists from the pair of times $(t_0+n+j,\,t_0+n)$ to the next pair. Step 3 takes $n=t-t_0$.
+
+\emph{Step 1.} Let $C$ be the right-hand maximum. It is attained on the nonempty finite set $\mathcal S$, and $C\geq0$, because the odometer is nondecreasing in time. We show that $v_{t_0+j}(y)-v_{t_0}(y)\leq C$ for every $y\in\mathbb Z^d$. If $y\notin\mathcal C_N^{(d)}$, the left side is zero. If $y\in\mathcal C_N^{(d)}$, Lemma \ref{symmetry_lemma} shows that the left side equals its value at the representative $z\in\mathcal S$ of $y$, which is at most $C$ by the definition of $C$.
+
+\emph{Step 2.} We show by induction on $n\geq0$ that $v_{t_0+n+j}(y)-v_{t_0+n}(y)\leq C$ for every $y\in\mathbb Z^d$. The case $n=0$ is Step 1. Assume the claim for $n$, and write $a:=t_0+n+j$ and $b:=t_0+n$, so that $v_a(z)-v_b(z)\leq C$ for all $z\in\mathbb Z^d$. We bound $v_{a+1}(y)-v_{b+1}(y)$. If $y\notin\mathcal C_N^{(d)}$, this difference is zero. Let $y\in\mathcal C_N^{(d)}$ and put $D:=v_a(y)-v_b(y)\leq C$.
+
+If $D<C$, then $D\leq C-1$, because both sides are integers. Since $v_{a+1}(y)-v_a(y)\leq1$ and $v_{b+1}(y)-v_b(y)\geq0$, we get $v_{a+1}(y)-v_{b+1}(y)\leq D+1\leq C$.
+
+If $D=C$, we compare heights. Each of the $2d$ neighbours $z\sim y$ satisfies $v_a(z)-v_b(z)\leq C$, so $\sum_{z\sim y}v_a(z)-\sum_{z\sim y}v_b(z)\leq 2d\,C$. The initial pile $s_0(y)$ is the same at both times, so
+\begin{equation*}
+s_a(y)-s_b(y)=\Big(\sum_{z\sim y}v_a(z)-\sum_{z\sim y}v_b(z)\Big)-2d\,D\leq 2d\,C-2d\,C=0\,.
+\end{equation*}
+Hence $s_a(y)\leq s_b(y)$, so $\mathbf 1\{s_a(y)\geq 2d\}\leq\mathbf 1\{s_b(y)\geq 2d\}$. The odometer rule gives
+\begin{equation*}
+v_{a+1}(y)-v_{b+1}(y)=D+\mathbf 1\{s_a(y)\geq 2d\}-\mathbf 1\{s_b(y)\geq 2d\}\leq D=C\,.
+\end{equation*}
+This completes the induction.
+
+\emph{Step 3.} Let $t\geq t_0$ and $z\in\mathcal S$. Step 2 with $n=t-t_0$ gives $v_{t+j}(z)-v_t(z)\leq C$. Taking the maximum over $z\in\mathcal S$ gives the assertion, since $C$ is the right-hand side.
     \end{proof}
 	
 	
@@ -619,16 +652,13 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 	 When $s_0^{(d)} \equiv 2 d + (d_0-1)$,  $v_\infty^{(d_0)} \equiv 1$ but $v_\infty^{(d_0-1)} \equiv 2$.
 	\end{prop}
 	\begin{proof} 
-		In dimension $d$, a corner site of the hypercube has $d$ internal neighbors so 
-		$\Delta^{(d)} (\mathbf{1}) = - 2 d + d = -d $.
-		Hence, in dimension $d_0$, 
-		\[
-		s_1^{(d_0)}(\mathbf{1}) = (2 d_0 + (d_0-1))- d_0 = 2 d_0 - 1
-		\]
-		however, in dimension $(d_0-1)$, 
-		\[
-		s_1^{(d_0-1)}(\mathbf{1}) = (2 (d_0-1) + (d_0-1)) - (d_0-1) = 2(d_0-1).
-		\]
+Route: For $N=2$ the cube is $\mathcal C_2^{(d)}=\{0,1\}^d$. Every site has exactly $d$ neighbours in it, because for each coordinate exactly one of $x\pm e_i$ lies in $\{0,1\}$. In dimension $d$ the initial pile is $c_d:=2d+(d_0-1)$. We compute the odometer for two steps and then show that it is constant. We use one general fact: if $v_{t+1}=v_t$, then $s_{t+1}=s_t$, hence $v_{t+2}=v_{t+1}$, and the odometer is constant from time $t$ on.
+
+\emph{Step 1.} Since $c_d\geq 2d$ in both dimensions, every site topples at step $1$, so $v_1\equiv1$ on the cube. Each site has $d$ neighbours in the cube, so its height at time $1$ is $s_1=c_d-2d+d=c_d-d$.
+
+\emph{Step 2 (dimension $d_0$).} Here $c_{d_0}=3d_0-1$, so $s_1=2d_0-1<2d_0$. No site topples at step $2$. Hence $v_2=v_1\equiv1$, and the odometer is constant from time $1$ on. Thus $v_\infty^{(d_0)}\equiv1$.
+
+\emph{Step 3 (dimension $d_0-1$).} Put $d:=d_0-1$. Then $c_d=3d$, so $s_1=3d-d=2d$. Every site topples at step $2$, so $v_2\equiv2$. The height at time $2$ is $s_2=3d-2d\cdot2+d\cdot2=d<2d$, so no site topples at step $3$. Hence $v_3=v_2\equiv2$, and the odometer is constant from time $2$ on. Thus $v_\infty^{(d_0-1)}\equiv2$.
 	\end{proof}
 	
 	
