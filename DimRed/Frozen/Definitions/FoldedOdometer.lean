@@ -1,11 +1,11 @@
 /-
 Symmetrized-odometer definition of the corrected edition.
-`dimred-corrected-arxiv.tex:380-384` (literal initial value and threshold
+`dimred-corrected-arxiv.tex:379-383` (literal initial value and threshold
 recursion; context `subsec:symmetry`):
 
-  "Each of the $2d$ neighbours of $x$ contributes one term to $Ru(x)$: a point
-   of $\mathcal{S}^{(d)}_M$ is counted once for each neighbour of $x$ in its
-   orbit, and a neighbour outside $\mathcal{C}_N^{(d)}$ contributes zero. The
+  "Each of the $2d$ neighbors of $x$ contributes one term to $Ru(x)$: a point
+   of $\mathcal{S}^{(d)}_M$ is counted once for each neighbor of $x$ in its
+   orbit, and a neighbor outside $\mathcal{C}_N^{(d)}$ contributes zero. The
    \textbf{symmetrized odometer} is defined by $v_0^{\mathcal S}\equiv0$ and
    v_{t+1}^{\mathcal S}(x)=v_t^{\mathcal S}(x)+\mathbf 1\{s_0(x)+Rv_t^{\mathcal
    S}(x)-2d\,v_t^{\mathcal S}(x)\geq2d\}

@@ -1,6 +1,6 @@
 /-
 Lifted-value definition of the corrected edition.
-`dimred-corrected-arxiv.tex:372-375` (literal lifted-value definition; context
+`dimred-corrected-arxiv.tex:371-374` (literal lifted-value definition; context
 `subsec:symmetry`):
 
   "Let $s_0:\mathcal{C}_N^{(d)}\to\Z$ be symmetric, that is, $\sigma s_0=s_0$

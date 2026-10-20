@@ -1,6 +1,6 @@
 /-
 Lemma 2.5 of the corrected edition.
-`dimred-corrected-arxiv.tex:601-608` (label `topple_limit`):
+`dimred-corrected-arxiv.tex:599-606` (label `topple_limit`):
 
   "For all $t \geq t_0$ and $j \geq 0$, \max_{z \in \mathcal{S}} \left(
    v_{t+j}(z) - v_t(z) \right) \leq \max_{z \in \mathcal{S}} \left(

@@ -1,5 +1,5 @@
 /-
-The strong facet compatibility clause of Proposition 4.1 of the corrected edition. `dimred-corrected-arxiv.tex:833-841` (label
+The strong facet compatibility clause of Proposition 4.1 of the corrected edition. `dimred-corrected-arxiv.tex:831-839` (label
 `base_dimension`, display `base_dimension:strong_compatability`):
 
   "\item[Strong facet compatibility] Let $i,j\geq0$, $i+1+j=d$, and put

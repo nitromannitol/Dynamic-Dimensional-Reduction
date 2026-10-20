@@ -1,6 +1,6 @@
 /-
 Proposition 3.2 of the corrected edition.
-`dimred-corrected-arxiv.tex:701-725` (label `prop:base_case`):
+`dimred-corrected-arxiv.tex:699-723` (label `prop:base_case`):
 
   "For all $d \geq 1$, when $s_0^{(d)} = 2 d + (d-1)$, the radially
    reparameterized parallel toppling odometer has the following form. For all

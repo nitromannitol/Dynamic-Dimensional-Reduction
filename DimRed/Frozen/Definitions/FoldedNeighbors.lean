@@ -1,13 +1,13 @@
 /-
 Neighbour-sum definition of the corrected edition.
-`dimred-corrected-arxiv.tex:376-380` (literal neighbour-sum definition;
+`dimred-corrected-arxiv.tex:375-379` (literal neighbour-sum definition;
 context `subsec:symmetry`):
 
   "and put, for $x\in\mathcal{S}^{(d)}_M$,
    Ru(x)=\sum_{i=1}^d\big(\widetilde u(x+e_i)+\widetilde u(x-e_i)\big)\,.
-   Each of the $2d$ neighbours of $x$ contributes one term to $Ru(x)$: a point
-   of $\mathcal{S}^{(d)}_M$ is counted once for each neighbour of $x$ in its
-   orbit, and a neighbour outside $\mathcal{C}_N^{(d)}$ contributes zero."
+   Each of the $2d$ neighbors of $x$ contributes one term to $Ru(x)$: a point
+   of $\mathcal{S}^{(d)}_M$ is counted once for each neighbor of $x$ in its
+   orbit, and a neighbor outside $\mathcal{C}_N^{(d)}$ contributes zero."
 
 This unit records the sum of the lifted values over the
 `2d` neighbours, each orbit point counted with multiplicity and exterior

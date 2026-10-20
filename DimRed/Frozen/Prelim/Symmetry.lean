@@ -1,6 +1,6 @@
 /-
 Lemma 2.3 of the corrected edition.
-`dimred-corrected-arxiv.tex:395-397` (label `symmetry_lemma`):
+`dimred-corrected-arxiv.tex:394-396` (label `symmetry_lemma`):
 
   "For each $t \geq 0$ and each $ \sigma \in
    \operatorname{Aut}_{\mathcal{C}_d}$, $ \sigma v_t = v_t$. Hence, $v_t =

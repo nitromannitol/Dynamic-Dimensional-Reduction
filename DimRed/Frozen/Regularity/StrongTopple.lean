@@ -1,5 +1,5 @@
 /-
-The strong topple control clause of Proposition 4.1 of the corrected edition. `dimred-corrected-arxiv.tex:847-849` (label
+The strong topple control clause of Proposition 4.1 of the corrected edition. `dimred-corrected-arxiv.tex:845-847` (label
 `base_dimension`, display `base_dimension:strong_topple`):
 
   "For all $t \geq \tau_{M-1}$, \sup_{\mathbf{x} \in \mathcal{S}_M}
