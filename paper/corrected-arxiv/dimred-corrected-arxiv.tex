@@ -373,7 +373,11 @@ By Steps 1 and 2, $v$ belongs to the class and lies below each of its members. S
 	\begin{equation*}
 	\widetilde u(y)=\begin{cases}u(r_N(y)), & y\in\mathcal{C}_N^{(d)},\\ 0, & y\notin\mathcal{C}_N^{(d)},\end{cases}
 	\end{equation*}
-	and put $Ru(x)=\sum_{i=1}^d\big(\widetilde u(x+e_i)+\widetilde u(x-e_i)\big)$ for $x\in\mathcal{S}^{(d)}_M$. Each of the $2d$ neighbours of $x$ contributes one term to $Ru(x)$: a point of $\mathcal{S}^{(d)}_M$ is counted once for each neighbour of $x$ in its orbit, and a neighbour outside $\mathcal{C}_N^{(d)}$ contributes zero. The \textbf{symmetrized odometer} is defined by $v_0^{\mathcal S}\equiv0$ and
+	and put, for $x\in\mathcal{S}^{(d)}_M$,
+	\begin{equation*}
+	Ru(x)=\sum_{i=1}^d\big(\widetilde u(x+e_i)+\widetilde u(x-e_i)\big)\,.
+	\end{equation*}
+	Each of the $2d$ neighbours of $x$ contributes one term to $Ru(x)$: a point of $\mathcal{S}^{(d)}_M$ is counted once for each neighbour of $x$ in its orbit, and a neighbour outside $\mathcal{C}_N^{(d)}$ contributes zero. The \textbf{symmetrized odometer} is defined by $v_0^{\mathcal S}\equiv0$ and
 	\begin{equation*}
 	v_{t+1}^{\mathcal S}(x)=v_t^{\mathcal S}(x)+\mathbf 1\{s_0(x)+Rv_t^{\mathcal S}(x)-2d\,v_t^{\mathcal S}(x)\geq2d\}
 	\end{equation*}

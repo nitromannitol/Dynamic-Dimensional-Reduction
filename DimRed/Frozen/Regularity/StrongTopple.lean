@@ -1,5 +1,5 @@
 /-
-The strong topple control clause of Proposition 4.1 of the corrected edition. `dimred-corrected-arxiv.tex:761-763` (label
+The strong topple control clause of Proposition 4.1 of the corrected edition. `dimred-corrected-arxiv.tex:847-849` (label
 `base_dimension`, display `base_dimension:strong_topple`):
 
   "For all $t \geq \tau_{M-1}$, \sup_{\mathbf{x} \in \mathcal{S}_M}
@@ -7,7 +7,7 @@ The strong topple control clause of Proposition 4.1 of the corrected edition. `d
 
 `τ_{M-1}` is `toppleTime d (M-1)`, valued in `ℕ∞`. The supremum over the
 finite domain is `Corrected.maximum`, the nonempty-maximum unit of
-`dimred-corrected-arxiv.tex:561-568`.
+`dimred-corrected-arxiv.tex`, label `topple_limit`.
 -/
 import DimRed.Support.RegProved
 import DimRed.Support.SourceCarriers

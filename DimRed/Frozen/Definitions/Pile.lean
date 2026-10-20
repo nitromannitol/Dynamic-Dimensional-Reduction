@@ -1,7 +1,7 @@
 /-
 Finite-pile conservation of the corrected edition.
 `dimred-corrected-arxiv.tex:93-98` (physical carrier at
-`dimred-corrected-arxiv.tex:278-284`):
+`dimred-corrected-arxiv.tex`, label `subsec:notation`):
 
   "Our proof begins with the {\it odometer} $v_t$, which encodes the number of
    topples at each site over time. Let $v_0 : \mathcal{C}_N^{(d)} \to

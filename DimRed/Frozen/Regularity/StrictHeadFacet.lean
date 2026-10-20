@@ -1,6 +1,6 @@
 /-
 Lemma 5.1 of the corrected edition.
-`dimred-corrected-arxiv.tex:1127-1137` (label `lem:strict-head-facet`):
+`dimred-corrected-arxiv.tex:1218-1228` (label `lem:strict-head-facet`):
 
   "Let $d\geq1$, $M\geq2$, $P_M=\{1,\ldots,M\}^d$, and $s_0\equiv2d$. For
    every $t\geq0$, $x\in P_M$ and coordinate $k$ with $x_k<\max_l x_l$,

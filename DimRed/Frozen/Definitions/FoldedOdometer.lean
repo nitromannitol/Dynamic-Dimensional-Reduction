@@ -1,16 +1,15 @@
 /-
 Symmetrized-odometer definition of the corrected edition.
-`dimred-corrected-arxiv.tex:380-389` (literal initial value and threshold
+`dimred-corrected-arxiv.tex:380-384` (literal initial value and threshold
 recursion; context `subsec:symmetry`):
 
-  "The sum retains all $2d$ directed occurrences, including repeated orbit
-   representatives and zero contributions from exterior neighbors. Define the
-   symmetrized odometer independently by $v_0^{\mathcal S}\equiv0$ and
-   v_{t+1}^{\mathcal S}(x)=v_t^{\mathcal S}(x)+ 1\{s_0(x)+R v_t^{\mathcal
-   S}(x)-2d v_t^{\mathcal S}(x)\geq2d\}.
-
-  This uses the physical cube embedding for each parity of $N$: reflection
-   sends $0$ to $1$ for even $N$ and $0$ to $2$ for odd $N$."
+  "Each of the $2d$ neighbours of $x$ contributes one term to $Ru(x)$: a point
+   of $\mathcal{S}^{(d)}_M$ is counted once for each neighbour of $x$ in its
+   orbit, and a neighbour outside $\mathcal{C}_N^{(d)}$ contributes zero. The
+   \textbf{symmetrized odometer} is defined by $v_0^{\mathcal S}\equiv0$ and
+   v_{t+1}^{\mathcal S}(x)=v_t^{\mathcal S}(x)+\mathbf 1\{s_0(x)+Rv_t^{\mathcal
+   S}(x)-2d\,v_t^{\mathcal S}(x)\geq2d\}
+   for $x\in\mathcal{S}^{(d)}_M$ and $t\geq0$."
 
 This unit records the symmetrized odometer `foldedOdo` by its zero initial
 value and its threshold recursion on the folded neighbour sum.

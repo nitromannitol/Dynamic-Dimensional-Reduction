@@ -16,11 +16,11 @@ Lemma 2.4 of the corrected edition.
   then \sup_{j} \left( D_{w_j} v_{t+1}(x) - g_j(x) \right) \leq 0 for all $t
    \geq t_0$ and $x \in \mathcal{S}$."
 
-`D_w v_t(x) = v_t(x) - v_t(x+w)` (`dimred-corrected-arxiv.tex:427`) and the
-three pieces of `B_w` are `dimred-corrected-arxiv.tex:440-450`. A supremum
+`D_w v_t(x) = v_t(x) - v_t(x+w)` (`dimred-corrected-arxiv.tex`, label `subsec:derivative_comparison`) and the
+three pieces of `B_w` are `dimred-corrected-arxiv.tex`, label `eq:dissipative_boundary`. A supremum
 over the finite index set being at most zero is every term being at most zero.
 The standing hypothesis of the subsection is that the initial sandpile is
-constant (`dimred-corrected-arxiv.tex:426-427`), carried here as the constant
+constant (`dimred-corrected-arxiv.tex`, label `subsec:derivative_comparison`), carried here as the constant
 `c`; the statement takes every integer `c`, so the bound of Section 2 is not
 assumed here.
 -/

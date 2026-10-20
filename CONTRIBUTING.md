@@ -37,7 +37,7 @@ A few practical notes for working with this development:
 
 - **Frozen statements.**  The text between `-- FROZEN-STATEMENT-BEGIN` and
   `-- FROZEN-STATEMENT-END` in `DimRed/Frozen/` is pinned by the SHA-256 recorded in
-  `ledger/manifest.yaml`.  A change there is reported by the `check_manifest` gate and must
+  `ledger/manifest.yaml`.  A change there is reported by the `check_manifest` check and must
   be recorded in the manifest; the proofs after the end marker may be changed freely.
 
 - **The main results** are in `DimRed/MainTheorems.lean`.  The axiom report is
@@ -80,7 +80,7 @@ Python 3.10 or newer and PyYAML (`python3 -m pip install -r tools/requirements.t
 | `check_coverage` | every theorem, lemma, proposition and corollary of the corrected edition is named in the `source` of some statement |
 | `check_clauses` | compares the number of assertions of each paper statement with the conjuncts of its Lean statement, against the reading in `ledger/readings.yaml` |
 | `check_exponents` | compares the exponents of a paper statement with those of its Lean statement, against `ledger/readings.yaml` |
-| `paper_anchors`, `paper_citations` | the `<file>.tex:<lines>` references in the manifest and in the Lean docstrings point at the cited labels |
+| `paper_anchors`, `paper_citations` | the `<file>.tex:<lines>` references in the manifest and in the headers of `DimRed/Frozen/` point at the cited labels; other comments cite the edition by label only |
 | `sync_docs` | the generated status block of `README.md` and the statement table of `CORRESPONDENCE.md` agree with the manifest (`--write` regenerates them) |
 | `assumptions`, `certificate` | `ASSUMPTIONS.md` and `CERTIFICATE.md` are current (`--check`) |
 

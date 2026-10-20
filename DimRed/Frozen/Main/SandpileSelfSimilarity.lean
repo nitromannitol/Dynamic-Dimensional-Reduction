@@ -7,7 +7,7 @@ Corollary to Theorem 1.1 of the corrected edition.
    = s_t^{(d,2 j)}(\mathbf{x}-(M-j))."
 
 `τ_j` is `toppleTime d j`. Vector inequalities and the subtraction of a scalar
-from a vector are coordinatewise (`dimred-corrected-arxiv.tex:275`).
+from a vector are coordinatewise (`dimred-corrected-arxiv.tex`, label `subsec:notation`).
 -/
 import DimRed.Support.RegProved
 import DimRed.Support.SourceCarriers

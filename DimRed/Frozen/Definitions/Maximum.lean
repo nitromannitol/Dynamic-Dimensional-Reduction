@@ -1,5 +1,5 @@
 /-
-Nonempty-maximum clause of the topple-limit statement in the corrected edition. `dimred-corrected-arxiv.tex:561-568` (label
+Nonempty-maximum clause of the topple-limit statement in the corrected edition. `dimred-corrected-arxiv.tex:601-608` (label
 `topple_limit`, the finite maximum over the sorted domain):
 
   "For all $t \geq t_0$ and $j \geq 0$, \max_{z \in \mathcal{S}} \left(

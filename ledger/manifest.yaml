@@ -17,7 +17,7 @@ nodes:
   - id: prop-base-dimension-weak
     version: 2
     kind: theorem
-    source: dimred-corrected-arxiv.tex:731-738 (label base_dimension, clause weak facet compatibility)
+    source: dimred-corrected-arxiv.tex:817-824 (label base_dimension, clause weak facet compatibility)
     file: DimRed/Frozen/Regularity/WeakFacet.lean
     export: DimRed.Frozen.base_dimension_weak_compatibility
     state: PROVED
@@ -61,7 +61,7 @@ nodes:
   - id: lem-symmetry
     version: 3
     kind: theorem
-    source: dimred-corrected-arxiv.tex:399-401 (label symmetry_lemma)
+    source: dimred-corrected-arxiv.tex:395-397 (label symmetry_lemma)
     file: DimRed/Frozen/Prelim/Symmetry.lean
     export: DimRed.Frozen.symmetry_lemma
     state: PROVED
@@ -72,7 +72,7 @@ nodes:
   - id: prop-no-reduction
     version: 3
     kind: theorem
-    source: dimred-corrected-arxiv.tex:596-598 (label no_reduction)
+    source: dimred-corrected-arxiv.tex:645-647 (label no_reduction)
     file: DimRed/Frozen/BaseCase/NoReduction.lean
     export: DimRed.Frozen.no_reduction_at_critical_dimension
     state: PROVED
@@ -83,7 +83,7 @@ nodes:
   - id: lem-radial-laplacian
     version: 3
     kind: theorem
-    source: dimred-corrected-arxiv.tex:618-624 (label radial_laplacian)
+    source: dimred-corrected-arxiv.tex:667-673 (label radial_laplacian)
     file: DimRed/Frozen/BaseCase/RadialLaplacian.lean
     export: DimRed.Frozen.radial_laplacian
     state: PROVED
@@ -127,7 +127,7 @@ nodes:
   - id: prop-base-case
     version: 6
     kind: theorem
-    source: dimred-corrected-arxiv.tex:660-684 (label prop:base_case)
+    source: dimred-corrected-arxiv.tex:701-725 (label prop:base_case)
     file: DimRed/Frozen/BaseCase/ExplicitOdometer.lean
     export: DimRed.Frozen.base_case
     state: PROVED
@@ -138,7 +138,7 @@ nodes:
   - id: prop-base-dimension-consistency
     version: 3
     kind: theorem
-    source: dimred-corrected-arxiv.tex:727-729 (label base_dimension, clause self-similarity)
+    source: dimred-corrected-arxiv.tex:813-815 (label base_dimension, clause self-similarity)
     file: DimRed/Frozen/Regularity/Consistency.lean
     export: DimRed.Frozen.base_dimension_consistency
     state: PROVED
@@ -149,7 +149,7 @@ nodes:
   - id: prop-base-dimension-strong-derivative
     version: 3
     kind: theorem
-    source: dimred-corrected-arxiv.tex:743-745 (label base_dimension, clause strong derivative)
+    source: dimred-corrected-arxiv.tex:829-831 (label base_dimension, clause strong derivative)
     file: DimRed/Frozen/Regularity/StrongDerivative.lean
     export: DimRed.Frozen.base_dimension_strong_derivative
     state: PROVED
@@ -160,7 +160,7 @@ nodes:
   - id: prop-base-dimension-strong-facet
     version: 3
     kind: theorem
-    source: dimred-corrected-arxiv.tex:747-755 (label base_dimension, clause both strong compatibility conclusions)
+    source: dimred-corrected-arxiv.tex:833-841 (label base_dimension, clause both strong compatibility conclusions)
     file: DimRed/Frozen/Regularity/StrongFacet.lean
     export: DimRed.Frozen.base_dimension_strong_compatibility
     state: PROVED
@@ -171,7 +171,7 @@ nodes:
   - id: prop-base-dimension-strong-topple
     version: 3
     kind: theorem
-    source: dimred-corrected-arxiv.tex:761-763 (label base_dimension, clause strong topple control)
+    source: dimred-corrected-arxiv.tex:847-849 (label base_dimension, clause strong topple control)
     file: DimRed/Frozen/Regularity/StrongTopple.lean
     export: DimRed.Frozen.base_dimension_strong_topple
     state: PROVED
@@ -204,7 +204,7 @@ nodes:
   - id: cor-axis-monotonicity
     version: 4
     kind: theorem
-    source: dimred-corrected-arxiv.tex:503-513 (label axis_monotonicity)
+    source: dimred-corrected-arxiv.tex:525-535 (label axis_monotonicity)
     file: DimRed/Frozen/Prelim/AxisMonotonicity.lean
     export: DimRed.Frozen.axis_monotonicity
     state: PROVED
@@ -215,7 +215,7 @@ nodes:
   - id: cor-derivative-bound
     version: 3
     kind: theorem
-    source: dimred-corrected-arxiv.tex:527-534 (label cor:derivative_bound)
+    source: dimred-corrected-arxiv.tex:554-561 (label cor:derivative_bound)
     file: DimRed/Frozen/Prelim/DerivativeBound.lean
     export: DimRed.Frozen.derivative_bound
     state: PROVED
@@ -226,7 +226,7 @@ nodes:
   - id: lem-strict-head-facet
     version: 1
     kind: theorem
-    source: dimred-corrected-arxiv.tex:1127-1137 (label lem:strict-head-facet)
+    source: dimred-corrected-arxiv.tex:1218-1228 (label lem:strict-head-facet)
     file: DimRed/Frozen/Regularity/StrictHeadFacet.lean
     export: DimRed.Frozen.strict_head_facet
     state: PROVED
@@ -237,7 +237,7 @@ nodes:
   - id: lem-one-terminal-profile
     version: 1
     kind: theorem
-    source: dimred-corrected-arxiv.tex:920-927 (label lem:one-terminal-profile, clause quadratic profile)
+    source: dimred-corrected-arxiv.tex:1006-1013 (label lem:one-terminal-profile, clause quadratic profile)
     file: DimRed/Frozen/Regularity/OneTerminalProfile.lean
     export: DimRed.Frozen.one_terminal_profile
     state: PROVED
@@ -248,7 +248,7 @@ nodes:
   - id: lem-one-terminal-derivative
     version: 1
     kind: theorem
-    source: dimred-corrected-arxiv.tex:920-927 (label lem:one-terminal-profile, clause full derivative including endpoint)
+    source: dimred-corrected-arxiv.tex:1006-1013 (label lem:one-terminal-profile, clause full derivative including endpoint)
     file: DimRed/Frozen/Regularity/OneTerminalDerivative.lean
     export: DimRed.Frozen.one_terminal_derivative
     state: PROVED
@@ -259,7 +259,7 @@ nodes:
   - id: char-folded-lift
     version: 1
     kind: theorem
-    source: dimred-corrected-arxiv.tex:370-377 (literal lifted-value definition; context subsec:symmetry)
+    source: dimred-corrected-arxiv.tex:372-375 (literal lifted-value definition; context subsec:symmetry)
     file: DimRed/Frozen/Definitions/FoldedLift.lean
     export: DimRed.Frozen.folded_lift_definition
     state: PROVED
@@ -270,7 +270,7 @@ nodes:
   - id: char-folded-neighbors
     version: 1
     kind: theorem
-    source: dimred-corrected-arxiv.tex:378-380 (literal directed-neighbor definition; context subsec:symmetry)
+    source: dimred-corrected-arxiv.tex:376-380 (literal neighbour-sum definition; context subsec:symmetry)
     file: DimRed/Frozen/Definitions/FoldedNeighbors.lean
     export: DimRed.Frozen.folded_neighbors_definition
     state: PROVED
@@ -281,7 +281,7 @@ nodes:
   - id: char-folded-odometer
     version: 1
     kind: theorem
-    source: dimred-corrected-arxiv.tex:380-389 (literal initial value and threshold recursion; context subsec:symmetry)
+    source: dimred-corrected-arxiv.tex:380-384 (literal initial value and threshold recursion; context subsec:symmetry)
     file: DimRed/Frozen/Definitions/FoldedOdometer.lean
     export: DimRed.Frozen.folded_odometer_definition
     state: PROVED
@@ -314,7 +314,7 @@ nodes:
   - id: char-nonempty-maximum
     version: 1
     kind: theorem
-    source: dimred-corrected-arxiv.tex:561-568 (label topple_limit, clause nonempty-maximum semantic unit)
+    source: dimred-corrected-arxiv.tex:601-608 (label topple_limit, clause nonempty-maximum semantic unit)
     file: DimRed/Frozen/Definitions/Maximum.lean
     export: DimRed.Frozen.maximum_definition
     state: PROVED
@@ -325,7 +325,7 @@ nodes:
   - id: lem-topple-limit
     version: 4
     kind: theorem
-    source: dimred-corrected-arxiv.tex:561-568 (label topple_limit)
+    source: dimred-corrected-arxiv.tex:601-608 (label topple_limit)
     file: DimRed/Frozen/Prelim/ToppleLimit.lean
     export: DimRed.Frozen.topple_limit
     state: PROVED

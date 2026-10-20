@@ -1,14 +1,17 @@
 /-
-Directed-neighbour definition of the corrected edition.
-`dimred-corrected-arxiv.tex:378-380` (literal directed-neighbor definition;
+Neighbour-sum definition of the corrected edition.
+`dimred-corrected-arxiv.tex:376-380` (literal neighbour-sum definition;
 context `subsec:symmetry`):
 
-  "Write $R u(x)=\sum_{i=1}^d(\widetilde u(x+e_i)+\widetilde u(x-e_i))$. The
-   sum retains all $2d$ directed occurrences, including repeated orbit
-   representatives and zero contributions from exterior neighbors. Define"
+  "and put, for $x\in\mathcal{S}^{(d)}_M$,
+   Ru(x)=\sum_{i=1}^d\big(\widetilde u(x+e_i)+\widetilde u(x-e_i)\big)\,.
+   Each of the $2d$ neighbours of $x$ contributes one term to $Ru(x)$: a point
+   of $\mathcal{S}^{(d)}_M$ is counted once for each neighbour of $x$ in its
+   orbit, and a neighbour outside $\mathcal{C}_N^{(d)}$ contributes zero."
 
-This unit records the directed-neighbour sum of the lifted values over all
-`2d` occurrences, with repeated representatives and exterior zeros kept.
+This unit records the sum of the lifted values over the
+`2d` neighbours, each orbit point counted with multiplicity and exterior
+neighbours contributing zero.
 -/
 import DimRed.Support.ReflectedThreshold
 

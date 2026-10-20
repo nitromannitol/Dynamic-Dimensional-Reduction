@@ -1,6 +1,6 @@
 /-
 Corollary 2.1 of the corrected edition.
-`dimred-corrected-arxiv.tex:503-513` (label `axis_monotonicity`, "Axis
+`dimred-corrected-arxiv.tex:525-535` (label `axis_monotonicity`, "Axis
 monotonicity"), attributed to Babai and Gorodezky:
 
   "For all $t\geq1$, $x\in\mathcal S$, every $1\leq i\leq d$, and $\mathcal
@@ -19,9 +19,9 @@ perpendicular to one axis. On `S_M^{(d)}` the axes of symmetry are the
 reflections `x_i = 1/2`, whose perpendicular step is `e_i`, and the rotations
 `x_i = x_j`, whose perpendicular step is `e_i - e_j` with `i < j`. Those are
 the two moves below. The use in Section 5 of the corrected edition
-(`dimred-corrected-arxiv.tex:1270`) is a chain of the moves stated here. The
+(`dimred-corrected-arxiv.tex`, label `subsubsec:higher_strong_topple`) is a chain of the moves stated here. The
 standing hypothesis of the subsection is that the initial sandpile is constant
-(`dimred-corrected-arxiv.tex:426-427`), carried here as `c`. The paper's `t ≥
+(`dimred-corrected-arxiv.tex`, label `subsec:derivative_comparison`), carried here as `c`. The paper's `t ≥
 1` is carried too, although the proof does not need it: at `t = 0` both sides
 are zero.
 -/

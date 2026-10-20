@@ -1,6 +1,6 @@
 /-
 Corollary 2.2 of the corrected edition.
-`dimred-corrected-arxiv.tex:527-534` (label `cor:derivative_bound`,
+`dimred-corrected-arxiv.tex:554-561` (label `cor:derivative_bound`,
 "Derivative bound"):
 
   "Suppose $v_{\infty}(M, \mathbf{1}_{d-1}) \leq k M$ for integer $k \geq 1$.
@@ -10,7 +10,7 @@ Corollary 2.2 of the corrected edition.
 `k` is fixed before `j`, `t` and `x`, as in the paper. `(M, 1_{d-1})` is
 `cornerPoint`. `v_∞` is valued in `ℕ∞`, so the hypothesis is an inequality
 there. The standing hypothesis of the subsection is that the initial sandpile
-is constant (`dimred-corrected-arxiv.tex:426-427`), carried here as `c`.
+is constant (`dimred-corrected-arxiv.tex`, label `subsec:derivative_comparison`), carried here as `c`.
 -/
 import DimRed.Support.DerivativeBoundFull
 
