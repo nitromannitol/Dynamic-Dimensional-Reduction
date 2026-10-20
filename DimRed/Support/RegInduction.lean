@@ -1,6 +1,6 @@
 /-
 The simultaneous induction bookkeeping for odometer regularity and dimensional
-reduction, `dimred-corrected-arxiv.tex:943-954`.  The six predicates below are the five
+reduction, `dimred-corrected-arxiv.tex`, label `sec:dim_reduction`.  The six predicates below are the five
 time-slice clauses of Proposition 4.1 together with the reduction identity.
 The transition predicates in `DimRed.Support.DimRedStep` are reused by the
 arguments which discharge the six induction-step hypotheses; they are not

@@ -7,7 +7,7 @@ The second display of Theorem 1.1(i) of the corrected edition. `dimred-corrected
 The dimension is written `d + 1` in place of `d`. `v_∞` is `odoInfUnif`, the
 supremum `odoInf` at the constant initial condition `2d`, valued in `ℕ∞`; that
 it is finite is a theorem of the development. Vector inequalities are
-coordinatewise (`dimred-corrected-arxiv.tex:275`).
+coordinatewise (`dimred-corrected-arxiv.tex`, label `subsec:notation`).
 -/
 import DimRed.Support.RegProved
 

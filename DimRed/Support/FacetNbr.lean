@@ -22,7 +22,7 @@ theorem facetPoint_tail {i j : ℕ} (x : Fin i → ℤ) (c : ℤ) (b : Fin j) :
   simp [facetPoint]
 
 /-- The mid facet point with its first tail coordinate raised from one to two:
-the paper's tail neighbour `(x_i, 2, 2, 1_{j-1})` of `eq:laplace_13`.  When
+the paper's tail neighbour `(x_i, 2, 2, 1_{j-1})` in Step 7 of the proof of `lem:strict-head-facet` in `dimred-corrected-arxiv.tex`.  When
 `j = 0` the tail sum is empty and the point is the mid point itself. -/
 def facetTailRaise {i : ℕ} (x : Fin i → ℤ) (j : ℕ) : Site (i + 1 + j) :=
   fun l => if i + 1 ≤ (l : ℕ) then (if (l : ℕ) = i + 1 then 2 else 1) else facetPoint x 2 j l

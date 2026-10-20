@@ -1,6 +1,6 @@
 /-
 Lemma 2.5 of the corrected edition.
-`dimred-corrected-arxiv.tex:561-568` (label `topple_limit`):
+`dimred-corrected-arxiv.tex:601-608` (label `topple_limit`):
 
   "For all $t \geq t_0$ and $j \geq 0$, \max_{z \in \mathcal{S}} \left(
    v_{t+j}(z) - v_t(z) \right) \leq \max_{z \in \mathcal{S}} \left(
@@ -9,9 +9,9 @@ Lemma 2.5 of the corrected edition.
 `\mathcal{S}` is `S_M^{(d)}`, the sorted fundamental domain of `C_{2M}^{(d)}`,
 and `v_t` on it is the odometer of the hypercube (`symmetry_lemma`; see
 CORRESPONDENCE.md). The standing symmetry of the initial sandpile
-(`dimred-corrected-arxiv.tex:370`) is carried as `hsym`, without which the
+(`dimred-corrected-arxiv.tex`, label `subsec:symmetry`) is carried as `hsym`, without which the
 maximum over a fundamental domain says nothing about the rest of the cube. The
-bound `s_0 ≤ 2(2d) - 1` of `dimred-corrected-arxiv.tex:290` is not a
+bound `s_0 ≤ 2(2d) - 1` of `dimred-corrected-arxiv.tex`, label `subsec:babai_gorodezky` is not a
 hypothesis of this statement.
 -/
 import DimRed.Support.ToppleContractionFull

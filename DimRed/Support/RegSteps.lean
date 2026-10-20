@@ -4,7 +4,7 @@ import DimRed.Support.SimplexFold
 /-!
 # Dimensional reduction at one triple
 
-Dimensional reduction at one triple, `dimred-corrected-arxiv.tex:955-1008`.
+Dimensional reduction at one triple, the subsection labelled `subsec:dim_reduction` in `dimred-corrected-arxiv.tex`.
 
 The step is `odo_dimred_step`, whose remaining input is the unit-gap interior
 branch `odo_dimred_critical`.  Both are stated for the raw point `x` of the

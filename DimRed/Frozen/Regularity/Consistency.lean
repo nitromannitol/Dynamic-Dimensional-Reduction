@@ -1,5 +1,5 @@
 /-
-The self-similarity clause of Proposition 4.1 of the corrected edition. `dimred-corrected-arxiv.tex:727-729` (label `base_dimension`,
+The self-similarity clause of Proposition 4.1 of the corrected edition. `dimred-corrected-arxiv.tex:813-815` (label `base_dimension`,
 display `base_dimension:consistency`):
 
   "Recall the definition of $\tau_{j}$ from Theorem \ref{the_theorem}. For all
@@ -11,10 +11,10 @@ display `base_dimension:consistency`):
    > M-j$}."
 
 `v_t^{(M)}` is the odometer of the initial condition `s_0 ≡ 2d`
-(`dimred-corrected-arxiv.tex:38`) on the hypercube `C_{2M}^{(d)}`, restricted
-to `S_M^{(d)}` (`dimred-corrected-arxiv.tex:420-422`). `τ_j` is `toppleTime`;
+(`dimred-corrected-arxiv.tex`, label `subsec:overview`) on the hypercube `C_{2M}^{(d)}`, restricted
+to `S_M^{(d)}` (`dimred-corrected-arxiv.tex`, label `subsec:symmetry`). `τ_j` is `toppleTime`;
 it is valued in `ℕ∞`, so `t ≤ τ_j` is an inequality there. Vector inequalities
-are coordinatewise (`dimred-corrected-arxiv.tex:275`).
+are coordinatewise (`dimred-corrected-arxiv.tex`, label `subsec:notation`).
 -/
 import DimRed.Support.RegProved
 

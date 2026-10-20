@@ -16,7 +16,7 @@ challenge's vocabulary, and proves the byte-identical statements from the restat
 
 namespace DimRed.StatementAudit.Regularity
 
-/-- **Proposition 4.1** (`base_dimension`), self-similarity clause (`dimred-corrected-arxiv.tex:727-729`):
+/-- **Proposition 4.1** (`base_dimension`), self-similarity clause (`dimred-corrected-arxiv.tex`, label `base_dimension:consistency`):
 for `M ≥ 2`, `1 ≤ j ≤ M`, `t ≤ τ_j` and `x ∈ S_M` with `x > M - j`,
 `v_t^{(M)}(x) = v_t^{(j)}(x - (M - j))`. -/
 theorem base_dimension_consistency (d M : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
@@ -27,7 +27,7 @@ theorem base_dimension_consistency (d M : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
   simp only [Bridge.odoUnif_eq]
   exact DimRed.base_dimension_consistency d M hd hM j hj1 hj2 t ht x hx hxgt
 
-/-- **Proposition 4.1** (`base_dimension`), weak facet compatibility (`dimred-corrected-arxiv.tex:731-738`):
+/-- **Proposition 4.1** (`base_dimension`), weak facet compatibility (`dimred-corrected-arxiv.tex`, label `base_dimension:weak_compatability`):
 if `v_t(x_i, 1, 1_j) = v_t(x_i, 2, 1_j) + 1` then `v_{t+1}(x_i, 1, 1_j) = v_t(x_i, 1, 1_j)`. -/
 theorem base_dimension_weak_compatibility (M i j : ℕ) (hM : 2 ≤ M)
     (t : ℕ) (ht : 1 ≤ t) (x : Fin i → ℤ) (hx2 : ∀ a, 2 ≤ x a)
@@ -39,7 +39,7 @@ theorem base_dimension_weak_compatibility (M i j : ℕ) (hM : 2 ≤ M)
   simp only [Bridge.odoUnif_eq] at h ⊢
   exact DimRed.base_dimension_weak_compatibility M i j hM t ht x hx2 hxs h
 
-/-- **Proposition 4.1** (`base_dimension`), strong derivative bound (`dimred-corrected-arxiv.tex:743-745`):
+/-- **Proposition 4.1** (`base_dimension`), strong derivative bound (`dimred-corrected-arxiv.tex`, label `base_dimension:strong_derivative`):
 for `x_i ≥ 2`, `j ≥ 0` and the regime `t < τ_M` or `i ≥ 1, t ≥ τ_M`,
 `v_t(x_i, 1, 1_j) - v_t(x_i, 3, 1_j) ≤ 2`. -/
 theorem base_dimension_strong_derivative (M i j : ℕ) (hM : 2 ≤ M)
@@ -53,7 +53,7 @@ theorem base_dimension_strong_derivative (M i j : ℕ) (hM : 2 ≤ M)
   simp only [Bridge.odoUnif_eq]
   exact DimRed.base_dimension_strong_derivative M i j hM t x hx2 hxs hreg
 
-/-- **Proposition 4.1** (`base_dimension`), strong facet compatibility (`dimred-corrected-arxiv.tex:747-755`):
+/-- **Proposition 4.1** (`base_dimension`), strong facet compatibility (`dimred-corrected-arxiv.tex`, label `base_dimension:strong_compatability`):
 under the derivative bound's hypotheses and the gap
 `v_t(x_i, 1, 1_j) = v_t(x_i, 2, 1_j) + 1`, the first point stays and the second topples. -/
 theorem base_dimension_strong_compatibility (M i j : ℕ) (hM : 2 ≤ M)
@@ -71,7 +71,7 @@ theorem base_dimension_strong_compatibility (M i j : ℕ) (hM : 2 ≤ M)
   simp only [Bridge.odoUnif_eq] at h ⊢
   exact DimRed.base_dimension_strong_compatibility M i j hM t x hx2 hxs hreg h
 
-/-- **Proposition 4.1** (`base_dimension`), strong topple control (`dimred-corrected-arxiv.tex:761-763`):
+/-- **Proposition 4.1** (`base_dimension`), strong topple control (`dimred-corrected-arxiv.tex`, label `base_dimension:strong_topple`):
 for all `t ≥ τ_{M-1}`, `sup_{x ∈ S_M}(v_{t+2}(x) - v_t(x)) ≤ 1`. -/
 theorem base_dimension_strong_topple (d M : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
     (t : ℕ) (ht : toppleTime d (M - 1) ≤ (t : ℕ∞)) :

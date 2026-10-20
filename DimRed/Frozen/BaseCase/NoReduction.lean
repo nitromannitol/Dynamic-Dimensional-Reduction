@@ -1,14 +1,14 @@
 /-
 Proposition 3.1 of the corrected edition.
-`dimred-corrected-arxiv.tex:596-598` (label `no_reduction`):
+`dimred-corrected-arxiv.tex:645-647` (label `no_reduction`):
 
   "When $s_0^{(d)} \equiv 2 d + (d_0-1)$, $v_\infty^{(d_0)} \equiv 1$ but
    $v_\infty^{(d_0-1)} \equiv 2$."
 
 The setting is `M = 1`, that is, the hypercube of side `N = 2`
-(`dimred-corrected-arxiv.tex:594-595` and
-`dimred-corrected-arxiv.tex:420-422`), and `d_0 ≥ 2` because a
-zero-dimensional sandpile is not defined (`dimred-corrected-arxiv.tex:595`).
+(`dimred-corrected-arxiv.tex`, label `subsec:M1` and
+`dimred-corrected-arxiv.tex`, label `subsec:symmetry`), and `d_0 ≥ 2` because a
+zero-dimensional sandpile is not defined (`dimred-corrected-arxiv.tex`, label `subsec:M1`).
 In dimension `d` the initial sandpile is `2d + (d_0 - 1)` chips at every site,
 so it is `2 d_0 + (d_0-1)` in dimension `d_0` and `2(d_0-1) + (d_0-1)` in
 dimension `d_0 - 1`.

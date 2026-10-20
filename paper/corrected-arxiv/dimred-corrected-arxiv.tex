@@ -34,7 +34,7 @@
 	
 	\section{Introduction}
 	
-	\subsection{Overview} 
+	\subsection{Overview} \label{subsec:overview} 
 	Let $\mathcal{C}_N^{(d)}$ be a hypercube of side length $N$ centered at the origin in the $d$-dimensional integer lattice $\Z^d$.  A {\it sandpile} is a function $s: \mathcal{C}_N^{(d)} \to \Z$. Start with $2d$ chips in the hypercube,  $s = s_0^{(d)} \equiv 2d$, then iterate the following rule: every site with at least $2d$ chips on it becomes {\it unstable} 
 	and {\it topples} in {\it parallel}, simultaneously giving one chip to each of its $2d$ neighbors. If a boundary site topples, it loses chips over the edge. Eventually every site is stable and the process stops, yielding a sequence of sandpiles over time $\{s_t^{(d)}\}_{t \geq 0}$ \cite{bak1987self, dhar1990self, holroyd2008chip,levine2010sandpile,levine2017laplacian,jarai2018sandpile, klivans2018mathematics}.
 	
@@ -89,7 +89,7 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 	
 
 	
-	\subsection{Main Result}
+	\subsection{Main Result} \label{subsec:main_result}
 	Our proof begins with the {\it odometer} $v_t$, which encodes the number of topples at each site over time. Let $v_0 : \mathcal{C}_N^{(d)} \to \mathbb{Z}^+$ be the initial odometer $v_0 \equiv 0$; then, recursively, 
 	\begin{align}
 	v_{t+1} &= v_{t} +  1\{ s_{t} \geq 2 d \}, \\
@@ -238,7 +238,7 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 	
 	
 	
-	\subsection{Outline of the proof}
+	\subsection{Outline of the proof} \label{subsec:outline}
 	The proof of Theorem \ref{the_theorem} is a careful induction on hypercube dimension, side length, and time. Some parts of the argument can be simplified 
 	but we present it in this fashion to suggest a template for proving dimensional reduction with more general initial data. At a high level, 
 	we show that if the parallel toppling process for a $d_0$-dimensional sandpile is sufficiently regular, then dimensional reduction is guaranteed 
@@ -267,7 +267,7 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 	\section{Preliminaries} \label{sec:prelims}
 	
 	
-	\subsection{Notation and conventions}
+	\subsection{Notation and conventions} \label{subsec:notation}
 	When we need to distinguish between vectors and scalars, we reserve $\mathbf{x}$
 	for vectors and $x$ for scalars. The $i$-th element of $\mathbf{x}$ is $x_i$
 	and $\mathbf{x}_{i} = (x_1, \ldots, x_i)$. We refer to coordinate basis vectors of 
@@ -286,7 +286,7 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 	sum $y \sim x$ is over the 2d nearest neighbors of $x$, $|y-x| = 1$.  When the hypercube size or dimension is not used, we omit distinguishing sub/superscripts. 
 	
 	
-	\subsection{Babai-Gorodezky technique} 
+	\subsection{Babai-Gorodezky technique} \label{subsec:babai_gorodezky} 
 	In this subsection and the next, let $s_0 \leq 2 (2 d) - 1$ be an arbitrary initial sandpile on $\mathcal{C}$ and $v_t$ its odometer. A straightforward induction argument and the definition of the graph Laplacian yields the following lemma. 
 	\begin{lemma}[] \label{pt_ind_lemma}
 		For each $x \in \mathcal{C}$ and all $t \geq 0$, 
@@ -300,7 +300,7 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 	Lemma \ref{pt_ind_lemma} is used many other times throughout this paper; notably we use it to prove a parabolic least action principle and symmetry of the odometer on the hypercube. 
 	
 	
-	\subsection{Parabolic least action principle} 
+	\subsection{Parabolic least action principle} \label{subsec:parabolic} 
 	The least action principle \cite{fey2010growth} shows that $v_\infty$ is minimal among all $w: \mathcal{C} \to \mathbb{Z}^+$ which {\it stabilize} $s_0$: $\Delta w + s_0 \leq 2d -1$. We upgrade this to a parabolic least action principle by observing the parallel toppling procedure as a directed sandpile on $\mathcal{G} = \mathbb{Z}^+ \times \mathcal{C}$. The initial sandpile and odometer over time are stacked,
 	$s(t,x) := s_0(x)$ and $v(t,x) := v_t(x)$ for all $t \geq 0$ and $x \in \mathcal{C}$.  The graph Laplacian operates on functions $f:\mathcal{G} \to \mathbb{R}$ as
 	\begin{equation}
@@ -318,19 +318,21 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 		%If $\Delta^{\mathcal{G}} w + s \leq 2d-1$, then $w(t, \cdot) \geq v_t(\cdot)$ for all $t \geq 1$.
 	\end{lemma}
 	\begin{proof}
-        Put $K=2d$ and $q_t(x)=\lfloor(s_0(x)+\sum_{y\sim x}v_t(y))/K\rfloor$.
-        Lemma \ref{pt_ind_lemma} gives $v_{t+1}(x)=\max\{0,q_t(x)\}$.
-        Thus $K v_{t+1}(x)\geq s_0(x)+\sum_{y\sim x}v_t(y)-(K-1)$,
-        which proves that $v$ belongs to the class in \eqref{eq:parabolic_leastaction}.
-        Let $u$ be any member of that class. At time zero, $v_0=0\leq u_0$.
-        If $v_t\leq u_t$, its defining inequality and $u_{t+1}\geq0$ give
-        \[
-        u_{t+1}(x)\geq\max\left\{0,\left\lfloor
-        \frac{s_0(x)+\sum_{y\sim x}u_t(y)}K\right\rfloor\right\}
-        \geq v_{t+1}(x).
-        \]
-        Zero padding supplies the comparison outside the cube. Induction proves
-        $v\leq u$, and feasibility of $v$ proves the attained pointwise minimum.
+Step 1 shows that $v$ belongs to the class in~\eqref{eq:parabolic_leastaction}, and Step 2 shows that every member of the class lies above $v$.
+
+\emph{Step 1.} We show that $v$ belongs to the class. Put $K:=2d$ and $a_t(x):=s_0(x)+\sum_{y\sim x}v_t(y)$. The standing assumption is $s_0\leq 2K-1$, so Lemma~\ref{pt_ind_lemma} gives $v_{t+1}(x)=\max\{0,\lfloor a_t(x)/K\rfloor\}$. For every integer $a$ we have $\lfloor a/K\rfloor>a/K-1$, so $K\lfloor a/K\rfloor\geq a-(K-1)$. Hence $K v_{t+1}(x)\geq a_t(x)-(K-1)$ for all $t\geq0$ and $x\in\mathcal C_N^{(d)}$. Rearranging gives
+\begin{equation*}
+-K\,v_{t+1}(x)+\sum_{y\sim x}v_t(y)+s_0(x)\leq K-1\,,
+\end{equation*}
+which is the constraint at time $t+1$. The values of $v$ are nonnegative integers, so $v$ belongs to the class.
+
+\emph{Step 2.} Let $u$ be a member of the class, and extend $u$ and $v$ by zero outside $\mathcal C_N^{(d)}$. This does not change the neighbour sums in the constraint at points of $\mathcal C_N^{(d)}$. We show by induction on $t$ that $v_t\leq u_t$. At $t=0$ this holds since $v_0=0$ and $u_0\geq0$. Assume $v_t\leq u_t$. Both functions vanish outside $\mathcal C_N^{(d)}$, so the inequality holds on all of $\mathbb Z^d$. Fix $y\in\mathcal C_N^{(d)}$ and put
+\begin{equation*}
+b:=s_0(y)+\sum_{y'\sim y}u_t(y')\,,\qquad a:=s_0(y)+\sum_{y'\sim y}v_t(y')\,.
+\end{equation*}
+The constraint for $u$ at time $t+1$ says $b\leq Ku_{t+1}(y)+K-1$, that is, $b<K\big(u_{t+1}(y)+1\big)$. Since $a\leq b$, we get $a<K\big(u_{t+1}(y)+1\big)$, and therefore $\lfloor a/K\rfloor\leq u_{t+1}(y)$. Together with $u_{t+1}(y)\geq0$, this gives $v_{t+1}(y)=\max\{0,\lfloor a/K\rfloor\}\leq u_{t+1}(y)$. This completes the induction.
+
+By Steps 1 and 2, $v$ belongs to the class and lies below each of its members. So $v$ is the pointwise minimum of the class, which is \eqref{eq:parabolic_leastaction}.
     \end{proof}
 	\noindent  
 	Our usage of the parabolic least action principle in the main argument is minimal
@@ -367,25 +369,19 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 	Observe that  $\{ \mathbf{x}_{d-1} : (\mathbf{x}_{d-1}, 1) \in \mathcal{S}^{(d)}_M\} = \mathcal{S}^{(d-1)}_M$;
 	this is the first step towards proving dimensional reduction on the hypercube. 
 	
-	Let $s_0:\mathcal{C}_N^{(d)}\to\mathbb Z$ be invariant under the cube
-    symmetries on its cube domain. Every site $y$ in the cube has a unique
-    orbit representative $r_N(y)\in\mathcal{S}^{(d)}_M$; the symmetry taking
-    $y$ to that representative need not be unique. For
-    $u:\mathcal{S}^{(d)}_M\to\mathbb Z$ define its lifted values by
-    \[
-    \widetilde u(y)=\begin{cases}u(r_N(y)),&y\in\mathcal{C}_N^{(d)},\\
-    0,&y\notin\mathcal{C}_N^{(d)}.\end{cases}
-    \]
-    Write $R u(x)=\sum_{i=1}^d(\widetilde u(x+e_i)+\widetilde u(x-e_i))$.
-    The sum retains all $2d$ directed occurrences, including repeated orbit
-    representatives and zero contributions from exterior neighbors. Define
-    the symmetrized odometer independently by $v_0^{\mathcal S}\equiv0$ and
-    \[
-    v_{t+1}^{\mathcal S}(x)=v_t^{\mathcal S}(x)+
-    1\{s_0(x)+R v_t^{\mathcal S}(x)-2d v_t^{\mathcal S}(x)\geq2d\}.
-    \]
-    This uses the physical cube embedding for each parity of $N$: reflection
-    sends $0$ to $1$ for even $N$ and $0$ to $2$ for odd $N$.
+	Let $s_0:\mathcal{C}_N^{(d)}\to\Z$ be symmetric, that is, $\sigma s_0=s_0$ for every $\sigma\in\operatorname{Aut}_{\mathcal{C}_d}$. Every site $y\in\mathcal{C}_N^{(d)}$ has exactly one point $r_N(y)\in\mathcal{S}^{(d)}_M$ in its orbit under $\operatorname{Aut}_{\mathcal{C}_d}$, although the symmetry carrying $y$ to $r_N(y)$ need not be unique. Here a reflection of one coordinate exchanges $0$ and $1$ when $N$ is even, and $0$ and $2$ when $N$ is odd, in the coordinates of $\mathcal{C}_N^{(d)}$ fixed above. For $u:\mathcal{S}^{(d)}_M\to\Z$ define $\widetilde u:\Z^d\to\Z$ by
+	\begin{equation*}
+	\widetilde u(y)=\begin{cases}u(r_N(y)), & y\in\mathcal{C}_N^{(d)},\\ 0, & y\notin\mathcal{C}_N^{(d)},\end{cases}
+	\end{equation*}
+	and put, for $x\in\mathcal{S}^{(d)}_M$,
+	\begin{equation*}
+	Ru(x)=\sum_{i=1}^d\big(\widetilde u(x+e_i)+\widetilde u(x-e_i)\big)\,.
+	\end{equation*}
+	Each of the $2d$ neighbours of $x$ contributes one term to $Ru(x)$: a point of $\mathcal{S}^{(d)}_M$ is counted once for each neighbour of $x$ in its orbit, and a neighbour outside $\mathcal{C}_N^{(d)}$ contributes zero. The \textbf{symmetrized odometer} is defined by $v_0^{\mathcal S}\equiv0$ and
+	\begin{equation*}
+	v_{t+1}^{\mathcal S}(x)=v_t^{\mathcal S}(x)+\mathbf 1\{s_0(x)+Rv_t^{\mathcal S}(x)-2d\,v_t^{\mathcal S}(x)\geq2d\}
+	\end{equation*}
+	for $x\in\mathcal{S}^{(d)}_M$ and $t\geq0$.
 
 
 	
@@ -401,17 +397,21 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 	\end{lemma}
 	
 	\begin{proof}
-        Induct on $t$ using the simultaneous threshold update. The zero
-        odometer is invariant. Each cube symmetry preserves cube membership
-        and permutes the $2d$ directed neighbor occurrences. Therefore the
-        initial-height term, neighbor sum, center odometer and firing indicator
-        at $\sigma x$ equal the corresponding terms at $x$. This proves
-        invariance at time $t+1$, with zero odometer outside the cube.
-        For the identification, induct again from zero on $\mathcal S$.
-        Invariance replaces each in-cube neighbor by its orbit representative;
-        exterior neighbors contribute zero. The physical update is then
-        precisely the independent recursion defining $v^{\mathcal S}$.
-        Hence $v_t=v_t^{\mathcal S}$ on $\mathcal S$ for every $t\geq0$.
+Step 1 proves the invariance $\sigma v_t=v_t$ by induction on $t$. Step 2 shows, again by induction on $t$, that the restriction of $v_t$ to $\mathcal S$ satisfies the recursion defining $v^{\mathcal S}$.
+
+\emph{Step 1.} We show that $\sigma v_t=v_t$ for every $\sigma\in\operatorname{Aut}_{\mathcal C_d}$ and every $t\geq0$. The zero odometer is invariant. Assume $v_t(\sigma x)=v_t(x)$ for all $x$ and all $\sigma$. Each $\sigma$ maps $\mathcal C_N^{(d)}$ onto itself, and it carries the $2d$ directed neighbours of $x$ bijectively onto those of $\sigma x$, so $\sum_{y'\sim\sigma x}v_t(y')=\sum_{y\sim x}v_t(\sigma y)$. The initial pile is invariant, $s_0(\sigma x)=s_0(x)$. Hence the height at time $t$ satisfies
+\begin{equation*}
+s_t(\sigma x)=s_0(\sigma x)-2d\,v_t(\sigma x)+\sum_{y\sim x}v_t(\sigma y)=s_t(x)\,,
+\end{equation*}
+by the induction hypothesis. The odometer rule then gives $v_{t+1}(\sigma x)=v_{t+1}(x)$ for $x\in\mathcal C_N^{(d)}$. Outside the cube both values are zero.
+
+\emph{Step 2.} We show that $v_t(x)=v_t^{\mathcal S}(x)$ for every $x\in\mathcal S$ and every $t\geq0$. Both sides vanish at $t=0$. Assume the identity at time $t$. For $y\in\mathcal C_N^{(d)}$ let $r_N(y)\in\mathcal S$ be its orbit representative. By Step 1, $v_t(y)=v_t(r_N(y))=v_t^{\mathcal S}(r_N(y))$, and $v_t(y)=0$ outside the cube, so $v_t$ is the lift of $v_t^{\mathcal S}$ defined above. For $x\in\mathcal S$ the $2d$ neighbours of $x$ therefore contribute $\sum_{y\sim x}v_t(y)=R\,v_t^{\mathcal S}(x)$, where neighbours outside $\mathcal C_N^{(d)}$ contribute zero. Thus the odometer rule at $x$ reads
+\begin{equation*}
+v_{t+1}(x)=v_t(x)+\mathbf 1\{s_0(x)+R\,v_t^{\mathcal S}(x)-2d\,v_t^{\mathcal S}(x)\geq 2d\}=v_{t+1}^{\mathcal S}(x)\,,
+\end{equation*}
+which is exactly the recursion defining $v^{\mathcal S}$. This completes the induction.
+
+Hence $v_t=v_t^{\mathcal S}$ on $\mathcal S$ for every $t\geq0$.
     \end{proof}
 	\noindent Note that the proof indicates that Lemma \ref{symmetry_lemma} can be extended in a natural way to 
 	other graphs and domains which are preserved under the automorphism group of the graph. 
@@ -422,7 +422,7 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 	are identical except for slight changes to the boundary arguments. Also, we will use $\mathcal{S}_M^{(d)}$ to refer exclusively to the sorted fundamental domain of $\mathcal{C}_{2M}^{(d)}$. The expressions $v_t^{(d,M)}$  and $s_t^{(d,M)}$ will refer to the parallel toppling odometers and sandpiles on $\mathcal{S}_M^{(d)}$. 
 	
 	
-	\subsection{Derivative comparison}
+	\subsection{Derivative comparison} \label{subsec:derivative_comparison}
 	In this section we provide a general parabolic comparison result for first order differences of $v_t$ on $\mathcal{S}_M$
 	when the initial sandpile, $s_0$, is constant. For $w \in \Z^d$, let $D_{w}$ denote a first order difference operator of the form $D_{w} v_t(\cdot) = v_t(\cdot) - v_t(\cdot+w)$. Pad $v_t$ by $v_t(x) := 0$ for all $x \not \in \mathcal{C}_N$.  
 	Denote the interior with respect to $w$ as 
@@ -480,22 +480,44 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 	\end{lemma}
 	
 	\begin{proof}
-        Induct on $t$ from the initial inequalities. Fix an index $j$ and
-        write $D=v_t(x)-v_t(x+w_j)$ and $g=g_j(x)$. If $D<g$, integrality
-        gives $D\leq g-1$, and one-fire increments give $D_{w_j}v_{t+1}(x)\leq g$.
-        If $D=g$ and both endpoints are in the cube, the neighbor inequality
-        \[
-        \sum_{y\sim x}v_t(y)-\sum_{y'\sim(x+w_j)}v_t(y')\leq2d g
-        \]
-        says that the height at $x$ is at most the height at $x+w_j$:
-        the constant initial heights cancel and the center difference is $g$.
-        Thus firing of $x$ forces firing of $x+w_j$, preserving the bound.
-        At an interior point the displayed neighbor inequality follows by
-        summing the previous difference inequalities and using superharmonicity
-        of $g_j$. At a boundary point the first alternative supplies that
-        inequality and both in-cube endpoints; the second supplies the desired
-        next-time inequalities directly. This proves all indices together.
-    \end{proof}
+	We induct on $t\geq t_0$. The case $t=t_0$ is \eqref{eq:initial_cond}. Fix $t\geq t_0$ and assume $D_{w_j}v_t\leq g_j$ on $\mathcal S$ for every $j$. We prove the same inequality at time $t+1$ in three steps. Step 1 is a one-step estimate for a pair of sites. Steps 2 and 3 treat the interior and boundary points of $\mathcal S$, and each applies Step 1.
+	
+	\emph{Step 1.} We show that if $x,y\in\mathcal C_N^{(d)}$ and $a\in\Z$ satisfy
+	\begin{equation*}
+	v_t(x)-v_t(y)\leq a
+	\quad\mbox{and}\quad
+	\sum_{x'\sim x}v_t(x')-\sum_{y'\sim y}v_t(y')\leq 2d\,a\,,
+	\end{equation*}
+	then $v_{t+1}(x)-v_{t+1}(y)\leq a$.
+	
+	For $z\in\mathcal C_N^{(d)}$, the height of $z$ at time $t$ is
+	\begin{equation*}
+	s_t(z)=s_0(z)-2d\,v_t(z)+\sum_{y\sim z}v_t(y)\,.
+	\end{equation*}
+	The odometer rule $v_{t+1}(z)=v_t(z)+\mathbf{1}\{s_t(z)\geq 2d\}$ says that $z$ topples at step $t+1$ exactly when $s_t(z)\geq 2d$. In particular, $v_{t+1}(z)-v_t(z)\in\{0,1\}$.
+	
+	Suppose first that $v_t(x)-v_t(y)<a$. Both sides are integers, so $v_t(x)-v_t(y)\leq a-1$. Since $v_{t+1}(x)-v_t(x)\leq 1$ and $v_{t+1}(y)-v_t(y)\geq 0$, we get $v_{t+1}(x)-v_{t+1}(y)\leq v_t(x)-v_t(y)+1\leq a$.
+	
+	Suppose next that $v_t(x)-v_t(y)=a$. The initial sandpile $s_0$ is constant, so $s_0(x)=s_0(y)$. The heights therefore satisfy
+	\begin{equation*}
+	s_t(x)-s_t(y)=\Big(\sum_{x'\sim x}v_t(x')-\sum_{y'\sim y}v_t(y')\Big)-2d\,\big(v_t(x)-v_t(y)\big)\leq 2d\,a-2d\,a=0\,.
+	\end{equation*}
+	Hence $s_t(x)\leq s_t(y)$, so if $x$ topples at step $t+1$, then $s_t(y)\geq s_t(x)\geq 2d$ and $y$ topples at step $t+1$ too. Thus $v_{t+1}(x)-v_t(x)\leq v_{t+1}(y)-v_t(y)$, and
+	\begin{equation*}
+	v_{t+1}(x)-v_{t+1}(y)=\big(v_t(x)-v_t(y)\big)+\big(v_{t+1}(x)-v_t(x)\big)-\big(v_{t+1}(y)-v_t(y)\big)\leq a\,.
+	\end{equation*}
+	This proves Step 1.
+	
+	\emph{Step 2.} We show the inequality at every $x\in\mathcal S$ with $x\notin\mathcal B_0\cup\mathcal B_{\mathbf w}$. Fix such an $x$ and an index $j$. Since $x\notin\mathcal B_0$, we have $1<x_i<M$ for all $i$ and $x_j<x_i$ for $i<j$, which gives $x\pm e_i\in\mathcal S$ for every $i$. Since $x\notin\mathcal B_{\mathbf w}$, the same strict inequalities hold at $x+w_j$, so $x+w_j\in\mathcal S$. Summing the induction hypothesis $D_{w_j}v_t(y)\leq g_j(y)$ over the neighbours $y$ of $x$ gives
+	\begin{equation*}
+	\sum_{y\sim x}v_t(y)-\sum_{y'\sim x+w_j}v_t(y')=\sum_{y\sim x}\big(v_t(y)-v_t(y+w_j)\big)\leq\sum_{y\sim x}g_j(y)\leq 2d\,g_j(x)\,.
+	\end{equation*}
+	The equality substitutes $y'=y+w_j$, which runs over the neighbours of $x+w_j$ as $y$ runs over the neighbours of $x$. The last inequality is the superharmonicity of $g_j$ at $x$. Now Step 1 applies with $y=x+w_j$ and $a=g_j(x)$. Its first hypothesis is the induction hypothesis at $x$, and its second is the display above. Hence $D_{w_j}v_{t+1}(x)\leq g_j(x)$.
+	
+	\emph{Step 3.} We show the inequality at every $x\in\mathcal S\cap(\mathcal B_0\cup\mathcal B_{\mathbf w})$. The hypothesis \eqref{eq:boundaries_ref} at time $t$ gives one of its two alternatives. If the second alternative holds, the inequality at time $t+1$ is part of the hypothesis. If the first holds, then $x+w_j\in\mathcal C_N^{(d)}$ for every $j$, and the neighbour inequality holds with $2d\,g_j(x)$ on the right. Step 1 with $y=x+w_j$ and $a=g_j(x)$, together with the induction hypothesis at $x$, gives $D_{w_j}v_{t+1}(x)\leq g_j(x)$ for every $j$.
+	
+	Steps 2 and 3 cover all of $\mathcal S$, which completes the induction.
+	\end{proof}
 	
 	\noindent As a corollary, we deduce the following discrete quasiconcavity property of $v_t$ on a hypercube, which was proved in \cite{babai2007sandpile}
 	for axis monotonic initial sandpiles on $\Z^2$.  (Note that Aleksanyan and Shahgholian, using a discrete analogue of the method of moving planes, proved axis monotonicity
@@ -513,16 +535,21 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 	\end{corollary}
 
 	\begin{proof}
-        Work on the physical cube with zero exterior. Induct on time for the
-        two families of comparisons perpendicular to a reflection mirror and
-        to a coordinate-interchange mirror. A strict previous comparison is
-        preserved by the one-fire bound. At equality, pair the directed
-        neighbor occurrences by reflection, respectively interchange of the
-        selected coordinates. The previous comparisons give the neighbor-sum
-        order; the equal center values and constant initial height give the
-        same order of firing indicators. A reflecting occurrence is identified
-        by symmetry and an exterior occurrence has zero value. This proves
-        each elementary comparison and hence its restriction to $\mathcal S$.
+Throughout this subsection $s_0$ is constant, and $v_t$ is extended by zero outside $\mathcal C_N^{(d)}$. Steps 1 and 2 prove two comparisons for all $t\geq0$ and all $x\in\Z^d$, and Step 3 specialises them to the corollary.
+
+\emph{Step 1.} We show that $v_t(x+e_i)\leq v_t(x)$ whenever $x_i\geq1$. This holds at $t=0$, so assume it at time $t$ for all $x$. If $x\notin\mathcal C_N^{(d)}$, then $x+e_i\notin\mathcal C_N^{(d)}$, because $x_i\geq1$ and moving up in coordinate $i$ cannot bring an out-of-range coordinate back into range. Both values vanish at time $t+1$. If $x\in\mathcal C_N^{(d)}$ and $x+e_i\notin\mathcal C_N^{(d)}$, then $v_{t+1}(x+e_i)=0\leq v_{t+1}(x)$. Now let both points lie in the cube.
+
+If $v_t(x+e_i)<v_t(x)$, then integrality and $v_{t+1}(z)-v_t(z)\in\{0,1\}$ give $v_{t+1}(x+e_i)\leq v_t(x+e_i)+1\leq v_t(x)\leq v_{t+1}(x)$.
+
+If $v_t(x+e_i)=v_t(x)$, we compare heights. For each $k$, the two neighbours $x+e_i\pm e_k$ of $x+e_i$ are paired with $x+e_k$ and $x-e_k$. The induction hypothesis at $x+e_k$ gives $v_t(x+e_i+e_k)\leq v_t(x+e_k)$, and the hypothesis at $x-e_k$ gives $v_t(x+e_i-e_k)\leq v_t(x-e_k)$ when $x-e_k$ has $i$-th coordinate at least $1$. The only exception is $k=i$ with $x_i=1$. In that case $v_t(x-e_i)=v_t(x)$, by Lemma \ref{symmetry_lemma} applied to the reflection $y_i\mapsto 1-y_i$, which exchanges $x$ and $x-e_i$. So in all cases $v_t(x+e_i+e_k)+v_t(x+e_i-e_k)\leq v_t(x+e_k)+v_t(x-e_k)$. Summing over $k$ gives $\sum_{y\sim x+e_i}v_t(y)\leq\sum_{y\sim x}v_t(y)$. With $s_0$ constant and $v_t(x+e_i)=v_t(x)$, the heights satisfy $s_t(x+e_i)\leq s_t(x)$. So if $x+e_i$ topples at step $t+1$, then $x$ topples too, and $v_{t+1}(x+e_i)\leq v_{t+1}(x)$.
+
+\emph{Step 2.} We show that $v_t(x+e_i-e_j)\leq v_t(x)$ whenever $i\neq j$ and $x_j\leq x_i$. This holds at $t=0$, so assume it at time $t$ for all such $x$. Write $y:=x+e_i-e_j$. If $y\notin\mathcal C_N^{(d)}$, then $v_{t+1}(y)=0\leq v_{t+1}(x)$. If $y\in\mathcal C_N^{(d)}$, then $x\in\mathcal C_N^{(d)}$ as well, because $y_j<x_j\leq x_i<y_i$, so both coordinates of $x$ are in range. Now let both points lie in the cube.
+
+If $v_t(y)<v_t(x)$, the same integrality argument gives $v_{t+1}(y)\leq v_{t+1}(x)$.
+
+If $v_t(y)=v_t(x)$, we compare heights. For each $k$, the neighbours $y\pm e_k$ of $y$ are paired with $x+e_k$ and $x-e_k$. For $y+e_k$ and $x+e_k$ with $k\neq j$, the hypothesis at $x+e_k$ applies, because $(x+e_k)_j=x_j\leq x_i\leq(x+e_k)_i$. For $k=j$, the pair is $x+e_i$ and $x+e_j$. If $x_j<x_i$, the hypothesis at $x+e_j$ gives $v_t(x+e_i)\leq v_t(x+e_j)$. If $x_j=x_i$, the transposition of coordinates $i$ and $j$ fixes $x$ and carries $x+e_i$ to $x+e_j$, so Lemma \ref{symmetry_lemma} gives equality. For $y-e_k$ and $x-e_k$ with $k\neq i$, the hypothesis at $x-e_k$ applies, because $(x-e_k)_j\leq x_j\leq x_i=(x-e_k)_i$. For $k=i$, the pair is $x-e_j$ and $x-e_i$. If $x_j<x_i$, the hypothesis at $x-e_i$ gives $v_t(x-e_j)\leq v_t(x-e_i)$. If $x_j=x_i$, the transposition gives equality as before. Summing over $k$ shows $\sum_{y'\sim y}v_t(y')\leq\sum_{y'\sim x}v_t(y')$. Hence $s_t(y)\leq s_t(x)$, and the toppling argument of Step 1 gives $v_{t+1}(y)\leq v_{t+1}(x)$.
+
+\emph{Step 3.} Let $x\in\mathcal S$, $1\leq i\leq d$, and $\mathcal J=\varnothing$ or $\mathcal J=\{j\}$ with $i<j$. If $\mathcal J=\varnothing$, then $x_i\geq1$ and Step 1 gives the claim. If $\mathcal J=\{j\}$, then $x_i\geq x_j$ because $x\in\mathcal S$, and Step 2 gives the claim. This proves the corollary.
     \end{proof}
 		\begin{corollary}[Derivative bound] \label{cor:derivative_bound}
 		Suppose $v_{\infty}(M, \mathbf{1}_{d-1}) \leq k M$ for integer $k \geq 1$. 
@@ -534,28 +561,41 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 	\end{corollary}
 	
 	\begin{proof}
-        The terminal-corner hypothesis bounds the corner odometer by $kM$
-        at every finite time. Elementary axis monotonicity and symmetry then
-        bound $v_t$ by $kM$ on any selected top face $x_j=M$.
-        Prove the derivative inequality on the unsorted positive orthant by
-        induction on time. It is true at time zero. At the selected top face,
-        the shifted value is zero and the preceding face bound applies.
-        Else both selected endpoints lie in the cube. If their previous
-        difference is strictly less than the integer $kx_j$, the one-fire
-        bound closes the step. At equality, sum the preceding difference
-        inequalities over directed neighbors with affine weight $k y_j$;
-        their weights sum to $2d kx_j$. A selected negative occurrence at
-        $x_j=1$ has difference zero by reflection, equal to its zero weight.
-        A transverse negative reflecting occurrence has the base difference
-        and unchanged weight; a transverse positive exterior occurrence has
-        both values zero. All other occurrences are positive-orthant induction
-        instances, including selected top-face neighbors. The neighbor-sum
-        bound and equality of center differences therefore imply the firing
-        indicator at $x$ is at most that at $x+e_j$. This closes the induction.
+The proof has two parts. Step 1 bounds $v_t$ on the top face $\{x_j=M\}$ by the corner hypothesis. Steps 2 to 5 prove the inequality by induction on $t$ for all $x \in \mathbb{Z}^d$ with $x_j \geq 1$, not only for $x \in \mathcal{S}$, because the induction step uses neighbours that can leave $\mathcal{S}$ or the cube.
+
+\emph{Step 1.} We show that $v_t(x) \leq kM$ for all $t \geq 0$ and every $x \in \mathcal{C}_N^{(d)}$ with $x_j = M$. Put $\mathbf{c} = (M, \mathbf{1}_{d-1})$. The odometer is nondecreasing in time, so $v_t(\mathbf{c}) \leq v_\infty(\mathbf{c}) \leq kM$. Folding each coordinate $c \leq 0$ to $1-c$ and then sorting the coordinates in decreasing order gives a symmetry $\sigma$ with $y := \sigma x \in \mathcal{S}$, and Lemma \ref{symmetry_lemma} gives $v_t(x) = v_t(y)$. The folded value of $x_j$ is $M$, so $y_1 = M$.
+
+Now walk from $y$ to $\mathbf{c}$ inside $\mathcal{S}$. Let $z \in \mathcal{S}$ with $z \neq \mathbf{c}$, and let $l$ be the largest index with $z_l > 1$. Then $l \geq 2$, and $z - e_l \in \mathcal{S}$, because $z_{l-1} \geq z_l > z_l - 1 \geq 1 = z_{l+1}$ (the last comparison is void when $l = d$). Corollary \ref{axis_monotonicity} with $\mathcal{J} = \varnothing$ gives $v_t(z - e_l) \geq v_t(z)$ for $t \geq 1$, and both sides vanish at $t = 0$. So $v_t$ does not decrease along the walk, which ends at $\mathbf{c}$. Hence $v_t(x) = v_t(y) \leq v_t(\mathbf{c}) \leq kM$.
+
+\emph{Step 2.} For $t \geq 0$ let $P(t)$ be the statement that $v_t(x) - v_t(x+e_j) \leq k\,x_j$ for every $j \in \{1, \ldots, d\}$ and every $x \in \mathbb{Z}^d$ with $x_j \geq 1$, where $v_t$ is extended by zero outside $\mathcal{C}_N^{(d)}$. The statement $P(0)$ holds because $v_0 \equiv 0$ and $k\,x_j \geq 0$. Assume $P(t)$, fix $j$ and $x$ with $x_j \geq 1$, and put $D := v_t(x) - v_t(x+e_j)$. We show that $v_{t+1}(x) - v_{t+1}(x+e_j) \leq k\,x_j$.
+
+\emph{Step 3.} This step treats the cases in which $x$ or $x+e_j$ lies outside the cube. If $x \notin \mathcal{C}_N^{(d)}$, then $v_{t+1}(x) = 0$, and the difference is $-v_{t+1}(x+e_j) \leq 0 \leq k\,x_j$. If $x \in \mathcal{C}_N^{(d)}$ but $x+e_j \notin \mathcal{C}_N^{(d)}$, then $x_j = M$, so $v_{t+1}(x+e_j) = 0$ and Step 1 gives $v_{t+1}(x) \leq kM = k\,x_j$.
+
+\emph{Step 4.} Assume from now on that $x$ and $x+e_j$ both lie in the cube. The height of $z$ at time $t$ is $s_t(z) = s_0(z) - 2d\,v_t(z) + \sum_{y \sim z} v_t(y)$, and the odometer rule $v_{t+1}(z) = v_t(z) + \mathbf{1}\{s_t(z) \geq 2d\}$ gives $v_{t+1}(z) - v_t(z) \in \{0, 1\}$. The number $D$ is an integer with $D \leq k\,x_j$ by $P(t)$. If $D < k\,x_j$, then $D \leq k\,x_j - 1$, and therefore $v_{t+1}(x) - v_{t+1}(x+e_j) \leq D + 1 \leq k\,x_j$.
+
+\emph{Step 5.} Assume finally that $D = k\,x_j$. For $i \in \{1, \ldots, d\}$ put
+\begin{equation*}
+B_i := \big(v_t(x+e_i) - v_t(x+e_i+e_j)\big) + \big(v_t(x-e_i) - v_t(x-e_i+e_j)\big)\,.
+\end{equation*}
+We show that $B_i \leq 2k\,x_j$. If $i \neq j$, then $P(t)$ at $x+e_i$ and at $x-e_i$, whose $j$-th coordinates are both $x_j \geq 1$, bounds each bracket by $k\,x_j$. If $i = j$ and $x_j \geq 2$, then $P(t)$ at $x+e_j$ and at $x-e_j$, whose $j$-th coordinates are $x_j+1$ and $x_j-1$, bounds the brackets by $k(x_j+1)$ and $k(x_j-1)$. If $i = j$ and $x_j = 1$, the reflection $y_j \mapsto 1-y_j$ fixes the cube and exchanges $x-e_j$ and $x$, so $v_t(x-e_j) = v_t(x)$ by Lemma \ref{symmetry_lemma}. The second bracket then vanishes, and $P(t)$ at $x+e_j$ bounds the first by $k(x_j+1) = 2k\,x_j$.
+
+The neighbours of $x$ are $x \pm e_i$, and the neighbours of $x+e_j$ are $x+e_j \pm e_i$. Hence
+\begin{equation*}
+\sum_{y \sim x} v_t(y) - \sum_{y \sim x+e_j} v_t(y) = \sum_{i=1}^d B_i \leq 2d\,k\,x_j\,.
+\end{equation*}
+Since $s_0$ is constant, the heights satisfy
+\begin{equation*}
+s_t(x) - s_t(x+e_j) = \Big(\sum_{y \sim x} v_t(y) - \sum_{y \sim x+e_j} v_t(y)\Big) - 2d\,D \leq 2d\,k\,x_j - 2d\,k\,x_j = 0\,.
+\end{equation*}
+So $s_t(x) \leq s_t(x+e_j)$. If $x$ topples at step $t+1$, that is $s_t(x) \geq 2d$, then $s_t(x+e_j) \geq 2d$ and $x+e_j$ topples at step $t+1$ too. Hence $\mathbf{1}\{s_t(x) \geq 2d\} \leq \mathbf{1}\{s_t(x+e_j) \geq 2d\}$, and
+\begin{equation*}
+v_{t+1}(x) - v_{t+1}(x+e_j) = D + \mathbf{1}\{s_t(x) \geq 2d\} - \mathbf{1}\{s_t(x+e_j) \geq 2d\} \leq D = k\,x_j\,.
+\end{equation*}
+This proves $P(t+1)$. Hence $P(t)$ holds for every $t$, which gives \eqref{eq:cor:derivative_bound} for all $x \in \mathbb{Z}^d$ with $x_j \geq 1$, in particular for all $x \in \mathcal{S}$.
     \end{proof}
 	
 	
-	\subsection{Weak topple control}	
+	\subsection{Weak topple control} \label{subsec:weak_topple}	
 	We provide a difference-in-time analogue of Lemma \ref{general_difference_comparison}
 
 	\begin{lemma} \label{topple_limit}
@@ -569,16 +609,25 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 
 	
 	\begin{proof}
-        Let $C$ be the right-hand maximum. It exists on the nonempty finite
-        simplex and is nonnegative, since the odometer is nondecreasing in time.
-        Symmetry carries this bound to the whole cube. Suppose at two times
-        $a,b$ the pointwise bound $v_a\leq v_b+C$ holds. At a site where the
-        inequality is strict, integrality and one-fire increments preserve it
-        at the next times. At equality, the neighbor-sum difference is at most
-        $2dC$, so cancellation of equal initial heights and center difference
-        $C$ shows that firing at time $a$ forces firing at time $b$. Exterior
-        odometers are zero and $C\geq0$. Thus $v_{a+1}\leq v_{b+1}+C$.
-        Starting with $(a,b)=(t_0+j,t_0)$ and iterating proves the assertion.
+Let $C$ be the right-hand side of the lemma. Step 1 bounds $v_{t_0+j}-v_{t_0}$ by $C$ on all of $\Z^d$, Step 2 shows by induction on $n$ that $v_{t_0+n+j}-v_{t_0+n}\leq C$, and Step 3 takes $n=t-t_0$.
+
+\emph{Step 1.} The maximum $C$ is attained on the nonempty finite set $\mathcal S$, and $C\geq0$ because the odometer is nondecreasing in time. We show that $v_{t_0+j}(y)-v_{t_0}(y)\leq C$ for every $y\in\mathbb Z^d$. If $y\notin\mathcal C_N^{(d)}$, the left side is zero. If $y\in\mathcal C_N^{(d)}$, Lemma \ref{symmetry_lemma} shows that the left side equals its value at the representative $z\in\mathcal S$ of $y$, which is at most $C$ by the definition of $C$.
+
+\emph{Step 2.} We show by induction on $n\geq0$ that $v_{t_0+n+j}(y)-v_{t_0+n}(y)\leq C$ for every $y\in\mathbb Z^d$. The case $n=0$ is Step 1. Assume the claim for $n$, and write $a:=t_0+n+j$ and $b:=t_0+n$, so that $v_a(z)-v_b(z)\leq C$ for all $z\in\mathbb Z^d$. We bound $v_{a+1}(y)-v_{b+1}(y)$. If $y\notin\mathcal C_N^{(d)}$, this difference is zero. Let $y\in\mathcal C_N^{(d)}$ and put $D:=v_a(y)-v_b(y)\leq C$.
+
+If $D<C$, then $D\leq C-1$, because both sides are integers. Since $v_{a+1}(y)-v_a(y)\leq1$ and $v_{b+1}(y)-v_b(y)\geq0$, we get $v_{a+1}(y)-v_{b+1}(y)\leq D+1\leq C$.
+
+If $D=C$, we compare heights. Each of the $2d$ neighbours $z\sim y$ satisfies $v_a(z)-v_b(z)\leq C$, so $\sum_{z\sim y}v_a(z)-\sum_{z\sim y}v_b(z)\leq 2d\,C$. The initial pile $s_0(y)$ is the same at both times, so
+\begin{equation*}
+s_a(y)-s_b(y)=\Big(\sum_{z\sim y}v_a(z)-\sum_{z\sim y}v_b(z)\Big)-2d\,D\leq 2d\,C-2d\,C=0\,.
+\end{equation*}
+Hence $s_a(y)\leq s_b(y)$, so $\mathbf 1\{s_a(y)\geq 2d\}\leq\mathbf 1\{s_b(y)\geq 2d\}$. The odometer rule gives
+\begin{equation*}
+v_{a+1}(y)-v_{b+1}(y)=D+\mathbf 1\{s_a(y)\geq 2d\}-\mathbf 1\{s_b(y)\geq 2d\}\leq D=C\,.
+\end{equation*}
+This completes the induction.
+
+\emph{Step 3.} Let $t\geq t_0$ and $z\in\mathcal S$. Step 2 with $n=t-t_0$ gives $v_{t+j}(z)-v_t(z)\leq C$. Taking the maximum over $z\in\mathcal S$ gives the assertion, since $C$ is the right-hand side.
     \end{proof}
 	
 	
@@ -591,7 +640,7 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 	
 	
 	
-	\subsection{\texorpdfstring{$M=1$}{M=1}}
+	\subsection{\texorpdfstring{$M=1$}{M=1}} \label{subsec:M1}
 	As we do not know how to define a $0$-dimensional sandpile, suppose $d_0 \geq 2$. 
 	\begin{prop}\label{no_reduction}
 	 When $s_0^{(d)} \equiv 2 d + (d_0-1)$,  $v_\infty^{(d_0)} \equiv 1$ but $v_\infty^{(d_0-1)} \equiv 2$.
@@ -610,7 +659,7 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 	\end{proof}
 	
 	
-	\subsection{\texorpdfstring{$M=2$}{M=2}}
+	\subsection{\texorpdfstring{$M=2$}{M=2}} \label{subsec:M2}
 	Now, suppose $d \geq 1$. After a radial reparameterization of $\mathcal{S}_2$, arbitrary dimensional sandpiles become one-dimensional with a simple nearest-neighbor 
 	toppling rule.  Indeed, every $\mathbf{x} \in \mathcal{S}_2$ is of the form $\mathbf{x} =(\mathbf{2}_{x},\mathbf{1}_{d-x})$, for $x = 0, \ldots, d$. Overload notation and consider $s_t$ and $v_t$ as functions on $\{0, \ldots, d\}$. The Laplacian on the one-dimensional graph can then be computed using symmetry. 
 	%Fine analysis of this one-dimensional sandpile is tractable 
@@ -623,19 +672,11 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 		\]
 	\end{lemma}
     \begin{proof}
-        At the radial site $(\mathbf2_x,\mathbf1_{d-x})$, each of the $x$
-        coordinates equal to two contributes one exterior zero neighbor and
-        one neighbor in the orbit of radial index $x-1$. Each of the $d-x$
-        coordinates equal to one contributes one reflected copy of the base
-        site and one neighbor in the orbit of radial index $x+1$. Retaining
-        all directed occurrences gives
-        \[
-        \Delta v_t(x)=-2dv_t(x)+xv_t(x-1)
-            +(d-x)(v_t(x)+v_t(x+1)),
-        \]
-        which is the displayed formula. At either endpoint the coefficient
-        of the out-of-range radial value is zero, consistent with the stated
-        zero convention.
+        Extend $v_t$ to the cube by Lemma~\ref{symmetry_lemma}, and fix the site $(\mathbf2_x,\mathbf1_{d-x})$. Each of its $x$ coordinates equal to $2$ gives one neighbour outside the cube, with value $0$, and one neighbour with that coordinate equal to $1$, which lies in the orbit of radial index $x-1$. Each of its $d-x$ coordinates equal to $1$ gives one neighbour with that coordinate equal to $0$, which the reflection of that coordinate carries to the site itself, and one neighbour with that coordinate equal to $2$, which lies in the orbit of radial index $x+1$. Hence
+        \begin{equation*}
+        \Delta v_t(x)=-2d\,v_t(x)+x\,v_t(x-1)+(d-x)\big(v_t(x)+v_t(x+1)\big)\,,
+        \end{equation*}
+        which is the formula of the lemma. The coefficient of $v_t(-1)$ is $x=0$ when $x=0$, and the coefficient of $v_t(d+1)$ is $d-x=0$ when $x=d$, so the convention $v_t(-1)=v_t(d+1)=0$ does not affect the formula.
     \end{proof}
 	
 	
@@ -684,26 +725,71 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 	\end{prop}
 	
 	\begin{proof}
-        Induct on time, using the radial Laplacian of Lemma~\ref{radial_laplacian}
-        and the simultaneous threshold rule. At time one every radial site
-        has fired once. In the firing block, $v_t(x)=t$ for $x\leq a_t$.
-        For $x<a_t$ its height is $2d+(d-1)-tx$; at $x=a_t$ the separate
-        edge contribution is $-(d-x)$, so its height is
-        $2d+(d-1)-tx-(d-x)$. The definition of $a_{t+1}$, with its two
-        time regimes, determines which of these heights is at least $2d$.
-        The affine expression $(d-1)-tx$ decreases with $x$; it is not the
-        firing criterion at the edge unless that edge contribution is included.
+        We use the radial Laplacian of Lemma~\ref{radial_laplacian}. Since $s_0\equiv 2d+(d-1)$, the height of a radial site $x$ at time $t$ is
+        \begin{equation*}
+        s_t(x)=2d+(d-1)+\Delta v_t(x)\,,
+        \end{equation*}
+        and $x$ topples at step $t+1$ exactly when $s_t(x)\geq 2d$, in which case $v_{t+1}(x)=v_t(x)+1$. Steps 1 and 2 prove~\eqref{eq:continuous_block}: for $x\leq a_t$, Step 1 at times $t$ and $t-1$ gives $v_t(x)=v_{t-1}(x)+1$, since $a_t\leq a_{t-1}$ (for $t=1$ use $v_0\equiv 0$). Step 3 proves~\eqref{eq:ripple}.
 
-        For a ripple window $a_{t'-1}\geq x>a_{t'}$, use the induction formula
-        $v_t(x)=v_{t'}(x-(t-t'))$ while $t-t'\leq x$. To compute the next
-        firing indicator, read the values at $x-1,x,x+1$ from their respective
-        windows, using the neighboring windows at either endpoint. Split into
-        the three positions behind the moving front, immediately in front of
-        it, and further ahead. Substitution in the radial Laplacian advances
-        the profile by one site exactly until the shift reaches zero; the
-        new value is $v_{t'}(x-((t+1)-t'))$ when $t+1\leq t'+x$.
-        Outside this time window the proposition makes no ripple assertion.
-        These block and ripple calculations close the simultaneous induction.
+        We use four facts about the edges. By definition,
+        \begin{equation*}
+        a_0=a_1=d\,,\qquad a_u=\Big\lfloor\frac{d-1}{u-1}\Big\rfloor\ \text{ for } 2\leq u\leq t_d\,,\qquad a_u=a_{u-1}-1\ \text{ for } u>t_d\,.
+        \end{equation*}
+
+        (F1) The edges strictly decrease: $a_{u+1}<a_u$ for $u\geq 1$. For $u\geq t_d$ this is the last case of the definition. For $u=1$ with $u+1\leq t_d$ it reads $a_2=d-1<d=a_1$. Let $u\geq 2$ with $u+1\leq t_d$, and suppose $a_{u+1}\geq a_u=:A$. Then $Au\leq a_{u+1}u\leq d-1<(A+1)(u-1)$, so $A\leq u-2$ and hence $d-1<(u-1)^2$. But $u-1<\sqrt{d-1}$, because $u\leq t_d-1=\lceil\sqrt{d-1}\rceil$. This is a contradiction.
+
+        (F2) If $a_{u-1}-a_u\geq 2$, then $u\leq t_d$, because $a_u=a_{u-1}-1$ for $u>t_d$.
+
+        (F3) If $x\leq a_u$, then $x(u-1)\leq d-1$. For $u=1$ this reads $0\leq d-1$, and for $2\leq u\leq t_d$ it follows from $a_u\leq\frac{d-1}{u-1}$. Let $u>t_d$. If $d=1$, then $a_u\leq 0$, so $x=0$. For $d\geq 2$ put $m=t_d-1=\lceil\sqrt{d-1}\rceil$ and $r=u-t_d\geq 1$. Then $u-1=m+r$, $m^2\geq d-1$, and $a_u=a_{t_d}-r\leq\frac{d-1}{m}-r$, so
+        \begin{equation*}
+        x(u-1)\leq a_u(u-1)\leq\Big(\frac{d-1}{m}-r\Big)(m+r)=(d-1)+r\Big(\frac{d-1}{m}-m\Big)-r^2\leq d-1\,.
+        \end{equation*}
+
+        (F4) If $2\leq u\leq t_d$ and $a_u<x$, then $x(u-1)>d-1$, since $a_u+1>\frac{d-1}{u-1}$ and $x\geq a_u+1$.
+
+        \emph{Step 1.} We show that $v_t(x)=t$ for every $x\leq a_t$. We induct on $t$. For $t=1$ every height at time $0$ equals $s_0\geq 2d$, so every site topples at step $1$, and $a_1=d$. Let $n\geq 1$ and assume the claim at time $n$. Let $x\leq a_{n+1}$. Since $a_{n+1}<a_n$, the sites $x-1$, $x$ and $x+1$ are all at most $a_n$, so their values at time $n$ equal $n$. (If $x=0$, the term $x\,v_n(x-1)$ vanishes.) Hence $\Delta v_n(x)=-(d+x)n+(d-x)n+xn=-xn$ and $s_n(x)=2d+(d-1)-xn$. By (F3) with $u=n+1$, $xn\leq d-1$, so $s_n(x)\geq 2d$. Thus $x$ topples at step $n+1$, and $v_{n+1}(x)=n+1$.
+
+        \emph{Step 2.} We show that $v_{t+1}(x)=v_t(x)$ for $a_{t+1}<x\leq a_t$. Since $x$ topples at step $t+1$ exactly when $s_t(x)\geq 2d$, it suffices to show $s_t(x)<2d$. We induct on $t$, and fix $t\geq 1$ and $x$ with $a_{t+1}<x\leq a_t$.
+
+        Case (a): $x<a_t$. Then $x-1$, $x$ and $x+1$ are at most $a_t$, so their values at time $t$ are $t$ by Step 1. Hence $\Delta v_t(x)=-xt$ and $s_t(x)=2d+(d-1)-xt$. Since $a_{t+1}<x<a_t$, the gap $a_t-a_{t+1}\geq 2$ gives $t+1\leq t_d$ by (F2). Then (F4) with $u=t+1$ gives $xt>d-1$, so $s_t(x)<2d$.
+
+        Case (b): $x=a_t$. If $t=1$, then $x=d$. The term $(d-x)v_1(x+1)$ vanishes, and $\Delta v_1(d)=-2d+d=-d$ because $v_1(d)=v_1(d-1)=1$. So $s_1(d)=2d-1$. If $t\geq 2$, then $x<d$, since $a_t\leq a_2=d-1$. Also $a_t<x+1\leq a_{t-1}$, so $v_t(x+1)=v_{t-1}(x+1)=t-1$ by the case $t-1$ of this step and by Step 1. Also $v_t(x-1)=v_t(x)=t$ by Step 1. Hence $\Delta v_t(x)=-(d+x)t+(d-x)(t-1)+xt=-xt-(d-x)$, and $s_t(x)=2d-1-(t-1)x<2d$.
+
+        In both cases $s_t(x)<2d$, so $v_{t+1}(x)=v_t(x)$.
+
+        \emph{Step 3.} We show~\eqref{eq:ripple}. For $u\geq1$ let $W_u=\{z: a_u<z\leq a_{u-1}\}$. Fix $x\in W_{t'}$ and put $k=t-t'$, so $1\leq k\leq x$. We induct on $k$, and for fixed $k$ on $t'$: the induction hypothesis is~\eqref{eq:ripple} for every smaller $k$ and every $t'$, and for the same $k$ and every smaller $t'$. For $k=1$ the first part is empty.
+
+        We first compute three values at time $t-1$.
+
+        First, if $z\in W_{t'}$ and $z\geq k-1$, then $v_{t-1}(z)=t'$ when $z-k+1\leq a_{t'}$, and $v_{t-1}(z)=t'-1$ otherwise. Indeed $v_{t-1}(z)=v_{t'}(z-k+1)$ by the induction hypothesis for $k-1$ and the same $t'$, which is trivial when $k=1$. Steps 1 and 2 give the values of $v_{t'}$: it equals $t'$ on $\{w\leq a_{t'}\}$ and $t'-1$ on $W_{t'}$.
+
+        Second, $v_{t-1}(a_{t'})\in\{t',t'+1\}$. For $k=1$ this is $v_{t'}(a_{t'})=t'$ by Step 1. For $k\geq 2$, the site $a_{t'}$ lies in $W_{t'+1}$, so the induction hypothesis for $k-2$ and $t'+1$ gives $v_{t-1}(a_{t'})=v_{t'+1}(a_{t'}-k+2)$. Steps 1 and 2 at time $t'+1$ show that this value is $t'$ or $t'+1$.
+
+        Third, if $x=a_{t'-1}<d$, then $v_{t-1}(x+1)=t'-1$. The site $x+1$ lies in $W_{t'-1}$, so the induction hypothesis for $k$ and $t'-1$ gives $v_{t-1}(x+1)=v_{t'-1}(x+1-k)$. Since $x+1-k\leq a_{t'-1}$, Step 1 makes this $t'-1$.
+
+        Write $\lambda=v_{t-1}(x-1)$, $\beta=v_{t-1}(x)$ and $\rho=v_{t-1}(x+1)$. The radial Laplacian gives
+        \begin{equation*}
+        s_{t-1}(x)-2d=(d-1)-(d+x)\beta+(d-x)\rho+x\lambda\,.
+        \end{equation*}
+        If $x=d$, then the term $(d-x)\rho$ vanishes, and we set $\rho=t'-1$ in that case; the third fact is then not needed.
+
+        We split by the position of $x-k$ relative to $a_{t'}$. In each case we show $v_t(x)=v_{t'}(x-k)$. By Steps 1 and 2 this value is $t'$ when $x-k\leq a_{t'}$, and $t'-1$ when $x-k>a_{t'}$.
+
+        Suppose first that $x-k<a_{t'}$. Then $\beta=t'$ by the first fact, since $x-k+1\leq a_{t'}$. By the first and second facts, $\lambda=t'+\alpha$ with $\alpha\in\{0,1\}$. By the first and third facts, $\rho=t'-\gamma$ with $\gamma\in\{0,1\}$. Then
+        \begin{equation*}
+        s_{t-1}(x)-2d=(d-1)-xt'+x\alpha-(d-x)\gamma\,.
+        \end{equation*}
+        If $\gamma=1$, then this equals $-1-x(t'-1)+x\alpha\leq -1-x(t'-2)<0$, because $\alpha\leq 1$ and $t'\geq 2$. If $\gamma=0$, then $\rho=t'$ forces $x+1\leq a_{t'-1}$. So $a_{t'-1}-a_{t'}\geq 2$, and $t'\leq t_d$ by (F2). Since $a_{t'}<x$, (F4) with $u=t'$ gives $x(t'-1)>d-1$. Then $s_{t-1}(x)-2d=(d-1)-x(t'-1)-x(1-\alpha)<0$. In both cases $s_{t-1}(x)<2d$, so $x$ does not topple at step $t$, and $v_t(x)=\beta=t'$.
+
+        Suppose next that $x-k=a_{t'}$. Then $\beta=t'-1$ by the first fact, since $x-k+1=a_{t'}+1$. The value $\lambda$ equals $t'$. For $k\geq 2$ this is the first fact, since $x-1\in W_{t'}$ and $(x-1)-k+1=a_{t'}$. For $k=1$ it holds because $x-1=a_{t'}$ and $t-1=t'$. The value $\rho$ equals $t'-1$ by the first or third fact, since $(x+1)-k+1=a_{t'}+2$. Hence
+        \begin{equation*}
+        s_{t-1}(x)-2d=(d-1)+(2-t')x=(d-1)-x(t'-2)\,.
+        \end{equation*}
+        Since $x\leq a_{t'-1}$, (F3) with $u=t'-1$ gives $x(t'-2)\leq d-1$. So $s_{t-1}(x)\geq 2d$, $x$ topples at step $t$, and $v_t(x)=t'=v_{t'}(x-k)$.
+
+        Suppose finally that $x-k>a_{t'}$. Then $x-1\geq x-k>a_{t'}$, and the first and third facts give $\lambda=\beta=\rho=t'-1$. Hence $s_{t-1}(x)-2d=(d-1)-x(t'-1)$. Since $x\geq (x-k)+1\geq a_{t'}+2$ and $x\leq a_{t'-1}$, we have $a_{t'-1}-a_{t'}\geq 2$, so $t'\leq t_d$ by (F2). Then (F4) with $u=t'$ gives $x(t'-1)>d-1$. So $s_{t-1}(x)<2d$, $x$ does not topple at step $t$, and $v_t(x)=t'-1=v_{t'}(x-k)$.
+
+        In all three cases $v_t(x)=v_{t'}(x-k)$, which is \eqref{eq:ripple}.
     \end{proof}
 	
 	
@@ -784,7 +870,7 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 		and suppose they hold for $M$ for all $t' \leq (t-1)$. 
 		We verify each inductive step. 
 		
-		\subsubsection*{Self-similarity: \eqref{base_dimension:consistency}}
+		\subsubsection*{Self-similarity: \eqref{base_dimension:consistency}} \label{subsubsec:one_dim_self_similarity}
 		By strong induction, it suffices to show $v_t^{(M)}(x) = v_t^{(M-1)}(x-1)$ for $x \geq 2$.
 		By Lemma \ref{pt_ind_lemma}, 
 		\[
@@ -815,7 +901,7 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 		This contradicts strong facet compatibility for $v_t^{(M-1)}(1)$ from $(t-2) \to (t-1)$, which 
 		we can use as $t \leq \tau_{M-1}$ and hence $(t-1) < \tau_{M-1}$.
 		
-		\subsubsection*{Weak facet compatibility: \eqref{base_dimension:weak_compatability}}
+		\subsubsection*{Weak facet compatibility: \eqref{base_dimension:weak_compatability}} \label{subsubsec:one_dim_weak_facet}
 		% This is especially simple in one dimension. 
 		If $v_t(1) = v_t(2) + 1$, then $\Delta v_t(1) = -1$ and so $v_{t+1}(1) = v_{t}(1)$. 
 		
@@ -824,7 +910,7 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 		
 		
 		
-		\subsubsection*{Strong facet compatibility: \eqref{base_dimension:strong_derivative} and \eqref{base_dimension:strong_compatability}} 
+		\subsubsection*{Strong facet compatibility: \eqref{base_dimension:strong_derivative} and \eqref{base_dimension:strong_compatability}} \label{subsubsec:one_dim_strong_facet} 
 		
 		We use Lemma \ref{general_difference_comparison} to show \eqref{base_dimension:strong_derivative}.
 		The function $g(x) = 2 x$ is harmonic in the interior of the interval so it suffices to check 
@@ -848,7 +934,7 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 		\]
 		which shows \eqref{base_dimension:strong_compatability}. 
 		
-		\subsubsection*{Strong topple control: \eqref{base_dimension:strong_topple}}
+		\subsubsection*{Strong topple control: \eqref{base_dimension:strong_topple}} \label{subsubsec:one_dim_strong_topple}
 		By Lemma \ref{topple_limit}, it suffices to show 
 		\[ 
 		\sup_{x \in \mathcal{S}_M} \left(v_{\tau_{M-1}+2}(x) - v_{\tau_{M-1}}(x)\right) \leq 1
@@ -926,14 +1012,21 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
     where $v_\infty(M+1)=0$ is the dissipating boundary value.
     \end{lemma}
     \begin{proof}
-    The reflected quadratic profile is an integral stabilizing upper bound.
-    The least action comparison bounds every finite odometer by it; monotonicity
-    gives stabilization. The terminal threshold inequality, successively from
-    the reflecting endpoint, gives the reverse inequality and hence the formula.
-    Subtract the two quadratic values; at $x=M$ use the exterior zero value.
+    The formula $Q(x)=\frac{M(M+1)-x(x-1)}{2}$ defines an integer valued function on $\mathbb{Z}$, since $M(M+1)$ and $x(x-1)$ are even. For every integer $x$,
+    \begin{equation*}
+    Q(1-x)=Q(x)\,,\qquad Q(x)-Q(x+1)=x\,.
+    \end{equation*}
+    Hence $Q(0)=Q(1)$ and $Q(M+1)=0$. Also $\Delta Q(x)=(Q(x+1)-Q(x))+(Q(x-1)-Q(x))=-x+(x-1)=-1$ for every $x$. Since $Q$ decreases on $\{1,\dots,M+1\}$ to $Q(M+1)=0$, it is nonnegative on $\{1,\dots,M\}$, and by the symmetry $Q(1-x)=Q(x)$ also on $\{1-M,\dots,0\}$.
+
+    \emph{Step 1.} We show that $v_t\leq Q$ on the cube $\{1-M,\dots,M\}$ for every $t$. The function $Q$ is nonnegative and integer valued there, and $\Delta Q+s_0=-1+2=1=2d-1$ (here $d=1$). So $Q$ stabilizes $s_0$, and the parabolic least action principle (Lemma~\ref{parabolic_comparison}) gives $v_t\leq Q$ for every $t$.
+
+    \emph{Step 2.} We show that the odometer stops changing. Each $v_t(x)$ is nondecreasing in $t$ and bounded by $Q(x)$ by Step 1, so it is eventually constant. The cube is finite, so there is a time $T$ with $v_{T+1}=v_T$, and then $v_\infty=v_T$.
+
+    \emph{Step 3.} We show that $v_T\geq Q$ on $\{1,\dots,M\}$. Since no site topples at step $T+1$, the sandpile $s_T=2+\Delta v_T$ is at most $1$ on $\{1,\dots,M\}$, so $\Delta v_T\leq -1$ there. Put $q=v_T-Q$. Then $\Delta q\leq 0$ on $\{1,\dots,M\}$. Let $\rho_x=q(x+1)-q(x)$. Then $\Delta q(x)=\rho_x-\rho_{x-1}$, so $\rho_x\leq\rho_{x-1}$ for $1\leq x\leq M$. The odometer is symmetric under $x\mapsto 1-x$ (Section~\ref{subsec:symmetry}), and so is $Q$, so $q(0)=q(1)$, that is, $\rho_0=0$. Hence $\rho_x\leq 0$ for $0\leq x\leq M$, and $q$ is nonincreasing on $\{1,\dots,M+1\}$. Both $v_T$ and $Q$ vanish at $M+1$, so $q(M+1)=0$, and therefore $q\geq 0$ on $\{1,\dots,M\}$.
+
+    \emph{Step 4.} By Steps 1 to 3, $v_\infty=v_T=Q$ on $\{1,\dots,M\}$, which is the displayed formula. Since $v_\infty(M+1)=0=Q(M+1)$, the identity $Q(x)-Q(x+1)=x$ gives $v_\infty(x)-v_\infty(x+1)=x$ for $1\leq x\leq M$, including $x=M$.
     \end{proof}
-    Hence the restriction $t<\tau_M$ is needed for strong facet compatibility
-    when the head is empty.
+	Taking $x=1$ in Lemma~\ref{lem:one-terminal-profile} gives $v_\infty(1)=v_\infty(2)+1$. Once the odometer has stopped changing, the premise of~\eqref{base_dimension:strong_compatability} at $p=1$ therefore holds and its second conclusion fails. This is why Proposition~\ref{base_dimension} asserts strong facet compatibility for $i=0$ only when $t<\tau_M$.
 	
 	\section{Odometer regularity and dimensional reduction} \label{sec:dim_reduction}
 	We now prove Proposition \ref{base_dimension} for $d \geq 2$ together with dimensional reduction,
@@ -952,7 +1045,7 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 	We also suppose  \eqref{eq:reduction_gen_d} holds for $v_{t-1}^{(d',M')}$ for all $d' \geq 2$ and $M' \leq M$.
 	Indeed, $v_{1}^{(d,M)} \equiv 1$ for all $d \geq 1$ and $M \geq 1$.
 
-	\subsection{Dimensional reduction}
+	\subsection{Dimensional reduction} \label{subsec:dim_reduction}
 	We start the induction in time by proving dimensional reduction given odometer regularity at $(t-1)$. 
 	Let $\mathbf{x}_{d-1}$ be given and pick the smallest $d > i \geq 0$ so that
 	$(\mathbf{x}_i, \mathbf{1}_{d-i}) = (\mathbf{x}_{d-1},1)$. 
@@ -1009,12 +1102,12 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 	
 
 
-\subsection{Odometer regularity for \texorpdfstring{$d \geq 2$}{d >= 2}}
+\subsection{Odometer regularity for \texorpdfstring{$d \geq 2$}{d >= 2}} \label{subsec:regularity_higher}
 
 We verify each inductive step. 
 
 
-\subsubsection*{Self-similarity: \eqref{base_dimension:consistency}}
+\subsubsection*{Self-similarity: \eqref{base_dimension:consistency}} \label{subsubsec:higher_self_similarity}
 As $\eqref{base_dimension:consistency}$ holds for $(M-1)$ at $t$, it suffices to show 
 that if $t \leq \tau_{M-1}$ and $\mathbf{x} > 1$,
 \begin{equation}\label{eq:self_sim1}
@@ -1085,45 +1178,43 @@ we must have for each neighbor $(\mathbf{y}-e_i) \sim (\mathbf{x} - e_i)$, $v_{t
 
 
 \subsubsection*{Strong facet compatibility: \eqref{base_dimension:strong_derivative}
-    and \eqref{base_dimension:strong_compatability}}
-The regularity clauses and finite dimensional reduction can be proved jointly
-in lexicographic order of dimension, side length and time. At a fixed triple,
-prove dimensional reduction first, then the strong derivative bound, then the
-two strong compatibility conclusions, followed by weak compatibility and
-self-similarity, and finally strong topple control. Any regularity assertion
-used to obtain the strong derivative bound is at an earlier time.
-For a nonempty head, Lemma~\ref{lem:strict-head-facet} below states both the
-constant-two bound and the two firing conclusions, at every time. Its closed
-conclusions also follow from the completed joint induction; they must not be
-fed back into that induction as additional assumptions. The independent
-argument below gives an alternative proof using first waits.
-For an empty head the point is $\mathbf1$ and the permitted regime is
-$t<\tau_M$. Case~1 gives the constant-two bound using earlier weak
-compatibility. The no-fire conclusion follows from the reflected Laplacian
-at $\mathbf1$: a unit gap gives $\Delta v_t(\mathbf1)=-d$.
-For the raised site's firing conclusion, compare its current neighbor sum
-with the preceding neighbor sum at $\mathbf1$, using the early two-step
-bound and the earlier compatibility assertions. This is the same generic
-facet comparison used in the joint induction, with its exceptional early
-subcases resolved by earlier dimensional reduction. No all-time raised-site
-firing is claimed at $\mathbf1$.
-{\bf Case 1: $t<\tau_M$} \\
-We prove $v_t(x)-v_t(x+2e_k)\leq2x_k$ for every $1\leq k\leq d$ on
-$P_M=\{1,\ldots,M\}^d$, by induction up to the indicated time. The first
-difference is bounded by $x_k$. Before $\tau_M$, every physical inner-boundary
-odometer is at most $M-1$. At $x_k=M$ this bounds the zero-extended two-step
-difference by $2M$; at $x_k=M-1$ the first-difference bound and the face bound
-give $2(M-1)$. In the remaining interior, sum the earlier two-step differences
-with affine weight $2y_k$ and use the exact uniform-height floor update.
-Transverse exterior occurrences give zero, transverse reflecting occurrences
-return the base pair, and selected negative reflection at $x_k=1$ has the
-previous facet gap. If this gap is one, earlier weak compatibility keeps the
-base site fixed and monotonicity of the far value transfers the previous
-bound. If the gap is zero, that reflected term has its required zero weight.
-This proves all directions on the unsorted orthant and thus on the sorted
-simplex; no rotating boundary is omitted. In particular it proves the needed
-empty-head facet inequality.
-{\bf Case 2: a nonempty head, at every time.}
+    and \eqref{base_dimension:strong_compatability}} \label{subsubsec:higher_strong_facet}
+
+The strong derivative bound \eqref{base_dimension:strong_derivative} and the two strong compatibility conclusions \eqref{base_dimension:strong_compatability} are proved jointly with dimensional reduction \eqref{eq:reduction_gen_d}, in the lexicographic order of dimension, side length and time fixed above. At a fixed triple $(d,M,t)$ they are proved in the following order: dimensional reduction, the strong derivative bound, the two strong compatibility conclusions, weak compatibility and self-similarity, and strong topple control. Every regularity assertion used to obtain the strong derivative bound is at an earlier time.
+
+Let $p=(\mathbf{x}_i,1,\mathbf{1}_j)$ with $i+1+j=d$ and $\mathbf{x}_i\geq2$; when $i=0$, $p=\mathbf{1}$. Put $k=i+1$, so that $p_k=1$. The three conclusions at $p$ are the strong derivative bound $v_t(p)-v_t(p+2e_k)\leq 2$ and, when $v_t(p)=v_t(p+e_k)+1$, the two strong compatibility conclusions $v_{t+1}(p)=v_t(p)$ and $v_{t+1}(p+e_k)=v_t(p+e_k)+1$.
+
+If $i\geq1$, Lemma~\ref{lem:strict-head-facet} below gives all three conclusions at every time. Its proof uses only the first time at which each site does not topple, a quadratic upper bound on the odometer, and the monotonicity of the odometer in space and time. It uses no assumption from the induction, so it applies at each triple directly.
+
+If $i=0$, then $p=\mathbf{1}$, and the three conclusions are asserted only for $t<\tau_M$, where $\tau_M$, defined in Theorem~\ref{the_theorem}, is the first time at which some site of the inner boundary of the cube has odometer value at least $M$. The argument below proves them for $t<\tau_M$.
+
+As in the proof of Lemma~\ref{lem:strict-head-facet} below, write $P_M=\{1,\ldots,M\}^d$, $K=2d$ and $Nu(x)=\sum_{y\sim x}u(y)$, with values vanishing outside the cube $\{1-M,\ldots,M\}^d$. We first show that $v_t(x)-v_t(x+2e_k)\leq 2x_k$ for every $x\in P_M$, every $1\leq k\leq d$ and every $t<\tau_M$, by induction on $t$. The case $x=\mathbf{1}$ is the strong derivative bound at $p=\mathbf{1}$.
+
+Two facts are used. The first-difference bound $v_t(x)-v_t(x+e_k)\leq x_k$ holds on $P_M$ at every time, as recorded in the proof of Lemma~\ref{lem:strict-head-facet} below. For $t<\tau_M$, every site of the inner boundary has odometer value at most $M-1$, by the definition of $\tau_M$.
+
+If $x_k=M$, the point $x+2e_k$ is exterior and $x$ lies on the inner boundary, so $v_t(x)-v_t(x+2e_k)=v_t(x)\leq M-1\leq 2M$. If $x_k=M-1$, the point $x+2e_k$ is again exterior and $x+e_k$ lies on the inner boundary, so the first-difference bound and $v_t(x+e_k)\leq M-1$ give $v_t(x)\leq 2(M-1)$.
+
+Now let $x_k\leq M-2$, so that $x+2e_k$ lies in the cube. The neighbours of $x+2e_k$ are the points $y+2e_k$ with $y$ a neighbour of $x$, so
+\begin{equation*}
+Nv_{t-1}(x)-Nv_{t-1}(x+2e_k)=\sum_{y\sim x}\big(v_{t-1}(y)-v_{t-1}(y+2e_k)\big)\,.
+\end{equation*}
+
+We bound the summand of $y$ by $2y_k$, the right-hand side of the bound at $y$ at time $t-1$. These right-hand sides add up to $4dx_k$, because the $k$-th coordinates of the $2d$ neighbours of $x$ add up to $2d\,x_k$.
+
+Let $y=x\pm e_j$ with $j\neq k$. If $y$ lies outside the cube, then so does $y+2e_k$, and the summand is zero. If $x_j=1$ and $y=x-e_j$, the reflection of coordinate $j$ carries $y$ to $x$ and $y+2e_k$ to $x+2e_k$, so the summand equals $v_{t-1}(x)-v_{t-1}(x+2e_k)$, which is at most $2x_k=2y_k$ by the hypothesis at time $t-1$. Every other such $y$ lies in $P_M$, and the hypothesis at time $t-1$ applies at $y$.
+
+The neighbour $x+e_k$ lies in $P_M$, and the hypothesis at time $t-1$ bounds its summand by $2(x_k+1)$. If $x_k\geq2$, the neighbour $x-e_k$ lies in $P_M$, and its summand is at most $2(x_k-1)$. If $x_k=1$, the reflection of coordinate $k$ carries $x-e_k$ to $x$ and $x+e_k$ to itself, so the summand of $x-e_k$ is $g=v_{t-1}(x)-v_{t-1}(x+e_k)$, while the right-hand side $2(x_k-1)$ is $0$. Axis monotonicity and the first-difference bound give $0\leq g\leq 1$.
+
+If $x_k=1$ and $g=0$, the summand of $x-e_k$ vanishes, and the bound on the sum below applies. If $x_k=1$ and $g=1$, weak compatibility~\eqref{base_dimension:weak_compatability} at time $t-1$ gives $v_t(x)=v_{t-1}(x)$. Since $v_t(x+2e_k)$ does not decrease in time, $v_t(x)-v_t(x+2e_k)\leq v_{t-1}(x)-v_{t-1}(x+2e_k)\leq 2$, which is the required bound.
+
+In all other cases the summands are bounded as above, so $Nv_{t-1}(x)-Nv_{t-1}(x+2e_k)\leq 4dx_k=K\cdot 2x_k$. The comparison rule (R) in the proof of Lemma~\ref{lem:strict-head-facet} then gives $v_t(x)-v_t(x+2e_k)\leq 2x_k$.
+
+Since the induction runs over all of $P_M$ and not only over $\mathcal{S}_M$, the planes $x_i=x_j$ that bound $\mathcal{S}_M$ need no separate treatment.
+
+Let $t<\tau_M$ and $q=\mathbf{1}+e_k$, and suppose that $v_t(\mathbf{1})=v_t(q)+1$. The identity $v_{t+1}(q)=v_t(q)+1$ follows from the comparison of Step~7 in the proof of Lemma~\ref{lem:strict-head-facet}, carried out at $p=\mathbf{1}$: it compares the neighbour sum of $q$ at time $t$ with the neighbour sum of $p$ at time $t-1$, using the bound $v_t(p)-v_t(p+2e_k)\leq2$ just proved and the compatibility conclusions at earlier times. The cases of that comparison that these inputs do not cover are settled by dimensional reduction~\eqref{eq:reduction_gen_d} at an earlier time. This identity is not asserted for $t\geq\tau_M$.
+
+If $v_t(\mathbf{1})=v_t(\mathbf{1}+e_k)+1$, then $v_{t+1}(\mathbf{1})=v_t(\mathbf{1})$ by fact~(d) in the proof of Lemma~\ref{lem:strict-head-facet}.
+
 \begin{lemma}\label{lem:strict-head-facet}
 Let $d\geq1$, $M\geq2$, $P_M=\{1,\ldots,M\}^d$, and $s_0\equiv2d$.
 For every $t\geq0$, $x\in P_M$ and coordinate $k$ with $x_k<\max_l x_l$,
@@ -1136,107 +1227,58 @@ v_{t+1}(x)=v_t(x),\qquad v_{t+1}(x+e_k)=v_t(x+e_k)+1.
 \]
 \end{lemma}
 \begin{proof}
-Put $K=2d$, $Nu(x)=\sum_i(u(x+e_i)+u(x-e_i))$, and
-$f_t=v_{t+1}-v_t\in\{0,1\}$. All values are zero outside the physical cube.
-For in-cube sites the uniform-height update is
-$v_{t+1}(x)=1+\lfloor Nv_t(x)/K\rfloor$. Consequently
-$Nv_a(x)-Nv_b(z)\leq Kg$ implies $v_{a+1}(x)-v_{b+1}(z)\leq g$ for
-in-cube $x,z$ and integral $g$.
+Write $K=2d$ and $Nu(x)=\sum_{y\sim x}u(y)$ for the sum over the $K$ neighbours $y$ of $x$. Values vanish outside the cube $\{1-M,\ldots,M\}^d$, and a site outside this cube is exterior. On the cube the floor update of Lemma~\ref{pt_ind_lemma} with $s_0\equiv 2d$ reads $v_{t+1}(x)=1+\lfloor Nv_t(x)/K\rfloor$. We say that $x$ \textbf{fires} at round $t$ if $v_{t+1}(x)=v_t(x)+1$, which happens exactly when $\Delta v_t(x)=Nv_t(x)-Kv_t(x)\geq0$, and we write $f_t(x)=v_{t+1}(x)-v_t(x)\in\{0,1\}$. We use the comparison rule (R): if $x$ and $z$ are cube sites and $g$ is an integer with $Nv_a(x)-Nv_b(z)\leq Kg$, then $v_{a+1}(x)-v_{b+1}(z)\leq g$. This holds because $\lfloor \beta/K\rfloor+g=\lfloor(\beta+Kg)/K\rfloor$ and the floor function is monotone.
 
-We first record three inputs directly from this process. With
-$\rho(x)=M+1-\max_i x_i$, every round before $\rho(x)$ fires at $x$, and
-round $\rho(x)$ waits. Indeed, before the exterior signal arrives all directed
-neighbor values equal the current time; at its arrival a neighbor in a
-maximizing direction has one less toppling, and all other values are at most
-the current time. The floor update gives $v_\rho(x)=v_{\rho+1}(x)=\rho$.
-After this first wait there is no later pair of consecutive firings. To see
-this, a first such pair, preceded by a wait, requires more than $K$ incoming
-firings over its two preceding rounds. Among the $K$ directed occurrences
-one must have fired in both rounds. An exterior occurrence cannot do so;
-a reflecting occurrence would be the original waiting site. For any other
-neighbor $y$, $\rho(y)\leq\rho(x)+1$, so its pair either contradicts its own
-first wait or gives an earlier forbidden pair. Strong time induction closes
-the argument.
+\emph{Step 1.} We record four facts, which hold for every $t$. For a site $x$ of the cube let $\rho(x)$ be its graph distance to the exterior, so that $\rho(x)=M+1-\max_i x_i$ for $x\in P_M$, and every neighbour $y$ of $x$ in the cube has $\rho(y)\geq\rho(x)-1$.
 
-The zero-extended axial profile
-$U_M(z)=(M(M+1)-z(z-1))/2$, reflected by $z\mapsto1-z$, is a nonnegative
-barrier for the odometer. The selected axial neighbor pair is $2U_M-1$;
-every transverse pair is at most $2U_M$, including zero sinks. Thus
-$NU_M\leq KU_M-1$ and induction with the floor update gives $v_t(x)\leq U_M(x_k)$
-on the positive orthant. In particular $v_t(x)\leq M$ when $x_k=M$.
-The derivative bound and elementary axis monotonicity now give
-$0\leq v_t(x)-v_t(x+e_k)\leq x_k$.
+(a) For every cube site $x$ and every $t\leq\rho(x)$ we have $v_t(x)=t$, and every $x\in P_M$ does not fire in round $\rho(x)$, so $v_{\rho(x)+1}(x)=\rho(x)$. The first part follows by induction on $t$: if $t<\rho(x)$, every neighbour $y$ of $x$ has $v_t(y)=t$, because either $\rho(y)\geq\rho(x)-1\geq t$, or $y$ is exterior and $t=0$. Hence $Nv_t(x)=Kt=Kv_t(x)$, and $x$ fires in round $t$. For the second part we induct on $\rho(x)$. Let $t=\rho(x)$, and let $i$ be a direction with $x_i=\max_l x_l$. The neighbour $x+e_i$ is exterior, which happens only when $t=1$, or it lies in $P_M$ with $\rho(x+e_i)=t-1$. In both cases $v_t(x+e_i)=t-1$, by the induction hypothesis in the second case. Every other neighbour $y$ has $v_t(y)\leq t$. Hence $Nv_t(x)<Kt=Kv_t(x)$, and $x$ does not fire in round $t$.
 
-For $t\geq1$ maintain the assertions
-\[
-\begin{aligned}
- A_t(k,x)&:\ v_t(x)-v_{t-1}(x+e_k)\leq x_k,\\
- B_t(k,l,x)&:\ v_t(x)-v_t(x+e_k+e_l)\leq x_k+x_l-1\quad(k\ne l),\\
- C_t(k,x)&:\ v_t(x)-v_t(x+2e_k)\leq2x_k\quad(x_k<\max_l x_l),
-\end{aligned}
-\]
-together with the two firing conclusions $S_t$ of the lemma on its stated
-nonempty-head domain. Derive, rather than assume, the lag assertion
-$L_t(k,x):v_t(x+e_k)\geq v_{t-1}(x)$ when $x_k=1$ and $\max x\geq2$.
-At time zero B and C are immediate and S has no unit-gap premise; A at time
-one follows from $v_1=1$. At all ones retain only the separate no-fire fact:
-a unit gap there gives $\Delta v_t=-d$ by symmetry and reflection.
+(b) If $x\in P_M$ and $s>\rho(x)$, then $f_s(x)+f_{s+1}(x)\leq1$. Suppose not, and choose $x\in P_M$ and $s>\rho(x)$ with $f_s(x)=f_{s+1}(x)=1$ and $s$ minimal over all such pairs. Then $f_{s-1}(x)=0$, by fact~(a) if $s-1=\rho(x)$ and by the minimality of $s$ otherwise. Since $x$ does not fire in round $s-1$ and fires in round $s+1$, and $v_{s+1}(x)=v_{s-1}(x)+1$, we get $Nv_{s+1}(x)-Nv_{s-1}(x)>K$. The left side is $\sum_{y\sim x}\big(f_{s-1}(y)+f_s(y)\big)$, a sum of $K$ terms in $\{0,1,2\}$, so some neighbour $y$ of $x$ fires in both rounds $s-1$ and $s$. The neighbour $y$ is not exterior, since values outside the cube vanish, and it is not the reflection of $x$ in a coordinate equal to $1$, since $x$ does not fire in round $s-1$. Hence $y\in P_M$ and $\rho(y)\leq\rho(x)+1\leq s$. If $\rho(y)\in\{s-1,s\}$, this contradicts fact~(a) at $y$. If $\rho(y)<s-1$, the pair of rounds $s-1,s$ at $y$ contradicts the minimality of $s$.
 
-The order of the step is $A_t,L_t,B_t,C_t,S_t$, using the preceding-time
-assertions. At a selected top face A follows from $v_t\leq M$ and the exterior
-zero value. At $x_k=1$ its preceding gap is zero or one; in the latter case
-previous S keeps the site fixed, or at all ones the separate no-fire fact
-does so. For $2\leq x_k\leq M-1$ and $t\geq2$, sum previous A with affine
-weight $y_k$ and use the floor comparison at old times $t-1,t-2$.
-A transverse sink has both values zero; a transverse reflection is the base
-pair with unchanged weight. Selected neighbors remain in $P_M$, including
-the top face. L follows from previous S when the previous gap is one and
-from temporal monotonicity when it is zero; its head restriction is retained.
+(c) Let $U_M(z)=\tfrac12\big(M(M+1)-z(z-1)\big)$ for $1\leq z\leq M+1$, let $U_M(z)=U_M(1-z)$ for $1-M\leq z\leq0$, and let $U_M(z)=0$ otherwise. Then $U_M(M+1)=0$ and $U_M(M)=M$. Fix $k$ and put $W(x)=U_M(x_k)$ on the cube and $W=0$ outside it. Then $NW(x)\leq KW(x)-1$ at every cube site $x$: the pair $x\pm e_k$ contributes $2U_M(x_k)-1$, because $U_M(z+1)+U_M(z-1)=2U_M(z)-1$, and each of the $d-1$ pairs $x\pm e_j$ with $j\neq k$ contributes at most $2U_M(x_k)$, since a neighbour outside the cube contributes zero. Induction on $t$ through the floor update, using the comparison rule (R), gives $v_t(x)\leq U_M(x_k)$ for $x\in P_M$. In particular $v_t(x)\leq M$ when $x_k=M$. With the first-difference bound of Corollary~\ref{cor:derivative_bound} and axis monotonicity, this gives $0\leq v_t(x)-v_t(x+e_k)\leq x_k$ on $P_M$.
 
-For B a selected top face is bounded by $M\leq x_k+x_l-1$. If $x_k=1$,
-apply L at $x+e_l$ and then A at $x$ in direction $l$; that shifted point has
-a head. Treat $x_l=1$ symmetrically. Otherwise sum previous B with affine
-weight $y_k+y_l-1$ and apply the equal-time floor comparison. Each transverse
-sink gives two zero values; transverse reflection returns previous B at the
-base; all selected neighbors remain in $P_M$.
+(d) Suppose $v_t(\mathbf{1})=v_t(\mathbf{1}+e_k)+1$ for some $k$. By the permutation symmetry, $v_t(\mathbf{1}+e_k)=v_t(2,\mathbf{1}_{d-1})$, and by the reflection $v_t(\mathbf{1}-e_j)=v_t(\mathbf{1})$. Hence $\Delta v_t(\mathbf{1})=d\big(v_t(2,\mathbf{1}_{d-1})-v_t(\mathbf{1})\big)=-d$, so $\mathbf{1}$ does not fire at round $t$.
 
-For C choose $l$ with $x_l>x_k=a$. If $x_l=a+1$, interchange those two
-coordinates at $x+e_k$: the two far values coincide, and same-time B gives
-$C_t$ with bound $a+(a+1)-1=2a$, including an exterior endpoint.
-Otherwise $x_l\geq a+2$ and the far endpoint is in the cube. Sum previous C
-with affine weight $2y_k$. Ordinary neighbors still have a strict head;
-transverse sinks are zero and transverse reflections return the base pair.
-The only exceptional occurrence is $x-e_k$ at $a=1$. A previous unit gap
-makes the base site wait by previous S, so monotonicity of the far value
-transfers previous C. A zero gap contributes its exact zero affine weight.
-Thus C follows without a full-domain second-difference claim.
+\emph{Step 2.} We now prove, by induction on $t$, the following assertions for $x\in P_M$ and $k\neq l$.
 
-For S put $p=x$, $q=x+e_k$ and suppose the current gap is one. A previous unit
-gap would make $p$ stay and $q$ fire by previous S and erase this gap.
-Thus, for some $b$, the old values at $p,q$ were $b,b$ and the new values
-are $b+1,b$: their previous firing pair was $(1,0)$. The nonempty head gives
-$\rho(p)=\rho(q)$. That pair cannot occur before their first wait or at it,
-so the no-later-consecutive-firing result makes $p$ wait now.
-To force $q$ to fire compare $Nv_t(q)$ with $Nv_{t-1}(p)$; both center values
-are $b$. The selected pair contributes at least $(b+1)+(b-1)=2b$ by current C,
-whereas its old reflected pair was $b+b$. For a transverse positive direction,
-L at $p+e_h$ gives the comparison unless both sites are exterior, when both
-values vanish. In a transverse negative direction with $p_h=1$, reflection
-gives $b$ on both sides. If $p_h=2$, the new point is a permutation of $p$
-and has value $b+1$, while the old value is at most $b+1$ by first difference.
-If $p_h\geq3$, L at $p-e_h$ applies with a surviving head. Hence
-$Nv_t(q)\geq Nv_{t-1}(p)\geq Kb$, since $p$ fired in the previous round.
-The threshold at $q$ now makes it fire. This proves S and closes the induction.
+\begin{itemize}
+\item $A_t(k,x)$: $v_t(x)-v_{t-1}(x+e_k)\leq x_k$.
+\item $L_t(k,x)$: $v_t(x+e_k)\geq v_{t-1}(x)$, when $x_k=1$ and $\max_l x_l\geq2$.
+\item $B_t(k,l,x)$: $v_t(x)-v_t(x+e_k+e_l)\leq x_k+x_l-1$.
+\item $C_t(k,x)$: $v_t(x)-v_t(x+2e_k)\leq 2x_k$, when $x_k<\max_l x_l$.
+\item $S_t(k,x)$: if $v_t(x)=v_t(x+e_k)+1$, then $v_{t+1}(x)=v_t(x)$ and $v_{t+1}(x+e_k)=v_t(x+e_k)+1$, when $x_k=1$ and $\max_l x_l\geq2$.
+\end{itemize}
+
+The case $t=0$ holds because all values vanish: $B_0$ and $C_0$ are immediate, and $S_0$ has no premise. The case $t=1$ follows from $v_0\equiv0$ and $v_1\equiv1$ on the cube. Let $t\geq2$ and assume the assertions at all earlier times. At time $t$ we prove them in the order $A_t,L_t,B_t,C_t,S_t$, each step using the earlier assertions in this order.
+
+\emph{Step 3: $A_t$.} If $x_k=M$, then $x+e_k$ is exterior, so $v_{t-1}(x+e_k)=0$, and $v_t(x)\leq M$ by fact (c). Let $x_k=1$, and let $g=v_{t-1}(x)-v_{t-1}(x+e_k)\in\{0,1\}$. Then $v_t(x)-v_{t-1}(x+e_k)=\big(v_t(x)-v_{t-1}(x)\big)+g$, and the first term is at most $1$. If $g=0$ this is at most $1=x_k$. If $g=1$, the bound holds exactly when $x$ does not fire in round $t-1$. This holds by $S_{t-1}(k,x)$ when $x$ has a coordinate at least $2$, and at $\mathbf{1}$ by fact~(d). Let $2\leq x_k\leq M-1$. Then $x\pm e_k\in P_M$. Since $Nv_{t-1}(x)-Nv_{t-2}(x+e_k)=\sum_{y\sim x}\big(v_{t-1}(y)-v_{t-2}(y+e_k)\big)$, each summand is at most $y_k$ by $A_{t-1}(k,y)$. These bounds add up to $\sum_{y\sim x}y_k=2dx_k$. Here a neighbour $y=x\pm e_j$ with $j\neq k$ outside the cube has $y+e_k$ outside the cube, so its summand is zero, and if $x_j=1$, the reflection of coordinate $j$ makes the summand of $x-e_j$ equal to the summand $v_{t-1}(x)-v_{t-2}(x+e_k)$, which is at most $x_k$ by $A_{t-1}(k,x)$. Every other neighbour lies in $P_M$, including those with $y_k=M$. So $Nv_{t-1}(x)-Nv_{t-2}(x+e_k)\leq Kx_k$, and rule (R) with $a=t-1$ and $b=t-2$ gives $A_t(k,x)$.
+
+\emph{Step 4: $L_t$.} Let $x_k=1$ and $\max_l x_l\geq2$, and let $g=v_{t-1}(x)-v_{t-1}(x+e_k)\in\{0,1\}$. If $g=0$, then $v_t(x+e_k)\geq v_{t-1}(x+e_k)=v_{t-1}(x)$ by monotonicity in time. If $g=1$, then $S_{t-1}(k,x)$ applies, because $x$ has a coordinate at least $2$, and it gives $v_t(x+e_k)=v_{t-1}(x+e_k)+1=v_{t-1}(x)$. In both cases $L_t(k,x)$ holds.
+
+\emph{Step 5: $B_t$.} If $x_k=M$ or $x_l=M$, the point $x+e_k+e_l$ is exterior, and $v_t(x)\leq M\leq x_k+x_l-1$ by fact (c). Suppose $x_k=1$, the case $x_l=1$ being symmetric. Then $L_t(k,x+e_l)$ applies, because $x+e_l$ has $k$-coordinate $1$ and $l$-coordinate $x_l+1\geq2$. It gives $v_t(x+e_l+e_k)\geq v_{t-1}(x+e_l)$. Together with $A_t(l,x)$, which gives $v_t(x)-v_{t-1}(x+e_l)\leq x_l$, this yields $v_t(x)-v_t(x+e_k+e_l)\leq x_l=x_k+x_l-1$. Otherwise $x_k,x_l\geq2$, and $x+e_k+e_l$ lies in the cube. The map $y\mapsto y+e_k+e_l$ is a bijection from the neighbours of $x$ to those of $x+e_k+e_l$, so $Nv_{t-1}(x)-Nv_{t-1}(x+e_k+e_l)=\sum_{y\sim x}\big(v_{t-1}(y)-v_{t-1}(y+e_k+e_l)\big)$. Each summand is at most $y_k+y_l-1$ by $B_{t-1}$, and these right-hand sides add up to $2d(x_k+x_l-1)$. A neighbour $y=x\pm e_h$ with $h\notin\{k,l\}$ outside the cube has $y+e_k+e_l$ outside the cube, so its summand is zero, and if $x_h=1$, the reflection of coordinate $h$ makes the summand of $x-e_h$ equal to the summand at $x$, with the same bound $x_k+x_l-1$. Every other neighbour lies in $P_M$. Rule (R) with $a=b=t-1$ then gives $B_t(k,l,x)$.
+
+\emph{Step 6: $C_t$.} Let $a=x_k$, and choose $l$ with $x_l>a$, which is possible because $a<\max_m x_m$. If $x_l=a+1$, interchanging coordinates $k$ and $l$ maps $x+2e_k$ to $x+e_k+e_l$. The odometer is symmetric under coordinate permutations, so $v_t(x+2e_k)=v_t(x+e_k+e_l)$, including when both are exterior. Then $B_t(k,l,x)$ gives $v_t(x)-v_t(x+2e_k)\leq a+(a+1)-1=2a$. Otherwise $x_l\geq a+2$, so $x+2e_k$ lies in the cube. The summands are $v_{t-1}(y)-v_{t-1}(y+2e_k)$ for $y\sim x$, with right-hand sides $2y_k$, which add up to $4da$. For $h\neq k$, a neighbour $x\pm e_h$ outside the cube contributes zero, and if $x_h=1$, the reflection of coordinate $h$ makes the summand of $x-e_h$ equal to the summand at $x$, with bound $2a$. Every other neighbour $x\pm e_h$ with $h\neq k$ lies in $P_M$ and has a coordinate larger than $a$, namely $x_l$ or $x_l\pm1$, so it is bounded by $C_{t-1}$ with right-hand side $2a$. The neighbour $x+e_k$ has $(x+e_k)_k=a+1<x_l$, so $C_{t-1}(k,x+e_k)$ applies with right-hand side $2(a+1)$. If $a\geq2$, the neighbour $x-e_k$ satisfies $C_{t-1}(k,x-e_k)$ with right-hand side $2(a-1)$. If $a=1$, the reflection of coordinate $k$ carries $x-e_k$ to $x$ and $x+e_k$ to itself, so the summand of $x-e_k$ is $g=v_{t-1}(x)-v_{t-1}(x+e_k)$, while $2(a-1)=0$. If $g=0$, the summand is zero and the sum bound applies. If $g=1$, then $S_{t-1}(k,x)$ applies, because $x$ has $x_l\geq3$. It gives $v_t(x)=v_{t-1}(x)$, and since $v_t(x+2e_k)\geq v_{t-1}(x+2e_k)$, we get $v_t(x)-v_t(x+2e_k)\leq v_{t-1}(x)-v_{t-1}(x+2e_k)\leq 2$ by $C_{t-1}(k,x)$. In every case $C_t(k,x)$ holds. The argument uses $C_{t-1}$ at the neighbours of $x$, $S_{t-1}$ at $x$ in the single case $a=1$, $g=1$, and $B_t$ at $x$ in the case $x_l=a+1$.
+
+\emph{Step 7: $S_t$.} Let $p=x$ and $q=x+e_k$, with $p_k=1$, $\max_l p_l\geq2$, and $v_t(p)=v_t(q)+1$. We show that $p$ does not fire in round $t$ and that $q$ fires in round $t$.
+
+First, the gap at time $t-1$ is zero. If it were one, $S_{t-1}(k,p)$ would give $v_t(p)=v_{t-1}(p)$ and $v_t(q)=v_{t-1}(q)+1$, so the gap at time $t$ would be zero, contrary to the assumption. Let $b$ be the common value $v_{t-1}(p)=v_{t-1}(q)$. Monotonicity in time gives $v_t(q)\geq b$, and $v_t(p)\leq b+1$, so $v_t(p)=b+1$ and $v_t(q)=b$. Thus $p$ fired and $q$ did not fire at round $t-1$.
+
+Since the largest coordinate of $p$ is at least $2$ and $p_k=1$, the maximum is attained outside direction $k$. Hence $\max p=\max q$ and $\rho(p)=\rho(q)=:r$. If $t-1<r$, both sites fire at round $t-1$, which contradicts $f_{t-1}(q)=0$. If $t-1=r$, neither site fires, which contradicts $f_{t-1}(p)=1$. So $t-1>r$, and fact (b) gives $f_t(p)=0$. This is $v_{t+1}(p)=v_t(p)$.
+
+For $q$, we show $Nv_t(q)\geq Nv_{t-1}(p)$ direction by direction. In direction $k$, $Nv_t(q)$ contains $v_t(p+2e_k)+v_t(p)$, and $C_t(k,p)$ gives $v_t(p+2e_k)\geq (b+1)-2=b-1$, so this pair is at least $2b$. The corresponding pair in $Nv_{t-1}(p)$ is $v_{t-1}(q)+v_{t-1}(p-e_k)=b+b$, because $p-e_k$ is reflected to $p$. For $h\neq k$, $L_t(k,p+e_h)$ gives $v_t(q+e_h)\geq v_{t-1}(p+e_h)$. If $p+e_h$ is exterior, both sides vanish. For $h\neq k$, consider also $q-e_h=p+e_k-e_h$ and $p-e_h$. If $p_h=1$, the reflections give $v_t(q-e_h)=v_t(q)=b$ and $v_{t-1}(p-e_h)=v_{t-1}(p)=b$. If $p_h=2$, the point $q-e_h$ is a coordinate permutation of $p$, so $v_t(q-e_h)=v_t(p)=b+1$, while $v_{t-1}(p-e_h)\leq v_{t-1}(p)+1=b+1$ by the first-difference bound. If $p_h\geq3$, $L_t(k,p-e_h)$ gives $v_t(q-e_h)\geq v_{t-1}(p-e_h)$, since $p-e_h$ has a coordinate at least $2$. Adding the directions gives $Nv_t(q)\geq Nv_{t-1}(p)$.
+
+Since $p$ fired at round $t-1$, we have $Nv_{t-1}(p)\geq Kb$. Hence $Nv_t(q)\geq Kb=Kv_t(q)$, so $\Delta v_t(q)\geq0$, and $q$ fires at round $t$. This is $v_{t+1}(q)=v_t(q)+1$, which proves $S_t(k,x)$ and completes the induction.
+
+The first clause of the lemma is $C_t$, and the second is $S_t$.
 \end{proof}
-For the required facet $p=(\mathbf{x}_i,1,\mathbf1_j)$ with $i\geq1$,
-choose its coordinate equal to one and a head coordinate at least two.
-The lemma gives the constant-two bound and both compatibility conclusions.
+
+For $p=(\mathbf{x}_i,1,\mathbf{1}_j)$ with $i\geq1$ and $\mathbf{x}_i\geq2$, the coordinate $p_k$ with $k=i+1$ equals $1$, and $p_1\geq2$. Lemma~\ref{lem:strict-head-facet} therefore gives $v_t(p)-v_t(p+2e_k)\leq 2$ and both firing conclusions at $p$, at every time. These are the strong derivative bound and the two strong compatibility conclusions at $p$.
 
 
 
 
 
-\subsubsection*{Weak facet compatibility: \eqref{base_dimension:weak_compatability}}
+\subsubsection*{Weak facet compatibility: \eqref{base_dimension:weak_compatability}} \label{subsubsec:higher_weak_facet}
 The only remaining case is 
 \[
 v_t^{(d)}(1, \mathbf{1}_j) = v_{t}^{(d)}(2,\mathbf{1}_j) + 1.
@@ -1247,7 +1289,7 @@ By symmetry,
 \]
 
 
-\subsubsection*{Strong topple control: \eqref{base_dimension:strong_topple}}
+\subsubsection*{Strong topple control: \eqref{base_dimension:strong_topple}} \label{subsubsec:higher_strong_topple}
 We use strong topple control established in dimension $(d-1)$.  Suppose for sake of contradiction 
 there exists $\mathbf{x} \in \mathcal{S}_M^{(d)}$ with $v_{\tau_{M-1}+2}(\mathbf{x}) - v_{\tau_{M-1}}(\mathbf{x}) = 2$.
 Pick $\mathbf{x} = (\mathbf{x}_{d-1}, x)$ so that $x \geq 1$ is minimal. 
@@ -1287,35 +1329,50 @@ This edition corrects the arXiv v2 text, arXiv:2009.05968v2. The main results, T
 \item[C02.] Lemma 2.1, the point formula. Published: $v_{t+1}(x) = \lfloor (s_0(x) + \sum_{y \sim x} v_t(y))/2d \rfloor$. Corrected: $v_{t+1}(x) = \max\{0, \lfloor (s_0(x) + \sum_{y \sim x} v_t(y))/2d \rfloor\}$. Reason: for signed initial values the untruncated formula can be negative, so the truncation at zero is needed.
 \item[C03.] Lemma 2.2 (parabolic least action principle), proof only. Published: the proof identifies $v$ with the right-hand side $w$ of the least action formula and concludes ``by minimality of $w$''. Corrected: the proof shows that $v$ lies in the admissible class and compares $v$ with every nonnegative competitor, including arbitrary initial values, by induction on time. Reason: the published proof does not treat the zero truncation, and the corrected comparison covers every nonnegative competitor.
 \item[C04.] Definition of the process $v^{\mathcal S}$ of Lemma~\ref{symmetry_lemma}, on the sorted fundamental domain $\mathcal S^{(d)}_M$. Published: $v_{t+1}^{\mathcal S}(x) = \lfloor (s_0(x) + \sum_{y \overset{\mathcal S}{\sim} x} v_t^{\mathcal S}(y))/2d \rfloor$, where the sum iterates over the set $\{\sigma_y y : y \sim x\}$. Corrected: $v_{t+1}^{\mathcal S}(x) = v_t^{\mathcal S}(x) + \mathbf{1}\{ s_0(x) + R v_t^{\mathcal S}(x) - 2d\, v_t^{\mathcal S}(x) \geq 2d \}$, where $R u(x) = \sum_{i=1}^d \left( \widetilde u(x + e_i) + \widetilde u(x - e_i) \right)$ and $\widetilde u$ is $u$ at the orbit representative of a site in the cube and zero outside it. Reason: the published sum runs over the set of reflected neighbours, which drops repeated neighbours; the published chain $M = x_{l_0} = x_{r_0} < \cdots < x_{l_n} = x_{r_n} = 1$ has its inequalities reversed; and the published floor update fails for initial piles outside $[0, 4d-1]$. The corrected sum runs over the $2d$ lattice neighbours of $x$, each counted with multiplicity after reflection into the domain, and agrees with the published block-index formula (lines 391--404 of the published text) when $0 \leq s_0 \leq 4d-1$.
-\item[C05.] Lemma 2.3 (symmetry), proof only. Published: the proof shows that $v_t$ is symmetric by induction on $t$, using Lemma 2.1 and the isometry, and says nothing about $v^{\mathcal S}$. Corrected: the proof shows invariance under the cube symmetries by induction on time, and then identifies the physical odometer with $v^{\mathcal S}$ for symmetric initial piles of every height. Reason: the published proof gives only symmetry and does not identify $v^{\mathcal S}$.
+\item[C05.] Lemma 2.3 (symmetry), proof only. Published: the proof shows that $v_t$ is symmetric by induction on $t$, using Lemma 2.1 and the isometry, and says nothing about $v^{\mathcal S}$. Corrected: the proof shows invariance under the cube symmetries by induction on time, and then identifies the restriction of $v_t$ to $\mathcal S$ with $v_t^{\mathcal S}$ for symmetric initial piles of every height. Reason: the published proof gives only symmetry and does not identify $v^{\mathcal S}$.
 \item[C06.] Lemma 2.4 (difference comparison), statement. Published:
-\[ \sup_{j} \Bigl( \sum_{y \sim x} v_{t}(y) - \sum_{y' \sim (x + w_j)} v_{t}(y') - 2 d\, g_j(x) \Bigr) \leq 0 \]
+\begin{equation*}
+\sup_{j} \Bigl( \sum_{y \sim x} v_{t}(y) - \sum_{y' \sim (x + w_j)} v_{t}(y') - 2 d\, g_j(x) \Bigr) \leq 0\,.
+\end{equation*}
 Corrected: the same inequality, with the first boundary alternative now also requiring $x + w_j \in \mathcal{C}_N^{(d)}$ for every $j$. Reason: the published statement fails for $d=1$, $N=4$, $s_0 \equiv 2$, $w=2$, $g \equiv 2$, $t_0=0$, at $t=3$ and $x=1$.
 \item[C07.] Lemma 2.4, proof only. Published: the induction bounds $D_{w_j} v_{t+1}(x) - g_j(x)$ by a floor estimate, using that $g_j$ is superharmonic and integer valued. Corrected: the induction splits each difference into a strict case and an equality case, and treats the boundary through the two alternatives. Reason: the strict and equality split covers every constant integer height.
 \item[C08.] Corollary 2.1 (axis monotonicity), statement. Published: for index sets
-\[ \mathcal I = \{i_1, \ldots, i_n\}, \quad \mathcal J = \{j_1, \ldots, j_m\}, \quad i_n < j_1, \quad n \geq 1, \quad m \geq 0, \]
-\[ v_t(x) \geq v_t(x + e_{\mathcal I} - e_{\mathcal J}) \quad \text{whenever } x + e_{\mathcal I} - e_{\mathcal J} \in \mathcal S \]
+\begin{equation*}
+\mathcal I = \{i_1, \ldots, i_n\}, \quad \mathcal J = \{j_1, \ldots, j_m\}, \quad i_n < j_1, \quad n \geq 1, \quad m \geq 0\,,
+\end{equation*}
+the inequality
+\begin{equation*}
+v_t(x) \geq v_t(x + e_{\mathcal I} - e_{\mathcal J}) \quad \text{whenever } x + e_{\mathcal I} - e_{\mathcal J} \in \mathcal S\,.
+\end{equation*}
 Corrected: for $1 \leq i \leq d$ and $\mathcal J = \varnothing$ or $\mathcal J = \{j\}$ with $i < j \leq d$,
-\[ v_t(x) \geq v_t(x + e_i - e_{\mathcal J}) \quad \text{whenever } x + e_i - e_{\mathcal J} \in \mathcal S \]
+\begin{equation*}
+v_t(x) \geq v_t(x + e_i - e_{\mathcal J}) \quad \text{whenever } x + e_i - e_{\mathcal J} \in \mathcal S\,.
+\end{equation*}
 Reason: the published statement is false when $\lvert \mathcal J \rvert > \lvert \mathcal I \rvert$, for example for $d=3$, $N=8$, $s_0 \equiv 8$, $t=8$, $\mathcal I = \{1\}$ and $\mathcal J = \{2,3\}$; the proofs use only the elementary moves.
 \item[C09.] Corollary 2.1, proof only. Published: no proof is given, and the next sentence reads ``We also have control on the derivative given an odometer upper bound on the dissipating boundary.'' Corrected: the proof handles the two families of elementary comparisons by induction on time and, at equality, pairs the $2d$ lattice neighbours of $x$, counted with multiplicity, by reflection or by coordinate interchange. Reason: the elementary axis moves need a direct threshold proof.
 \item[C10.] Corollary 2.2 (derivative bound), proof only. Published: the case analysis for $M \geq 2$ bounds the neighbour sums through the index sets $\mathbf{I}^{(M,d)}(x)$ at the reflecting and dissipating boundaries. Corrected: the proof keeps the terminal-corner premise and all constant integer heights, uses axis monotonicity and symmetry on the top faces, and makes direct firing comparisons at the reflecting and dissipating boundaries. Reason: the published case analysis depends on the neighbour index algorithm that the corrected definition of $v^{\mathcal S}$ replaces.
-\item[C11.] Lemma 2.5 (weak topple control), proof only. Published: the induction bounds $v_{t+j}(x) - v_t(x)$ through the floor update of Lemma 2.1 and the maximum over $z \in \mathcal S$. Corrected: the proof takes $C$ to be the right-hand maximum, which exists and is nonnegative, and shows that the bound $v_a \leq v_b + C$ propagates through the threshold update, using cube symmetry. Reason: the unrestricted floor argument is replaced by a contraction argument for the physical threshold update.
+\item[C11.] Lemma 2.5 (weak topple control), proof only. Published: the induction bounds $v_{t+j}(x) - v_t(x)$ through the floor update of Lemma 2.1 and the maximum over $z \in \mathcal S$. Corrected: the proof takes $C$ to be the right-hand maximum, which exists and is nonnegative, and shows that the bound $v_a \leq v_b + C$ propagates through the odometer rule, using cube symmetry. Reason: the unrestricted floor argument is replaced by a contraction argument for the odometer rule.
 \item[C12.] Definition of the block edges $a_t$ in Section 3, before Proposition 3.2. Published: $a_1 = d$, followed by the definition of $a_t$ for $t \geq 1$. Corrected: $a_0 = a_1 = d$, followed by the same definition. Reason: defining $a_0$ gives the first ripple window a left endpoint, and no firing assertion is added at time zero.
 \item[C13.] Proposition 3.2, ripple clause. Published: for each $t' < t$ and $a_{t'-1} \geq x > a_{t'}$, $v_{t}(x) = v_{t-1}(x-1)$. Corrected: for each $1 \leq t' < t \leq t' + x$ and $a_{t'-1} \geq x > a_{t'}$, $v_t(x) = v_{t'}(x - (t - t'))$. Reason: the published shift is false, for example for $d=2$, $s_0 \equiv 5$, $t'=2$, $x=2$ and $t=6$, so the clause is limited to times at which the shifted index $x - (t - t')$ is nonnegative and is read from the reference time $t'$.
-\item[C14.] Proposition 3.2, proof only. Published: the induction treats the block by the affine function $g(x) = (d-1) - tx$ and the ripple by comparing neighbouring values. Corrected: the induction keeps the separate block-edge term $-(d-x)$, includes the cases of a site behind the ripple front, immediately in front of it and further ahead, and the adjacent windows in the ripple step, and uses the radial Laplacian. Reason: the published induction omits the block-edge term and the cases of a site behind, immediately in front of, or further ahead of the ripple front, and states the affine monotonicity in the wrong direction.
+\item[C14.] Proposition 3.2, proof only. Published: the induction treats the block by the affine function $g(x) = (d-1) - tx$ and the ripple by comparing neighbouring values. Corrected: the induction keeps the separate block-edge term $-(d-x)$ and uses the radial Laplacian; the ripple step is an induction on $k=t-t'$ that treats the three cases $x-k<a_{t'}$, $x-k=a_{t'}$ and $x-k>a_{t'}$ and evaluates the neighbours of $x$ by the ripple identity at the neighbouring block edges. Reason: the published induction omits the block-edge term and these three cases, and states the affine monotonicity in the wrong direction.
 \item[C15.] Proposition 4.1, weak facet compatibility. Published: $v_{t+1}^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j) = v_{t+1}^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j)$. Corrected: $v_{t+1}^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j) = v_t^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j)$. Reason: the published equation is a tautology, and the corrected no-fire conclusion is the one the induction uses.
 \item[C16.] Proposition 4.1, strong facet compatibility, statement. Published: for $\mathbf{x}_i \geq 2$, $j \geq 0$ and $i < d$, under ($t < \tau_M$ and $i \geq 0$) or ($i \geq 1$ and $t \geq \tau_M$), $v_t^{(M)}(\mathbf{x}) - v_t^{(M)}(\mathbf{x} + 2 e_{i+1}) \leq 2$. Corrected: for $i, j \geq 0$ with $i + 1 + j = d$ and $p = (\mathbf{x}_i, 1, \mathbf{1}_j) \in \mathcal S_M^{(d)}$ with $\mathbf{x}_i \geq 2$, if $t < \tau_M$, or if $i \geq 1$ and $t \geq \tau_M$, then $v_t^{(M)}(p) - v_t^{(M)}(p + 2 e_{i+1}) \leq 2$. Reason: the published point is unbound, and read broadly the constant-two bound is false, so the corrected statement binds the facet point and its dimension.
 \item[C17.] Proposition 4.1, strong compatibility equation. Published:
-\[ v_t^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j) = v_t^{(M)}(\mathbf{x}_i, 2, \mathbf{1}) + 1 \]
+\begin{equation*}
+v_t^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j) = v_t^{(M)}(\mathbf{x}_i, 2, \mathbf{1}) + 1\,.
+\end{equation*}
 Corrected:
-\[ v_t^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j) = v_t^{(M)}(\mathbf{x}_i, 2, \mathbf{1}_j) + 1 \]
+\begin{equation*}
+v_t^{(M)}(\mathbf{x}_i, 1, \mathbf{1}_j) = v_t^{(M)}(\mathbf{x}_i, 2, \mathbf{1}_j) + 1\,.
+\end{equation*}
 Reason: the published tail is missing its subscript, so the corrected tail is $\mathbf{1}_j$.
-\item[C18.] Proof of Proposition 4.1 for $d \geq 2$, strong facet compatibility, proof only. Published: the proof derives the compatibility from the two-step bound $v_t(\mathbf{x}_{i-1}, 1, \mathbf{1}_j) - v_t(\mathbf{x}_{i-1}, 3, \mathbf{1}_j) \leq 2$ and a comparison of Laplacians, and then splits into cases. Corrected: the regularity clauses are proved jointly in lexicographic order of dimension, side length and time; a nonempty head is covered at every time by the strict-head lemma of Section 5, and an empty head by a comparison of the current and preceding neighbour sums at the raised site, using the early two-step bound and the earlier compatibility assertions. Reason: the published derivation of the compatibility from the two-step bound at $(\mathbf x_{i-1}, 1, \mathbf 1_j)$ is false, so the proof treats nonempty and empty heads separately.
+\item[C18.] Proof of Proposition 4.1 for $d \geq 2$, strong facet compatibility, proof only. Published: the proof derives the compatibility from the two-step bound $v_t(\mathbf{x}_{i-1}, 1, \mathbf{1}_j) - v_t(\mathbf{x}_{i-1}, 3, \mathbf{1}_j) \leq 2$ and a comparison of Laplacians, and then splits into cases. Corrected: the regularity clauses are proved jointly in lexicographic order of dimension, side length and time; the case $i\geq1$ is covered at every time by Lemma~\ref{lem:strict-head-facet}, and the case $i=0$, where the point is $\mathbf 1$, by a comparison of the neighbour sum of $\mathbf 1+e_k$ at time $t$ with that of $\mathbf 1$ at time $t-1$, using the two-step bound for $t<\tau_M$ and the compatibility conclusions at earlier times. Reason: the published derivation of the compatibility from the two-step bound at $(\mathbf x_{i-1}, 1, \mathbf 1_j)$ is false, so the proof treats the cases $i\geq1$ and $i=0$ separately.
 \item[C19.] Proof of Proposition 4.1 for $d \geq 2$, early times, proof only. Published: the bound is stated for all $d \leq i \leq 1$, and the two-step estimate uses the first-difference bound and the face bound. Corrected: the bound is stated for all $1 \leq k \leq d$, and the two-step estimate counts each boundary neighbour with its multiplicity, with the early-time restriction $t < \tau_M$ retained. Reason: the published index range $d \leq i \leq 1$ is empty, and the two-step estimate omits some boundary neighbours counted with multiplicity.
-\item[C20.] Proof of Proposition 4.1 for $d \geq 2$, later times, proof only. Published: for $t \geq \tau_M$ and $i \geq 2$, the dissipating boundary is shrunk to $\mathcal B^{(disp)}$, and the reflecting point $(2, \mathbf{1}_{d-1})$ is handled by contradiction. Corrected: the full-domain estimate and the shrinking of the dissipating boundary to $\mathcal B^{(disp)}$ are withdrawn; the strict-head conclusion and the nonempty-head conclusion are stated at every time, and only the no-fire fact is kept at $\mathbf 1$, where every coordinate equals one. Reason: the published full-domain estimate for this case is false, so only the strict-head and nonempty-head conclusions are kept.
+\item[C20.] Proof of Proposition 4.1 for $d \geq 2$, later times, proof only. Published: for $t \geq \tau_M$ and $i \geq 2$, the dissipating boundary is shrunk to $\mathcal B^{(disp)}$, and the reflecting point $(2, \mathbf{1}_{d-1})$ is handled by contradiction. Corrected: the full-domain estimate and the shrinking of the dissipating boundary to $\mathcal B^{(disp)}$ are withdrawn; the conclusions of Lemma~\ref{lem:strict-head-facet}, and with them the conclusions for $i\geq1$, are stated at every time, and at $\mathbf 1$, where every coordinate equals one, only the fact that $\mathbf 1$ does not topple when $v_t(\mathbf 1)=v_t(\mathbf 1+e_k)+1$ is kept. Reason: the published full-domain estimate for this case is false, so only these conclusions are kept.
 \item[C21.] One-dimensional terminal profile, used in the proof of Proposition 4.1 for $d=1$. Published: a remark gives $v_\infty(x) = \frac12 \left( M(M+1) - x(x-1) \right)$ and $v_\infty(x) - v_\infty(x+1) = x$, and notes that an assumption such as $t < \tau_M$ is needed. Corrected: a labelled lemma states the profile and its difference for $1 \leq x \leq M$, with $v_\infty(M+1) = 0$, and proves them; the restriction $t < \tau_M$ is then stated as needed. Reason: the published profile is correct but unlabelled, and its difference omits the dissipating endpoint $x = M$.
-\item[C22--C24.] Labels only, for Corollary 1.1, the no-reduction proposition in Section 3, and the radial Laplacian lemma in Section 3. Published: the three environments carry no label. Corrected: each carries a label, and its statement is unchanged. Reason: a label is needed for the statement to be cited, and its assertion does not change.
+\item[C22.] Corollary 1.1, label only. Published: the corollary carries no label. Corrected: it carries a label, and its statement is unchanged. Reason: a label is needed for the statement to be cited.
+\item[C23.] The no-reduction proposition in Section 3, label only. Published: the proposition carries no label. Corrected: it carries a label, and its statement is unchanged. Reason: a label is needed for the statement to be cited.
+\item[C24.] The radial Laplacian lemma in Section 3, label only. Published: the lemma carries no label. Corrected: it carries a label, and its statement is unchanged. Reason: a label is needed for the statement to be cited.
 \item[C25.] Proof of the radial Laplacian lemma in Section 3, proof only. Published: the proof writes the Laplacian at $\mathbf{x} = (\mathbf{2}_x, \mathbf{1}_{d-x})$ using the index sets $\mathbf{I}^{(2,d)}(\mathbf{x})$ of the block-index algorithm. Corrected: the proof counts the radial neighbours with their multiplicities, giving $\Delta v_t(x) = -2d\, v_t(x) + x\, v_t(x-1) + (d-x)\bigl(v_t(x) + v_t(x+1)\bigr)$, with zero coefficients at the endpoints. Reason: the published proof uses the block-index algorithm that the corrected definitions remove, and the exact count replaces it.
 \end{enumerate}
 

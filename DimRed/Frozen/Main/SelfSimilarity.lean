@@ -16,7 +16,7 @@ Theorem 1.1(ii) of the corrected edition.
 
 `τ_j` is `toppleTime d j`, an `sInf` in `ℕ∞`, so `t ≤ τ_j` is an inequality
 there. Vector inequalities and the subtraction of a scalar from a vector are
-coordinatewise (`dimred-corrected-arxiv.tex:275`).
+coordinatewise (`dimred-corrected-arxiv.tex`, label `subsec:notation`).
 -/
 import DimRed.Support.RegProved
 

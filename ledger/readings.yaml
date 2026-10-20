@@ -1,6 +1,6 @@
 # Readings of the statements of the corrected edition, used by the clause, constant and exponent checks.
 clauses:
-  prop-base-dimension-weak: dimred-corrected-arxiv.tex:731-738 (label base_dimension, clause weak facet
+  prop-base-dimension-weak: dimred-corrected-arxiv.tex:817-824 (label base_dimension, clause weak facet
     compatibility). M>=2; every legal facet p=(head,1,ones) with head coordinates >=2, including an empty
     head. At t>=1 a unit gap p/q forces p to stay. C15 replaces the printed repeated-time tautology explicitly;
     hxs supplies the standing sorted domain.
@@ -17,14 +17,14 @@ clauses:
     requires positive dimension; cubeSnocOne and cubeSimplexSite retain the literal source coordinates.
     Their proof arguments are geometric typing evidence, not added hypotheses. The eventual finite-time
     characterization discharges all ENat conversions.
-  lem-symmetry: 'dimred-corrected-arxiv.tex:399-401 (label symmetry_lemma). Both source conclusions, jointly:
+  lem-symmetry: 'dimred-corrected-arxiv.tex:395-397 (label symmetry_lemma). Both source conclusions, jointly:
     every physical odometer symmetry and equality with the independent folded threshold process on the
     sorted domain. CubeSymmetric requires the initial pile to be symmetric only inside the cube. No height
     premise. Directed occurrences retain multiplicity, and the physical embedding handles both parities.'
-  prop-no-reduction: dimred-corrected-arxiv.tex:596-598 (label no_reduction). M=1 and d0>=2, with dimension-dependent
+  prop-no-reduction: dimred-corrected-arxiv.tex:645-647 (label no_reduction). M=1 and d0>=2, with dimension-dependent
     constant heights 2d+(d0-1). The terminal odometers equal 1 at every site in dimension d0 and 2 at
     every site in dimension d0-1. Both full cube domains are quantified.
-  lem-radial-laplacian: dimred-corrected-arxiv.tex:618-624 (label radial_laplacian). At radial index k<=d
+  lem-radial-laplacian: dimred-corrected-arxiv.tex:667-673 (label radial_laplacian). At radial index k<=d
     on N=4, retain the exact coefficients -d-k,d-k,k for every constant integer height. At k=0 the truncated
     predecessor is multiplied by zero; at k=d the successor is multiplied by zero. There is no assertion
     that radial d (d+1) is an exterior site.
@@ -36,7 +36,7 @@ clauses:
     the pointwise least-action statement under the signed upper bound only. First v satisfies the parabolic
     inequality at t+1; then every nonnegative zero-extended feasible trajectory dominates v. Competitors
     may have arbitrary nonnegative values at time zero.
-  lem-topple-limit: 'dimred-corrected-arxiv.tex:561-568 (label topple_limit). C11: for d>=1,M>=1 and every
+  lem-topple-limit: 'dimred-corrected-arxiv.tex:601-608 (label topple_limit). C11: for d>=1,M>=1 and every
     integer pile with cube-local initial symmetry, every time-window maximum contracts from t0 to t>=t0,
     for all j>=0. No height bounds or global initial symmetry remain. Both maxima are genuine nonempty
     sup-prime values. M>=1 is the physical nonempty source domain, not a convenience hypothesis. The unrestricted
@@ -46,23 +46,23 @@ clauses:
     At each boundary point retain the outer all-index OR. Physical translated-site membership belongs
     only to the first neighbor-sum alternative. The second alternative is the next-step difference bound,
     with no membership restriction. All times t>=t0 and every source index remain in the conclusion.'
-  prop-base-case: 'dimred-corrected-arxiv.tex:660-684 (label prop:base_case). C12/C13: retain both firing-block
+  prop-base-case: 'dimred-corrected-arxiv.tex:701-725 (label prop:base_case). C12/C13: retain both firing-block
     clauses for all t>=1 and the bounded shifted ripple profile for 1<=tprime<tabs<=tprime+x. Lean writes
     tabs=t+1,tprime=s+1, so the shift is t-s and its nonnegativity bound is t-s<=x. a0=a1=d; the first
     reference-time window is empty. No unrestricted ripple conclusion. C14 arithmetic is checked separately.'
-  prop-base-dimension-consistency: dimred-corrected-arxiv.tex:727-729 (label base_dimension, clause self-similarity).
+  prop-base-dimension-consistency: dimred-corrected-arxiv.tex:813-815 (label base_dimension, clause self-similarity).
     For d>=1,M>=2, every 1<=j<=M, t<=tau_j and sorted x with every coordinate >M-j, the exact literal
     translation gives equal uniform odometers. Includes j=M and t=0 as the printed proposition does.
-  prop-base-dimension-strong-derivative: 'dimred-corrected-arxiv.tex:743-745 (label base_dimension, clause
+  prop-base-dimension-strong-derivative: 'dimred-corrected-arxiv.tex:829-831 (label base_dimension, clause
     strong derivative). C16: bind the precise legal facet p=(head,1,ones), dimension i+1+j, head coordinates
     >=2. The constant-two pure difference is at p and p+2e, not at an arbitrary unbound point. The source
     regime is t<tau_M or (i>=1 and tau_M<=t). The far value is ambient and zero-extended when exterior.'
-  prop-base-dimension-strong-facet: 'dimred-corrected-arxiv.tex:747-755 (label base_dimension, clause
+  prop-base-dimension-strong-facet: 'dimred-corrected-arxiv.tex:833-841 (label base_dimension, clause
     both strong compatibility conclusions). C17 retains both conclusions: a current unit gap at the same
     legal facet forces the base to stay and the raised site to fire. The tail subscript and dimension
     are explicit. Preserve the early empty-head restriction and the all-time nonempty-head regime; no
     current compatibility premise is assumed in the proof.'
-  prop-base-dimension-strong-topple: dimred-corrected-arxiv.tex:761-763 (label base_dimension, clause
+  prop-base-dimension-strong-topple: dimred-corrected-arxiv.tex:847-849 (label base_dimension, clause
     strong topple control). For d>=1,M>=2 and t>=tau_(M-1), the maximum of the two-step increments on
     the full sorted domain is <=1. Corrected.maximum uses the constructed nonempty domain, whose all-ones
     witness follows from M>=2. No default maximum is exported.
@@ -74,61 +74,52 @@ clauses:
     pile self-similarity). The full finite pile equality on the original and translated physical cube
     carriers, with the printed strict margin x_i>M-j+1. Corrected.pile is evaluated only in each cube.
     cubeShiftedSite retains x-(M-j); no j>=1 premise is added.
-  cor-axis-monotonicity: 'dimred-corrected-arxiv.tex:503-513 (label axis_monotonicity). C08/C09: retain
+  cor-axis-monotonicity: 'dimred-corrected-arxiv.tex:525-535 (label axis_monotonicity). C08/C09: retain
     elementary reflection e_i and rotation e_i-e_j for i<j, represented by J.card<=1 and I={i}. Arbitrary
     constant integer c, t>=1 and both source/shifted sorted domains. No artificial height bound. Arbitrary
     unbalanced mixed sets are explicitly withdrawn, not silently assumed.'
-  cor-derivative-bound: 'dimred-corrected-arxiv.tex:527-534 (label cor:derivative_bound). C10: retain
+  cor-derivative-bound: 'dimred-corrected-arxiv.tex:554-561 (label cor:derivative_bound). C10: retain
     the genuine terminal corner cap vInf(corner)<=kM, k>=1, before all directions,times,sites. Every constant
     integer c is allowed. Conclude every coordinate first difference <=k*x_j on the sorted domain. The
     terminal cap produces all finite-time corner caps inside the proof.'
-  lem-strict-head-facet: 'dimred-corrected-arxiv.tex:1127-1137 (label lem:strict-head-facet). C20 new
+  lem-strict-head-facet: 'dimred-corrected-arxiv.tex:1218-1228 (label lem:strict-head-facet). C20 new
     lemma: on the unsorted orthant 1<=x_i<=M, d>=1,M>=2,t>=0, strict-nonmax pure second differences are
     <=2*x_k. Jointly, a coordinate-one facet with a nonempty head and unit gap has BOTH next firing conclusions.
     No tau, current reduction, conditional induction bundle, mixed-axis assumption or dissipating cap
     is a premise. Existential head witnesses express strict maxima on the finite coordinate domain.'
-  lem-one-terminal-profile: 'dimred-corrected-arxiv.tex:920-927 (label lem:one-terminal-profile, clause
+  lem-one-terminal-profile: 'dimred-corrected-arxiv.tex:1006-1013 (label lem:one-terminal-profile, clause
     quadratic profile). C21 first clause: M>=1 and the whole legal interval 1<=x_0<=M. The terminal odometer
     equals the nonnegative integral quadratic numerator divided by two, represented in ENat by a natural
     cast. The numerator is nonnegative on this carrier; Int.toNat introduces no fallback value.'
-  lem-one-terminal-derivative: 'dimred-corrected-arxiv.tex:920-927 (label lem:one-terminal-profile, clause
+  lem-one-terminal-derivative: 'dimred-corrected-arxiv.tex:1006-1013 (label lem:one-terminal-profile, clause
     full derivative including endpoint). C21 second clause: the same full interval including x=M. The
     terminal ENat values are finite by positive-dimensional stabilization. The endpoint x+1=M+1 has the
     genuine zero exterior odometer; the value at M is M. Includes M=1; no strict-interior restriction.'
-  char-folded-lift: 'dimred-corrected-arxiv.tex:370-377 (literal lifted-value definition; context subsec:symmetry).
-    Literal defining equation of the lifted folded value on every ambient site: use the proved orbit representative
-    only when in the physical cube, otherwise the required exterior zero. This piecewise definition is
-    the source zero extension, not invented off-domain dynamics. Semantic definition unit, zero numbered-theorem
-    coverage.'
-  char-folded-neighbors: 'dimred-corrected-arxiv.tex:378-380 (literal directed-neighbor definition; context
-    subsec:symmetry). Literal defining equation of R: sum both signed physical neighbors for each coordinate.
-    No deduplication; representatives that coincide still give separate summands. Semantic definition
-    unit, zero numbered-theorem coverage.'
-  char-folded-odometer: dimred-corrected-arxiv.tex:380-389 (literal initial value and threshold recursion;
-    context subsec:symmetry). Joint literal initial-zero and next-step equations for the independently
-    recursively defined folded process on the complete sorted carrier, with arbitrary signed heights and
-    correct physical directed-neighbor sum. Its identification theorem is the second conjunct of lem-symmetry.
-    Semantic definition unit, zero numbered-theorem coverage.
+  char-folded-lift: 'dimred-corrected-arxiv.tex:372-375 (literal lifted-value definition; context subsec:symmetry).
+    Literal defining equation of the lifted value on every site of Z^d: the value at the orbit representative inside the cube, and zero outside it, as in the source. A definition, not a numbered result of the paper.'
+  char-folded-neighbors: 'dimred-corrected-arxiv.tex:376-380 (literal neighbour-sum definition; context subsec:symmetry). Literal defining equation of R: for each coordinate, the lifted values at both neighbours x+e_i and x-e_i. Neighbours with the same orbit representative give separate summands. A definition, not a numbered result of the paper.'
+  char-folded-odometer: dimred-corrected-arxiv.tex:380-384 (literal initial value and threshold recursion;
+    context subsec:symmetry). The literal initial value and recursion of the symmetrized odometer on the whole sorted domain, for initial heights of every sign, through the neighbour sum R. Its identification with the odometer is the second conclusion of lem-symmetry.
+    A definition, not a numbered result of the paper.
   char-physical-pile: dimred-corrected-arxiv.tex:93-98 (finite-pile conservation; physical carrier at
     278-284). The physical finite-time pile is initial height plus the odometer Laplacian, on a CubeSite.
     This literal body is equivalent to the source mutual recursion by odo_succ_eq and sandp_succ. No ambient-site
-    pile value is supplied. Semantic definition unit, zero numbered-theorem coverage.
+    pile value is supplied. A definition, not a numbered result of the paper.
   char-terminal-pile: dimred-corrected-arxiv.tex:145-161 (label sandpile_corollary, which uses the terminal
     pile s_infinity). The unit records only the defining equation on a positive-dimensional physical cube site,
     namely that the terminal pile is 2d plus the Laplacian of the final odometer, which is the telescoped form of the
     recursion at dimred-corrected-arxiv.tex:95-96 with s_0 = 2d and v_0 = 0. Finiteness of the final odometer
     and eventual agreement with the finite-time pile are Support lemmas (DimRed.Corrected.odoInfUnif_ne_top,
-    DimRed.Corrected.terminalPile_eventually), not part of this unit. Definition unit, zero numbered-theorem
-    coverage.
-  char-nonempty-maximum: 'dimred-corrected-arxiv.tex:561-568 (label topple_limit, clause nonempty-maximum
+    DimRed.Corrected.terminalPile_eventually), not part of this unit. A definition, not a numbered result of the paper.
+  char-nonempty-maximum: 'dimred-corrected-arxiv.tex:601-608 (label topple_limit, clause nonempty-maximum
     semantic unit). Literal maximum body on a finite domain with an explicit Nonempty witness: sup-prime,
     with no empty-domain branch. Geometric simplexNonempty constructs the witness at every source maximum
-    use. Semantic definition unit, zero numbered-theorem coverage.'
+    use. A definition, not a numbered result of the paper.'
 constants: {}
 exponents:
   prop-base-dimension-weak:
   - kind: notation
-    detail: In dimred-corrected-arxiv.tex:731-738 (label base_dimension, clause weak facet compatibility),
+    detail: In dimred-corrected-arxiv.tex:817-824 (label base_dimension, clause weak facet compatibility),
       superscripts on C, S, v, s and boundary symbols are dimension, size or folded-process indices, not
       powers. Lean carries these indices as explicit dimensional/side arguments. The stated conclusion
       and the coordinate/time ranges are recorded in the clause reading.
@@ -152,13 +143,13 @@ exponents:
       and the coordinate/time ranges are recorded in the clause reading.
   lem-symmetry:
   - kind: notation
-    detail: In dimred-corrected-arxiv.tex:399-401 (label symmetry_lemma), superscripts on C, S, v, s and
+    detail: In dimred-corrected-arxiv.tex:395-397 (label symmetry_lemma), superscripts on C, S, v, s and
       boundary symbols are dimension, size or folded-process indices, not powers. Lean carries these indices
       as explicit dimensional/side arguments. The stated conclusion and the coordinate/time ranges are
       recorded in the clause reading.
   prop-no-reduction:
   - kind: notation
-    detail: In dimred-corrected-arxiv.tex:596-598 (label no_reduction), superscripts on C, S, v, s and
+    detail: In dimred-corrected-arxiv.tex:645-647 (label no_reduction), superscripts on C, S, v, s and
       boundary symbols are dimension, size or folded-process indices, not powers. Lean carries these indices
       as explicit dimensional/side arguments. The stated conclusion and the coordinate/time ranges are
       recorded in the clause reading.
@@ -176,25 +167,25 @@ exponents:
       ranges are recorded in the clause reading.
   prop-base-case:
   - kind: notation
-    detail: In dimred-corrected-arxiv.tex:660-684 (label prop:base_case), superscripts on C, S, v, s and
+    detail: In dimred-corrected-arxiv.tex:701-725 (label prop:base_case), superscripts on C, S, v, s and
       boundary symbols are dimension, size or folded-process indices, not powers. Lean carries these indices
       as explicit dimensional/side arguments. The stated conclusion and the coordinate/time ranges are
       recorded in the clause reading.
   prop-base-dimension-consistency:
   - kind: notation
-    detail: In dimred-corrected-arxiv.tex:727-729 (label base_dimension, clause self-similarity), superscripts
+    detail: In dimred-corrected-arxiv.tex:813-815 (label base_dimension, clause self-similarity), superscripts
       on C, S, v, s and boundary symbols are dimension, size or folded-process indices, not powers. Lean
       carries these indices as explicit dimensional/side arguments. The stated conclusion and the coordinate/time
       ranges are recorded in the clause reading.
   prop-base-dimension-strong-derivative:
   - kind: notation
-    detail: In dimred-corrected-arxiv.tex:743-745 (label base_dimension, clause strong derivative), superscripts
+    detail: In dimred-corrected-arxiv.tex:829-831 (label base_dimension, clause strong derivative), superscripts
       on C, S, v, s and boundary symbols are dimension, size or folded-process indices, not powers. Lean
       carries these indices as explicit dimensional/side arguments. The stated conclusion and the coordinate/time
       ranges are recorded in the clause reading.
   prop-base-dimension-strong-facet:
   - kind: notation
-    detail: In dimred-corrected-arxiv.tex:747-755 (label base_dimension, clause both strong compatibility
+    detail: In dimred-corrected-arxiv.tex:833-841 (label base_dimension, clause both strong compatibility
       conclusions), superscripts on C, S, v, s and boundary symbols are dimension, size or folded-process
       indices, not powers. Lean carries these indices as explicit dimensional/side arguments. The stated
       conclusion and the coordinate/time ranges are recorded in the clause reading.
@@ -212,25 +203,25 @@ exponents:
       and the coordinate/time ranges are recorded in the clause reading.
   lem-strict-head-facet:
   - kind: notation
-    detail: In dimred-corrected-arxiv.tex:1127-1137 (label lem:strict-head-facet), superscripts on C,
+    detail: In dimred-corrected-arxiv.tex:1218-1228 (label lem:strict-head-facet), superscripts on C,
       S, v, s and boundary symbols are dimension, size or folded-process indices, not powers. Lean carries
       these indices as explicit dimensional/side arguments. The stated conclusion and the coordinate/time
       ranges are recorded in the clause reading.
   char-folded-lift:
   - kind: notation
-    detail: In dimred-corrected-arxiv.tex:370-377 (literal lifted-value definition; context subsec:symmetry),
+    detail: In dimred-corrected-arxiv.tex:372-375 (literal lifted-value definition; context subsec:symmetry),
       superscripts on C, S, v, s and boundary symbols are dimension, size or folded-process indices, not
       powers. Lean carries these indices as explicit dimensional/side arguments. The stated conclusion
       and the coordinate/time ranges are recorded in the clause reading.
   char-folded-neighbors:
   - kind: notation
-    detail: In dimred-corrected-arxiv.tex:378-380 (literal directed-neighbor definition; context subsec:symmetry),
+    detail: In dimred-corrected-arxiv.tex:376-380 (literal neighbour-sum definition; context subsec:symmetry),
       superscripts on C, S, v, s and boundary symbols are dimension, size or folded-process indices, not
       powers. Lean carries these indices as explicit dimensional/side arguments. The stated conclusion
       and the coordinate/time ranges are recorded in the clause reading.
   char-folded-odometer:
   - kind: notation
-    detail: In dimred-corrected-arxiv.tex:380-389 (literal initial value and threshold recursion; context
+    detail: In dimred-corrected-arxiv.tex:380-384 (literal initial value and threshold recursion; context
       subsec:symmetry), superscripts on C, S, v, s and boundary symbols are dimension, size or folded-process
       indices, not powers. Lean carries these indices as explicit dimensional/side arguments. The stated
       conclusion and the coordinate/time ranges are recorded in the clause reading.

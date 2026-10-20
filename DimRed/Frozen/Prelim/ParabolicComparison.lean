@@ -8,8 +8,8 @@ Lemma 2.2 of the corrected edition.
    1$} \}"
 
 Here `G = ℤ^+ × C`, `s(t,x) := s_0(x)`, `v(t,x) := v_t(x)`
-(`dimred-corrected-arxiv.tex:304-305`) and `Δ^G f(t,x) = -2d f(t,x) + ∑_{y ∼
-x} f(t-1,y)` for `t ≥ 1` (`dimred-corrected-arxiv.tex:305-309`), the sum being
+(`dimred-corrected-arxiv.tex`, label `subsec:parabolic`) and `Δ^G f(t,x) = -2d f(t,x) + ∑_{y ∼
+x} f(t-1,y)` for `t ≥ 1` (`dimred-corrected-arxiv.tex`, label `subsec:parabolic`), the sum being
 over the neighbours of `x` in `C`, so a competitor `u` is a nonnegative
 function on `ℤ^+ × C`, extended by zero off the hypercube. A minimum of a set
 of functions is the pointwise minimum: `v` satisfies the constraint, and `v ≤

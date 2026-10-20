@@ -6,7 +6,7 @@ Lemma 2.1 of the corrected edition.
    \max\left\{0,\left\lfloor \frac{s_0(x)+\sum_{y\sim
    x}v_t(y)}{2d}\right\rfloor\right\}."
 
-The standing hypothesis of the subsection, `dimred-corrected-arxiv.tex:290`,
+The standing hypothesis of the subsection, `dimred-corrected-arxiv.tex`, label `subsec:babai_gorodezky`,
 is "let $s_0 \leq 2 (2 d) - 1$ be an arbitrary initial sandpile on
 $\mathcal{C}$ and $v_t$ its odometer", carried as `hs1`; the corrected
 hypothesis has no lower bound on `s_0`, and none is carried. Integer division

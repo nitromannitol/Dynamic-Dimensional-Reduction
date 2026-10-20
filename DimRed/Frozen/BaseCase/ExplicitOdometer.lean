@@ -1,6 +1,6 @@
 /-
 Proposition 3.2 of the corrected edition.
-`dimred-corrected-arxiv.tex:660-684` (label `prop:base_case`):
+`dimred-corrected-arxiv.tex:701-725` (label `prop:base_case`):
 
   "For all $d \geq 1$, when $s_0^{(d)} = 2 d + (d-1)$, the radially
    reparameterized parallel toppling odometer has the following form. For all
@@ -9,11 +9,11 @@ Proposition 3.2 of the corrected edition.
    And for each $1\leq t'<t\leq t'+x$ and $a_{t'-1}\geq x>a_{t'}$,
    v_t(x)=v_{t'}(x-(t-t'))."
 
-The setting is `M = 2` (`dimred-corrected-arxiv.tex:613-615`), hence the
-hypercube `C_4^{(d)}` since `N = 2M` (`dimred-corrected-arxiv.tex:420-422`),
-and `x` is the radial coordinate of `dimred-corrected-arxiv.tex:614-615`, so
+The setting is `M = 2` (`dimred-corrected-arxiv.tex`, label `subsec:M2`), hence the
+hypercube `C_4^{(d)}` since `N = 2M` (`dimred-corrected-arxiv.tex`, label `subsec:symmetry`),
+and `x` is the radial coordinate of `dimred-corrected-arxiv.tex`, label `subsec:M2`, so
 `v_t(x)` is the odometer at `radial d x`. `a_t` is `blockEdge`,
-`dimred-corrected-arxiv.tex:649-657`. Time is written `t + 1` so that `t ≥ 1`
+`dimred-corrected-arxiv.tex`, label `subsec:M2`. Time is written `t + 1` so that `t ≥ 1`
 and `t - 1` need no truncated subtraction, and the ripple's `t'` is written `s
 + 1` for the same reason.
 

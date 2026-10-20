@@ -27,8 +27,8 @@ import DimRed.Frozen.Regularity.StrongTopple
 
 The results of *Dynamic dimensional reduction in the Abelian sandpile* (Ahmed Bou-Rabee), in the
 corrected edition `paper/corrected-arxiv/dimred-corrected-arxiv.tex`. The main results are
-Theorem 1.1 and Corollary 1.1, proved together with the five clauses of Proposition 4.1 by one
-joint induction over dimension, side length and time (Sections 4 and 5):
+Theorem 1.1 (`the_theorem`) and Corollary 1.1 (`sandpile_corollary`), proved together with the five clauses of Proposition 4.1 (`base_dimension`) by one
+joint induction over dimension, side length and time (`sec:base_regularity` and `sec:dim_reduction`):
 
 * `DimRed.dimensional_reduction`: Theorem 1.1(i), dimensional reduction on the
   centre slice, `v_t^{(d,N)}(x_{d-1}, 1) = v_t^{(d-1,N)}(x_{d-1})` for every `t ≥ 1`.

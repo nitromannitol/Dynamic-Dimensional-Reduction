@@ -9,7 +9,9 @@ published text, the corrected text and the reason, in the section "Corrections t
 version" at the end of the corrected edition, and in the repository README.
 
 The Lean statements follow this edition, whose SHA-256 is recorded in `ledger/manifest.yaml`.
-Line references in the comments of `DimRed/` are to this file.
+The comments of `DimRed/` and `DimRedAudit/` cite this file by label. The headers of
+`DimRed/Frozen/` and `ledger/manifest.yaml` also give line ranges next to the label; the checks
+`paper_anchors` and `paper_citations` keep those ranges in step with the labels.
 
 The bibliography and the figures are included. Build from this directory:
 

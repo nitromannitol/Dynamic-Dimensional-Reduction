@@ -2,7 +2,7 @@ import DimRed.Support.Basic
 
 /-
 The coordinate and simplex identities for appending a trailing coordinate,
-`dimred-corrected-arxiv.tex`.
+`dimred-corrected-arxiv.tex`, label `subsec:symmetry`.
 -/
 namespace DimRed
 
