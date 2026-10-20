@@ -1,7 +1,7 @@
 import DimRed.Support.Recursion
 
 /-
-The Laplacian at a facet point, `dimred-corrected-arxiv.tex:962-966` and the weak facet
+The Laplacian at a facet point, the subsection titled `Dimensional reduction` in `dimred-corrected-arxiv.tex` and the weak facet
 compatibility clause of `dimred-corrected-arxiv.tex`, after the neighbour terms are supplied by
 symmetry.
 -/

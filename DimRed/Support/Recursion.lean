@@ -1,5 +1,5 @@
 /-
-The two displays of `dimred-corrected-arxiv.tex:100-107` as theorems about `DimRed.odo`, the
+The two displays of the subsection titled `Main Result` in `dimred-corrected-arxiv.tex` as theorems about `DimRed.odo`, the
 invariant `0 ≤ s_t ≤ 2(2d) - 1` that the paper's blanket hypothesis
 `s_0 ≤ 2(2d) - 1` propagates in time, and the elementary consequences of the
 recursion used everywhere below.

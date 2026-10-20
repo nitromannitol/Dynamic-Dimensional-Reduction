@@ -1,5 +1,5 @@
 /-
-The unit-gap interior branch of dimensional reduction, `dimred-corrected-arxiv.tex:981-1008`, which is the
+The unit-gap interior branch of dimensional reduction, the subsection titled `Dimensional reduction` in `dimred-corrected-arxiv.tex`, which is the
 one branch `DimRed/Support/DimRedStep.lean` leaves open.  The point has every coordinate above
 one, so the least index with a tail of ones is the last, and the facet gap at the previous time
 is exactly one.  The paper splits on whether the previous-but-one time has reached the topple
@@ -37,7 +37,7 @@ theorem odo_frozen_of_topple (d M t : ℕ) (_hd : 1 ≤ d) (_hM : 2 ≤ M) (_ht 
     exact odo_mono d (2 * M) (fun _ => 2 * (d : ℤ)) hmono z
   omega
 
-/-- The reflecting boundary identity `eq:reflecting_boundaries`, `dimred-corrected-arxiv.tex:997-1006`.
+/-- The reflecting boundary identity `eq:reflecting_boundaries`, the subsection titled `Dimensional reduction` in `dimred-corrected-arxiv.tex`.
 Below the topple time, self-similarity at scale `M` and dimensional reduction at both scales
 identify the layer `2` of the last coordinate with the layer `1`. -/
 theorem odo_reflecting_boundary (d M t : ℕ) (_hd : 1 ≤ d) (_hM : 2 ≤ M)
@@ -57,7 +57,7 @@ theorem odo_reflecting_boundary (d M t : ℕ) (_hd : 1 ≤ d) (_hM : 2 ≤ M)
     _ = odoUnif d (2 * M) t z := hconsist.symm
     _ = odoUnif (d + 1) (2 * M) t (Fin.snoc z 1) := hredM.symm
 
-/-- The unit-gap interior branch of dimensional reduction, `dimred-corrected-arxiv.tex:981-1008`, which is
+/-- The unit-gap interior branch of dimensional reduction, the subsection titled `Dimensional reduction` in `dimred-corrected-arxiv.tex`, which is
 the one branch `DimRed.Support.DimRedStep.odo_dimred_step` leaves open.  The point has every
 coordinate above one, so the least index with a tail of ones is `i = d`, and the facet gap at
 time `t-1` is exactly one.  The paper splits on whether `t-2` has reached the topple time of

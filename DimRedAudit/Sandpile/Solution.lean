@@ -16,7 +16,7 @@ proves the byte-identical statements from `DimRed.sandpile_dimensional_reduction
 
 namespace DimRed.StatementAudit.Sandpile
 
-/-- **Corollary 1.1(i)** (`sandpile_corollary`, `dimred-corrected-arxiv.tex:151-154`): dimensional reduction
+/-- **Corollary 1.1(i)** (`sandpile_corollary`, `dimred-corrected-arxiv.tex`, label `sandpile_corollary`): dimensional reduction
 of the terminal sandpile, `s_∞^{(d,N)}(x_{d-1}, 1) = s_∞^{(d-1,N)}(x_{d-1}) + 2` for
 `x_{d-1} ∈ S_M^{(d-1)}` with `x_{d-1} ≥ 2`. -/
 theorem sandpile_dimensional_reduction (N d : ℕ) (hN : 1 ≤ N) (hd : 1 ≤ d)
@@ -25,7 +25,7 @@ theorem sandpile_dimensional_reduction (N d : ℕ) (hN : 1 ≤ N) (hd : 1 ≤ d)
   rw [Bridge.sandpInfUnif_eq, Bridge.sandpInfUnif_eq]
   exact DimRed.sandpile_dimensional_reduction N d hN hd x hx hx2
 
-/-- **Corollary 1.1(ii)** (`sandpile_corollary`, `dimred-corrected-arxiv.tex:155-158`): self-similarity of
+/-- **Corollary 1.1(ii)** (`sandpile_corollary`, `dimred-corrected-arxiv.tex`, label `sandpile_corollary`): self-similarity of
 the sandpile, for all `j < M`, `t ≤ τ_j` and `x ∈ S_M^{(d)}` with `x > M - j + 1`,
 `s_t^{(d,N)}(x) = s_t^{(d,2j)}(x - (M - j))`. -/
 theorem sandpile_self_similarity (N d : ℕ) (hN : 1 ≤ N) (hd : 2 ≤ d)

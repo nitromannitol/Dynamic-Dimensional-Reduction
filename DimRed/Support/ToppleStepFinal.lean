@@ -238,7 +238,7 @@ theorem odoUnif_dim_one_one_le_two_add_one (M s : ℕ) (hM : 2 ≤ M) :
     rw [hr]
     split_ifs with h <;> omega
 
-/-- The neighbour lemma behind `dimred-corrected-arxiv.tex:864-866`: a site that rises by two
+/-- The neighbour lemma behind the proof of the proposition (`base_dimension`) in `dimred-corrected-arxiv.tex`: a site that rises by two
 over two steps has a neighbour that rose by two one step earlier. -/
 theorem odoUnif_dim_one_rise_two_nbr (M s : ℕ) (hs : 1 ≤ s) (c : ℤ)
     (hbad : 2 ≤ odoUnif 1 (2 * M) (s + 2) (fun _ => c) - odoUnif 1 (2 * M) s (fun _ => c)) :
@@ -521,7 +521,7 @@ theorem odoUnif_snoc_one_le (e N s : ℕ) (he : 1 ≤ e) (x : Site e) :
 
 /-- The reflecting boundary identity `eq:reflecting_boundaries` at one time, from
 self-similarity in dimensions `e + 1` and `e` and dimensional reduction at the
-scales `M` and `M - 1`, `dimred-corrected-arxiv.tex:997-1006`. -/
+scales `M` and `M - 1`, the subsection titled `Dimensional reduction` in `dimred-corrected-arxiv.tex`. -/
 theorem odoUnif_snoc_two_eq_snoc_one {e M T : ℕ}
     (hCd : ∀ y : Site (e + 1), (∀ i, 2 ≤ y i) →
       odoUnif (e + 1) (2 * M) T y = odoUnif (e + 1) (2 * (M - 1)) T (fun i => y i - 1))
@@ -586,7 +586,7 @@ theorem odoUnif_sub_unit_eq_of_eq_two {e M T : ℕ}
   rw [← hsym (y - unit k), ← hsym y, e1, e2]
   exact (hsnoc z hz2).symm
 
-/-- The paper's Case 3, `dimred-corrected-arxiv.tex:1276-1277`: a point with every coordinate at
+/-- The paper's Case 3, the subsection titled `Odometer regularity for d >= 2` in `dimred-corrected-arxiv.tex`: a point with every coordinate at
 least three is two steps inside the self-similar region, so its two-step rise
 is the rise at scale `M - 1`. -/
 theorem topple_rise_le_one_of_three_le {d M T : ℕ} (hM : 2 ≤ M)
@@ -756,7 +756,7 @@ theorem toppleTime_eq_toppleTime_one (j D : ℕ) (hj : 1 ≤ j)
 /-! ### The induction step -/
 
 /-- Strong topple control at one triple of the joint induction,
-`dimred-corrected-arxiv.tex:759-763`, proved from the earlier triples and the self-similarity
+`dimred-corrected-arxiv.tex`, label `base_dimension`, proved from the earlier triples and the self-similarity
 and dimensional-reduction clauses at the current triple. -/
 theorem topple_step_of_earlier (d M t : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
     (hprior : ∀ d' M' t' : ℕ, regEarlier d M t d' M' t' →
