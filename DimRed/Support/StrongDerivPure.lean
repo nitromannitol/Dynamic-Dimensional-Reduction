@@ -190,7 +190,7 @@ theorem nbrSum_sub_le_of_terms {d : ℕ} (u u' : Site d → ℤ) (x w : Site d) 
 
 
 
-/-- The one-dimensional neighbour inequality, `dimred-corrected-arxiv.tex`, label `subsubsec:one_dim_self_similarity`. -/
+/-- The one-dimensional neighbour inequality `v_t(y+1) + v_t(y-1) ≤ 2v_{t+1}(y) - 1`, the analogue for the one-dimensional odometer of `NU_M ≤ KU_M - 1` in fact (c) of the proof of `lem:strict-head-facet` in `dimred-corrected-arxiv.tex`. -/
 theorem oneDim_nbr_le (M t : ℕ) (y : Site 1) (hy : inCube 1 (2 * M) y) :
     odoUnif 1 (2 * M) t (y + unit 0) + odoUnif 1 (2 * M) t (y - unit 0)
       ≤ 2 * odoUnif 1 (2 * M) (t + 1) y - 1 := by
@@ -219,8 +219,8 @@ theorem oneDim_nbr_le (M t : ℕ) (y : Site 1) (hy : inCube 1 (2 * M) y) :
       ≤ 2 * odo 1 (2 * M) (fun _ => 2) (t + 1) y - 1 := by omega
   simpa [odoUnif] using key
 
-/-- The comparison function in the supersolution argument of `lem:strict-head-facet` (fact (c) of its proof, `dimred-corrected-arxiv.tex`): the one-dimensional
-odometer of the `l`-th coordinate, extended by zero off the cube. -/
+/-- The comparison function for the bound `v_t(x) ≤ U_M(x_k)` of fact (c) in the proof of `lem:strict-head-facet` (`dimred-corrected-arxiv.tex`): here the one-dimensional
+odometer of the `l`-th coordinate at time `t`, extended by zero off the cube, whose terminal value is `U_M` (`lem:one-terminal-profile`). -/
 def oneDimComp (d M : ℕ) (l : Fin d) (t : ℕ) (z : Site d) : ℤ :=
   if inCube d (2 * M) z then odoUnif 1 (2 * M) t (fun _ => z l) else 0
 
@@ -315,7 +315,7 @@ theorem odo_le_oneDim_sup (d M : ℕ) (hd : 1 ≤ d) (l : Fin d) (t : ℕ) (y : 
     nlinarith [hmono, hnb]
   linarith
 
-/-- Domination by the one-dimensional odometer, from the supersolution inequality in fact (c) of the proof of `lem:strict-head-facet` in
+/-- Domination by the one-dimensional odometer at the same time. Since that odometer is at most its terminal value `U_M` (`lem:one-terminal-profile`), this gives the bound of fact (c) in the proof of `lem:strict-head-facet` in
 `dimred-corrected-arxiv.tex`. -/
 theorem odo_le_oneDim (d M : ℕ) (hd : 1 ≤ d) (l : Fin d) (t : ℕ) (x : Site d) :
     odoUnif d (2 * M) t x ≤ odoUnif 1 (2 * M) t (fun _ => x l) := by
