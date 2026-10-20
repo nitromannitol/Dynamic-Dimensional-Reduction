@@ -4,7 +4,7 @@ the statement labelled `base_dimension` in `dimred-corrected-arxiv.tex`, reduced
 
 The direct route, bounding the head second differences by `j`, is circular: by the Laplacian
 identity at a facet point, under the clause's own hypothesis that bound is equivalent to the
-conclusion.  The paper's route, at `dimred-corrected-arxiv.tex:981-986`, instead identifies the odometer in
+conclusion.  The paper's route, at the subsection titled `Dimensional reduction` in `dimred-corrected-arxiv.tex`, instead identifies the odometer in
 dimension `i+1+j` with the odometer in dimension `i+1` by dimensional reduction and applies
 the clause there, where the facet is a single point.
 -/
@@ -18,7 +18,7 @@ open LatticeProb
 
 /-- Weak facet compatibility with a tail of `j` ones, obtained from the same clause
 with an EMPTY tail one dimension group down, together with dimensional reduction,
-which is the paper's route at `dimred-corrected-arxiv.tex:981-986`. -/
+which is the paper's route at the subsection titled `Dimensional reduction` in `dimred-corrected-arxiv.tex`. -/
 theorem weak_facet_of_lower (M i j : ℕ) (_hM : 2 ≤ M) (t : ℕ) (_ht : 1 ≤ t)
     (x : Fin i → ℤ) (_hx2 : ∀ a, 2 ≤ x a)
     (_hxs : inSimplex (i + 1 + j) M (facetPoint x 1 j))

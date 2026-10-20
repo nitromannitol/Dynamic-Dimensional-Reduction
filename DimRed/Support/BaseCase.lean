@@ -1,5 +1,5 @@
 /-
-The elementary properties of the block edge `a_t` of `dimred-corrected-arxiv.tex:655-661`:
+The elementary properties of the block edge `a_t` of the subsection titled `M=2` in `dimred-corrected-arxiv.tex`:
 it is nonincreasing in `t`.
 -/
 import DimRed.Support.Radial
@@ -237,7 +237,7 @@ theorem ediv_strict_succ (a : ℤ) (t : ℕ) (ht : 1 ≤ t) (h : (t : ℤ) * (t 
   rw [Int.ediv_lt_iff_lt_mul ht1_pos]
   exact key
 
-/-- The block edge strictly decreases, `dimred-corrected-arxiv.tex:655-661`. -/
+/-- The block edge strictly decreases, the subsection titled `M=2` in `dimred-corrected-arxiv.tex`. -/
 theorem blockEdge_strict (d t : ℕ) (hd : 1 ≤ d) (ht : 1 ≤ t) :
     blockEdge d (t + 1) < blockEdge d t := by
   obtain ⟨u, rfl⟩ : ∃ u, t = u + 1 := ⟨t - 1, by omega⟩
@@ -398,7 +398,7 @@ theorem sandp_block_ge (d n x : ℕ) (hd : 1 ≤ d) (hn : 1 ≤ n) (hx : x ≤ d
     have hw := blockEdge_window_le d n x hd hn hx h1
     nlinarith [hw]
 
-/-- The block edge never exceeds `d`, `dimred-corrected-arxiv.tex:655-661`. -/
+/-- The block edge never exceeds `d`, the subsection titled `M=2` in `dimred-corrected-arxiv.tex`. -/
 theorem blockEdge_le_self (d m : ℕ) (hd : 1 ≤ d) : blockEdge d m ≤ (d : ℤ) := by
   induction m using Nat.strong_induction_on with
   | _ m ih =>

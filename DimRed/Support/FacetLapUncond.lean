@@ -1,7 +1,7 @@
 /-
 The Laplacian at a facet point, with no hypotheses.  `DimRed/Support/FacetLap.lean` carries the
 five neighbour identities as assumptions because it was proved before them; all five are
-theorems of `DimRed/Support/FacetNbr.lean`, so the decomposition of `dimred-corrected-arxiv.tex:962-966` holds
+theorems of `DimRed/Support/FacetNbr.lean`, so the decomposition of the subsection titled `Dimensional reduction` in `dimred-corrected-arxiv.tex` holds
 outright.  The only gap between the two files is the way a tail index is written: `FacetLap`
 describes it by the inequality `i + 1 ≤ l`, `FacetNbr` by the constructor `Fin.natAdd (i+1)`.
 -/
@@ -22,7 +22,7 @@ theorem exists_natAdd_of_isTail {i j : ℕ} (l : Fin (i + 1 + j)) (hl : IsTail l
   simp only [Fin.val_natAdd]
   omega
 
-/-- `dimred-corrected-arxiv.tex:962-966` with every hypothesis discharged. -/
+/-- The subsection titled `Dimensional reduction` in `dimred-corrected-arxiv.tex` with every hypothesis discharged. -/
 theorem lap_facetPoint_of {i j M : ℕ} (c' : ℤ) (x : Fin i → ℤ) (t : ℕ) :
     lap (odo (i + 1 + j) (2 * M) (fun _ => c') t) (facetPoint x 1 j) =
       (∑ a : Fin i,

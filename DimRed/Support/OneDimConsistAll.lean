@@ -1,6 +1,6 @@
 /-
 The iterated one-dimensional self-similarity clause and the lower bound on
-successive toppling times from `dimred-corrected-arxiv.tex:726-729` and `1040-1044`.
+successive toppling times from `dimred-corrected-arxiv.tex`, label `base_dimension` and the subsection titled `Odometer regularity for d >= 2` in `dimred-corrected-arxiv.tex`.
 -/
 import DimRed.Support.OneDimConsist
 import DimRed.Support.CornerReaches

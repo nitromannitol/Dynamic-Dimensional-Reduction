@@ -1,6 +1,6 @@
 import DimRed.Support.NonnegativeUpdate
 /-
-The derivative bound of `dimred-corrected-arxiv.tex:527-534`: if the odometer at the corner
+The derivative bound of `dimred-corrected-arxiv.tex`, label `cor:derivative_bound`: if the odometer at the corner
 `(M, 1_{d-1})` never exceeds `k M`, then `v_t(x) - v_t(x + e_j) ≤ k x_j`
 everywhere.
 
@@ -183,7 +183,7 @@ section Derivative
 
 variable (d M : ℕ)
 
-/-- `dimred-corrected-arxiv.tex:527-534`.  Given a bound `k M` on the corner value, the
+/-- `dimred-corrected-arxiv.tex`, label `cor:derivative_bound`.  Given a bound `k M` on the corner value, the
 first difference of the odometer in direction `j` is at most `k x_j`. -/
 theorem odo_deriv_bound (hd : 1 ≤ d) (c : ℤ) (hc0 : 0 ≤ c)
     (hc1 : c ≤ 2 * (2 * (d : ℤ)) - 1) (k : ℕ) (hk : 1 ≤ k)

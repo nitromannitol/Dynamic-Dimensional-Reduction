@@ -16,7 +16,7 @@ vocabulary, and proves the byte-identical statement from `DimRed.self_similarity
 
 namespace DimRed.StatementAudit.SelfSimilarity
 
-/-- **Theorem 1.1(ii)** (`the_theorem`, `dimred-corrected-arxiv.tex:122-133`): self-similarity, for all
+/-- **Theorem 1.1(ii)** (`the_theorem`, `dimred-corrected-arxiv.tex`, label `the_theorem`): self-similarity, for all
 `j < M`, `t ≤ τ_j` and `x ∈ S_M^{(d)}` with `x > M - j`,
 `v_t^{(d,N)}(x) = v_t^{(d,2j)}(x - (M - j))`. -/
 theorem self_similarity (N d : ℕ) (hN : 1 ≤ N) (hd : 2 ≤ d)
