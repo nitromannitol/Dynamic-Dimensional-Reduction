@@ -143,7 +143,7 @@ counts are generated from `ledger/manifest.yaml` by
 
 ## Size
 
-`DimRed/` and `DimRed.lean`: 112 Lean files with 21,311 lines (17,871 lines of code once
+`DimRed/` and `DimRed.lean`: 112 Lean files with 21,312 lines (17,871 lines of code once
 comments and blank lines are removed). The comparator surface `DimRedAudit/` is counted
 separately: 16 files with 1,601 lines.
 
