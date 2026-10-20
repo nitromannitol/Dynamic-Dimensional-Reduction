@@ -706,26 +706,71 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
 	\end{prop}
 	
 	\begin{proof}
-        Induct on time, using the radial Laplacian of Lemma~\ref{radial_laplacian}
-        and the simultaneous threshold rule. At time one every radial site
-        has fired once. In the firing block, $v_t(x)=t$ for $x\leq a_t$.
-        For $x<a_t$ its height is $2d+(d-1)-tx$; at $x=a_t$ the separate
-        edge contribution is $-(d-x)$, so its height is
-        $2d+(d-1)-tx-(d-x)$. The definition of $a_{t+1}$, with its two
-        time regimes, determines which of these heights is at least $2d$.
-        The affine expression $(d-1)-tx$ decreases with $x$; it is not the
-        firing criterion at the edge unless that edge contribution is included.
+        We use the radial Laplacian of Lemma~\ref{radial_laplacian}. Since $s_0\equiv 2d+(d-1)$, the height of a radial site $x$ at time $t$ is
+        \begin{equation*}
+        s_t(x)=2d+(d-1)+\Delta v_t(x)\,,
+        \end{equation*}
+        and $x$ topples at step $t+1$ exactly when $s_t(x)\geq 2d$, in which case $v_{t+1}(x)=v_t(x)+1$. Step 1 and Step 2 prove \eqref{eq:continuous_block}: for $x\leq a_t$, Step 1 at times $t$ and $t-1$ gives $v_t(x)=v_{t-1}(x)+1$, since $a_t\leq a_{t-1}$ (for $t=1$ use $v_0\equiv 0$). Step 3 proves \eqref{eq:ripple}.
 
-        For a ripple window $a_{t'-1}\geq x>a_{t'}$, use the induction formula
-        $v_t(x)=v_{t'}(x-(t-t'))$ while $t-t'\leq x$. To compute the next
-        firing indicator, read the values at $x-1,x,x+1$ from their respective
-        windows, using the neighboring windows at either endpoint. Split into
-        the three positions behind the moving front, immediately in front of
-        it, and further ahead. Substitution in the radial Laplacian advances
-        the profile by one site exactly until the shift reaches zero; the
-        new value is $v_{t'}(x-((t+1)-t'))$ when $t+1\leq t'+x$.
-        Outside this time window the proposition makes no ripple assertion.
-        These block and ripple calculations close the simultaneous induction.
+        We use four facts about the edges. By definition,
+        \begin{equation*}
+        a_0=a_1=d\,,\qquad a_u=\Big\lfloor\frac{d-1}{u-1}\Big\rfloor\ \text{ for } 2\leq u\leq t_d\,,\qquad a_u=a_{u-1}-1\ \text{ for } u>t_d\,.
+        \end{equation*}
+
+        (F0) The edges strictly decrease: $a_{u+1}<a_u$ for $u\geq 1$. For $u\geq t_d$ this is the last case of the definition. For $u=1$ with $u+1\leq t_d$ it reads $a_2=d-1<d=a_1$. Let $u\geq 2$ with $u+1\leq t_d$, and suppose $a_{u+1}\geq a_u=:A$. Then $Au\leq a_{u+1}u\leq d-1<(A+1)(u-1)$, so $A\leq u-2$ and hence $d-1<(u-1)^2$. But $u-1<\sqrt{d-1}$, because $u\leq t_d-1=\lceil\sqrt{d-1}\rceil$. This is a contradiction.
+
+        (F0$'$) If $a_{u-1}-a_u\geq 2$, then $u\leq t_d$, because $a_u=a_{u-1}-1$ for $u>t_d$.
+
+        (F1) If $x\leq a_u$, then $x(u-1)\leq d-1$. For $u=1$ this reads $0\leq d-1$, and for $2\leq u\leq t_d$ it follows from $a_u\leq\frac{d-1}{u-1}$. Let $u>t_d$. If $d=1$, then $a_u\leq 0$, so $x=0$. For $d\geq 2$ put $m=t_d-1=\lceil\sqrt{d-1}\rceil$ and $r=u-t_d\geq 1$. Then $u-1=m+r$, $m^2\geq d-1$, and $a_u=a_{t_d}-r\leq\frac{d-1}{m}-r$, so
+        \begin{equation*}
+        x(u-1)\leq a_u(u-1)\leq\Big(\frac{d-1}{m}-r\Big)(m+r)=(d-1)+r\Big(\frac{d-1}{m}-m\Big)-r^2\leq d-1\,.
+        \end{equation*}
+
+        (F2) If $2\leq u\leq t_d$ and $a_u<x$, then $x(u-1)>d-1$, since $a_u+1>\frac{d-1}{u-1}$ and $x\geq a_u+1$.
+
+        \emph{Step 1.} We show that $v_t(x)=t$ for every $x\leq a_t$. We induct on $t$. For $t=1$ every height at time $0$ equals $s_0\geq 2d$, so every site topples at step $1$, and $a_1=d$. Let $n\geq 1$ and assume the claim at time $n$. Let $x\leq a_{n+1}$. Since $a_{n+1}<a_n$, the sites $x-1$, $x$ and $x+1$ are all at most $a_n$, so their values at time $n$ equal $n$. (If $x=0$, the term $x\,v_n(x-1)$ vanishes.) Hence $\Delta v_n(x)=-(d+x)n+(d-x)n+xn=-xn$ and $s_n(x)=2d+(d-1)-xn$. By (F1) with $u=n+1$, $xn\leq d-1$, so $s_n(x)\geq 2d$. Thus $x$ topples at step $n+1$, and $v_{n+1}(x)=n+1$.
+
+        \emph{Step 2.} We show that $v_{t+1}(x)=v_t(x)$ for $a_{t+1}<x\leq a_t$. Since $x$ topples at step $t+1$ exactly when $s_t(x)\geq 2d$, it suffices to show $s_t(x)<2d$. We induct on $t$, and fix $t\geq 1$ and $x$ with $a_{t+1}<x\leq a_t$.
+
+        Case (a): $x<a_t$. Then $x-1$, $x$ and $x+1$ are at most $a_t$, so their values at time $t$ are $t$ by Step 1. Hence $\Delta v_t(x)=-xt$ and $s_t(x)=2d+(d-1)-xt$. Since $a_{t+1}<x<a_t$, the gap $a_t-a_{t+1}\geq 2$ gives $t+1\leq t_d$ by (F0$'$). Then (F2) with $u=t+1$ gives $xt>d-1$, so $s_t(x)<2d$.
+
+        Case (b): $x=a_t$. If $t=1$, then $x=d$. The term $(d-x)v_1(x+1)$ vanishes, and $\Delta v_1(d)=-2d+d=-d$ because $v_1(d)=v_1(d-1)=1$. So $s_1(d)=2d-1$. If $t\geq 2$, then $x<d$, since $a_t\leq a_2=d-1$. Also $a_t<x+1\leq a_{t-1}$, so $v_t(x+1)=v_{t-1}(x+1)=t-1$ by the case $t-1$ of this step and by Step 1. Also $v_t(x-1)=v_t(x)=t$ by Step 1. Hence $\Delta v_t(x)=-(d+x)t+(d-x)(t-1)+xt=-xt-(d-x)$, and $s_t(x)=2d-1-(t-1)x<2d$.
+
+        In both cases $s_t(x)<2d$, so $v_{t+1}(x)=v_t(x)$.
+
+        \emph{Step 3.} We show \eqref{eq:ripple}. Put $k=t-t'$, so $1\leq k\leq x$, and fix $x$ with $a_{t'}<x\leq a_{t'-1}$. We induct on $k$, and for fixed $k$ on $t'$. The induction hypothesis is \eqref{eq:ripple} for every smaller shift at every front, and for the shift $k$ at every smaller front. For $k=1$ the first part is empty.
+
+        Three values at time $t-1$ are needed.
+
+        First, if $a_{t'}<z\leq a_{t'-1}$ and $z\geq k-1$, then $v_{t-1}(z)=t'$ when $z-k+1\leq a_{t'}$, and $v_{t-1}(z)=t'-1$ otherwise. Indeed $v_{t-1}(z)=v_{t'}(z-k+1)$ by the hypothesis for shift $k-1$ at front $t'$, which is trivial when $k=1$. Steps 1 and 2 give the values of $v_{t'}$: it equals $t'$ on $\{w\leq a_{t'}\}$ and $t'-1$ on $\{a_{t'}<w\leq a_{t'-1}\}$.
+
+        Second, $v_{t-1}(a_{t'})\in\{t',t'+1\}$. For $k=1$ this is $v_{t'}(a_{t'})=t'$ by Step 1. For $k\geq 2$, the site $a_{t'}$ lies in the window of front $t'+1$, so the hypothesis for shift $k-2$ at front $t'+1$ gives $v_{t-1}(a_{t'})=v_{t'+1}(a_{t'}-k+2)$. Steps 1 and 2 at time $t'+1$ show that this value is $t'$ or $t'+1$.
+
+        Third, if $x=a_{t'-1}<d$, then $v_{t-1}(x+1)=t'-1$. The site $x+1$ lies in the window of front $t'-1$, so the hypothesis for shift $k$ at front $t'-1$ gives $v_{t-1}(x+1)=v_{t'-1}(x+1-k)$. Since $x+1-k\leq a_{t'-1}$, Step 1 makes this $t'-1$.
+
+        Write $\lambda=v_{t-1}(x-1)$, $\beta=v_{t-1}(x)$ and $\rho=v_{t-1}(x+1)$. The radial Laplacian gives
+        \begin{equation*}
+        s_{t-1}(x)-2d=(d-1)-(d+x)\beta+(d-x)\rho+x\lambda\,.
+        \end{equation*}
+        If $x=d$, then the term $(d-x)\rho$ vanishes, and we set $\rho=t'-1$ in that case; the third fact is then not needed.
+
+        We split by the position of $x-k$ relative to $a_{t'}$. In each case we show $v_t(x)=v_{t'}(x-k)$. By Steps 1 and 2 this value is $t'$ when $x-k\leq a_{t'}$, and $t'-1$ when $x-k>a_{t'}$.
+
+        \emph{Behind,} $x-k<a_{t'}$. Here $\beta=t'$ by the first fact, since $x-k+1\leq a_{t'}$. By the first and second facts, $\lambda=t'+\alpha$ with $\alpha\in\{0,1\}$. By the first and third facts, $\rho=t'-\gamma$ with $\gamma\in\{0,1\}$. Then
+        \begin{equation*}
+        s_{t-1}(x)-2d=(d-1)-xt'+x\alpha-(d-x)\gamma\,.
+        \end{equation*}
+        If $\gamma=1$, then this equals $-1-x(t'-1)+x\alpha\leq -1-x(t'-2)<0$, because $\alpha\leq 1$ and $t'\geq 2$. If $\gamma=0$, then $\rho=t'$ forces $x+1\leq a_{t'-1}$. So $a_{t'-1}-a_{t'}\geq 2$, and $t'\leq t_d$ by (F0$'$). Since $a_{t'}<x$, (F2) with $u=t'$ gives $x(t'-1)>d-1$. Then $s_{t-1}(x)-2d=(d-1)-x(t'-1)-x(1-\alpha)<0$. In both cases $s_{t-1}(x)<2d$, so $x$ does not topple at step $t$, and $v_t(x)=\beta=t'$.
+
+        \emph{At the front,} $x-k=a_{t'}$. Here $\beta=t'-1$ by the first fact, since $x-k+1=a_{t'}+1$. The value $\lambda$ equals $t'$. For $k\geq 2$ this is the first fact, since $x-1$ lies in the window and $(x-1)-k+1=a_{t'}$. For $k=1$ it holds because $x-1=a_{t'}$ and $t-1=t'$. The value $\rho$ equals $t'-1$ by the first or third fact, since $(x+1)-k+1=a_{t'}+2$. Hence
+        \begin{equation*}
+        s_{t-1}(x)-2d=(d-1)+(2-t')x=(d-1)-x(t'-2)\,.
+        \end{equation*}
+        Since $x\leq a_{t'-1}$, (F1) with $u=t'-1$ gives $x(t'-2)\leq d-1$. So $s_{t-1}(x)\geq 2d$, $x$ topples at step $t$, and $v_t(x)=t'=v_{t'}(x-k)$.
+
+        \emph{Ahead,} $x-k>a_{t'}$. Then $x-1\geq x-k>a_{t'}$, and the first and third facts give $\lambda=\beta=\rho=t'-1$. Hence $s_{t-1}(x)-2d=(d-1)-x(t'-1)$. Since $x\geq (x-k)+1\geq a_{t'}+2$ and $x\leq a_{t'-1}$, we have $a_{t'-1}-a_{t'}\geq 2$, so $t'\leq t_d$ by (F0$'$). Then (F2) with $u=t'$ gives $x(t'-1)>d-1$. So $s_{t-1}(x)<2d$, $x$ does not topple at step $t$, and $v_t(x)=t'-1=v_{t'}(x-k)$.
+
+        In all three cases $v_t(x)=v_{t'}(x-k)$, which is \eqref{eq:ripple}.
     \end{proof}
 	
 	
@@ -948,11 +993,19 @@ sandpiles in $\R^d$ from those in $\R^{d-1}$.  This is also possible for certain
     where $v_\infty(M+1)=0$ is the dissipating boundary value.
     \end{lemma}
     \begin{proof}
-    The reflected quadratic profile is an integral stabilizing upper bound.
-    The least action comparison bounds every finite odometer by it; monotonicity
-    gives stabilization. The terminal threshold inequality, successively from
-    the reflecting endpoint, gives the reverse inequality and hence the formula.
-    Subtract the two quadratic values; at $x=M$ use the exterior zero value.
+    The formula $Q(x)=\frac{M(M+1)-x(x-1)}{2}$ defines an integer valued function on $\mathbb{Z}$, since $M(M+1)$ and $x(x-1)$ are even. For every integer $x$,
+    \begin{equation*}
+    Q(1-x)=Q(x)\,,\qquad Q(x)-Q(x+1)=x\,.
+    \end{equation*}
+    Hence $Q(0)=Q(1)$ and $Q(M+1)=0$. Also $\Delta Q(x)=(Q(x+1)-Q(x))+(Q(x-1)-Q(x))=-x+(x-1)=-1$ for every $x$. Since $Q$ decreases on $\{1,\dots,M+1\}$ to $Q(M+1)=0$, it is nonnegative on $\{1,\dots,M\}$, and by the symmetry $Q(1-x)=Q(x)$ also on $\{1-M,\dots,0\}$.
+
+    \emph{Step 1.} We show that $v_t\leq Q$ on the cube $\{1-M,\dots,M\}$ for every $t$. The function $Q$ is nonnegative and integer valued there, and $\Delta Q+s_0=-1+2=1=2d-1$ (here $d=1$). So $Q$ stabilizes $s_0$, and the parabolic least action principle (Lemma~\ref{parabolic_comparison}) gives $v_t\leq Q$ for every $t$.
+
+    \emph{Step 2.} We show that the odometer stops changing. Each $v_t(x)$ is nondecreasing in $t$ and bounded by $Q(x)$ by Step 1, so it is eventually constant. The cube is finite, so there is a time $T$ with $v_{T+1}=v_T$, and then $v_\infty=v_T$.
+
+    \emph{Step 3.} We show that $v_T\geq Q$ on $\{1,\dots,M\}$. Since no site topples at step $T+1$, the sandpile $s_T=2+\Delta v_T$ is at most $1$ on $\{1,\dots,M\}$, so $\Delta v_T\leq -1$ there. Put $q=v_T-Q$. Then $\Delta q\leq 0$ on $\{1,\dots,M\}$. Let $\rho_x=q(x+1)-q(x)$. Then $\Delta q(x)=\rho_x-\rho_{x-1}$, so $\rho_x\leq\rho_{x-1}$ for $1\leq x\leq M$. The odometer is symmetric under $x\mapsto 1-x$ (Section~\ref{subsec:symmetry}), and so is $Q$, so $q(0)=q(1)$, that is, $\rho_0=0$. Hence $\rho_x\leq 0$ for $0\leq x\leq M$, and $q$ is nonincreasing on $\{1,\dots,M+1\}$. Both $v_T$ and $Q$ vanish at $M+1$, so $q(M+1)=0$, and therefore $q\geq 0$ on $\{1,\dots,M\}$.
+
+    \emph{Step 4.} By Steps 1 to 3, $v_\infty=v_T=Q$ on $\{1,\dots,M\}$, which is the displayed formula. Since $v_\infty(M+1)=0=Q(M+1)$, the identity $Q(x)-Q(x+1)=x$ gives $v_\infty(x)-v_\infty(x+1)=x$ for $1\leq x\leq M$, including $x=M$.
     \end{proof}
     Hence the restriction $t<\tau_M$ is needed for strong facet compatibility
     when the head is empty.
