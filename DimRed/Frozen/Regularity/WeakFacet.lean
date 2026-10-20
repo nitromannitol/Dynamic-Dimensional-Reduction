@@ -1,5 +1,5 @@
 /-
-The weak facet compatibility clause of Proposition 4.1 of the corrected edition. `dimred-corrected-arxiv.tex:817-824` (label
+The weak facet compatibility clause of Proposition 4.1 of the corrected edition. `dimred-corrected-arxiv.tex:815-822` (label
 `base_dimension`, display `base_dimension:weak_compatability`):
 
   "\item[Weak facet compatibility] For all $\mathbf{x}_i \geq 2$, $t \geq 1$,

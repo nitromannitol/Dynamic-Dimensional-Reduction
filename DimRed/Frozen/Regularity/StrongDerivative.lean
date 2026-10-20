@@ -1,5 +1,5 @@
 /-
-The strong derivative clause of Proposition 4.1 of the corrected edition. `dimred-corrected-arxiv.tex:829-831` (label `base_dimension`,
+The strong derivative clause of Proposition 4.1 of the corrected edition. `dimred-corrected-arxiv.tex:827-829` (label `base_dimension`,
 display `base_dimension:strong_derivative`):
 
   "\item[Strong facet compatibility] Let $i,j\geq0$, $i+1+j=d$, and put

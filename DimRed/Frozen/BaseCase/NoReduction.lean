@@ -1,6 +1,6 @@
 /-
 Proposition 3.1 of the corrected edition.
-`dimred-corrected-arxiv.tex:645-647` (label `no_reduction`):
+`dimred-corrected-arxiv.tex:643-645` (label `no_reduction`):
 
   "When $s_0^{(d)} \equiv 2 d + (d_0-1)$, $v_\infty^{(d_0)} \equiv 1$ but
    $v_\infty^{(d_0-1)} \equiv 2$."

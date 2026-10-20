@@ -12,7 +12,7 @@ All 29 statements in `ledger/manifest.yaml` are proved, with no added axiom and 
 |---|---|
 | Lean toolchain | `leanprover/lean4:v4.32.0` |
 | Mathlib revision | `81a5d257c8e410db227a6665ed08f64fea08e997` |
-| Paper (`paper/corrected-arxiv/dimred-corrected-arxiv.tex`) SHA-256 | `24b3ec19f8cce1b06f89a8a50d914dc6f075debdd0d37c5c418b00f002f5388f` |
+| Paper (`paper/corrected-arxiv/dimred-corrected-arxiv.tex`) SHA-256 | `806f174363fddf146ada5a571b93c02b95b9983dc294d00dac2e0db8c3b917eb` |
 | Build | succeeded, 8769 jobs |
 | Build warnings | 0 |
 | Generated | 2026-10-19 |

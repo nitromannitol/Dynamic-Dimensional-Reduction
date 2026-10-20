@@ -1,6 +1,6 @@
 /-
 Quadratic-profile clause of the one-dimensional terminal lemma (Lemma 4.1) of
-the corrected edition. `dimred-corrected-arxiv.tex:1006-1013`
+the corrected edition. `dimred-corrected-arxiv.tex:1004-1011`
 (label `lem:one-terminal-profile`, clause quadratic profile):
 
   "In dimension one, with $s_0\equiv2$ and $1\leq x\leq M$,

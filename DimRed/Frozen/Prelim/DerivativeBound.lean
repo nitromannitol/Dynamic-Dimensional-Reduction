@@ -1,6 +1,6 @@
 /-
 Corollary 2.2 of the corrected edition.
-`dimred-corrected-arxiv.tex:554-561` (label `cor:derivative_bound`,
+`dimred-corrected-arxiv.tex:552-559` (label `cor:derivative_bound`,
 "Derivative bound"):
 
   "Suppose $v_{\infty}(M, \mathbf{1}_{d-1}) \leq k M$ for integer $k \geq 1$.

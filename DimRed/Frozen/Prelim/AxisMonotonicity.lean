@@ -1,6 +1,6 @@
 /-
 Corollary 2.1 of the corrected edition.
-`dimred-corrected-arxiv.tex:525-535` (label `axis_monotonicity`, "Axis
+`dimred-corrected-arxiv.tex:523-533` (label `axis_monotonicity`, "Axis
 monotonicity"), attributed to Babai and Gorodezky:
 
   "For all $t\geq1$, $x\in\mathcal S$, every $1\leq i\leq d$, and $\mathcal

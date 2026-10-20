@@ -1,6 +1,6 @@
 /-
 Lemma 3.1 of the corrected edition.
-`dimred-corrected-arxiv.tex:667-673` (label `radial_laplacian`):
+`dimred-corrected-arxiv.tex:665-671` (label `radial_laplacian`):
 
   "If we define $0 = v_t(d+1) = v_t(-1)$, then \Delta v_t(x) = (-d - x) v_t(x)
    + (d-x) v_t(x+1) + x v_t(x-1)."
