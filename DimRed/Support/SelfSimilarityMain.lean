@@ -4,8 +4,8 @@ coordinate reflection.  The self-similarity argument is the iteration of the
 consecutive-scale step in the statement labelled `the_theorem` in `dimred-corrected-arxiv.tex`; its scale bridge and its
 `toppleTime` bounds are explicit because the consecutive step is stated only
 for even side lengths.  The odd reflection is the boundary adjustment
-described in the subsection titled `Notation and conventions` in `dimred-corrected-arxiv.tex`, in the section labelled `subsec:symmetry` of
-`dimred-corrected-arxiv.tex`, and in `dimred-corrected-arxiv.tex`, label `subsec:symmetry`.
+described in the subsection labelled `subsec:notation` in `dimred-corrected-arxiv.tex`, and in the subsection labelled `subsec:symmetry` of
+`dimred-corrected-arxiv.tex`.
 -/
 import DimRed.Support.AxisStep
 

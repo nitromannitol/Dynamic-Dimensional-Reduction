@@ -22,8 +22,8 @@ the second did not (`facet_prev`).
   (`nbr_pair_le`, `mid_pair_le`, `lap_le_of_prev`), each term from strong facet
   compatibility at `t - 1` (`strong_raw_le`), the first-difference bound, the
   reflection and swap symmetries, and the two-step bound `hderiv` for the mid
-  pair.  This is the paper's comparison of `eq:laplace_11`-`eq:laplace_13` with
-  `eq:laplace_21`-`eq:laplace_23`, carried out termwise under the gap
+  pair.  This is the paper's termwise comparison of the neighbour sums in Step 7 of the
+  proof of `lem:strict-head-facet` in `dimred-corrected-arxiv.tex`, carried out under the gap
   hypothesis; a head neighbour whose coordinate drops to one is handled by the
   swap symmetry, the first-difference bound and the toppling of the first point
   at `t - 1`, not by the paper's axis comparison.

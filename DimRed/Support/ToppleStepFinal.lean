@@ -457,7 +457,7 @@ end OneDimAt
 
 /-! ### Dimensions at least two -/
 
-/-- The parabolic least action principle of `dimred-corrected-arxiv.tex`: the odometer
+/-- The parabolic least action principle, `parabolic_comparison` in `dimred-corrected-arxiv.tex`: the odometer
 on the slice `x_{d} = 1` is dominated by the odometer one dimension lower. -/
 theorem odoUnif_snoc_one_le (e N s : ℕ) (he : 1 ≤ e) (x : Site e) :
     odoUnif (e + 1) N s (Fin.snoc x 1) ≤ odoUnif e N s x := by
@@ -521,7 +521,7 @@ theorem odoUnif_snoc_one_le (e N s : ℕ) (he : 1 ≤ e) (x : Site e) :
 
 /-- The reflecting boundary identity `eq:reflecting_boundaries` at one time, from
 self-similarity in dimensions `e + 1` and `e` and dimensional reduction at the
-scales `M` and `M - 1`, the subsection titled `Dimensional reduction` in `dimred-corrected-arxiv.tex`. -/
+scales `M` and `M - 1`, the subsection labelled `subsec:dim_reduction` in `dimred-corrected-arxiv.tex`. -/
 theorem odoUnif_snoc_two_eq_snoc_one {e M T : ℕ}
     (hCd : ∀ y : Site (e + 1), (∀ i, 2 ≤ y i) →
       odoUnif (e + 1) (2 * M) T y = odoUnif (e + 1) (2 * (M - 1)) T (fun i => y i - 1))
@@ -586,7 +586,7 @@ theorem odoUnif_sub_unit_eq_of_eq_two {e M T : ℕ}
   rw [← hsym (y - unit k), ← hsym y, e1, e2]
   exact (hsnoc z hz2).symm
 
-/-- The paper's Case 3, the subsection titled `Odometer regularity for d >= 2` in `dimred-corrected-arxiv.tex`: a point with every coordinate at
+/-- The paper's Case 3 (`dimred-corrected-arxiv.tex`, label `subsubsec:higher_strong_topple`): a point with every coordinate at
 least three is two steps inside the self-similar region, so its two-step rise
 is the rise at scale `M - 1`. -/
 theorem topple_rise_le_one_of_three_le {d M T : ℕ} (hM : 2 ≤ M)
@@ -624,7 +624,7 @@ theorem topple_rise_le_one_of_three_le {d M T : ℕ} (hM : 2 ≤ M)
   exact le_trans hle hW
 
 /-- Strong topple control at the topple time in dimension `e + 1 ≥ 2`,
-`dimred-corrected-arxiv.tex`. -/
+`dimred-corrected-arxiv.tex`, label `subsubsec:higher_strong_topple`. -/
 theorem topple_dim_succ_at {e M T : ℕ} (he : 1 ≤ e) (hM : 2 ≤ M)
     (hC : ∀ y : Site (e + 1), (∀ i, 2 ≤ y i) →
       odoUnif (e + 1) (2 * M) T y = odoUnif (e + 1) (2 * (M - 1)) T (fun i => y i - 1))

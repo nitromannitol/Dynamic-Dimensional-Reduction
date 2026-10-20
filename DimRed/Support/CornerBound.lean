@@ -18,7 +18,7 @@ theorem cornerPoint_one (M : ℕ) : cornerPoint 1 M = fun _ => (M : ℤ) := by
   fin_cases i
   simp [cornerPoint]
 
-/-- The corner bound of `dimred-corrected-arxiv.tex`, at every time below the topple time. -/
+/-- The corner bound at every time below the topple time, `dimred-corrected-arxiv.tex`, label `subsubsec:higher_strong_facet`. -/
 theorem odo_corner_le_of_lt_toppleTime (d M : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M) (s : ℕ)
     (hs : (s : ℕ∞) < toppleTime d M) :
     odoUnif d (2 * M) s (cornerPoint d M) ≤ (M : ℤ) - 1 := by

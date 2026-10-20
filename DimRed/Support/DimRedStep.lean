@@ -2,7 +2,7 @@ import DimRed.Support.DerivBound
 import DimRed.Support.Difference
 
 /-!
-The time step for dimensional reduction, following the subsection titled `Dimensional reduction` in `dimred-corrected-arxiv.tex`.
+The time step for dimensional reduction, following the subsection labelled `subsec:dim_reduction` in `dimred-corrected-arxiv.tex`.
 The zero-gap and boundary-gap cases are formalized here; the remaining
 interior facet case is exposed as an explicit induction hypothesis.
 -/

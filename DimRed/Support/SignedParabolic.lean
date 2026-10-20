@@ -2,7 +2,7 @@
 # Signed parabolic least action
 
 The parabolic least-action comparison from arXiv:2009.05968v2,
-`main.tex:300-333` (Lemma `parabolic_comparison`), with the signed initial
+`dimred-corrected-arxiv.tex`, label `parabolic_comparison`, with the signed initial
 piles allowed by the subsection's upper-bound-only standing assumption.
 -/
 import DimRed.Support.SignedUpdate

@@ -2,7 +2,7 @@ import DimRed.Support.DifferenceStep
 import DimRed.Support.NonnegativeUpdate
 /-
 The finite-time strong derivative estimate in dimension one, using the
-two-step comparison function from `dimred-corrected-arxiv.tex`.
+two-step comparison function from `dimred-corrected-arxiv.tex`, label `subsubsec:one_dim_strong_facet`.
 -/
 import DimRed.Support.DerivBound
 import DimRed.Frozen.Prelim.DifferenceComparison

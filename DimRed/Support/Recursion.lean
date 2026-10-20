@@ -1,5 +1,5 @@
 /-
-The two displays of the subsection titled `Main Result` in `dimred-corrected-arxiv.tex` as theorems about `DimRed.odo`, the
+The two displays of the subsection labelled `subsec:main_result` in `dimred-corrected-arxiv.tex` as theorems about `DimRed.odo`, the
 invariant `0 ≤ s_t ≤ 2(2d) - 1` that the paper's blanket hypothesis
 `s_0 ≤ 2(2d) - 1` propagates in time, and the elementary consequences of the
 recursion used everywhere below.
@@ -87,7 +87,7 @@ theorem odo_succ_eq (d N : ℕ) (s₀ : Site d → ℤ) (t : ℕ) (x : Site d) (
   have := odo_succ_sub_eq d N s₀ t x hx; linarith
 
 /-- The invariant of the parallel toppling process: the blanket hypothesis
-`0 ≤ s_0 ≤ 2(2d) - 1` of the section titled `Notation and conventions` in `dimred-corrected-arxiv.tex` propagates in time. -/
+`0 ≤ s_0 ≤ 2(2d) - 1` of the subsection labelled `subsec:notation` in `dimred-corrected-arxiv.tex` propagates in time. -/
 theorem sandp_bounds (d N : ℕ) (s₀ : Site d → ℤ)
     (h0 : ∀ y, inCube d N y → 0 ≤ s₀ y)
     (h1 : ∀ y, inCube d N y → s₀ y ≤ 2 * (2 * (d : ℤ)) - 1)

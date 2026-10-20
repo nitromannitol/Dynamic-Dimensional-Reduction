@@ -3,7 +3,7 @@ import DimRed.Support.Stabilize
 /-!
 The first two parallel toppling steps for the constant initial sandpile, and
 the elementary bounds on its odometer used later in the reduction argument;
-see the proof of the proposition (`base_dimension`) and `dimred-corrected-arxiv.tex`, label `sec:dim_reduction`.
+see the proof of the proposition (`base_dimension`) and the section labelled `sec:dim_reduction` in `dimred-corrected-arxiv.tex`.
 -/
 namespace DimRed
 

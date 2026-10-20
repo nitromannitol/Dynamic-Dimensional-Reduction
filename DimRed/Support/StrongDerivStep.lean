@@ -11,8 +11,8 @@ branches of the paper's Section 5 argument.
 With a nonempty head (`1 ≤ i`) the clause is `strong_deriv_pos_head`, which
 consumes the pure second difference `odo_pure_diff` of the positive orthant at
 every earlier time.  With an empty head the point is the all-ones point `1_d`
-and the clause is `strong_deriv_zero_head`, which is the early-time Case 1 of
-`dimred-corrected-arxiv.tex`; the regime hypothesis `hreg` then forces `t < τ_M`,
+and the clause is `strong_deriv_zero_head`, which is the early-time argument for the empty head in
+`dimred-corrected-arxiv.tex`, label `subsubsec:higher_strong_facet`; the regime hypothesis `hreg` then forces `t < τ_M`,
 because the second disjunct requires `1 ≤ i`.
 -/
 set_option autoImplicit false

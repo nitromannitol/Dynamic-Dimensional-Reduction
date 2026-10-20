@@ -31,13 +31,13 @@ clause (i) the dimension is written `d + 1` in place of the paper's `d`, and
 `(x_{d-1}, 1)` is `Fin.snoc x 1`; the terminal sandpile `s_∞ = 2d + Δ v_∞` is an integer,
 `v_∞` being read through `ℕ∞`.  In clause (ii) `τ_j` is `toppleTime d j`, an infimum in
 `ℕ∞`.  Vector inequalities and the subtraction of a scalar from a vector are coordinatewise
-(the subsection titled `Notation and conventions` in `dimred-corrected-arxiv.tex`).
+(the subsection labelled `subsec:notation` in `dimred-corrected-arxiv.tex`).
 -/
 
 -- VOCABULARY-BEGIN
 namespace DimRed.StatementAudit
 
-/-! ## 1. The lattice, the hypercube and the fundamental domain (`dimred-corrected-arxiv.tex`, label `the_theorem`, the subsection titled `Notation and conventions` in `dimred-corrected-arxiv.tex`) -/
+/-! ## 1. The lattice, the hypercube and the fundamental domain (`dimred-corrected-arxiv.tex`, labels `the_theorem` and `subsec:notation`) -/
 
 /-- A site of the lattice `ℤ^d`. -/
 abbrev Site (d : ℕ) : Type := Fin d → ℤ
@@ -54,7 +54,7 @@ def sideHalf (N : ℕ) : ℕ := (N + 1) / 2
 /-- The largest coordinate of the hypercube of side `N`, `M = ⌈N/2⌉`. -/
 def hiCoord (N : ℕ) : ℤ := (sideHalf N : ℤ)
 
-/-- `x` lies in the hypercube `C_N^{(d)}` of side length `N`: the subsection titled `Notation and conventions` in `dimred-corrected-arxiv.tex` embeds it
+/-- `x` lies in the hypercube `C_N^{(d)}` of side length `N`: the subsection labelled `subsec:notation` in `dimred-corrected-arxiv.tex` embeds it
 as `{x - k : 1 ≤ x_i ≤ 2k}` when `N = 2k` and as `{x + 1 : |x_i| ≤ k}` when `N = 2k + 1`,
 the box whose coordinates run from `1 - ⌊N/2⌋` to `⌈N/2⌉`. -/
 def inCube (d N : ℕ) (x : Site d) : Prop := ∀ i : Fin d, loCoord N ≤ x i ∧ x i ≤ hiCoord N
@@ -77,20 +77,20 @@ noncomputable def innerBoundary (d N : ℕ) : Finset (Site d) :=
     ∃ i : Fin d, ¬ inCube d N (x + unit i) ∨ ¬ inCube d N (x - unit i)
   (cube d N).filter fun x => ∃ i : Fin d, ¬ inCube d N (x + unit i) ∨ ¬ inCube d N (x - unit i)
 
-/-! ## 2. Parallel toppling (the subsection titled `Overview` in `dimred-corrected-arxiv.tex`, the subsection titled `Main Result` in `dimred-corrected-arxiv.tex`, the subsection titled `Notation and conventions` in `dimred-corrected-arxiv.tex`) -/
+/-! ## 2. Parallel toppling (`dimred-corrected-arxiv.tex`, labels `subsec:overview`, `subsec:main_result` and `subsec:notation`) -/
 
 /-- `∑_{y ∼ x} u(y)`, the sum over the `2d` nearest neighbours of `x`. -/
 def nbrSum {d : ℕ} (u : Site d → ℤ) (x : Site d) : ℤ :=
   ∑ i : Fin d, (u (x + unit i) + u (x - unit i))
 
-/-- The graph Laplacian `Δ^{(d)} u(x) = -2d u(x) + ∑_{y ∼ x} u(y)`, the subsection titled `Notation and conventions` in `dimred-corrected-arxiv.tex`.
+/-- The graph Laplacian `Δ^{(d)} u(x) = -2d u(x) + ∑_{y ∼ x} u(y)`, the subsection labelled `subsec:notation` in `dimred-corrected-arxiv.tex`.
 Every function it is applied to below vanishes off the hypercube, which is the paper's
 padding `f(y) := 0` for `y ∉ C_N^{(d)}` (dissipating boundary conditions). -/
 def lap {d : ℕ} (u : Site d → ℤ) (x : Site d) : ℤ :=
   -(2 * (d : ℤ)) * u x + nbrSum u x
 
 /-- The parallel toppling odometer `v_t` of the initial sandpile `s₀` on `C_N^{(d)}`,
-extended by zero off the hypercube.  The subsection titled `Main Result` in `dimred-corrected-arxiv.tex` defines it by `v_0 ≡ 0`,
+extended by zero off the hypercube.  The subsection labelled `subsec:main_result` in `dimred-corrected-arxiv.tex` defines it by `v_0 ≡ 0`,
 `v_{t+1} = v_t + 1{s_t ≥ 2d}`, `s_{t+1} = s_t + Δ(v_{t+1} - v_t)`; this is the equivalent
 closed recursion in which `s_t` is replaced by `s₀ + Δ v_t`. -/
 def odo (d N : ℕ) (s₀ : Site d → ℤ) : ℕ → Site d → ℤ
@@ -105,7 +105,7 @@ def sandp (d N : ℕ) (s₀ : Site d → ℤ) (t : ℕ) (x : Site d) : ℤ :=
   s₀ x + lap (odo d N s₀ t) x
 
 /-- The odometer `v_t^{(d,N)}` of the paper's initial condition `s_0^{(d)} ≡ 2d`
-(the subsection titled `Overview` in `dimred-corrected-arxiv.tex`). -/
+(the subsection labelled `subsec:overview` in `dimred-corrected-arxiv.tex`). -/
 def odoUnif (d N t : ℕ) (x : Site d) : ℤ := odo d N (fun _ => 2 * (d : ℤ)) t x
 
 /-- The sandpile `s_t^{(d,N)}` of the paper's initial condition `s_0^{(d)} ≡ 2d`. -/

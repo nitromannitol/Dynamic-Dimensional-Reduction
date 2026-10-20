@@ -10,7 +10,7 @@ import DimRed.Support.CornerBound
 # The strong derivative clause for a nonempty head
 
 The strong derivative clause of Proposition 4.1 for a nonempty head, at every
-time.  The paper's Case 2 (`dimred-corrected-arxiv.tex`) proves the bound
+time.  The first clause of Lemma `lem:strict-head-facet` in `dimred-corrected-arxiv.tex` (the assertion `C_t` in its proof) proves the bound
 `v_t(x) - v_t(x + 2 e_k) ≤ 2 x_k` for every point of the positive orthant whose
 `k`-th coordinate is not the largest, and the clause follows because the facet
 point `(x_i, 1, 1_j)` has `i ≥ 1` and its `(i+1)`-st coordinate is `1 < x_1`.
@@ -115,7 +115,7 @@ theorem term_reflect (d M : ℕ) (s s' : ℕ) (x w : Site d) (l : Fin d)
     odo_sub_unit_of_one d M (2 * (d : ℤ)) s' (x + w) l h3
   rw [h1, h2, h4]
 
-/-- The floor step of `dimred-corrected-arxiv.tex`: a bound on the difference of the
+/-- The comparison rule (R) in the proof of `lem:strict-head-facet` in `dimred-corrected-arxiv.tex`: a bound on the difference of the
 neighbour sums at two times gives the same bound on the odometer one step later. -/
 theorem floor_step (d M : ℕ) (hd : 1 ≤ d) (s s' : ℕ) (x w : Site d)
     (hx : inCube d (2 * M) x) (hxw : inCube d (2 * M) (x + w)) (g : ℤ)
@@ -190,7 +190,7 @@ theorem nbrSum_sub_le_of_terms {d : ℕ} (u u' : Site d → ℤ) (x w : Site d) 
 
 
 
-/-- The one-dimensional neighbour inequality of `dimred-corrected-arxiv.tex`. -/
+/-- The one-dimensional neighbour inequality, `dimred-corrected-arxiv.tex`, label `subsubsec:one_dim_self_similarity`. -/
 theorem oneDim_nbr_le (M t : ℕ) (y : Site 1) (hy : inCube 1 (2 * M) y) :
     odoUnif 1 (2 * M) t (y + unit 0) + odoUnif 1 (2 * M) t (y - unit 0)
       ≤ 2 * odoUnif 1 (2 * M) (t + 1) y - 1 := by
@@ -219,7 +219,7 @@ theorem oneDim_nbr_le (M t : ℕ) (y : Site 1) (hy : inCube 1 (2 * M) y) :
       ≤ 2 * odo 1 (2 * M) (fun _ => 2) (t + 1) y - 1 := by omega
   simpa [odoUnif] using key
 
-/-- The comparison function of `dimred-corrected-arxiv.tex`: the one-dimensional
+/-- The comparison function in the supersolution argument of `lem:strict-head-facet` (fact (c) of its proof, `dimred-corrected-arxiv.tex`): the one-dimensional
 odometer of the `l`-th coordinate, extended by zero off the cube. -/
 def oneDimComp (d M : ℕ) (l : Fin d) (t : ℕ) (z : Site d) : ℤ :=
   if inCube d (2 * M) z then odoUnif 1 (2 * M) t (fun _ => z l) else 0
@@ -315,8 +315,8 @@ theorem odo_le_oneDim_sup (d M : ℕ) (hd : 1 ≤ d) (l : Fin d) (t : ℕ) (y : 
     nlinarith [hmono, hnb]
   linarith
 
-/-- Domination by the one-dimensional odometer, `dimred-corrected-arxiv.tex`, from the
-supersolution inequality. -/
+/-- Domination by the one-dimensional odometer, from the supersolution inequality in fact (c) of the proof of `lem:strict-head-facet` in
+`dimred-corrected-arxiv.tex`. -/
 theorem odo_le_oneDim (d M : ℕ) (hd : 1 ≤ d) (l : Fin d) (t : ℕ) (x : Site d) :
     odoUnif d (2 * M) t x ≤ odoUnif 1 (2 * M) t (fun _ => x l) := by
   have hdZ : (1 : ℤ) ≤ (d : ℤ) := by exact_mod_cast hd
@@ -335,7 +335,7 @@ theorem odo_le_oneDim (d M : ℕ) (hd : 1 ≤ d) (l : Fin d) (t : ℕ) (x : Site
   · simp only [odoUnif, odo_eq_zero_outside d (2 * M) (fun _ => 2 * (d : ℤ)) t x hx]
     exact odo_nonneg 1 (2 * M) (fun _ => 2) t _
 
-/-- The corner value is at most `M`, `dimred-corrected-arxiv.tex`. -/
+/-- The corner value is at most `M`, fact (c) of the proof of `lem:strict-head-facet` in `dimred-corrected-arxiv.tex`. -/
 theorem odo_corner_le_M (d M : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M) (t : ℕ) :
     odoUnif d (2 * M) t (cornerPoint d M) ≤ (M : ℤ) := by
   have h1 : odoUnif d (2 * M) t (cornerPoint d M) ≤ odoUnif 1 (2 * M) t (fun _ => (M : ℤ)) := by
@@ -363,7 +363,7 @@ theorem odo_corner_le_M (d M : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M) (t : ℕ) :
     omega
   linarith
 
-/-- The first-difference bound `eq:first_difference`, `dimred-corrected-arxiv.tex`. -/
+/-- The first-difference bound, fact (c) of the proof of `lem:strict-head-facet` in `dimred-corrected-arxiv.tex`. -/
 theorem odo_first_diff (d M : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M) (t : ℕ) (k : Fin d)
     (x : Site d) (hxk : 1 ≤ x k) :
     odoUnif d (2 * M) t x - odoUnif d (2 * M) t (x + unit k) ≤ x k := by
