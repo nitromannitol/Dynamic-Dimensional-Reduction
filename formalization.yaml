@@ -130,6 +130,13 @@ status:
 
 automation:
   methods:
+    - method: agent
+      models: ["GPT-6.1 Sol"]
+      tool_setup: >-
+        Submission compatibility maintenance: public module interfaces, pinned build
+        dependencies, existing proof API adaptations, comparator wiring and metadata.
+        The existing mathematical proofs were reused. Selected full Palomar preflight
+        receipts distinguish mechanical verification from review and registration.
     - method: "agent"
       models:
         - "claude-opus-5"
@@ -202,12 +209,12 @@ fidelity:
     in README.md.
 
 review:
-  status: "author-reviewed"
-  reviewers:
-  - Ahmed Bou-Rabee
-  notes: >-
-    The statements were compared with the corrected edition by the author and by a separate
-    read-only model review. Not external peer review.
+  status: unchecked
+  notes: 'This submission compatibility revision has no independent statement audit or author
+    review. Original review reported before the maintenance revision: status author-reviewed;
+    reviewers Ahmed Bou-Rabee. Prior review notes follow: The statements were compared with
+    the corrected edition by the author and by a separate read-only model review. Not external
+    peer review.'
 
 alignment:
   namespace: DimRed
