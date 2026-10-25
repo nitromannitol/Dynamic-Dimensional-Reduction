@@ -432,18 +432,14 @@ lemma one_stable_lower (M T : ℕ)
       lap (odo 1 (2 * M) (fun _ => 2) T) y ≤ -1 := by
     intro y hy
     have hrec := odo_succ_eq 1 (2 * M) (fun _ => 2) T y hy
-    simp only [sandp] at hrec
     have he := congrFun hstable y
     rw [he] at hrec
     have hn : ¬ (2 : ℤ) ≤ 2 + lap (odo 1 (2 * M) (fun _ => 2) T) y := by
       intro hc
-      split at hrec
-      · rename_i hcase
-        norm_num at hcase
-        omega
-      · rename_i hcase
-        norm_num at hcase
-        omega
+      have hc' : 2 * ((1 : ℕ) : ℤ) ≤ sandp 1 (2 * M) (fun _ => 2) T y := by
+        simpa only [sandp, Nat.cast_one, mul_one] using hc
+      rw [if_pos hc'] at hrec
+      omega
     omega
   have hqlap : ∀ y, inCube 1 (2 * M) y → lap q y ≤ 0 := by
     intro y hy

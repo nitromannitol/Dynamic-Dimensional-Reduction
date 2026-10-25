@@ -276,11 +276,10 @@ theorem odo_succ_facetPoint_zero {j M : ℕ} (x : Fin 0 → ℤ) (t : ℕ)
         (fun _ => 2 * ((0 + 1 + j : ℕ) : ℤ)) t (facetPoint x 1 j)
     have hs := odo_succ_eq (0 + 1 + j) (2 * M)
       (fun _ => 2 * ((0 + 1 + j : ℕ) : ℤ)) t (facetPoint x 1 j) hx
-    simp only [sandp] at hs
     have hnot : ¬ 2 * ((0 + 1 + j : ℕ) : ℤ) ≤
-        2 * ((0 + 1 + j : ℕ) : ℤ) +
-          lap (odo (0 + 1 + j) (2 * M)
-            (fun _ => 2 * ((0 + 1 + j : ℕ) : ℤ)) t) (facetPoint x 1 j) := by
+        sandp (0 + 1 + j) (2 * M)
+          (fun _ => 2 * ((0 + 1 + j : ℕ) : ℤ)) t (facetPoint x 1 j) := by
+      dsimp only [sandp]
       rw [hlap']
       omega
     rw [hs, if_neg hnot, add_zero]

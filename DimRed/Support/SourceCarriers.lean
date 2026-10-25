@@ -53,7 +53,7 @@ theorem simplexNonempty (d M : ℕ) (hM : 1 ≤ M) : (simplex d M).Nonempty := b
   · intro i j hij
     exact le_rfl
 
-private theorem simplex_inCube (d N : ℕ) (x : Site d)
+theorem simplex_inCube (d N : ℕ) (x : Site d)
     (hx : inSimplex d (sideHalf N) x) : inCube d N x := by
   intro i
   have hi := hx.1 i
