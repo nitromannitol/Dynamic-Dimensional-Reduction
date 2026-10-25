@@ -1,5 +1,9 @@
-import DimRed.Support.Case2FirstWait
-import DimRed.Support.OneDimTerminal
+module
+
+public import DimRed.Support.Case2FirstWait
+public import DimRed.Support.OneDimTerminal
+
+@[expose] public section
 
 /-!
 # The quadratic barrier for the uniform even-cube odometer

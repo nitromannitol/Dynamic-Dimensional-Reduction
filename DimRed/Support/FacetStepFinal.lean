@@ -1,10 +1,14 @@
-import DimRed.Support.StrongRawLe
-import DimRed.Support.FacetLapUncond
-import DimRed.Support.FacetNbr
-import DimRed.Support.NbrSumSelfSim
-import DimRed.Support.DimRedCritical
-import DimRed.Support.OneStep
-import DimRed.Support.WeakStep
+module
+
+public import DimRed.Support.StrongRawLe
+public import DimRed.Support.FacetLapUncond
+public import DimRed.Support.FacetNbr
+public import DimRed.Support.NbrSumSelfSim
+public import DimRed.Support.DimRedCritical
+public import DimRed.Support.OneStep
+public import DimRed.Support.WeakStep
+
+@[expose] public section
 
 /-!
 # The strong facet step of the joint induction

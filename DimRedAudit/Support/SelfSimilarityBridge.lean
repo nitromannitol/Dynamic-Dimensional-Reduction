@@ -1,6 +1,10 @@
-import Mathlib
-import DimRed.MainTheorems
-import DimRedAudit.SelfSimilarity.SolutionBasic
+module
+
+public import Mathlib
+public import DimRed.MainTheorems
+public import DimRedAudit.SelfSimilarity.SolutionBasic
+
+@[expose] public section
 
 /-!
 # Bridges for `SelfSimilarity`: Mathlib-only vocabulary to the repository

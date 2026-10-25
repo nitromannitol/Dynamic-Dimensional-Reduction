@@ -1,3 +1,5 @@
+module
+
 /-
 # Signed parabolic least action
 
@@ -5,7 +7,9 @@ The parabolic least-action comparison of the corrected edition
 (`dimred-corrected-arxiv.tex`, label `parabolic_comparison`), with the signed initial
 piles allowed by the subsection's upper-bound-only standing assumption.
 -/
-import DimRed.Support.SignedUpdate
+public import DimRed.Support.SignedUpdate
+
+@[expose] public section
 
 open LatticeProb
 

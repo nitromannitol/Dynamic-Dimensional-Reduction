@@ -1,5 +1,9 @@
-import DimRed.Support.RegBridges
-import DimRed.Support.SimplexFold
+module
+
+public import DimRed.Support.RegBridges
+public import DimRed.Support.SimplexFold
+
+@[expose] public section
 
 /-!
 # Dimensional reduction at one triple

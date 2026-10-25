@@ -1,3 +1,5 @@
+module
+
 /-
 Lemma 5.1 of the corrected edition.
 `dimred-corrected-arxiv.tex:1218-1228` (label `lem:strict-head-facet`):
@@ -12,7 +14,9 @@ Lemma 5.1 of the corrected edition.
 This unit records the constant-two facet bound on a nonempty head and the two
 firing conclusions at a unit gap, both for every time `t`.
 -/
-import DimRed.Support.Case2Closed
+public import DimRed.Support.Case2Closed
+
+@[expose] public section
 
 open LatticeProb DimRed
 

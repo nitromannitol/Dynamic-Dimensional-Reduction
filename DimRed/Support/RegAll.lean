@@ -1,6 +1,10 @@
-import DimRed.Support.RegFinal
-import DimRed.Support.WeakStep
-import DimRed.Support.StrongDerivStep
+module
+
+public import DimRed.Support.RegFinal
+public import DimRed.Support.WeakStep
+public import DimRed.Support.StrongDerivStep
+
+@[expose] public section
 
 /-!
 # The joint induction with the three open steps as hypotheses

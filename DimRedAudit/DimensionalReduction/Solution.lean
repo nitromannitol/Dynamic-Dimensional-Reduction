@@ -1,7 +1,11 @@
-import Mathlib
-import DimRed.MainTheorems
-import DimRedAudit.DimensionalReduction.SolutionBasic
-import DimRedAudit.Support.DimensionalReductionBridge
+module
+
+public import Mathlib
+public import DimRed.MainTheorems
+public import DimRedAudit.DimensionalReduction.SolutionBasic
+public import DimRedAudit.Support.DimensionalReductionBridge
+
+@[expose] public section
 
 /-!
 # Solution: DimensionalReduction (Theorem 1.1(i))

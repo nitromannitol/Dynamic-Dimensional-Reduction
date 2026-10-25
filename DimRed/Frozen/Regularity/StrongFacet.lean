@@ -1,3 +1,5 @@
+module
+
 /-
 The strong facet compatibility clause of Proposition 4.1 of the corrected edition. `dimred-corrected-arxiv.tex:831-839` (label
 `base_dimension`, display `base_dimension:strong_compatability`):
@@ -15,7 +17,9 @@ The strong facet compatibility clause of Proposition 4.1 of the corrected editio
 `(x_i, c, 1_j)` is `facetPoint`, as in the weak clause, and the dimension is
 `d = i + 1 + j`.
 -/
-import DimRed.Support.RegProved
+public import DimRed.Support.RegProved
+
+@[expose] public section
 
 open LatticeProb DimRed
 

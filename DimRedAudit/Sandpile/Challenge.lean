@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Corollary 1.1 (`sandpile_corollary`): comparator challenge

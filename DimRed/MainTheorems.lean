@@ -1,26 +1,30 @@
-import DimRed.Frozen.Regularity.OneTerminalDerivative
-import DimRed.Frozen.Regularity.OneTerminalProfile
-import DimRed.Frozen.Regularity.StrictHeadFacet
-import DimRed.Frozen.Prelim.Symmetry
-import DimRed.Frozen.BaseCase.NoReduction
-import DimRed.Frozen.BaseCase.RadialLaplacian
-import DimRed.Frozen.Prelim.PtInd
-import DimRed.Frozen.Prelim.ParabolicComparison
-import DimRed.Frozen.Prelim.ToppleLimit
-import DimRed.Frozen.Prelim.DifferenceComparison
-import DimRed.Frozen.BaseCase.ExplicitOdometer
-import DimRed.Frozen.Prelim.AxisMonotonicity
-import DimRed.Frozen.Prelim.DerivativeBound
-import DimRed.Frozen.Main.DimensionalReduction
-import DimRed.Frozen.Main.TerminalReduction
-import DimRed.Frozen.Main.SelfSimilarity
-import DimRed.Frozen.Main.SandpileReduction
-import DimRed.Frozen.Main.SandpileSelfSimilarity
-import DimRed.Frozen.Regularity.Consistency
-import DimRed.Frozen.Regularity.WeakFacet
-import DimRed.Frozen.Regularity.StrongDerivative
-import DimRed.Frozen.Regularity.StrongFacet
-import DimRed.Frozen.Regularity.StrongTopple
+module
+
+public import DimRed.Frozen.Regularity.OneTerminalDerivative
+public import DimRed.Frozen.Regularity.OneTerminalProfile
+public import DimRed.Frozen.Regularity.StrictHeadFacet
+public import DimRed.Frozen.Prelim.Symmetry
+public import DimRed.Frozen.BaseCase.NoReduction
+public import DimRed.Frozen.BaseCase.RadialLaplacian
+public import DimRed.Frozen.Prelim.PtInd
+public import DimRed.Frozen.Prelim.ParabolicComparison
+public import DimRed.Frozen.Prelim.ToppleLimit
+public import DimRed.Frozen.Prelim.DifferenceComparison
+public import DimRed.Frozen.BaseCase.ExplicitOdometer
+public import DimRed.Frozen.Prelim.AxisMonotonicity
+public import DimRed.Frozen.Prelim.DerivativeBound
+public import DimRed.Frozen.Main.DimensionalReduction
+public import DimRed.Frozen.Main.TerminalReduction
+public import DimRed.Frozen.Main.SelfSimilarity
+public import DimRed.Frozen.Main.SandpileReduction
+public import DimRed.Frozen.Main.SandpileSelfSimilarity
+public import DimRed.Frozen.Regularity.Consistency
+public import DimRed.Frozen.Regularity.WeakFacet
+public import DimRed.Frozen.Regularity.StrongDerivative
+public import DimRed.Frozen.Regularity.StrongFacet
+public import DimRed.Frozen.Regularity.StrongTopple
+
+@[expose] public section
 
 /-!
 # Main results

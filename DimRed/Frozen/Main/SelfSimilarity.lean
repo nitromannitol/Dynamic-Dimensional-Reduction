@@ -1,3 +1,5 @@
+module
+
 /-
 Theorem 1.1(ii) of the corrected edition.
 `dimred-corrected-arxiv.tex:122-133` (label `the_theorem`), clause 2:
@@ -18,7 +20,9 @@ Theorem 1.1(ii) of the corrected edition.
 there. Vector inequalities and the subtraction of a scalar from a vector are
 coordinatewise (`dimred-corrected-arxiv.tex`, label `subsec:notation`).
 -/
-import DimRed.Support.RegProved
+public import DimRed.Support.RegProved
+
+@[expose] public section
 
 open LatticeProb DimRed
 

@@ -1,3 +1,5 @@
+module
+
 /-
 Corollary to Theorem 1.1 of the corrected edition.
 `dimred-corrected-arxiv.tex:147-154` (label `sandpile_corollary`), clause 1:
@@ -14,8 +16,10 @@ The dimension is written `d + 1` in place of `d`. `s_∞ = 2d + Δ v_∞` is
 `Corrected.terminalPile` (the same expression as `sandpInfUnif`), an integer,
 with `v_∞` read through `ℕ∞`.
 -/
-import DimRed.Support.RegProved
-import DimRed.Support.SourceCarriers
+public import DimRed.Support.RegProved
+public import DimRed.Support.SourceCarriers
+
+@[expose] public section
 
 open LatticeProb DimRed
 

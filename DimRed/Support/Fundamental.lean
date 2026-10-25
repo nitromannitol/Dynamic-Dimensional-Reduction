@@ -1,3 +1,5 @@
+module
+
 /-
 The fundamental domain: every site of the hypercube of side `2M` is carried into
 the sorted domain `S_M^{(d)}` by a symmetry of the cube, first folding every
@@ -5,7 +7,9 @@ coordinate into `[1, M]` and then sorting the coordinates in decreasing order.
 With `simplex_max` and its two bounds this turns a statement about the maximum
 over the fundamental domain into a statement about every site.
 -/
-import DimRed.Support.Symmetry
+public import DimRed.Support.Symmetry
+
+@[expose] public section
 
 namespace DimRed
 

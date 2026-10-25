@@ -1,3 +1,5 @@
+module
+
 /-
 The Laplacian at a facet point, with no hypotheses.  `DimRed/Support/FacetLap.lean` carries the
 five neighbour identities as assumptions because it was proved before them; all five are
@@ -5,8 +7,10 @@ theorems of `DimRed/Support/FacetNbr.lean`, so the decomposition of the subsecti
 outright.  The only gap between the two files is the way a tail index is written: `FacetLap`
 describes it by the inequality `i + 1 ≤ l`, `FacetNbr` by the constructor `Fin.natAdd (i+1)`.
 -/
-import DimRed.Support.FacetLap
-import DimRed.Support.FacetNbr
+public import DimRed.Support.FacetLap
+public import DimRed.Support.FacetNbr
+
+@[expose] public section
 
 namespace DimRed
 

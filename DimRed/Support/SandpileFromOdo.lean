@@ -1,4 +1,8 @@
-import DimRed.Support.AxisStep
+module
+
+public import DimRed.Support.AxisStep
+
+@[expose] public section
 
 /-
 The two sandpile consequences of the odometer identities, the statement labelled `sandpile_corollary` in `dimred-corrected-arxiv.tex`.

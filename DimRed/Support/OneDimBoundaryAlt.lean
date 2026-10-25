@@ -1,7 +1,11 @@
-import DimRed.Support.DifferenceStep
-import DimRed.Support.OneDimStrongDeriv
-import DimRed.Support.OneDimWeak
-import DimRed.Support.OneDimStrongFacet
+module
+
+public import DimRed.Support.DifferenceStep
+public import DimRed.Support.OneDimStrongDeriv
+public import DimRed.Support.OneDimWeak
+public import DimRed.Support.OneDimStrongFacet
+
+@[expose] public section
 
 /-!
 The one-dimensional strong derivative bound and strong facet compatibility with

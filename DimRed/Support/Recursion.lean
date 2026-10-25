@@ -1,10 +1,14 @@
+module
+
 /-
 The two displays of the subsection labelled `subsec:main_result` in `dimred-corrected-arxiv.tex` as theorems about `DimRed.odo`, the
 invariant `0 ≤ s_t ≤ 2(2d) - 1` that the paper's blanket hypothesis
 `s_0 ≤ 2(2d) - 1` propagates in time, and the elementary consequences of the
 recursion used everywhere below.
 -/
-import DimRed.Support.Basic
+public import DimRed.Support.Basic
+
+@[expose] public section
 
 namespace DimRed
 

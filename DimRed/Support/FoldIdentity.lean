@@ -1,6 +1,10 @@
-import DimRed.Support.Fundamental
-import DimRed.Support.SimplexFold
-import DimRed.Support.AxisStep
+module
+
+public import DimRed.Support.Fundamental
+public import DimRed.Support.SimplexFold
+public import DimRed.Support.AxisStep
+
+@[expose] public section
 
 open LatticeProb DimRed
 

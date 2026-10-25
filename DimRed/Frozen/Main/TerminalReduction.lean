@@ -1,3 +1,5 @@
+module
+
 /-
 The second display of Theorem 1.1(i) of the corrected edition. `dimred-corrected-arxiv.tex:119-121` (label `the_theorem`), clause 1:
 
@@ -9,7 +11,9 @@ supremum `odoInf` at the constant initial condition `2d`, valued in `ℕ∞`; th
 it is finite is a theorem of the development. Vector inequalities are
 coordinatewise (`dimred-corrected-arxiv.tex`, label `subsec:notation`).
 -/
-import DimRed.Support.RegProved
+public import DimRed.Support.RegProved
+
+@[expose] public section
 
 open LatticeProb DimRed
 

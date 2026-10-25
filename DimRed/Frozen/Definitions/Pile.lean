@@ -1,3 +1,5 @@
+module
+
 /-
 Finite-pile conservation of the corrected edition.
 `dimred-corrected-arxiv.tex:93-98` (physical carrier at
@@ -17,7 +19,9 @@ Finite-pile conservation of the corrected edition.
 This unit records the finite-time pile as `s_t = s_0 + Δ v_t` on the physical
 cube, the telescoped form of the recursion at lines 95-96 with `v_0 = 0`.
 -/
-import DimRed.Support.SourceCarriers
+public import DimRed.Support.SourceCarriers
+
+@[expose] public section
 
 open LatticeProb DimRed
 

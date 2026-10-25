@@ -1,3 +1,5 @@
+module
+
 /-
 Lemma 2.4 of the corrected edition.
 `dimred-corrected-arxiv.tex:457-478` (label `general_difference_comparison`):
@@ -24,7 +26,9 @@ constant (`dimred-corrected-arxiv.tex`, label `subsec:derivative_comparison`), c
 `c`; the statement takes every integer `c`, so the bound of Section 2 is not
 assumed here.
 -/
-import DimRed.Support.DifferenceComparisonFull
+public import DimRed.Support.DifferenceComparisonFull
+
+@[expose] public section
 
 open LatticeProb DimRed
 

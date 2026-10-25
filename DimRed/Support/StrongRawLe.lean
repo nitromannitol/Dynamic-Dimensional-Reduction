@@ -1,6 +1,10 @@
-import DimRed.Support.StrongDerivRaw
-import DimRed.Support.Stabilize
-import DimRed.Support.RegBridges
+module
+
+public import DimRed.Support.StrongDerivRaw
+public import DimRed.Support.Stabilize
+public import DimRed.Support.RegBridges
+
+@[expose] public section
 open LatticeProb DimRed
 namespace DimRed
 

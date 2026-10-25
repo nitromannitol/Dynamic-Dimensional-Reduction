@@ -1,3 +1,5 @@
+module
+
 /-
 Derivative clause of the one-dimensional terminal lemma (Lemma 4.1) of the
 corrected edition. `dimred-corrected-arxiv.tex:1004-1011`
@@ -11,7 +13,9 @@ This unit records the terminal derivative `v_∞(x) - v_∞(x+1) = x` for `1 ≤
 M`, with `v_∞(M+1) = 0` the exterior value, as a difference of `toNat` values
 of `odoInfUnif`.
 -/
-import DimRed.Support.OneDimTerminalEndpoint
+public import DimRed.Support.OneDimTerminalEndpoint
+
+@[expose] public section
 
 open LatticeProb DimRed
 

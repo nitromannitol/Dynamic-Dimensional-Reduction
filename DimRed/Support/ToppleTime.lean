@@ -1,4 +1,8 @@
-import DimRed.Support.DerivBound
+module
+
+public import DimRed.Support.DerivBound
+
+@[expose] public section
 
 /-!
 The toppling time and its corner reduction, including the strict pre-toppling

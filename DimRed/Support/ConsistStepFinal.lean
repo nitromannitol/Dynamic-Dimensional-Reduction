@@ -1,3 +1,5 @@
+module
+
 /-
 The self-similarity step of the joint induction, `dimred-corrected-arxiv.tex`, label `subsubsec:higher_self_similarity`.
 
@@ -12,9 +14,11 @@ into the simplex, and a coordinate equal to two uses the reflecting-boundary
 identity `odo_gap_zero`, which is dimensional reduction at scales `M` and
 `M - 1` plus the one-step identity in dimension `e`.
 -/
-import DimRed.Support.NbrSumSelfSim
-import DimRed.Support.ReflectShift
-import DimRed.Support.OneStep
+public import DimRed.Support.NbrSumSelfSim
+public import DimRed.Support.ReflectShift
+public import DimRed.Support.OneStep
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

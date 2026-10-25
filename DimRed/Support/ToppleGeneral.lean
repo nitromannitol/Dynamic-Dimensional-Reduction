@@ -1,3 +1,5 @@
+module
+
 /-
 Strong topple control in dimensions at least two, the clause
 `base_dimension:strong_topple` of `dimred-corrected-arxiv.tex`, with the three-case
@@ -6,9 +8,11 @@ boundary comparison, axis monotonicity, least-action comparison, and the
 lower-dimensional control are explicit inputs.  The remaining neighbour
 transfer is isolated as the local induction input for the third case.
 -/
-import DimRed.Support.SnocSimplex
-import DimRed.Support.ToppleTime
-import DimRed.Frozen.Prelim.ToppleLimit
+public import DimRed.Support.SnocSimplex
+public import DimRed.Support.ToppleTime
+public import DimRed.Frozen.Prelim.ToppleLimit
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

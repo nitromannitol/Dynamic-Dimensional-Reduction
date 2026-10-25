@@ -1,4 +1,8 @@
-import DimRed.Support.AxisStep
+module
+
+public import DimRed.Support.AxisStep
+
+@[expose] public section
 
 /-!
 # Axis monotonicity for arbitrary constant integer heights

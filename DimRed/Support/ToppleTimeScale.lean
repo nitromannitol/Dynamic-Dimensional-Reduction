@@ -1,6 +1,10 @@
-import DimRed.Support.OneDimConsistAll
-import DimRed.Support.StrongDerivStep
-import DimRed.Frozen.Prelim.AxisMonotonicity
+module
+
+public import DimRed.Support.OneDimConsistAll
+public import DimRed.Support.StrongDerivStep
+public import DimRed.Frozen.Prelim.AxisMonotonicity
+
+@[expose] public section
 
 open LatticeProb DimRed
 

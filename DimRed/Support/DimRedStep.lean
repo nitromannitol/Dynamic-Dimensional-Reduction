@@ -1,5 +1,9 @@
-import DimRed.Support.DerivBound
-import DimRed.Support.Difference
+module
+
+public import DimRed.Support.DerivBound
+public import DimRed.Support.Difference
+
+@[expose] public section
 
 /-!
 The time step for dimensional reduction, following the subsection labelled `subsec:dim_reduction` in `dimred-corrected-arxiv.tex`.

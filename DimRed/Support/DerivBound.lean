@@ -1,4 +1,6 @@
-import DimRed.Support.NonnegativeUpdate
+module
+
+public import DimRed.Support.NonnegativeUpdate
 /-
 The derivative bound of `dimred-corrected-arxiv.tex`, label `cor:derivative_bound`: if the odometer at the corner
 `(M, 1_{d-1})` never exceeds `k M`, then `v_t(x) - v_t(x + e_j) ≤ k x_j`
@@ -18,7 +20,9 @@ The corner hypothesis enters where the step leaves the hypercube: there
 `x_j = M`, the far value is the padded `0`, and the near value is at most the
 corner value by `odo_le_of_le`.
 -/
-import DimRed.Support.AxisStep
+public import DimRed.Support.AxisStep
+
+@[expose] public section
 
 namespace DimRed
 

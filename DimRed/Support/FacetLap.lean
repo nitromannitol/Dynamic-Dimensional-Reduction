@@ -1,4 +1,8 @@
-import DimRed.Support.Recursion
+module
+
+public import DimRed.Support.Recursion
+
+@[expose] public section
 
 /-
 The Laplacian at a facet point, the subsection labelled `subsec:dim_reduction` in `dimred-corrected-arxiv.tex` and the weak facet

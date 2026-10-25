@@ -1,3 +1,5 @@
+module
+
 /-
 Lemma 2.2 of the corrected edition.
 `dimred-corrected-arxiv.tex:314-319` (label `parabolic_comparison`, display
@@ -16,7 +18,9 @@ of functions is the pointwise minimum: `v` satisfies the constraint, and `v ≤
 u` for every `u` that does. The time index is written `t + 1` so that `t ≥ 1`
 needs no truncated subtraction.
 -/
-import DimRed.Support.SignedParabolic
+public import DimRed.Support.SignedParabolic
+
+@[expose] public section
 
 open LatticeProb DimRed
 

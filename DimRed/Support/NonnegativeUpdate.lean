@@ -1,5 +1,9 @@
+module
+
 /- The nonnegative floor specialization used by the existing joint proof. -/
-import DimRed.Support.Recursion
+public import DimRed.Support.Recursion
+
+@[expose] public section
 
 open LatticeProb DimRed
 

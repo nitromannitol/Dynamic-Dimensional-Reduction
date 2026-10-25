@@ -1,3 +1,5 @@
+module
+
 /-
 The two steps of the induction in Lemma 2.4 of `dimred-corrected-arxiv.tex`, label `general_difference_comparison`: the
 interior step, where every neighbour of `x` and of `x + w` is again a site of
@@ -5,8 +7,10 @@ the domain and the recursion of Lemma 2.1 applies at both, and the boundary
 step, where the first branch of `eq:boundaries_ref` bounds the neighbour sums
 directly.  Both are floor-division computations on `ℤ`.
 -/
-import DimRed.Support.NonnegativeUpdate
-import DimRed.Support.Difference
+public import DimRed.Support.NonnegativeUpdate
+public import DimRed.Support.Difference
+
+@[expose] public section
 
 namespace DimRed
 

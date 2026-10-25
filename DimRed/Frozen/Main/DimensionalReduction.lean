@@ -1,3 +1,5 @@
+module
+
 /-
 The first display of Theorem 1.1(i) of the corrected edition. `dimred-corrected-arxiv.tex:109-118` (label `the_theorem`), clause 1:
 
@@ -16,7 +18,9 @@ and `d - 1` needs no truncated subtraction. The initial condition is
 (`dimred-corrected-arxiv.tex`, label `subsec:overview`), which is what `odoUnif` carries. `(x_{d-1},
 1)` appends a last coordinate equal to `1`.
 -/
-import DimRed.Support.RegProved
+public import DimRed.Support.RegProved
+
+@[expose] public section
 
 open LatticeProb DimRed
 

@@ -1,4 +1,8 @@
-import DimRed.Support.ReflectedThreshold
+module
+
+public import DimRed.Support.ReflectedThreshold
+
+@[expose] public section
 
 /-!
 # Weak topple contraction for signed symmetric piles

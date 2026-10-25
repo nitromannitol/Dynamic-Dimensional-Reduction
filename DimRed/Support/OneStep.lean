@@ -1,7 +1,11 @@
-import DimRed.Support.Recursion
-import DimRed.Support.SimplexFold
-import DimRed.Support.CornerReaches
-import DimRed.Support.ToppleTime
+module
+
+public import DimRed.Support.Recursion
+public import DimRed.Support.SimplexFold
+public import DimRed.Support.CornerReaches
+public import DimRed.Support.ToppleTime
+
+@[expose] public section
 
 open LatticeProb DimRed
 

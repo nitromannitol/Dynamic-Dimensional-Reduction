@@ -1,3 +1,5 @@
+module
+
 /-
 Lemma 2.1 of the corrected edition.
 `dimred-corrected-arxiv.tex:291-297` (label `pt_ind_lemma`):
@@ -14,7 +16,9 @@ on `ℤ` is floor division for a positive divisor, so `/ (2 * d)` is the paper's
 `⌊·/2d⌋`, and the `max 0` of the statement is the outer `max {0, ·}` of the
 corrected display.
 -/
-import DimRed.Support.SignedUpdateZero
+public import DimRed.Support.SignedUpdateZero
+
+@[expose] public section
 
 open LatticeProb DimRed
 

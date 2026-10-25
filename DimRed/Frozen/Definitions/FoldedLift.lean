@@ -1,3 +1,5 @@
+module
+
 /-
 Lifted-value definition of the corrected edition.
 `dimred-corrected-arxiv.tex:371-374` (literal lifted-value definition; context
@@ -17,7 +19,9 @@ Lifted-value definition of the corrected edition.
 This unit records the lifted value of a function on the fundamental domain as
 its value at the orbit representative inside the cube and zero outside it.
 -/
-import DimRed.Support.ReflectedThreshold
+public import DimRed.Support.ReflectedThreshold
+
+@[expose] public section
 
 open LatticeProb DimRed
 

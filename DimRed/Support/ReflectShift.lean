@@ -1,5 +1,9 @@
-import DimRed.Support.AxisStep
-import DimRed.Support.Fundamental
+module
+
+public import DimRed.Support.AxisStep
+public import DimRed.Support.Fundamental
+
+@[expose] public section
 
 open LatticeProb DimRed
 

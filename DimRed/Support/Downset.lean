@@ -1,4 +1,8 @@
-import DimRed.Support.StrongDerivPure
+module
+
+public import DimRed.Support.StrongDerivPure
+
+@[expose] public section
 
 /-!
 # Down-sets of `Fin d`

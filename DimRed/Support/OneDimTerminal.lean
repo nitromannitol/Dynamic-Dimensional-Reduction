@@ -1,6 +1,10 @@
-import DimRed.Support.Stabilize
-import DimRed.Support.Fundamental
-import DimRed.Frozen.Prelim.ParabolicComparison
+module
+
+public import DimRed.Support.Stabilize
+public import DimRed.Support.Fundamental
+public import DimRed.Frozen.Prelim.ParabolicComparison
+
+@[expose] public section
 
 /-
 The terminal odometer in dimension one and its first difference, as in

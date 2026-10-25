@@ -1,12 +1,16 @@
-import DimRed.Support.DifferenceStep
-import DimRed.Support.NonnegativeUpdate
+module
+
+public import DimRed.Support.DifferenceStep
+public import DimRed.Support.NonnegativeUpdate
 /-
 The finite-time strong derivative estimate in dimension one, using the
 comparison function `g(x) = 2x` of Lemma `general_difference_comparison`, as in
 `dimred-corrected-arxiv.tex`, label `subsubsec:one_dim_strong_facet`.
 -/
-import DimRed.Support.DerivBound
-import DimRed.Frozen.Prelim.DifferenceComparison
+public import DimRed.Support.DerivBound
+public import DimRed.Frozen.Prelim.DifferenceComparison
+
+@[expose] public section
 
 namespace DimRed
 

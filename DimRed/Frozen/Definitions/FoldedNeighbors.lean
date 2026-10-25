@@ -1,3 +1,5 @@
+module
+
 /-
 Neighbour-sum definition of the corrected edition.
 `dimred-corrected-arxiv.tex:375-379` (literal neighbour-sum definition;
@@ -13,7 +15,9 @@ This unit records the sum of the lifted values over the
 `2d` neighbours, each orbit point counted with multiplicity and exterior
 neighbours contributing zero.
 -/
-import DimRed.Support.ReflectedThreshold
+public import DimRed.Support.ReflectedThreshold
+
+@[expose] public section
 
 open LatticeProb DimRed
 

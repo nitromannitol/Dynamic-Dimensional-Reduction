@@ -1,5 +1,9 @@
-import DimRed.Support.SignedUpdate
-import DimRed.Support.Stabilize
+module
+
+public import DimRed.Support.SignedUpdate
+public import DimRed.Support.Stabilize
+
+@[expose] public section
 
 /-!
 # Signed one-step odometer update with zero truncation

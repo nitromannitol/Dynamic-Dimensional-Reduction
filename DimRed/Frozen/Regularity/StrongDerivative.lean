@@ -1,3 +1,5 @@
+module
+
 /-
 The strong derivative clause of Proposition 4.1 of the corrected edition. `dimred-corrected-arxiv.tex:827-829` (label `base_dimension`,
 display `base_dimension:strong_derivative`):
@@ -14,7 +16,9 @@ states the same bound, at every time, as the first conclusion of
 `lem:strict-head-facet` (`dimred-corrected-arxiv.tex`, label `lem:strict-head-facet`, with `x_k =
 1`).
 -/
-import DimRed.Support.RegProved
+public import DimRed.Support.RegProved
+
+@[expose] public section
 
 open LatticeProb DimRed
 

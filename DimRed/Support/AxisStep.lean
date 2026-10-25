@@ -1,3 +1,5 @@
+module
+
 /-
 Axis monotonicity for the parallel toppling odometer of a constant initial
 sandpile, in the form of the source Corollary 2.1 cites: the odometer does not
@@ -14,9 +16,11 @@ the recursion of the statement labelled `pt_ind_lemma` in `dimred-corrected-arxi
 term.  A term where the step would leave the mirror on the wrong side is the
 site's own mirror image, and the two terms are equal.
 -/
-import DimRed.Support.Fundamental
-import DimRed.Support.Stabilize
-import DimRed.Support.NonnegativeUpdate
+public import DimRed.Support.Fundamental
+public import DimRed.Support.Stabilize
+public import DimRed.Support.NonnegativeUpdate
+
+@[expose] public section
 
 namespace DimRed
 

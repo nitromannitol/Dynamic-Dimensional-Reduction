@@ -1,6 +1,10 @@
-import DimRed.Support.AxisMonotonicityFull
-import DimRed.Support.DerivBound
-import DimRed.Support.Case2QuadraticBarrier
+module
+
+public import DimRed.Support.AxisMonotonicityFull
+public import DimRed.Support.DerivBound
+public import DimRed.Support.Case2QuadraticBarrier
+
+@[expose] public section
 
 /-!
 # Constant-height derivative bound with a terminal corner cap

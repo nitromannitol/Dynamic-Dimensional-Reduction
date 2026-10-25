@@ -1,10 +1,14 @@
+module
+
 /-
 The two computations of Proposition 3.1: on the hypercube of side `2` with
 `2d + (d_0 - 1)` chips at every site, the process stops after one step in
 dimension `d_0` and after two steps in dimension `d_0 - 1`.
 -/
-import DimRed.Support.CubeTwo
-import DimRed.Support.Stabilize
+public import DimRed.Support.CubeTwo
+public import DimRed.Support.Stabilize
+
+@[expose] public section
 
 namespace DimRed
 

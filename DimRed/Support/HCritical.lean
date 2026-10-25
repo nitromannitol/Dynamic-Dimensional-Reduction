@@ -1,7 +1,11 @@
-import DimRed.Support.RegSteps
-import DimRed.Support.DimRedCritical
-import DimRed.Support.OneStep
-import DimRed.Support.GapTopple
+module
+
+public import DimRed.Support.RegSteps
+public import DimRed.Support.DimRedCritical
+public import DimRed.Support.OneStep
+public import DimRed.Support.GapTopple
+
+@[expose] public section
 open LatticeProb DimRed
 namespace DimRed
 

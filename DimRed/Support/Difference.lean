@@ -1,10 +1,14 @@
+module
+
 /-
 Elementary lemmas for the difference comparison of `dimred-corrected-arxiv.tex`, label `general_difference_comparison`: the
 shift and subtraction identities for the neighbour sum, the fact that a point
 of the sorted fundamental domain lies in the hypercube, and the floor-division
 bounds that turn a bound on a neighbour sum into a bound on the odometer.
 -/
-import DimRed.Support.Recursion
+public import DimRed.Support.Recursion
+
+@[expose] public section
 
 namespace DimRed
 

@@ -1,4 +1,8 @@
-import DimRed.Support.Basic
+module
+
+public import DimRed.Support.Basic
+
+@[expose] public section
 
 /-
 The coordinate and simplex identities for appending a trailing coordinate,

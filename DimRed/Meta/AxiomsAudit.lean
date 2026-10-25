@@ -1,10 +1,14 @@
-import DimRed.MainTheorems
-import DimRed.Frozen.Definitions.FoldedLift
-import DimRed.Frozen.Definitions.FoldedNeighbors
-import DimRed.Frozen.Definitions.FoldedOdometer
-import DimRed.Frozen.Definitions.Pile
-import DimRed.Frozen.Definitions.TerminalPile
-import DimRed.Frozen.Definitions.Maximum
+module
+
+public import DimRed.MainTheorems
+public import DimRed.Frozen.Definitions.FoldedLift
+public import DimRed.Frozen.Definitions.FoldedNeighbors
+public import DimRed.Frozen.Definitions.FoldedOdometer
+public import DimRed.Frozen.Definitions.Pile
+public import DimRed.Frozen.Definitions.TerminalPile
+public import DimRed.Frozen.Definitions.Maximum
+
+@[expose] public section
 
 /-!
 # Axioms audit

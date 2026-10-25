@@ -1,3 +1,5 @@
+module
+
 /-
 Terminal finiteness and the second display of Theorem 1.1(i), `dimred-corrected-arxiv.tex`, label `the_theorem`.
 The stabilisation argument supplies the finite terminal odometers needed to
@@ -5,9 +7,11 @@ pass the finite-time dimensional-reduction identity to the limit; the final
 reflection identity is kept as an explicit hypothesis, as in
 `dimred-corrected-arxiv.tex`, labels `eq:reflecting_boundaries` and `subsec:main_result`.
 -/
-import DimRed.Frozen.Prelim.ParabolicComparison
-import DimRed.Support.AxisStep
-import DimRed.Support.Stabilize
+public import DimRed.Frozen.Prelim.ParabolicComparison
+public import DimRed.Support.AxisStep
+public import DimRed.Support.Stabilize
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

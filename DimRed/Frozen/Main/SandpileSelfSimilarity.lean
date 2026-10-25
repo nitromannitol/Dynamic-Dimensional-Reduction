@@ -1,3 +1,5 @@
+module
+
 /-
 Corollary to Theorem 1.1 of the corrected edition.
 `dimred-corrected-arxiv.tex:155-158` (label `sandpile_corollary`), clause 2:
@@ -9,8 +11,10 @@ Corollary to Theorem 1.1 of the corrected edition.
 `τ_j` is `toppleTime d j`. Vector inequalities and the subtraction of a scalar
 from a vector are coordinatewise (`dimred-corrected-arxiv.tex`, label `subsec:notation`).
 -/
-import DimRed.Support.RegProved
-import DimRed.Support.SourceCarriers
+public import DimRed.Support.RegProved
+public import DimRed.Support.SourceCarriers
+
+@[expose] public section
 
 open LatticeProb DimRed
 

@@ -1,11 +1,15 @@
-import DimRed.Support.NonnegativeUpdate
-import DimRed.Support.StrongDerivStep
-import DimRed.Support.DimRedCritical
-import DimRed.Support.ToppleGeneral
-import DimRed.Support.OneDimConsistAll
-import DimRed.Support.SelfSimilarityMain
-import DimRed.Support.CornerReaches
-import DimRed.Support.WeakStep
+module
+
+public import DimRed.Support.NonnegativeUpdate
+public import DimRed.Support.StrongDerivStep
+public import DimRed.Support.DimRedCritical
+public import DimRed.Support.ToppleGeneral
+public import DimRed.Support.OneDimConsistAll
+public import DimRed.Support.SelfSimilarityMain
+public import DimRed.Support.CornerReaches
+public import DimRed.Support.WeakStep
+
+@[expose] public section
 
 /-!
 # Bridges from the regularity clauses to the step predicates

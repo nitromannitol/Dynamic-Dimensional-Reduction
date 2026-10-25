@@ -1,3 +1,5 @@
+module
+
 /-
 Corollary 2.2 of the corrected edition.
 `dimred-corrected-arxiv.tex:552-559` (label `cor:derivative_bound`,
@@ -12,7 +14,9 @@ Corollary 2.2 of the corrected edition.
 there. The standing hypothesis of the subsection is that the initial sandpile
 is constant (`dimred-corrected-arxiv.tex`, label `subsec:derivative_comparison`), carried here as `c`.
 -/
-import DimRed.Support.DerivativeBoundFull
+public import DimRed.Support.DerivativeBoundFull
+
+@[expose] public section
 
 open LatticeProb DimRed
 

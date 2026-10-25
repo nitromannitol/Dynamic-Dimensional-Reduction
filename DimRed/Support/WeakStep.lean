@@ -1,11 +1,15 @@
+module
+
 /-
 The weak facet step of the joint induction of `dimred-corrected-arxiv.tex`, label `sec:dim_reduction`: weak facet compatibility
 at a triple, from strong facet compatibility at the same triple.
 -/
-import DimRed.Support.RegInduction
-import DimRed.Support.WeakFacetLower
-import DimRed.Support.FacetLapUncond
-import DimRed.Support.SnocSimplex
+public import DimRed.Support.RegInduction
+public import DimRed.Support.WeakFacetLower
+public import DimRed.Support.FacetLapUncond
+public import DimRed.Support.SnocSimplex
+
+@[expose] public section
 
 namespace DimRed
 

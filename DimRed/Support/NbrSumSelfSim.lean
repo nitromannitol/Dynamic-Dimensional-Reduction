@@ -1,10 +1,14 @@
-import DimRed.Support.ToppleTimeScale
-import DimRed.Support.SelfSimilarityMain
-import DimRed.Support.RegInduction
-import DimRed.Support.SimplexFold
-import DimRed.Support.Fundamental
-import DimRed.Support.AxisStep
-import DimRed.Support.FoldIdentity
+module
+
+public import DimRed.Support.ToppleTimeScale
+public import DimRed.Support.SelfSimilarityMain
+public import DimRed.Support.RegInduction
+public import DimRed.Support.SimplexFold
+public import DimRed.Support.Fundamental
+public import DimRed.Support.AxisStep
+public import DimRed.Support.FoldIdentity
+
+@[expose] public section
 
 open LatticeProb DimRed
 

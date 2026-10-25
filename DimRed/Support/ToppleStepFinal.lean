@@ -1,20 +1,24 @@
+module
+
 /-
 The strong topple control step of the joint induction (`base_dimension:strong_topple`) of
 `dimred-corrected-arxiv.tex`, for `d = 1` and for `d ≥ 2`.
 -/
-import DimRed.Support.RegInduction
-import DimRed.Support.OneDimConsistAll
-import DimRed.Support.CornerReaches
-import DimRed.Support.OneStep
-import DimRed.Support.SimplexFold
-import DimRed.Support.FoldIdentity
-import DimRed.Support.ReflectShift
-import DimRed.Support.ToppleTimeScale
-import DimRed.Support.SnocSimplex
-import DimRed.Support.NonnegativeUpdate
-import DimRed.Frozen.Prelim.AxisMonotonicity
-import DimRed.Frozen.Prelim.ParabolicComparison
-import DimRed.Frozen.Prelim.ToppleLimit
+public import DimRed.Support.RegInduction
+public import DimRed.Support.OneDimConsistAll
+public import DimRed.Support.CornerReaches
+public import DimRed.Support.OneStep
+public import DimRed.Support.SimplexFold
+public import DimRed.Support.FoldIdentity
+public import DimRed.Support.ReflectShift
+public import DimRed.Support.ToppleTimeScale
+public import DimRed.Support.SnocSimplex
+public import DimRed.Support.NonnegativeUpdate
+public import DimRed.Frozen.Prelim.AxisMonotonicity
+public import DimRed.Frozen.Prelim.ParabolicComparison
+public import DimRed.Frozen.Prelim.ToppleLimit
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

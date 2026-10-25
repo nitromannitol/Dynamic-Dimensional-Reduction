@@ -1,3 +1,5 @@
+module
+
 /-
 Symmetrized-odometer definition of the corrected edition.
 `dimred-corrected-arxiv.tex:379-383` (literal initial value and threshold
@@ -14,7 +16,9 @@ recursion; context `subsec:symmetry`):
 This unit records the symmetrized odometer `foldedOdo` by its zero initial
 value and its threshold recursion on the folded neighbour sum.
 -/
-import DimRed.Support.ReflectedThreshold
+public import DimRed.Support.ReflectedThreshold
+
+@[expose] public section
 
 open LatticeProb DimRed
 

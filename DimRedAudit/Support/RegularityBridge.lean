@@ -1,6 +1,10 @@
-import Mathlib
-import DimRed.MainTheorems
-import DimRedAudit.Regularity.SolutionBasic
+module
+
+public import Mathlib
+public import DimRed.MainTheorems
+public import DimRedAudit.Regularity.SolutionBasic
+
+@[expose] public section
 
 /-!
 # Bridges for `Regularity`: Mathlib-only vocabulary to the repository

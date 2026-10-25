@@ -1,6 +1,10 @@
-import Mathlib
-import DimRed.MainTheorems
-import DimRedAudit.Sandpile.SolutionBasic
+module
+
+public import Mathlib
+public import DimRed.MainTheorems
+public import DimRedAudit.Sandpile.SolutionBasic
+
+@[expose] public section
 
 /-!
 # Bridges for `Sandpile`: Mathlib-only vocabulary to the repository

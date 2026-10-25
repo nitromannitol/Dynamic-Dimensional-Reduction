@@ -1,3 +1,5 @@
+module
+
 /-
 Lemma 2.3 of the corrected edition.
 `dimred-corrected-arxiv.tex:394-396` (label `symmetry_lemma`):
@@ -18,7 +20,9 @@ Lean statement carries as its second conjunct (`foldedOdo`,
 `dimred-corrected-arxiv.tex`, label `subsec:symmetry`); the development works with `v_t` on
 `S_M^{(d)}` throughout (`dimred-corrected-arxiv.tex`, label `subsec:symmetry`).
 -/
-import DimRed.Support.ReflectedThreshold
+public import DimRed.Support.ReflectedThreshold
+
+@[expose] public section
 
 open LatticeProb DimRed
 

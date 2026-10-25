@@ -1,9 +1,13 @@
+module
+
 /-
 The first step of the base case of the statement labelled `prop:base_case` in `dimred-corrected-arxiv.tex`: at `t = 1` every
 radial site of `S_2^{(d)}` topples, because the initial sandpile
 `s_0 = 2d + (d-1)` is at least `2d` and the odometer starts at zero.
 -/
-import DimRed.Support.Radial
+public import DimRed.Support.Radial
+
+@[expose] public section
 
 namespace DimRed
 

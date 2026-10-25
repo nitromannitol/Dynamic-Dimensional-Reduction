@@ -1,3 +1,5 @@
+module
+
 /-
 Weak facet compatibility with a tail of ones, `base_dimension:weak_compatability` of
 the statement labelled `base_dimension` in `dimred-corrected-arxiv.tex`, reduced to the same clause with an EMPTY tail one dimension group down.
@@ -8,9 +10,11 @@ conclusion.  The paper's route, at the subsection labelled `subsec:dim_reduction
 dimension `i+1+j` with the odometer in dimension `i+1` by dimensional reduction and applies
 the clause there, where the facet is a single point.
 -/
-import DimRed.Support.FacetLap
-import DimRed.Support.FacetNbr
-import DimRed.Support.OneDimWeak
+public import DimRed.Support.FacetLap
+public import DimRed.Support.FacetNbr
+public import DimRed.Support.OneDimWeak
+
+@[expose] public section
 
 namespace DimRed
 

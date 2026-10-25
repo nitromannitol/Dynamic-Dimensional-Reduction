@@ -1,3 +1,5 @@
+module
+
 /-
 Proposition 3.2 of the corrected edition.
 `dimred-corrected-arxiv.tex:699-723` (label `prop:base_case`):
@@ -23,8 +25,10 @@ x` of the statement, with its time `t` written `t + 1`, is `s + 1 ≤ t` and `t
 - s ≤ x`, and the odometer at `radial d x` at time `t + 1` equals the odometer
 at `radial d (x - (t - s))` at time `s + 1`.
 -/
-import DimRed.Support.Recursion
-import DimRed.Support.BaseInduction
+public import DimRed.Support.Recursion
+public import DimRed.Support.BaseInduction
+
+@[expose] public section
 
 open LatticeProb DimRed
 

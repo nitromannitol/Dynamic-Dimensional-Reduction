@@ -1,6 +1,10 @@
-import Mathlib
-import DimRed.MainTheorems
-import DimRedAudit.DimensionalReduction.SolutionBasic
+module
+
+public import Mathlib
+public import DimRed.MainTheorems
+public import DimRedAudit.DimensionalReduction.SolutionBasic
+
+@[expose] public section
 
 /-!
 # Bridges for `DimensionalReduction`: Mathlib-only vocabulary to the repository

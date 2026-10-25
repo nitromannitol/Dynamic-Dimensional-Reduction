@@ -1,3 +1,5 @@
+module
+
 /-
 Quadratic-profile clause of the one-dimensional terminal lemma (Lemma 4.1) of
 the corrected edition. `dimred-corrected-arxiv.tex:1004-1011`
@@ -9,7 +11,9 @@ the corrected edition. `dimred-corrected-arxiv.tex:1004-1011`
 This unit records the terminal profile `v_∞(x) = (M(M+1) - x(x-1))/2` on `1 ≤
 x ≤ M`, with integer division and `toNat`, as the value of `odoInfUnif`.
 -/
-import DimRed.Support.OneDimTerminal
+public import DimRed.Support.OneDimTerminal
+
+@[expose] public section
 
 open LatticeProb DimRed
 

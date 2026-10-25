@@ -1,10 +1,14 @@
-import DimRed.Support.NonnegativeUpdate
-import DimRed.Support.RegInduction
-import DimRed.Support.DerivBound
-import DimRed.Support.AxisStep
-import DimRed.Support.FacetNbr
-import DimRed.Support.OneDimTerminal
-import DimRed.Support.CornerBound
+module
+
+public import DimRed.Support.NonnegativeUpdate
+public import DimRed.Support.RegInduction
+public import DimRed.Support.DerivBound
+public import DimRed.Support.AxisStep
+public import DimRed.Support.FacetNbr
+public import DimRed.Support.OneDimTerminal
+public import DimRed.Support.CornerBound
+
+@[expose] public section
 
 /-!
 # The strong derivative clause for a nonempty head

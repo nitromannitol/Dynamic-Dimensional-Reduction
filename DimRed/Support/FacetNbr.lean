@@ -1,5 +1,9 @@
-import DimRed.Support.AxisStep
-import DimRed.Support.Difference
+module
+
+public import DimRed.Support.AxisStep
+public import DimRed.Support.Difference
+
+@[expose] public section
 
 /-
 The coordinate evaluations and neighbour identities at a facet point

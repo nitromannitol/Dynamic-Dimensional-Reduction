@@ -1,7 +1,11 @@
-import DimRed.Support.NonnegativeUpdate
-import DimRed.Support.RegInduction
-import DimRed.Support.StrongDerivRaw
-import DimRed.Support.SelfSimilarityMain
+module
+
+public import DimRed.Support.NonnegativeUpdate
+public import DimRed.Support.RegInduction
+public import DimRed.Support.StrongDerivRaw
+public import DimRed.Support.SelfSimilarityMain
+
+@[expose] public section
 
 /-!
 # The odd cube against the even cube

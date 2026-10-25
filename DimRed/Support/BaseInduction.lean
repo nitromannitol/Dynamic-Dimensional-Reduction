@@ -1,3 +1,5 @@
+module
+
 /-
 The invariant profile of the parallel toppling odometer for the statement labelled `prop:base_case` in `dimred-corrected-arxiv.tex`
 (Proposition 3.2's proof): the closed value in the firing block (`block_eq`),
@@ -5,8 +7,10 @@ the frozen value immediately beyond it (`beyond_block_eq`), and the
 front-shifted ripple relation (`ripple_shift`) that together prove
 `DimRed.Frozen.base_case`.
 -/
-import DimRed.Support.BaseCase
-import DimRed.Support.BaseStep
+public import DimRed.Support.BaseCase
+public import DimRed.Support.BaseStep
+
+@[expose] public section
 
 namespace DimRed
 

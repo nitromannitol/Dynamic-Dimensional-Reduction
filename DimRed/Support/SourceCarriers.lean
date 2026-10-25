@@ -1,6 +1,10 @@
-import DimRed.Support.Fundamental
-import DimRed.Support.SnocSimplex
-import DimRed.Support.TerminalReduction
+module
+
+public import DimRed.Support.Fundamental
+public import DimRed.Support.SnocSimplex
+public import DimRed.Support.TerminalReduction
+
+@[expose] public section
 
 /-!
 # Physical carriers for the corrected source API

@@ -1,5 +1,9 @@
-import DimRed.Support.StrongDerivRaw
-import DimRed.Support.CornerBound
+module
+
+public import DimRed.Support.StrongDerivRaw
+public import DimRed.Support.CornerBound
+
+@[expose] public section
 
 /-!
 # The strong derivative clause below the topple time

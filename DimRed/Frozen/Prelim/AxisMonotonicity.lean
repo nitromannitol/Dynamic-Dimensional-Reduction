@@ -1,3 +1,5 @@
+module
+
 /-
 Corollary 2.1 of the corrected edition.
 `dimred-corrected-arxiv.tex:523-533` (label `axis_monotonicity`, "Axis
@@ -25,7 +27,9 @@ standing hypothesis of the subsection is that the initial sandpile is constant
 1` is carried too, although the proof does not need it: at `t = 0` both sides
 are zero.
 -/
-import DimRed.Support.AxisMonotonicityFull
+public import DimRed.Support.AxisMonotonicityFull
+
+@[expose] public section
 
 open LatticeProb DimRed
 

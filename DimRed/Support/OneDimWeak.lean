@@ -1,4 +1,8 @@
-import DimRed.Support.DerivBound
+module
+
+public import DimRed.Support.DerivBound
+
+@[expose] public section
 
 /-
 Weak compatibility at the all-ones facet: a height difference of one forces

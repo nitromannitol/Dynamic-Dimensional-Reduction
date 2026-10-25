@@ -1,3 +1,5 @@
+module
+
 /-
 The unit-gap interior branch of dimensional reduction, the subsection labelled `subsec:dim_reduction` in `dimred-corrected-arxiv.tex`, which is the
 one branch `DimRed/Support/DimRedStep.lean` leaves open.  The point has every coordinate above
@@ -7,9 +9,11 @@ time of the smaller cube: at or after it, strong topple control freezes both odo
 reduction carries forward; below it, self-similarity forces the two innermost layers of the
 last coordinate to agree, which contradicts the gap.
 -/
-import DimRed.Support.DimRedStep
-import DimRed.Support.SnocSimplex
-import DimRed.Support.ToppleTime
+public import DimRed.Support.DimRedStep
+public import DimRed.Support.SnocSimplex
+public import DimRed.Support.ToppleTime
+
+@[expose] public section
 
 namespace DimRed
 

@@ -1,3 +1,5 @@
+module
+
 /-
 The general-scale iteration for Theorem 1.1(ii), together with the odd-side
 coordinate reflection.  The self-similarity argument is the iteration of the
@@ -7,7 +9,9 @@ for even side lengths.  The odd reflection is the boundary adjustment
 described in the subsection labelled `subsec:notation` in `dimred-corrected-arxiv.tex`, and in the subsection labelled `subsec:symmetry` of
 `dimred-corrected-arxiv.tex`.
 -/
-import DimRed.Support.AxisStep
+public import DimRed.Support.AxisStep
+
+@[expose] public section
 
 namespace DimRed
 

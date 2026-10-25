@@ -1,3 +1,5 @@
+module
+
 /-
 Proposition 3.1 of the corrected edition.
 `dimred-corrected-arxiv.tex:643-645` (label `no_reduction`):
@@ -13,7 +15,9 @@ In dimension `d` the initial sandpile is `2d + (d_0 - 1)` chips at every site,
 so it is `2 d_0 + (d_0-1)` in dimension `d_0` and `2(d_0-1) + (d_0-1)` in
 dimension `d_0 - 1`.
 -/
-import DimRed.Support.CubeTwoTerminal
+public import DimRed.Support.CubeTwoTerminal
+
+@[expose] public section
 
 open LatticeProb DimRed
 

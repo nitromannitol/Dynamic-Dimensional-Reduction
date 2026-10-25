@@ -1,7 +1,11 @@
-import DimRed.Support.StrongDerivPure
-import DimRed.Support.Downset
-import DimRed.Support.FacetNbr
-import DimRed.Support.Symmetry
+module
+
+public import DimRed.Support.StrongDerivPure
+public import DimRed.Support.Downset
+public import DimRed.Support.FacetNbr
+public import DimRed.Support.Symmetry
+
+@[expose] public section
 
 /-!
 # The sorting normal form of a facet point

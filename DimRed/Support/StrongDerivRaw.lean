@@ -1,6 +1,10 @@
-import DimRed.Support.NonnegativeUpdate
-import DimRed.Support.StrongDerivPure
-import DimRed.Support.FacetNormal
+module
+
+public import DimRed.Support.NonnegativeUpdate
+public import DimRed.Support.StrongDerivPure
+public import DimRed.Support.FacetNormal
+
+@[expose] public section
 
 /-!
 # Raw forms of weak and strong facet compatibility

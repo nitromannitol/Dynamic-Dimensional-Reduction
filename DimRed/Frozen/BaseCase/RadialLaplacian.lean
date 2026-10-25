@@ -1,3 +1,5 @@
+module
+
 /-
 Lemma 3.1 of the corrected edition.
 `dimred-corrected-arxiv.tex:665-671` (label `radial_laplacian`):
@@ -14,7 +16,9 @@ needed here: the coefficient of the first is `d - x`, which vanishes at `x =
 d`, and the coefficient of the second is `x`, which vanishes at `x = 0`. The
 initial sandpile is constant, hence symmetric, which is all the proof uses.
 -/
-import DimRed.Support.Radial
+public import DimRed.Support.Radial
+
+@[expose] public section
 
 open LatticeProb DimRed
 

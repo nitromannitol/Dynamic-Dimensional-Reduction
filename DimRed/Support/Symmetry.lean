@@ -1,10 +1,14 @@
+module
+
 /-
 The symmetries of the hypercube and the invariance of the odometer under them:
 `cubeSym` carries a neighbour step of `σ x` to a neighbour step of `x`, so the
 neighbour sum and the Laplacian commute with `σ`, and Lemma 2.3 follows by
 induction on the time.
 -/
-import DimRed.Support.Recursion
+public import DimRed.Support.Recursion
+
+@[expose] public section
 
 namespace DimRed
 

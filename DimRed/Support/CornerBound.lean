@@ -1,3 +1,5 @@
+module
+
 /-
 The corner bound below the topple time, with the time restriction removed.
 
@@ -5,8 +7,10 @@ The corner bound below the topple time, with the time restriction removed.
 contradiction has nothing to contradict.  At `t = 0` the odometer is zero and the bound is
 immediate, so the two cases together give the form the strong derivative clause consumes.
 -/
-import DimRed.Support.ToppleTime
-import DimRed.Support.OneDimBoundaryAlt
+public import DimRed.Support.ToppleTime
+public import DimRed.Support.OneDimBoundaryAlt
+
+@[expose] public section
 
 namespace DimRed
 

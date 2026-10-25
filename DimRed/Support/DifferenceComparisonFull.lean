@@ -1,5 +1,9 @@
-import DimRed.Support.Difference
-import DimRed.Support.Symmetry
+module
+
+public import DimRed.Support.Difference
+public import DimRed.Support.Symmetry
+
+@[expose] public section
 
 /-!
 Difference comparison for arbitrary constant integer initial heights. The proof

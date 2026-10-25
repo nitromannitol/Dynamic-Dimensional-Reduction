@@ -1,3 +1,5 @@
+module
+
 /-
 The vocabulary of the paper.
 
@@ -17,7 +19,9 @@ Here `odo` is defined by the equivalent closed recursion in which `s_t` is
 replaced by `s₀ + Δ v_t`; the paper's two displays are `odo_succ_eq` and
 `sandp_succ`.
 -/
-import LatticeProb.Site
+public import LatticeProb.Site
+
+@[expose] public section
 
 namespace DimRed
 

@@ -1,3 +1,5 @@
+module
+
 /-
 Lemma 2.5 of the corrected edition.
 `dimred-corrected-arxiv.tex:599-606` (label `topple_limit`):
@@ -14,7 +16,9 @@ maximum over a fundamental domain says nothing about the rest of the cube. The
 bound `s_0 ≤ 2(2d) - 1` of `dimred-corrected-arxiv.tex`, label `subsec:babai_gorodezky` is not a
 hypothesis of this statement.
 -/
-import DimRed.Support.ToppleContractionFull
+public import DimRed.Support.ToppleContractionFull
+
+@[expose] public section
 
 open LatticeProb DimRed
 

@@ -1,8 +1,12 @@
+module
+
 /-
 Monotonicity of the odometer in time, and the terminal odometer `v_∞` when the
 process has stabilized.
 -/
-import DimRed.Support.Recursion
+public import DimRed.Support.Recursion
+
+@[expose] public section
 
 namespace DimRed
 

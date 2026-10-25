@@ -1,5 +1,9 @@
-import DimRed.Support.AxisStep
-import DimRed.Support.NonnegativeUpdate
+module
+
+public import DimRed.Support.AxisStep
+public import DimRed.Support.NonnegativeUpdate
+
+@[expose] public section
 
 /-
 The one-dimensional inductive self-similarity step in Proposition 4.1: the self-similarity

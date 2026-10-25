@@ -1,4 +1,8 @@
-import DimRed.Support.AxisStep
+module
+
+public import DimRed.Support.AxisStep
+
+@[expose] public section
 
 /-!
 The strong facet compatibility clause in dimension one, the proof of the proposition (`base_dimension`) in `dimred-corrected-arxiv.tex`.

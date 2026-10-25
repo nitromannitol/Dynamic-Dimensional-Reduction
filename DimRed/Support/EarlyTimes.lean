@@ -1,4 +1,8 @@
-import DimRed.Support.Stabilize
+module
+
+public import DimRed.Support.Stabilize
+
+@[expose] public section
 
 /-!
 The first two parallel toppling steps for the constant initial sandpile, and

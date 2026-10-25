@@ -1,4 +1,8 @@
-import DimRed.Support.Recursion
+module
+
+public import DimRed.Support.Recursion
+
+@[expose] public section
 
 /-!
 # Signed one-step odometer update

@@ -1,3 +1,5 @@
+module
+
 /-
 The joint induction of `dimred-corrected-arxiv.tex`, label `sec:dim_reduction` with all six step hypotheses discharged:
 odometer regularity (Proposition 4.1) and dimensional reduction hold at every dimension
@@ -6,12 +8,14 @@ Corollary 1.1 and Proposition 4.1 are read off from `reg_proved` by the bridges 
 `DimRed.Support.FrozenFromReg` and `DimRed.Support.FrozenFromRegMain`, which this module
 re-exports for them.
 -/
-import DimRed.Support.RegAll
-import DimRed.Support.ConsistStepFinal
-import DimRed.Support.FacetStepFinal
-import DimRed.Support.ToppleStepFinal
-import DimRed.Support.FrozenFromReg
-import DimRed.Support.FrozenFromRegMain
+public import DimRed.Support.RegAll
+public import DimRed.Support.ConsistStepFinal
+public import DimRed.Support.FacetStepFinal
+public import DimRed.Support.ToppleStepFinal
+public import DimRed.Support.FrozenFromReg
+public import DimRed.Support.FrozenFromRegMain
+
+@[expose] public section
 
 set_option autoImplicit false
 

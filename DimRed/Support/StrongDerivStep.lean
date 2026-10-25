@@ -1,6 +1,10 @@
-import DimRed.Support.StrongDerivRaw
-import DimRed.Support.StrongDerivEarly
-import DimRed.Support.SnocSimplex
+module
+
+public import DimRed.Support.StrongDerivRaw
+public import DimRed.Support.StrongDerivEarly
+public import DimRed.Support.SnocSimplex
+
+@[expose] public section
 
 /-!
 # The strong derivative clause at one triple

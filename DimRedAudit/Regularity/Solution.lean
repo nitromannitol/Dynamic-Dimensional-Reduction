@@ -1,7 +1,11 @@
-import Mathlib
-import DimRed.MainTheorems
-import DimRedAudit.Regularity.SolutionBasic
-import DimRedAudit.Support.RegularityBridge
+module
+
+public import Mathlib
+public import DimRed.MainTheorems
+public import DimRedAudit.Regularity.SolutionBasic
+public import DimRedAudit.Support.RegularityBridge
+
+@[expose] public section
 
 /-!
 # Solution: Regularity (Proposition 4.1)

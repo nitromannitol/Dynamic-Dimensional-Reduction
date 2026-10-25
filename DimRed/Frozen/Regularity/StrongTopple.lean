@@ -1,3 +1,5 @@
+module
+
 /-
 The strong topple control clause of Proposition 4.1 of the corrected edition. `dimred-corrected-arxiv.tex:845-847` (label
 `base_dimension`, display `base_dimension:strong_topple`):
@@ -9,8 +11,10 @@ The strong topple control clause of Proposition 4.1 of the corrected edition. `d
 finite domain is `Corrected.maximum`, the nonempty-maximum unit of
 `dimred-corrected-arxiv.tex`, label `topple_limit`.
 -/
-import DimRed.Support.RegProved
-import DimRed.Support.SourceCarriers
+public import DimRed.Support.RegProved
+public import DimRed.Support.SourceCarriers
+
+@[expose] public section
 
 open LatticeProb DimRed
 

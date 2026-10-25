@@ -1,12 +1,16 @@
+module
+
 /-
 The iterated one-dimensional self-similarity clause and the lower bound on
 successive toppling times from `dimred-corrected-arxiv.tex`, labels `base_dimension` and `subsec:regularity_higher`.
 -/
-import DimRed.Support.OneDimConsist
-import DimRed.Support.CornerReaches
-import DimRed.Support.EarlyTimes
-import DimRed.Support.StrongDerivPure
-import DimRed.Support.ToppleTime
+public import DimRed.Support.OneDimConsist
+public import DimRed.Support.CornerReaches
+public import DimRed.Support.EarlyTimes
+public import DimRed.Support.StrongDerivPure
+public import DimRed.Support.ToppleTime
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

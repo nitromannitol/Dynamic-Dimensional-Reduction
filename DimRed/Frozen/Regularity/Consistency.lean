@@ -1,3 +1,5 @@
+module
+
 /-
 The self-similarity clause of Proposition 4.1 of the corrected edition. `dimred-corrected-arxiv.tex:811-813` (label `base_dimension`,
 display `base_dimension:consistency`):
@@ -16,7 +18,9 @@ to `S_M^{(d)}` (`dimred-corrected-arxiv.tex`, label `subsec:symmetry`). `τ_j` i
 it is valued in `ℕ∞`, so `t ≤ τ_j` is an inequality there. Vector inequalities
 are coordinatewise (`dimred-corrected-arxiv.tex`, label `subsec:notation`).
 -/
-import DimRed.Support.RegProved
+public import DimRed.Support.RegProved
+
+@[expose] public section
 
 open LatticeProb DimRed
 

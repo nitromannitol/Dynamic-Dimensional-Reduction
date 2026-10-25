@@ -1,8 +1,12 @@
+module
+
 /-
 The elementary properties of the block edge `a_t` of the subsection labelled `subsec:M2` in `dimred-corrected-arxiv.tex`:
 it is nonincreasing in `t`.
 -/
-import DimRed.Support.Radial
+public import DimRed.Support.Radial
+
+@[expose] public section
 
 namespace DimRed
 

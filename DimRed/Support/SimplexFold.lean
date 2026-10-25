@@ -1,8 +1,12 @@
-import DimRed.Support.Fundamental
-import DimRed.Support.SandpileFromOdo
-import DimRed.Support.StrongDerivPure
-import DimRed.Support.FacetNormal
-import DimRed.Support.CubeTwo
+module
+
+public import DimRed.Support.Fundamental
+public import DimRed.Support.SandpileFromOdo
+public import DimRed.Support.StrongDerivPure
+public import DimRed.Support.FacetNormal
+public import DimRed.Support.CubeTwo
+
+@[expose] public section
 
 /-!
 # Folding a point into the sorted fundamental domain

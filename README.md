@@ -136,9 +136,9 @@ counts are generated from `ledger/manifest.yaml` by
   [leanprover/comparator](https://github.com/leanprover/comparator) checks them with the Lean
   kernel and the nanoda kernel. The other results (Sections 2 and 3, Lemmas 4.1 and 5.1) have
   no comparator pair.
-- **Pinned toolchain and dependencies.** Lean `v4.32.0`, Mathlib
-  `81a5d257c8e410db227a6665ed08f64fea08e997` and Lattice-Probability
-  `bbe0b90a7cf0517db0578139aaab7f152edbc45e`, recorded in
+- **Pinned toolchain and dependencies.** Lean `v4.35.0-rc2`, Mathlib
+  `065356127b1dc0016f66b7283ce0ce2c4055aa55` and Lattice-Probability
+  `d6dc1aaae0ad1bdfd353cb7e1817a41406131e18`, recorded in
   [`lake-manifest.json`](lake-manifest.json).
 
 ## Size
@@ -243,3 +243,8 @@ Comparator configuration to check. It records the dispatched commit and runs wit
 minimum, source-module, Challenge-closure, licensing and metadata requirements before
 dispatch. A passing preflight is advisory; it is separate from submission, editorial
 review and a public registry record.
+
+The module compatibility revision preserves the mathematical definitions and frozen
+statements. Its pinned Lattice-Probability source adds public module interfaces and
+updates two existing walk-proof calls to the current Mathlib API. Full Palomar
+verification checks the selected Challenge/Solution pair at the dispatched commit.

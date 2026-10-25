@@ -1,3 +1,5 @@
+module
+
 /-
 The weak facet compatibility clause of Proposition 4.1 of the corrected edition. `dimred-corrected-arxiv.tex:815-822` (label
 `base_dimension`, display `base_dimension:weak_compatability`):
@@ -16,7 +18,9 @@ v_t(2) + 1$, then $\Delta v_t(1) = -1$ and so $v_{t+1}(1) = v_{t}(1)$"),
 = v_t^{(d)}(x_i, 1_{d-i})` off it. `(x_i, c, 1_j)` is `facetPoint`, and the
 dimension is `d = i + 1 + j`.
 -/
-import DimRed.Support.RegProved
+public import DimRed.Support.RegProved
+
+@[expose] public section
 
 open LatticeProb DimRed
 

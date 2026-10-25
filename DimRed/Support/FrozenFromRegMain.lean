@@ -1,5 +1,9 @@
-import DimRed.Support.FrozenFromRegOdd
-import DimRed.Support.SandpileFromOdo
+module
+
+public import DimRed.Support.FrozenFromRegOdd
+public import DimRed.Support.SandpileFromOdo
+
+@[expose] public section
 
 /-!
 # The main results for every side `N` from the joint induction

@@ -1,7 +1,11 @@
-import Mathlib
-import DimRed.MainTheorems
-import DimRedAudit.Sandpile.SolutionBasic
-import DimRedAudit.Support.SandpileBridge
+module
+
+public import Mathlib
+public import DimRed.MainTheorems
+public import DimRedAudit.Sandpile.SolutionBasic
+public import DimRedAudit.Support.SandpileBridge
+
+@[expose] public section
 
 /-!
 # Solution: Sandpile (Corollary 1.1)

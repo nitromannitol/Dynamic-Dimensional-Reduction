@@ -1,7 +1,11 @@
-import DimRed.Support.RegInduction
-import DimRed.Support.RegSteps
-import DimRed.Support.HCritical
-import DimRed.Support.DimRedConcrete
+module
+
+public import DimRed.Support.RegInduction
+public import DimRed.Support.RegSteps
+public import DimRed.Support.HCritical
+public import DimRed.Support.DimRedConcrete
+
+@[expose] public section
 open LatticeProb DimRed
 namespace DimRed
 

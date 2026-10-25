@@ -1,3 +1,5 @@
+module
+
 /-
 The closed Case 2 export of the odometer strict-head and compatibility clauses.
 
@@ -7,10 +9,12 @@ The first clause is the pure second difference `odo_pure_diff` at horizon `t`, f
 weak and strong facet clauses of `reg_proved` at every time.  The second clause is the
 same-time strong facet compatibility `strong_raw_stay` and `strong_raw` at `t`.
 -/
-import DimRed.Support.RegProved
-import DimRed.Support.RegBridges
-import DimRed.Support.StrongDerivRaw
-import DimRed.Support.Case2FirstWait
+public import DimRed.Support.RegProved
+public import DimRed.Support.RegBridges
+public import DimRed.Support.StrongDerivRaw
+public import DimRed.Support.Case2FirstWait
+
+@[expose] public section
 
 open LatticeProb
 

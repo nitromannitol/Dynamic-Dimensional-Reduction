@@ -1,4 +1,8 @@
-import DimRed.Support.RegInduction
+module
+
+public import DimRed.Support.RegInduction
+
+@[expose] public section
 
 /-!
 # The regularity clauses of Proposition 4.1 from the joint induction

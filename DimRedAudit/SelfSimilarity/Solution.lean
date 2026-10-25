@@ -1,7 +1,11 @@
-import Mathlib
-import DimRed.MainTheorems
-import DimRedAudit.SelfSimilarity.SolutionBasic
-import DimRedAudit.Support.SelfSimilarityBridge
+module
+
+public import Mathlib
+public import DimRed.MainTheorems
+public import DimRedAudit.SelfSimilarity.SolutionBasic
+public import DimRedAudit.Support.SelfSimilarityBridge
+
+@[expose] public section
 
 /-!
 # Solution: SelfSimilarity (Theorem 1.1(ii))

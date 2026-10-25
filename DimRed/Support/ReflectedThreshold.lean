@@ -1,6 +1,10 @@
-import DimRed.Support.Radial
-import DimRed.Support.SourceCarriers
-import DimRed.Support.SandpileFromOdo
+module
+
+public import DimRed.Support.Radial
+public import DimRed.Support.SourceCarriers
+public import DimRed.Support.SandpileFromOdo
+
+@[expose] public section
 
 /-!
 # The independent folded threshold process

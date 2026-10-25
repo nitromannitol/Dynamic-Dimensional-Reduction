@@ -1,3 +1,5 @@
+module
+
 /-
 The simultaneous induction bookkeeping for odometer regularity and dimensional
 reduction, `dimred-corrected-arxiv.tex`, label `sec:dim_reduction`.  The six predicates below are the five
@@ -6,7 +8,9 @@ The transition predicates in `DimRed.Support.DimRedStep` are reused by the
 arguments which discharge the six induction-step hypotheses; they are not
 duplicated here.
 -/
-import DimRed.Support.DimRedStep
+public import DimRed.Support.DimRedStep
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

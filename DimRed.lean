@@ -1,81 +1,85 @@
-import DimRed.Frozen.BaseCase.ExplicitOdometer
-import DimRed.Support.Fundamental
-import DimRed.Support.Radial
-import DimRed.Support.CubeTwoTerminal
-import DimRed.Support.CubeTwo
-import DimRed.Support.Symmetry
-import DimRed.Support.Stabilize
-import DimRed.Frozen.BaseCase.NoReduction
-import DimRed.Frozen.BaseCase.RadialLaplacian
-import DimRed.Frozen.Main.DimensionalReduction
-import DimRed.Frozen.Main.SandpileReduction
-import DimRed.Frozen.Main.SandpileSelfSimilarity
-import DimRed.Frozen.Main.SelfSimilarity
-import DimRed.Frozen.Main.TerminalReduction
-import DimRed.Frozen.Prelim.AxisMonotonicity
-import DimRed.Frozen.Prelim.DerivativeBound
-import DimRed.Frozen.Prelim.DifferenceComparison
-import DimRed.Frozen.Prelim.ParabolicComparison
-import DimRed.Frozen.Prelim.PtInd
-import DimRed.Frozen.Prelim.Symmetry
-import DimRed.Frozen.Prelim.ToppleLimit
-import DimRed.Frozen.Regularity.Consistency
-import DimRed.Frozen.Regularity.StrongDerivative
-import DimRed.Frozen.Regularity.StrongFacet
-import DimRed.Frozen.Regularity.StrongTopple
-import DimRed.Frozen.Regularity.WeakFacet
-import DimRed.Support.AxisStep
-import DimRed.Support.Basic
-import DimRed.Support.DerivBound
-import DimRed.Support.Difference
-import DimRed.Support.DifferenceStep
-import DimRed.Support.Recursion
-import DimRed.Support.BaseCase
-import DimRed.Support.BaseStep
-import DimRed.Support.BaseInduction
-import DimRed.Support.DimRedCritical
-import DimRed.Support.DimRedStep
-import DimRed.Support.EarlyTimes
-import DimRed.Support.FacetLap
-import DimRed.Support.FacetNbr
-import DimRed.Support.OneDimConsist
-import DimRed.Support.OneDimStrongDeriv
-import DimRed.Support.OneDimStrongFacet
-import DimRed.Support.OneDimTerminal
-import DimRed.Support.OneDimWeak
-import DimRed.Support.SandpileFromOdo
-import DimRed.Support.SnocSimplex
-import DimRed.Support.ToppleTime
-import DimRed.Support.OneDimBoundaryAlt
-import DimRed.Support.OneDimConsistAll
-import DimRed.Support.RegInduction
-import DimRed.Support.StrongDerivPure
-import DimRed.Support.Downset
-import DimRed.Support.FacetNormal
-import DimRed.Support.StrongDerivRaw
-import DimRed.Support.SelfSimilarityMain
-import DimRed.Support.TerminalReduction
-import DimRed.Support.ToppleGeneral
-import DimRed.Support.CornerBound
-import DimRed.Support.CornerReaches
-import DimRed.Support.StrongRawLe
-import DimRed.Support.FacetLapUncond
-import DimRed.Support.WeakFacetLower
-import DimRed.Support.WeakStep
-import DimRed.Support.StrongDerivEarly
-import DimRed.Support.StrongDerivStep
-import DimRed.Support.RegBridges
-import DimRed.Support.RegSteps
-import DimRed.Support.SimplexFold
-import DimRed.MainTheorems
+module
 
-import DimRed.Frozen.Regularity.StrictHeadFacet
-import DimRed.Frozen.Regularity.OneTerminalProfile
-import DimRed.Frozen.Regularity.OneTerminalDerivative
+public import DimRed.Frozen.BaseCase.ExplicitOdometer
+public import DimRed.Support.Fundamental
+public import DimRed.Support.Radial
+public import DimRed.Support.CubeTwoTerminal
+public import DimRed.Support.CubeTwo
+public import DimRed.Support.Symmetry
+public import DimRed.Support.Stabilize
+public import DimRed.Frozen.BaseCase.NoReduction
+public import DimRed.Frozen.BaseCase.RadialLaplacian
+public import DimRed.Frozen.Main.DimensionalReduction
+public import DimRed.Frozen.Main.SandpileReduction
+public import DimRed.Frozen.Main.SandpileSelfSimilarity
+public import DimRed.Frozen.Main.SelfSimilarity
+public import DimRed.Frozen.Main.TerminalReduction
+public import DimRed.Frozen.Prelim.AxisMonotonicity
+public import DimRed.Frozen.Prelim.DerivativeBound
+public import DimRed.Frozen.Prelim.DifferenceComparison
+public import DimRed.Frozen.Prelim.ParabolicComparison
+public import DimRed.Frozen.Prelim.PtInd
+public import DimRed.Frozen.Prelim.Symmetry
+public import DimRed.Frozen.Prelim.ToppleLimit
+public import DimRed.Frozen.Regularity.Consistency
+public import DimRed.Frozen.Regularity.StrongDerivative
+public import DimRed.Frozen.Regularity.StrongFacet
+public import DimRed.Frozen.Regularity.StrongTopple
+public import DimRed.Frozen.Regularity.WeakFacet
+public import DimRed.Support.AxisStep
+public import DimRed.Support.Basic
+public import DimRed.Support.DerivBound
+public import DimRed.Support.Difference
+public import DimRed.Support.DifferenceStep
+public import DimRed.Support.Recursion
+public import DimRed.Support.BaseCase
+public import DimRed.Support.BaseStep
+public import DimRed.Support.BaseInduction
+public import DimRed.Support.DimRedCritical
+public import DimRed.Support.DimRedStep
+public import DimRed.Support.EarlyTimes
+public import DimRed.Support.FacetLap
+public import DimRed.Support.FacetNbr
+public import DimRed.Support.OneDimConsist
+public import DimRed.Support.OneDimStrongDeriv
+public import DimRed.Support.OneDimStrongFacet
+public import DimRed.Support.OneDimTerminal
+public import DimRed.Support.OneDimWeak
+public import DimRed.Support.SandpileFromOdo
+public import DimRed.Support.SnocSimplex
+public import DimRed.Support.ToppleTime
+public import DimRed.Support.OneDimBoundaryAlt
+public import DimRed.Support.OneDimConsistAll
+public import DimRed.Support.RegInduction
+public import DimRed.Support.StrongDerivPure
+public import DimRed.Support.Downset
+public import DimRed.Support.FacetNormal
+public import DimRed.Support.StrongDerivRaw
+public import DimRed.Support.SelfSimilarityMain
+public import DimRed.Support.TerminalReduction
+public import DimRed.Support.ToppleGeneral
+public import DimRed.Support.CornerBound
+public import DimRed.Support.CornerReaches
+public import DimRed.Support.StrongRawLe
+public import DimRed.Support.FacetLapUncond
+public import DimRed.Support.WeakFacetLower
+public import DimRed.Support.WeakStep
+public import DimRed.Support.StrongDerivEarly
+public import DimRed.Support.StrongDerivStep
+public import DimRed.Support.RegBridges
+public import DimRed.Support.RegSteps
+public import DimRed.Support.SimplexFold
+public import DimRed.MainTheorems
 
-import DimRed.Frozen.Definitions.FoldedLift
-import DimRed.Frozen.Definitions.FoldedNeighbors
-import DimRed.Frozen.Definitions.FoldedOdometer
-import DimRed.Frozen.Definitions.Pile
-import DimRed.Frozen.Definitions.TerminalPile
-import DimRed.Frozen.Definitions.Maximum
+public import DimRed.Frozen.Regularity.StrictHeadFacet
+public import DimRed.Frozen.Regularity.OneTerminalProfile
+public import DimRed.Frozen.Regularity.OneTerminalDerivative
+
+public import DimRed.Frozen.Definitions.FoldedLift
+public import DimRed.Frozen.Definitions.FoldedNeighbors
+public import DimRed.Frozen.Definitions.FoldedOdometer
+public import DimRed.Frozen.Definitions.Pile
+public import DimRed.Frozen.Definitions.TerminalPile
+public import DimRed.Frozen.Definitions.Maximum
+
+@[expose] public section

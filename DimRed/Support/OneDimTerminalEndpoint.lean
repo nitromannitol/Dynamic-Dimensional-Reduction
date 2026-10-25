@@ -1,5 +1,9 @@
-import DimRed.Support.OneDimTerminal
-import DimRed.Support.Recursion
+module
+
+public import DimRed.Support.OneDimTerminal
+public import DimRed.Support.Recursion
+
+@[expose] public section
 
 /-
 The full printed legal interval of the one-dimensional terminal derivative,

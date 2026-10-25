@@ -1,3 +1,5 @@
+module
+
 /-
 The topple time exists.  `DimRed/Support/ToppleTime.lean` reduces its existence to the
 odometer at the corner `(j, 1_{d-1})` of `C_{2j}^{(d)}` reaching height `j`; that is proved
@@ -8,9 +10,11 @@ exceeds it, so nothing weaker than the exact one-dimensional value would do.
 The descent uses dimensional reduction in every lower dimension, which is an earlier instance
 of the induction of Sections 4 and 5, carried here as `hdimred`.
 -/
-import DimRed.Support.ToppleTime
-import DimRed.Support.OneDimTerminal
-import DimRed.Support.EarlyTimes
+public import DimRed.Support.ToppleTime
+public import DimRed.Support.OneDimTerminal
+public import DimRed.Support.EarlyTimes
+
+@[expose] public section
 
 namespace DimRed
 

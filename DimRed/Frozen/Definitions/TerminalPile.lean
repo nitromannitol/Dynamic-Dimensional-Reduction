@@ -1,3 +1,5 @@
+module
+
 /-
 Terminal-pile definition of the sandpile corollary in the corrected edition. `dimred-corrected-arxiv.tex:145-161` (label
 `sandpile_corollary`), where the terminal pile `s_\infty` is used; its defining
@@ -14,7 +16,9 @@ This unit records the terminal pile `s_∞` as its literal defining equation,
 `2d` plus the Laplacian of the final odometer, which is the telescoped form of
 the recursion at lines 95-96 with `s_0 ≡ 2d` and `v_0 = 0`.
 -/
-import DimRed.Support.SourceCarriers
+public import DimRed.Support.SourceCarriers
+
+@[expose] public section
 
 open LatticeProb DimRed
 

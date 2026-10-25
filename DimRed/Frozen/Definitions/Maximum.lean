@@ -1,3 +1,5 @@
+module
+
 /-
 Nonempty-maximum clause of the topple-limit statement in the corrected edition. `dimred-corrected-arxiv.tex:599-606` (label
 `topple_limit`, the finite maximum over the sorted domain):
@@ -10,7 +12,9 @@ This unit records the maximum over the fundamental domain in that statement as
 the supremum over the nonempty simplex, `Corrected.maximum`, which takes the
 nonemptiness proof as an argument.
 -/
-import DimRed.Support.SourceCarriers
+public import DimRed.Support.SourceCarriers
+
+@[expose] public section
 
 open LatticeProb DimRed
 

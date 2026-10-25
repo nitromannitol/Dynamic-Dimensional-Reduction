@@ -1,6 +1,10 @@
-import DimRed.Support.EarlyTimes
-import DimRed.Support.AxisStep
-import DimRed.Support.NonnegativeUpdate
+module
+
+public import DimRed.Support.EarlyTimes
+public import DimRed.Support.AxisStep
+public import DimRed.Support.NonnegativeUpdate
+
+@[expose] public section
 
 namespace DimRed
 
