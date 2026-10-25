@@ -24,7 +24,6 @@ lemma peel_inSimplex {i j : ℕ} (x : Fin i → ℤ) (M : ℕ) (hM : 1 ≤ M)
   · rw [facetPoint_succ] at hxs
     have htemp : inSimplex ((i + 1 + m) + 1) M (Fin.snoc (facetPoint x 1 m) 1) := by
       convert hxs using 1
-      omega
     have hpeeled : inSimplex (i + 1 + m) M (facetPoint x 1 m) :=
       ((inSimplex_snoc_one hM (facetPoint x 1 m)).mp htemp)
     exact ih hpeeled
@@ -51,7 +50,6 @@ lemma inSimplex_facetPoint_two_of_inSimplex_facetPoint_one {M i j k : ℕ} (x : 
     -- hxs_inner: inSimplex (i + 1 + m) M (facetPoint x 2 m)
     -- inSimplex_snoc_one gives equivalence with (i+1+m)+1 instead of i+1+(m+1)
     convert ((inSimplex_snoc_one hM1 (facetPoint x 2 m)).mpr hxs_inner) using 1
-    omega
 
 /-- Dimensional reduction applied `j` times to peel trailing ones from a facet point,
 reducing dimension `i+1+j` to `i+1`.  The proof is by induction on `j`.
