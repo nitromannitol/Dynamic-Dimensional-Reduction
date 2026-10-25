@@ -138,7 +138,7 @@ counts are generated from `ledger/manifest.yaml` by
   no comparator pair.
 - **Pinned toolchain and dependencies.** Lean `v4.35.0-rc2`, Mathlib
   `065356127b1dc0016f66b7283ce0ce2c4055aa55` and Lattice-Probability
-  `d6dc1aaae0ad1bdfd353cb7e1817a41406131e18`, recorded in
+  `a40ffead0cc9abcfc25ab00544a772d4339edf8d`, recorded in
   [`lake-manifest.json`](lake-manifest.json).
 
 ## Size
@@ -246,5 +246,5 @@ review and a public registry record.
 
 The module compatibility revision preserves the mathematical definitions and frozen
 statements. Its pinned Lattice-Probability source adds public module interfaces and
-updates two existing walk-proof calls to the current Mathlib API. Full Palomar
+updates existing walk-proof calls to the current Mathlib API. Full Palomar
 verification checks the selected Challenge/Solution pair at the dispatched commit.
