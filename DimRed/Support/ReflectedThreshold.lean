@@ -45,12 +45,12 @@ theorem foldedLift_of_inCube (d N : ℕ)
     (v : SimplexSite d (sideHalf N) → ℤ) (y : Site d) (hy : inCube d N y) :
     foldedLift d N v y =
       v ⟨toSimplexPointN d N y, inSimplex_toSimplexPointN d N y hy⟩ := by
-  rw [foldedLift, dif_pos hy]
+  rw [foldedLift, dite_eq_left hy]
 
 theorem foldedLift_of_not_inCube (d N : ℕ)
     (v : SimplexSite d (sideHalf N) → ℤ) (y : Site d) (hy : ¬ inCube d N y) :
     foldedLift d N v y = 0 := by
-  rw [foldedLift, dif_neg hy]
+  rw [foldedLift, dite_eq_right hy]
 
 theorem foldedNbrSum_eq_nbrSum (d N : ℕ)
     (v : SimplexSite d (sideHalf N) → ℤ) (x : SimplexSite d (sideHalf N)) :
@@ -85,8 +85,8 @@ private theorem odo_congr_on_cube (d N : ℕ) (s₀ s₁ : Site d → ℤ)
   | succ t ih =>
     funext x
     by_cases hx : inCube d N x
-    · simp only [odo, if_pos hx, ih, h x hx]
-    · simp only [odo, if_neg hx]
+    · simp only [odo, ite_eq_left hx, ih, h x hx]
+    · simp only [odo, ite_eq_right hx]
 
 /-- Cube-local initial symmetry suffices for ambient odometer symmetry. -/
 theorem odo_cubeSym_of_cubeSymmetric (d N : ℕ) (s₀ : Site d → ℤ)
@@ -99,10 +99,10 @@ theorem odo_cubeSym_of_cubeSymmetric (d N : ℕ) (s₀ : Site d → ℤ)
     dsimp only [s₁]
     simp only [cubeSym_inCube]
     by_cases hy : inCube d N y
-    · simp only [if_pos hy, hsym ρ δ y hy]
-    · simp only [if_neg hy]
+    · simp only [ite_eq_left hy, hsym ρ δ y hy]
+    · simp only [ite_eq_right hy]
   have heq : odo d N s₀ t = odo d N s₁ t :=
-    odo_congr_on_cube d N s₀ s₁ (fun y hy => by simp only [s₁, if_pos hy]) t
+    odo_congr_on_cube d N s₀ s₁ (fun y hy => by simp only [s₁, ite_eq_left hy]) t
   rw [heq]
   exact odo_cubeSym d N s₁ hsym₁ t π ε x
 
@@ -193,7 +193,7 @@ example (t : ℕ) (x : SimplexSite 1 (sideHalf 4)) :
       foldedOdo 1 4 (fun y => if inCube 1 4 y then 4 else y 0) t x := by
   apply (symmetry_lemma 1 4 _ ?_).2 t x
   intro π ε y hy
-  simp only [if_pos hy, if_pos ((cubeSym_inCube 1 4 π ε y).2 hy)]
+  simp only [ite_eq_left hy, ite_eq_left ((cubeSym_inCube 1 4 π ε y).2 hy)]
 
 -- Odd reflection sends 0 to 2; even reflection sends 0 to 1.
 example : foldPointN 1 3 (fun _ => 0) = (fun _ => 2) := by

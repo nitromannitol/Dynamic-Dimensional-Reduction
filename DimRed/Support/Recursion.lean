@@ -21,14 +21,14 @@ theorem odo_eq_zero_outside (d N : ℕ) (s₀ : Site d → ℤ) (t : ℕ) (x : S
     (hx : ¬ inCube d N x) : odo d N s₀ t x = 0 := by
   induction t with
   | zero => rfl
-  | succ n _ => simp only [odo, if_neg hx]
+  | succ n _ => simp only [odo, ite_eq_right hx]
 
 /-- A site topples at most once per time step. -/
 theorem odo_succ_sub_bounds (d N : ℕ) (s₀ : Site d → ℤ) (t : ℕ) (x : Site d) :
     0 ≤ odo d N s₀ (t + 1) x - odo d N s₀ t x ∧
       odo d N s₀ (t + 1) x - odo d N s₀ t x ≤ 1 := by
   by_cases hx : inCube d N x
-  · simp only [odo, if_pos hx]
+  · simp only [odo, ite_eq_left hx]
     split <;> omega
   · rw [odo_eq_zero_outside d N s₀ (t + 1) x hx, odo_eq_zero_outside d N s₀ t x hx]
     omega
@@ -76,7 +76,7 @@ theorem sandp_zero (d N : ℕ) (s₀ : Site d → ℤ) (x : Site d) :
 theorem odo_succ_sub_eq (d N : ℕ) (s₀ : Site d → ℤ) (t : ℕ) (x : Site d) (hx : inCube d N x) :
     odo d N s₀ (t + 1) x - odo d N s₀ t x
       = if 2 * (d : ℤ) ≤ sandp d N s₀ t x then 1 else 0 := by
-  simp only [odo, if_pos hx, sandp]; ring_nf
+  simp only [odo, ite_eq_left hx, sandp]; ring_nf
 
 /-- The paper's second display, `s_{t+1} = s_t + Δ(v_{t+1} - v_t)`. -/
 theorem sandp_succ (d N : ℕ) (s₀ : Site d → ℤ) (t : ℕ) (x : Site d) :

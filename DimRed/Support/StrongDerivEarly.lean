@@ -51,9 +51,9 @@ theorem two_diff_floor_step (d M n : ℕ) (hd : 1 ≤ d) (k : Fin d) (x : Site d
     simp only [Pi.add_apply, unit, Pi.single_apply]
     by_cases hik : i = k
     · subst hik
-      simp only [if_true]
+      simp only [ite_true]
       omega
-    · simp only [if_neg hik, add_zero]
+    · simp only [ite_eq_right hik, add_zero]
       omega
   have hG : nbrSum (fun y : Site d => 2 * y k) x = 2 * (d : ℤ) * (2 * x k) := by
     have h := nbrSum_affine (fun m : Fin d => if m = k then (2:ℤ) else 0) 0 x
@@ -203,9 +203,9 @@ theorem odo_two_diff_early (d M T : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M)
                 simp only [Pi.add_apply, unit, Pi.single_apply]
                 by_cases hik : i = k
                 · subst hik
-                  simp only [if_true]
+                  simp only [ite_true]
                   omega
-                · simp only [if_neg hik, add_zero]
+                · simp only [ite_eq_right hik, add_zero]
                   omega) k (by rw [add_unit_self, hxk]; ring)
           linarith
         have h2 : 2 * x k = 2 * ((M : ℤ) - 1) := by rw [hxk]
@@ -233,7 +233,7 @@ theorem strong_deriv_zero_head (d M t : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
     by_cases hi : i = ⟨0, by omega⟩
     · subst hi
       norm_num
-    · rw [if_neg hi, if_neg hi]
+    · rw [ite_eq_right hi, ite_eq_right hi]
       norm_num
   rw [h2] at h
   norm_num at h

@@ -81,13 +81,13 @@ theorem add_unit_self (u : Site d) (i : Fin d) : (u + unit i) i = u i + 1 := by
   rw [add_unit_apply]; simp
 
 theorem add_unit_other (u : Site d) (i k : Fin d) (h : k ≠ i) : (u + unit i) k = u k := by
-  rw [add_unit_apply, if_neg h]; ring
+  rw [add_unit_apply, ite_eq_right h]; ring
 
 theorem sub_unit_self (u : Site d) (i : Fin d) : (u - unit i) i = u i - 1 := by
   rw [sub_unit_apply]; simp
 
 theorem sub_unit_other (u : Site d) (i k : Fin d) (h : k ≠ i) : (u - unit i) k = u k := by
-  rw [sub_unit_apply, if_neg h]; ring
+  rw [sub_unit_apply, ite_eq_right h]; ring
 
 end Steps
 
@@ -160,13 +160,13 @@ theorem odo_axis_refl (hd : 1 ≤ d) (c : ℤ) (hc0 : 0 ≤ c)
                   have e3 : (fun l => if l = k then 1 - (u - unit k) k else (u - unit k) l) = u := by
                     funext l
                     by_cases hlk : l = k
-                    · subst hlk; rw [if_pos rfl, sub_unit_apply]; simp [hu1]
-                    · rw [if_neg hlk, sub_unit_apply]; simp [hlk]
+                    · subst hlk; rw [ite_eq_left rfl, sub_unit_apply]; simp [hu1]
+                    · rw [ite_eq_right hlk, sub_unit_apply]; simp [hlk]
                   rw [e3] at hrefl
                   exact le_of_eq hrefl
               · refine ih (u - unit k) i ?_
                 rw [sub_unit_apply]
-                simp only [if_neg (fun h : i = k => hki h.symm)]
+                simp only [ite_eq_right (fun h : i = k => hki h.symm)]
                 omega
             linarith
           linarith
@@ -233,11 +233,11 @@ theorem inCube_of_rot (u : Site d) (i j : Fin d) (hij : i ≠ j) (hu : u j ≤ u
   have hM : (0 : ℤ) ≤ (M : ℤ) := Int.natCast_nonneg M
   have hi : 1 - (M : ℤ) ≤ u i + 1 ∧ u i + 1 ≤ (M : ℤ) := by
     have h := hc i
-    rw [rot_apply, loCoord_two_mul, hiCoord_two_mul, if_pos rfl, if_neg hij] at h
+    rw [rot_apply, loCoord_two_mul, hiCoord_two_mul, ite_eq_left rfl, ite_eq_right hij] at h
     simpa using h
   have hj : 1 - (M : ℤ) ≤ u j - 1 ∧ u j - 1 ≤ (M : ℤ) := by
     have h := hc j
-    rw [rot_apply, loCoord_two_mul, hiCoord_two_mul, if_neg (Ne.symm hij), if_pos rfl] at h
+    rw [rot_apply, loCoord_two_mul, hiCoord_two_mul, ite_eq_right (Ne.symm hij), ite_eq_left rfl] at h
     simpa using h
   intro k
   rw [loCoord_two_mul, hiCoord_two_mul]
@@ -246,7 +246,7 @@ theorem inCube_of_rot (u : Site d) (i j : Fin d) (hij : i ≠ j) (hu : u j ≤ u
   · by_cases hkj : k = j
     · subst hkj; omega
     · have h := hc k
-      rw [rot_apply, loCoord_two_mul, hiCoord_two_mul, if_neg hki, if_neg hkj] at h
+      rw [rot_apply, loCoord_two_mul, hiCoord_two_mul, ite_eq_right hki, ite_eq_right hkj] at h
       simpa using h
 
 /-- Axis monotonicity across a rotation mirror: a step away from the mirror

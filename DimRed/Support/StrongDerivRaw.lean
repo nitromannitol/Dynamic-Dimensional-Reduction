@@ -209,7 +209,7 @@ theorem mixed_top (d M : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M) (s : ℕ) (k l : Fin
     rw [hiCoord_two_mul] at h
     have hk' : (x + unit k + unit l) k = x k + 1 + (if k = l then 1 else 0) := by
       rw [add_unit_apply, add_unit_apply]
-      rw [if_pos rfl]
+      rw [ite_eq_left rfl]
     rw [hk', hk] at h
     split_ifs at h <;> linarith [h.2]
   have hzero : odoUnif d (2 * M) (s + 1) (x + unit k + unit l) = 0 :=
@@ -243,16 +243,16 @@ theorem mixed_reflect (d M T : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M)
     rw [add_unit_apply]
     by_cases hml : m = l
     · subst hml
-      rw [if_pos rfl]
+      rw [ite_eq_left rfl]
       constructor <;> omega
-    · rw [if_neg hml, add_zero]; exact hm
+    · rw [ite_eq_right hml, add_zero]; exact hm
   have h2 : ∃ m, 2 ≤ (x + unit l) m := ⟨l, by
     rw [add_unit_self]
     have := (hx l).1
     omega⟩
   have hk1' : (x + unit l) k = 1 := by
     rw [add_unit_apply]
-    rw [if_neg hkl, add_zero, hk1]
+    rw [ite_eq_right hkl, add_zero, hk1]
   have hlag := odo_facet_lag d M T hd hM hS s (by omega) (x + unit l) hpos k hk1' h2
   have htd := odo_time_diff d M T hd hM hW s (by omega) l x hx
   have hcomm : x + unit k + unit l = (x + unit l) + unit k := by abel
@@ -270,13 +270,13 @@ theorem mixed_hxw (d M : ℕ) (k l : Fin d) (hkl : k ≠ l) (x : Site d) (hx : i
   simp only [Pi.add_apply, unit, Pi.single_apply]
   by_cases hik : i = k
   · subst hik
-    simp only [if_neg hkl, add_zero]
+    simp only [ite_eq_right hkl, add_zero]
     omega
-  · simp only [if_neg hik]
+  · simp only [ite_eq_right hik]
     by_cases hil : i = l
     · subst hil
       omega
-    · simp only [if_neg hil, add_zero]
+    · simp only [ite_eq_right hil, add_zero]
       omega
 
 /-- The mixed second difference, the assertion `B_t` in the proof of Lemma `lem:strict-head-facet` in `dimred-corrected-arxiv.tex`. -/
@@ -416,14 +416,14 @@ theorem swap_add_eq_add_add (d : ℕ) (k l : Fin d) (hkl : k ≠ l) (x : Site d)
     rw [Equiv.swap_apply_left]
     rw [add_unit_self]
     omega
-  · rw [if_neg hmk]
+  · rw [ite_eq_right hmk]
     by_cases hml : m = l
     · subst hml
       rw [Equiv.swap_apply_right]
       rw [add_unit_other d x k m hmk]
       omega
     · rw [Equiv.swap_apply_def]
-      simp only [hmk, hml, if_false]
+      simp only [hmk, hml, ite_false]
       rw [add_unit_other d x k m hmk]
       ring
 
@@ -485,9 +485,9 @@ theorem pure_floor_step (d M n : ℕ) (hd : 1 ≤ d) (k : Fin d) (x : Site d)
     simp only [Pi.add_apply, unit, Pi.single_apply]
     by_cases hik : i = k
     · subst hik
-      simp only [if_true]
+      simp only [ite_true]
       omega
-    · simp only [if_neg hik, add_zero]
+    · simp only [ite_eq_right hik, add_zero]
       omega
   have hG : nbrSum (fun y : Site d => 2 * y k) x = 2 * (d : ℤ) * (2 * x k) := by
     have h := nbrSum_affine (fun m : Fin d => if m = k then (2:ℤ) else 0) 0 x

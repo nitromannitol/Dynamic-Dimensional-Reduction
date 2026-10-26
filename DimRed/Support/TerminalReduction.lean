@@ -49,9 +49,9 @@ private theorem terminal_quad_step_nonneg (d N : ℕ) (x : Site d)
   have hstepk := add_unit_apply d x i k
   rw [hstepk]
   by_cases hki : k = i
-  · simp only [if_pos hki]
+  · simp only [ite_eq_left hki]
     nlinarith
-  · simp only [if_neg hki]
+  · simp only [ite_eq_right hki]
     nlinarith
 
 private theorem terminal_quad_sub_step_nonneg (d N : ℕ) (x : Site d)
@@ -63,9 +63,9 @@ private theorem terminal_quad_sub_step_nonneg (d N : ℕ) (x : Site d)
   have hstepk := sub_unit_apply d x i k
   rw [hstepk]
   by_cases hki : k = i
-  · simp only [if_pos hki]
+  · simp only [ite_eq_left hki]
     nlinarith
-  · simp only [if_neg hki]
+  · simp only [ite_eq_right hki]
     nlinarith
 
 private theorem terminal_quad_neighbour_sum (d N : ℕ) (x : Site d) :
@@ -89,9 +89,9 @@ private theorem terminal_quad_neighbour_sum (d N : ℕ) (x : Site d) :
       intro k
       rw [add_unit_apply, sub_unit_apply]
       by_cases hki : k = i
-      · simp only [if_pos hki]
+      · simp only [ite_eq_left hki]
         ring
-      · simp only [if_neg hki]
+      · simp only [ite_eq_right hki]
         ring
     rw [Finset.sum_congr rfl (fun k _ => hpoint k)]
     rw [Finset.sum_sub_distrib]
@@ -110,17 +110,17 @@ private theorem terminal_barrier_lap_le (d N : ℕ) (_hd : 1 ≤ d) (x : Site d)
       terminalBarrier d N (x + unit i) ≤ terminalQuad d N (x + unit i) := by
     intro i
     by_cases hi : inCube d N (x + unit i)
-    · simp only [terminalBarrier, if_pos hi]
+    · simp only [terminalBarrier, ite_eq_left hi]
       exact le_rfl
-    · rw [terminalBarrier, if_neg hi]
+    · rw [terminalBarrier, ite_eq_right hi]
       exact terminal_quad_step_nonneg d N x hx i
   have hminus : ∀ i : Fin d,
       terminalBarrier d N (x - unit i) ≤ terminalQuad d N (x - unit i) := by
     intro i
     by_cases hi : inCube d N (x - unit i)
-    · simp only [terminalBarrier, if_pos hi]
+    · simp only [terminalBarrier, ite_eq_left hi]
       exact le_rfl
-    · rw [terminalBarrier, if_neg hi]
+    · rw [terminalBarrier, ite_eq_right hi]
       exact terminal_quad_sub_step_nonneg d N x hx i
   have hnb : nbrSum (terminalBarrier d N) x ≤ nbrSum (terminalQuad d N) x := by
     unfold nbrSum

@@ -48,7 +48,7 @@ theorem facetPoint_zero_head (c : ℤ) (j : ℕ) :
         = (⟨0, by omega⟩ : Fin (0 + 1 + j)) := by
       ext
       rfl
-    rw [hcast, if_pos rfl]
+    rw [hcast, ite_eq_left rfl]
   · rw [Fin.append_right]
     have hne : (Fin.natAdd (0 + 1) b : Fin (0 + 1 + j))
         ≠ (⟨0, by omega⟩ : Fin (0 + 1 + j)) := by
@@ -57,7 +57,7 @@ theorem facetPoint_zero_head (c : ℤ) (j : ℕ) :
       have h2 : ((⟨0, by omega⟩ : Fin (0 + 1 + j))).val = 0 := rfl
       rw [h] at h1
       omega
-    rw [if_neg hne]
+    rw [ite_eq_right hne]
 
 /-- The strong derivative clause at one triple, from the earlier instances of
 the joint induction.  The earlier instances enter only through weak facet
@@ -87,8 +87,8 @@ theorem deriv_step_of_earlier (d M t : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
       rw [hx0, facetPoint_zero_head]
       funext k
       by_cases hk : k = (⟨0, by omega⟩ : Fin (0 + 1 + j))
-      · rw [if_pos hk]
-      · rw [if_neg hk]
+      · rw [ite_eq_left hk]
+      · rw [ite_eq_right hk]
     have h3 : facetPoint x 3 j
         = fun k : Fin (0 + 1 + j) =>
             if k = (⟨0, by omega⟩ : Fin (0 + 1 + j)) then 3 else 1 := by

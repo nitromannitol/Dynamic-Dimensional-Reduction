@@ -131,8 +131,8 @@ theorem toppleTime_succ_lower
           (n : ℕ∞)).2 ⟨n, le_rfl, hn1, hnval⟩
       rw [← hq] at htn
       exact htn
-    have hnq' : n ≤ q := ENat.coe_le_coe.mp hnq
-    have hqn' : q ≤ n := ENat.coe_le_coe.mp hq_n
+    have hnq' : n ≤ q := ENat.natCast_le_natCast.mp hnq
+    have hqn' : q ≤ n := ENat.natCast_le_natCast.mp hq_n
     have hn : n = q := Nat.le_antisymm hnq' hqn'
     have hcorner_low : cornerPoint 1 (M - 2) =
         fun _ => ((M - 2 : ℕ) : ℤ) := by
@@ -147,7 +147,7 @@ theorem toppleTime_succ_lower
     have hqpos : 1 ≤ q := by
       have h := one_le_toppleTime 1 (M - 2)
       rw [← hq] at h
-      exact ENat.coe_le_coe.mp h
+      exact ENat.natCast_le_natCast.mp h
     have hprev :
         odoUnif 1 (2 * (M - 2)) (q - 1) (fun _ => ((M - 2 : ℕ) : ℤ)) ≤
           ((M - 2 : ℕ) : ℤ) - 1 := by
@@ -158,7 +158,7 @@ theorem toppleTime_succ_lower
       · have hqprevpos : 1 ≤ q - 1 := by omega
         have hqprevlt : ((q - 1 : ℕ) : ℕ∞) < toppleTime 1 (M - 2) := by
           rw [← hq]
-          exact ENat.coe_lt_coe.mpr (show q - 1 < q by omega)
+          exact ENat.natCast_lt_natCast.mpr (show q - 1 < q by omega)
         have hlt := odo_corner_lt_of_lt_toppleTime 1 (M - 2)
           (by norm_num) hlow (q - 1) hqprevlt hqprevpos
         have hcorner : cornerPoint 1 (M - 2) =
@@ -219,15 +219,15 @@ theorem toppleTime_succ_lower
           (n : ℕ∞)).2 ⟨n, le_rfl, hn1, hnval⟩
       rw [← hT] at htn
       exact htn
-    have hnT' : n ≤ T := ENat.coe_le_coe.mp hnT
-    have hTn' : T ≤ n := ENat.coe_le_coe.mp hT_n
+    have hnT' : n ≤ T := ENat.natCast_le_natCast.mp hnT
+    have hTn' : T ≤ n := ENat.natCast_le_natCast.mp hT_n
     have hn : n = T := Nat.le_antisymm hnT' hTn'
     simpa [hn] using hnval
   have hqT : q ≤ T := by
     by_contra hnot
     have hTq : T < q := by omega
     have hTlelow : (T : ℕ∞) ≤ toppleTime 1 (M - 2) := by
-      exact le_trans (ENat.coe_le_coe.mpr (show T ≤ q by omega)) (le_of_eq hq)
+      exact le_trans (ENat.natCast_le_natCast.mpr (show T ≤ q by omega)) (le_of_eq hq)
     have hcrossT := hconsist T hTlelow
     have hlowT :
         odoUnif 1 (2 * (M - 2)) T (fun _ => ((M - 2 : ℕ) : ℤ)) <
@@ -238,7 +238,7 @@ theorem toppleTime_succ_lower
         omega
       · have hTpos : 1 ≤ T := by omega
         have hTlt : (T : ℕ∞) < toppleTime 1 (M - 2) := by
-          exact (ENat.coe_lt_coe.mpr hTq).trans_eq hq
+          exact (ENat.natCast_lt_natCast.mpr hTq).trans_eq hq
         have hlt := odo_corner_lt_of_lt_toppleTime 1 (M - 2)
           (by norm_num) hlow T hTlt hTpos
         have hcorner := hcorner_low
@@ -286,8 +286,8 @@ theorem toppleTime_succ_lower
   calc
     toppleTime 1 (M - 2) + 2 = (q : ℕ∞) + 2 := by rw [← hq]; rfl
     _ = ((q + 2 : ℕ) : ℕ∞) := by
-      norm_num [ENat.coe_add]
-    _ ≤ (T : ℕ∞) := ENat.coe_le_coe.mpr hq2T
+      norm_num [ENat.natCast_add]
+    _ ≤ (T : ℕ∞) := ENat.natCast_le_natCast.mpr hq2T
     _ = toppleTime 1 (M - 1) := hT
 
 /-- The `hdouble` input of `toppleTime_succ_lower` is vacuously true.  At the
@@ -346,7 +346,7 @@ theorem one_dim_double (M q : ℕ) (hM : 4 ≤ M)
       (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ)) := by
     by_contra hcon
     push Not at hcon
-    rw [if_neg (show ¬ (2 ≤ sandp 1 (2 * (M - 1)) (fun _ => 2) q
+    rw [ite_eq_right (show ¬ (2 ≤ sandp 1 (2 * (M - 1)) (fun _ => 2) q
       (fun _ : Fin 1 => ((M - 1 : ℕ) : ℤ))) from not_le.mpr hcon)] at hstep
     rw [hlarge] at hstep
     omega
@@ -664,7 +664,7 @@ theorem sandp_corner_two :
     exact h'
   have h2 : odo 1 4 (fun _ => 2) 2 (fun _ : Fin 1 => (2 : ℤ)) = 1 := by
     rw [odo_succ_eq 1 4 (fun _ => 2) 1 _ hcube, h1]
-    rw [if_neg (by rw [sandp_corner_one]; norm_num)]
+    rw [ite_eq_right (by rw [sandp_corner_one]; norm_num)]
     norm_num
   rw [sandp, lap]
   rw [h2]
@@ -701,7 +701,7 @@ theorem sandp_corner_two :
       exact h'
     rw [h1']
     norm_num
-    rw [if_pos sandp_corner_one_neighbour]
+    rw [ite_eq_left sandp_corner_one_neighbour]
     norm_num
   norm_num at hone ⊢
   linarith [hone]
@@ -720,16 +720,16 @@ theorem toppleTime_one_two : toppleTime 1 2 = 3 := by
     norm_num
   have h1 : odo 1 4 (fun _ => 2) 1 (fun _ : Fin 1 => (2 : ℤ)) = 1 := by
     simp only [odo]
-    rw [if_pos hcube]
+    rw [ite_eq_left hcube]
     norm_num [lap, nbrSum, Fin.sum_univ_one, unit]
   have h2 : odo 1 4 (fun _ => 2) 2 (fun _ : Fin 1 => (2 : ℤ)) = 1 := by
     rw [odo_succ_eq 1 4 (fun _ => 2) 1 _ hcube, h1]
-    rw [if_neg (by rw [sandp_corner_one]; norm_num)]
+    rw [ite_eq_right (by rw [sandp_corner_one]; norm_num)]
     norm_num
   have h3 : 2 ≤ odo 1 4 (fun _ => 2) 3 (fun _ : Fin 1 => (2 : ℤ)) := by
     rw [odo_succ_eq 1 4 (fun _ => 2) 2 _ hcube, h2]
     norm_num
-    rw [if_pos sandp_corner_two]
+    rw [ite_eq_left sandp_corner_two]
     norm_num
   have hle : toppleTime 1 2 ≤ 3 := by
     rw [toppleTime_eq_corner 1 2 (by norm_num) (by omega)]
@@ -740,7 +740,7 @@ theorem toppleTime_one_two : toppleTime 1 2 = 3 := by
     have hmem := (toppleTime_le_iff 1 2 (by norm_num) (by omega)
       ⟨3, by norm_num, by rw [hc]; exact h3⟩ (2 : ℕ∞)).mp hcon
     obtain ⟨n, hn, hn1, hnval⟩ := hmem
-    have hn2 : n ≤ 2 := ENat.coe_le_coe.mp hn
+    have hn2 : n ≤ 2 := ENat.natCast_le_natCast.mp hn
     -- the odometer is monotone in time, so it is at most one for `n ≤ 2`
     have hmono : odoUnif 1 4 n (fun _ : Fin 1 => (2 : ℤ))
         ≤ odoUnif 1 4 2 (fun _ : Fin 1 => (2 : ℤ)) :=
@@ -761,9 +761,9 @@ theorem toppleTime_one_two : toppleTime 1 2 = 3 := by
     -- `τ_2 < 3` and `τ_2 ≤ 3` make `τ_2` a natural number below three
     obtain ⟨T, hT, _⟩ := (WithTop.le_coe_iff).mp hle
     rw [hT] at hcon
-    have hT3 : T < 3 := ENat.coe_lt_coe.mp hcon
+    have hT3 : T < 3 := ENat.natCast_lt_natCast.mp hcon
     have hT2 : T ≤ 2 := by omega
-    exact hgt (by rw [hT]; exact ENat.coe_le_coe.mpr hT2)
+    exact hgt (by rw [hT]; exact ENat.natCast_le_natCast.mpr hT2)
   exact le_antisymm hle hge
 theorem one_dim_tau_gap (M t : ℕ) (hM : 3 ≤ M) (ht : toppleTime 1 (M - 1) ≤ (t : ℕ∞))
     (hconsist : RegConsist 1 M t)
@@ -853,7 +853,7 @@ theorem one_dim_tau_gap (M t : ℕ) (hM : 3 ≤ M) (ht : toppleTime 1 (M - 1) �
               (q' : ℕ∞)).mp (le_of_eq hq'.symm)
             obtain ⟨n, hn, hn1, hnval⟩ := hle
             have hq'le : (q' : ℕ∞) ≤ toppleTime 1 (M - 2) := le_of_eq hq'
-            have hnq : n ≤ q' := ENat.coe_le_coe.mp hn
+            have hnq : n ≤ q' := ENat.natCast_le_natCast.mp hn
             have hmono : odoUnif 1 (2 * (M - 2)) n (cornerPoint 1 (M - 2))
                 ≤ odoUnif 1 (2 * (M - 2)) q' (cornerPoint 1 (M - 2)) :=
               odo_mono 1 (2 * (M - 2)) (fun _ => 2) hnq (cornerPoint 1 (M - 2))
@@ -889,12 +889,12 @@ theorem one_dim_tau_gap (M t : ℕ) (hM : 3 ≤ M) (ht : toppleTime 1 (M - 1) �
         have hle : q' ≤ 1 := by
           have h2 : (q' : ℕ∞) ≤ toppleTime 1 (3 - 2) := le_of_eq hq'
           rw [show (3 : ℕ) - 2 = 1 by norm_num, h1] at h2
-          exact ENat.coe_le_coe.mp h2
+          exact ENat.natCast_le_natCast.mp h2
         have hge : 1 ≤ q' := by
           have h2 : (1 : ℕ∞) ≤ (q' : ℕ∞) := by
             rw [hq']
             exact one_le_toppleTime 1 (3 - 2)
-          exact ENat.coe_le_coe.mp h2
+          exact ENat.natCast_le_natCast.mp h2
         omega
       subst hq1
       have hc : cornerPoint 1 2 = (fun _ : Fin 1 => (2 : ℤ)) := by
@@ -917,12 +917,12 @@ theorem one_dim_tau_gap (M t : ℕ) (hM : 3 ≤ M) (ht : toppleTime 1 (M - 1) �
         exact h'
       have h2v : odo 1 4 (fun _ => 2) 2 (fun _ : Fin 1 => (2 : ℤ)) = 1 := by
         rw [odo_succ_eq 1 4 (fun _ => 2) 1 _ hcube, h1v]
-        rw [if_neg (by rw [sandp_corner_one]; norm_num)]
+        rw [ite_eq_right (by rw [sandp_corner_one]; norm_num)]
         norm_num
       have h3v : 2 ≤ odo 1 4 (fun _ => 2) 3 (fun _ : Fin 1 => (2 : ℤ)) := by
         rw [odo_succ_eq 1 4 (fun _ => 2) 2 _ hcube, h2v]
         norm_num
-        rw [if_pos sandp_corner_two]
+        rw [ite_eq_left sandp_corner_two]
         norm_num
       rw [hc]
       -- the hypothesis `hdbl` is false at `M = 3`: the corner of the side-four
@@ -981,7 +981,7 @@ theorem toppleTime_mono_scale (a b : ℕ) (ha : 1 ≤ a) (hab : a ≤ b)
   have hbT : (b : ℤ) ≤ odoUnif 1 (2 * b) T (cornerPoint 1 b) := by
     have h := (toppleTime_le_iff 1 b (by norm_num) hb1 hhitb (T : ℕ∞)).mp hTle
     obtain ⟨n, hn, hn1, hnval⟩ := h
-    have hnT : n ≤ T := ENat.coe_le_coe.mp hn
+    have hnT : n ≤ T := ENat.natCast_le_natCast.mp hn
     have hmono' : odoUnif 1 (2 * b) n (cornerPoint 1 b)
         ≤ odoUnif 1 (2 * b) T (cornerPoint 1 b) :=
       odo_mono 1 (2 * b) (fun _ => 2) hnT _
@@ -1019,7 +1019,7 @@ theorem toppleTime_mono_scale (a b : ℕ) (ha : 1 ≤ a) (hab : a ≤ b)
       have h1 : (1 : ℕ∞) ≤ (T : ℕ∞) := by
         have h2 : (1 : ℕ∞) ≤ toppleTime 1 b := one_le_toppleTime 1 b
         exact le_trans h2 hTle
-      exact ENat.coe_le_coe.mp h1, by
+      exact ENat.natCast_le_natCast.mp h1, by
       rw [hcornera]; exact le_of_lt haT⟩
   exact absurd hle (not_le.mpr hTlt)
 end DimRed

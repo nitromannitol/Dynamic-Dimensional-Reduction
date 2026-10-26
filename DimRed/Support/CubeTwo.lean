@@ -63,11 +63,11 @@ theorem nbrSum_cube2 (d : ℕ) (a : ℤ) (x : Site d) (hx : inCube d 2 x) :
     intro i
     have hxi := (inCube_two_iff d x).1 hx i
     by_cases h0 : x i = 0
-    · rw [if_pos ((inCube_two_add d x hx i).2 h0), if_neg]
+    · rw [ite_eq_left ((inCube_two_add d x hx i).2 h0), ite_eq_right]
       · ring
       · rw [inCube_two_sub d x hx i]; omega
     · have h1 : x i = 1 := by omega
-      rw [if_neg, if_pos ((inCube_two_sub d x hx i).2 h1)]
+      rw [ite_eq_right, ite_eq_left ((inCube_two_sub d x hx i).2 h1)]
       · ring
       · rw [inCube_two_add d x hx i]; omega
   simp only [nbrSum, key, Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,
@@ -83,7 +83,7 @@ theorem odo_cube2_step (d : ℕ) (c₀ : ℤ) (t : ℕ) (a : ℤ)
   have hfun : odo d 2 (fun _ => c₀) t = fun y => if inCube d 2 y then a else 0 := funext h
   by_cases hx : inCube d 2 x
   · have harith : c₀ + (-(2 * (d : ℤ)) * a + a * (d : ℤ)) = c₀ - (d : ℤ) * a := by ring
-    simp only [odo, if_pos hx, lap, hfun, nbrSum_cube2 d a x hx, harith]
-  · simp only [odo, if_neg hx]
+    simp only [odo, ite_eq_left hx, lap, hfun, nbrSum_cube2 d a x hx, harith]
+  · simp only [odo, ite_eq_right hx]
 
 end DimRed

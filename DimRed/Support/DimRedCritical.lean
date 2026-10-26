@@ -134,7 +134,7 @@ theorem odo_dimred_critical (d M t : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M) (ht : 2 
       · rw [htop]; exact le_top
       · have h_fin : ∃ n : ℕ, toppleTime (d + 1) (M - 1) = (n : ℕ∞) := by
           refine ⟨(toppleTime (d + 1) (M - 1)).toNat,
-            (ENat.coe_toNat htop).symm⟩
+            (ENat.natCast_toNat htop).symm⟩
         rcases h_fin with ⟨n, hn⟩
         rw [hn] at h_lt ⊢
         have h_lt_nat : (t - 2 : ℕ) < n := by

@@ -16,7 +16,7 @@ open LatticeProb
 /-- Every site of the cube topples in the first parallel step. -/
 theorem odoUnif_one (d N : ℕ) (_hd : 1 ≤ d) (x : Site d) (hx : inCube d N x) :
     odoUnif d N 1 x = 1 := by
-  simp only [odoUnif, odo, if_pos hx]
+  simp only [odoUnif, odo, ite_eq_left hx]
   simp [lap, nbrSum]
 
 /-- The first-step odometer vanishes outside the cube. -/
@@ -35,16 +35,16 @@ theorem odoUnif_two (d M : ℕ) (_hd : 1 ≤ d) (_hM : 2 ≤ M) (x : Site d)
         if inCube d (2 * M) y then 1 else 0 := by
     intro y
     by_cases hy : inCube d (2 * M) y
-    · rw [if_pos hy]
+    · rw [ite_eq_left hy]
       exact odoUnif_one d (2 * M) _hd y hy
-    · rw [if_neg hy]
+    · rw [ite_eq_right hy]
       exact odoUnif_one_outside d (2 * M) y hy
   have hsand : sandp d (2 * M) (fun _ => 2 * (d : ℤ)) 1 x =
       nbrSum (fun y => if inCube d (2 * M) y then 1 else 0) x := by
     simp only [sandp, lap]
     rw [show odo d (2 * M) (fun _ => 2 * (d : ℤ)) 1 =
         (fun y => if inCube d (2 * M) y then 1 else 0) from funext hU1]
-    simp only [if_pos hx]
+    simp only [ite_eq_left hx]
     ring
   change odo d (2 * M) (fun _ => 2 * (d : ℤ)) 2 x = _
   rw [odo_succ_eq d (2 * M) (fun _ => 2 * (d : ℤ)) 1 x hx,
@@ -95,9 +95,9 @@ theorem odoUnif_two (d M : ℕ) (_hd : 1 ≤ d) (_hM : 2 ≤ M) (x : Site d)
             (if inCube d (2 * M) (x + unit i) then (1 : ℤ) else 0) +
                 (if inCube d (2 * M) (x - unit i) then (1 : ℤ) else 0) < 2 := by
           rcases hmissing with hplus | hminus
-          · simp only [if_neg hplus]
+          · simp only [ite_eq_right hplus]
             split_ifs <;> omega
-          · simp only [if_neg hminus]
+          · simp only [ite_eq_right hminus]
             split_ifs <;> omega
         exact Finset.sum_lt_sum (fun k _ => hle k)
           ⟨i, Finset.mem_univ i, hlt_i⟩

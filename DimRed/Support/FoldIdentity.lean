@@ -15,7 +15,7 @@ namespace DimRed
 theorem foldPoint_eq_self (d M : ℕ) (z : Site d) (hz : ∀ k, 1 ≤ z k) :
     foldPoint d (2 * M) z = z := by
   funext k
-  rw [foldPoint_apply, if_pos (hz k)]
+  rw [foldPoint_apply, ite_eq_left (hz k)]
 
 /-- For a point of the cube with every coordinate at least one, the sorted
 representative `toSimplexPoint` is the point permuted by `Tuple.sort`. -/

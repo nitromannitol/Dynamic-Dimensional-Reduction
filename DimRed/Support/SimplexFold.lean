@@ -173,14 +173,14 @@ theorem odoUnif_one_scale (d t : ℕ) (hd : 1 ≤ d) :
     · subst h0
       change odo d 2 (fun _ => 2 * (d : ℤ)) 0 (fun _ : Fin d => (1 : ℤ))
         + (if 2 * (d : ℤ) ≤ 2 * (d : ℤ) + -(d : ℤ) * 0 then 1 else 0) = 1
-      rw [if_pos (by linarith : 2 * (d : ℤ) ≤ 2 * (d : ℤ) + -(d : ℤ) * 0)]
+      rw [ite_eq_left (by linarith : 2 * (d : ℤ) ≤ 2 * (d : ℤ) + -(d : ℤ) * 0)]
       norm_num
       rfl
     · have ih' : odoUnif d 2 n (fun _ : Fin d => (1 : ℤ)) = 1 := by
         rw [ih]; simp [Nat.pos_iff_ne_zero.mp hpos]
       rw [ih']
       have hcond : ¬ (2 * (d : ℤ) ≤ 2 * (d : ℤ) + -(d : ℤ) * 1) := by linarith
-      rw [if_neg hcond]
+      rw [ite_eq_right hcond]
       simp only [add_zero]
       exact ih'
 
@@ -223,7 +223,7 @@ theorem odoUnif_one_eq_one (d M : ℕ) (z : Site d) (hz : inCube d (2 * M) z) :
     simp [lap, nbrSum]
   simp only [odoUnif, odo]
   simp only [hlap]
-  rw [if_pos hz]
+  rw [ite_eq_left hz]
   norm_num
 
 /-- Every point of the cube of side two folds to the all-ones point of the

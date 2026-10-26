@@ -261,10 +261,10 @@ theorem facet_normal_form (d M : ℕ) (x : Site d) (hx : inPos d M x) (k : Fin d
     by_cases ha : π (Fin.cast hij (Fin.castAdd j (Fin.castSucc a))) = k
     · exact absurd h2 (by rw [ha, hk]; omega)
     · by_cases hb : π (Fin.cast hij (Fin.castAdd j (Fin.castSucc b))) = k
-      · rw [if_neg ha, if_pos hb] at h1
+      · rw [ite_eq_right ha, ite_eq_left hb] at h1
         have hb1 : x (π (Fin.cast hij (Fin.castAdd j (Fin.castSucc b)))) = 1 := by rw [hb, hk]
         omega
-      · rw [if_neg ha, if_neg hb] at h1
+      · rw [ite_eq_right ha, ite_eq_right hb] at h1
         linarith [h4, h5]
   have hM1 : (1 : ℤ) ≤ (M : ℤ) := by
     have h1 : (1 : ℤ) ≤ x k := (hx k).1

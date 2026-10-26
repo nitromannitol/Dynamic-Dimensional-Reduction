@@ -97,38 +97,38 @@ theorem inSimplex_add_unit (d M : ℕ) (x : Site d) (hx : inSimplex d M x)
   have hval : ∀ k : Fin d, (x + unit i) k = if k = i then x k + 1 else x k := by
     intro k
     by_cases h : k = i
-    · rw [h, if_pos rfl]
+    · rw [h, ite_eq_left rfl]
       simp [Pi.add_apply, unit, Pi.single_eq_same]
-    · rw [if_neg h]
+    · rw [ite_eq_right h]
       simp only [Pi.add_apply, unit, Pi.single_eq_of_ne h]
       ring
   constructor
   · intro k
     rw [hval k]
     by_cases h : k = i
-    · rw [if_pos h]
+    · rw [ite_eq_left h]
       have hk := hx.1 k
       have hkM := hM k
       omega
-    · rw [if_neg h]
+    · rw [ite_eq_right h]
       exact hx.1 k
   · intro a b hab
     rw [hval a, hval b]
     by_cases ha : a = i
     · by_cases hb : b = i
-      · rw [if_pos ha, if_pos hb]
+      · rw [ite_eq_left ha, ite_eq_left hb]
         have := hx.2 a b hab
         omega
-      · rw [if_pos ha, if_neg hb]
+      · rw [ite_eq_left ha, ite_eq_right hb]
         have hlt : a < b := lt_of_le_of_ne hab (by rw [ha]; exact Ne.symm hb)
         have := hdec a b hlt
         omega
     · by_cases hb : b = i
-      · rw [if_neg ha, if_pos hb]
+      · rw [ite_eq_right ha, ite_eq_left hb]
         have hlt : a < b := lt_of_le_of_ne hab (by rw [hb]; exact ha)
         have := hdec a b hlt
         omega
-      · rw [if_neg ha, if_neg hb]
+      · rw [ite_eq_right ha, ite_eq_right hb]
         exact hx.2 a b hab
 
 /-- A strictly interior point of the sorted fundamental domain stays in it after
@@ -140,37 +140,37 @@ theorem inSimplex_sub_unit (d M : ℕ) (x : Site d) (hx : inSimplex d M x)
   have hval : ∀ k : Fin d, (x - unit i) k = if k = i then x k - 1 else x k := by
     intro k
     by_cases h : k = i
-    · rw [h, if_pos rfl]
+    · rw [h, ite_eq_left rfl]
       simp [Pi.sub_apply, unit]
-    · rw [if_neg h]
+    · rw [ite_eq_right h]
       simp [Pi.sub_apply, unit, h]
   constructor
   · intro k
     rw [hval k]
     by_cases h : k = i
-    · rw [if_pos h]
+    · rw [ite_eq_left h]
       have hk := hx.1 k
       have hk1 := h1 k
       omega
-    · rw [if_neg h]
+    · rw [ite_eq_right h]
       exact hx.1 k
   · intro a b hab
     rw [hval a, hval b]
     by_cases ha : a = i
     · by_cases hb : b = i
-      · rw [if_pos ha, if_pos hb]
+      · rw [ite_eq_left ha, ite_eq_left hb]
         have := hx.2 a b hab
         omega
-      · rw [if_pos ha, if_neg hb]
+      · rw [ite_eq_left ha, ite_eq_right hb]
         have hlt : a < b := lt_of_le_of_ne hab (fun h => hb (h.symm.trans ha))
         have := hdec a b hlt
         omega
     · by_cases hb : b = i
-      · rw [if_neg ha, if_pos hb]
+      · rw [ite_eq_right ha, ite_eq_left hb]
         have hlt : a < b := lt_of_le_of_ne hab (fun h => ha (h.trans hb))
         have := hdec a b hlt
         omega
-      · rw [if_neg ha, if_neg hb]
+      · rw [ite_eq_right ha, ite_eq_right hb]
         exact hx.2 a b hab
 
 /-- A point which is not on any of the three boundaries is strictly interior. -/

@@ -67,7 +67,7 @@ theorem foldPointN_mem (d N : ℕ) (x : Site d) (hx : inCube d N x) (j : Fin d) 
     omega
   rw [foldPointN, cubeSym]
   by_cases h1 : 1 ≤ x j
-  · simp only [h1, decide_true, if_true]
+  · simp only [h1, decide_true, ite_true]
     exact ⟨h1, hj.2⟩
   · have hx0 : x j ≤ 0 := by omega
     simp only [h1, decide_false]

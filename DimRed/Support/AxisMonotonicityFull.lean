@@ -61,13 +61,13 @@ theorem odo_axis_refl (d M : ℕ) (c : ℤ) :
                   have e3 : (fun l => if l = k then 1 - (u - unit k) k else (u - unit k) l) = u := by
                     funext l
                     by_cases hlk : l = k
-                    · subst hlk; rw [if_pos rfl, sub_unit_apply]; simp [hu1]
-                    · rw [if_neg hlk, sub_unit_apply]; simp [hlk]
+                    · subst hlk; rw [ite_eq_left rfl, sub_unit_apply]; simp [hu1]
+                    · rw [ite_eq_right hlk, sub_unit_apply]; simp [hlk]
                   rw [e3] at hrefl
                   exact le_of_eq hrefl
               · refine ih (u - unit k) i ?_
                 rw [sub_unit_apply]
-                simp only [if_neg (fun h : i = k => hki h.symm)]
+                simp only [ite_eq_right (fun h : i = k => hki h.symm)]
                 omega
             linarith
           have hs : sandp d (2 * M) (fun _ => c) n (u + unit i)

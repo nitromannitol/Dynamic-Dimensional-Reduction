@@ -55,7 +55,7 @@ theorem inPos_add_unit_or {d M : ℕ} {x : Site d} (hx : inPos d M x) (l : Fin d
     · subst hkl
       simp only []
       constructor <;> omega
-    · simp only [if_neg hkl, add_zero]
+    · simp only [ite_eq_right hkl, add_zero]
       exact hk
 
 /-- A neighbour of a point of the positive orthant in a negative direction is
@@ -71,7 +71,7 @@ theorem inPos_sub_unit_or {d M : ℕ} {x : Site d} (hx : inPos d M x) (l : Fin d
     · subst hkl
       simp only []
       constructor <;> omega
-    · simp only [if_neg hkl, sub_zero]
+    · simp only [ite_eq_right hkl, sub_zero]
       exact hk
 
 /-- A step above the top coordinate leaves the hypercube. -/
@@ -88,7 +88,7 @@ theorem nbrSum_affine {d : ℕ} (a : Fin d → ℤ) (b : ℤ) (x : Site d) :
   simp only [nbrSum, add_unit_apply, sub_unit_apply]
   simp only [mul_add, mul_sub, Finset.sum_add_distrib, Finset.sum_sub_distrib]
   simp only [mul_ite, mul_one, mul_zero]
-  simp only [Finset.sum_ite_eq', Finset.mem_univ, if_true]
+  simp only [Finset.sum_ite_eq', Finset.mem_univ, ite_true]
   simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
   ring
 
@@ -306,7 +306,7 @@ theorem odo_le_oneDim_sup (d M : ℕ) (hd : 1 ≤ d) (l : Fin d) (t : ℕ) (y : 
   have hmono : odoUnif 1 (2 * M) t (fun _ => y l)
       ≤ odoUnif 1 (2 * M) (t + 1) (fun _ => y l) :=
     odo_mono 1 (2 * M) (fun _ => 2) (Nat.le_succ t) _
-  simp only [oneDimComp, hy, if_true]
+  simp only [oneDimComp, hy, ite_true]
   have hdZ : (1 : ℤ) ≤ (d : ℤ) := by exact_mod_cast hd
   have hsum' : nbrSum (oneDimComp d M l t) y
       ≤ (2 * (d : ℤ) - 2) * odoUnif 1 (2 * M) t (fun _ => y l)
@@ -330,12 +330,12 @@ theorem odo_le_oneDim (d M : ℕ) (hd : 1 ≤ d) (l : Fin d) (t : ℕ) (x : Site
   have hmain := hpar (oneDimComp d M l)
     (fun t z => by
       by_cases h : inCube d (2 * M) z
-      · simp only [oneDimComp, h, if_true]; exact odo_nonneg 1 (2 * M) (fun _ => 2) t _
-      · simp only [oneDimComp, h, if_false]; exact le_rfl)
-    (fun t z hz => by simp only [oneDimComp, hz, if_false])
+      · simp only [oneDimComp, h, ite_true]; exact odo_nonneg 1 (2 * M) (fun _ => 2) t _
+      · simp only [oneDimComp, h, ite_false]; exact le_rfl)
+    (fun t z hz => by simp only [oneDimComp, hz, ite_false])
     (fun t z hz => odo_le_oneDim_sup d M hd l t z hz) t x
   by_cases hx : inCube d (2 * M) x
-  · simpa only [oneDimComp, hx, if_true, odoUnif] using hmain
+  · simpa only [oneDimComp, hx, ite_true, odoUnif] using hmain
   · simp only [odoUnif, odo_eq_zero_outside d (2 * M) (fun _ => 2 * (d : ℤ)) t x hx]
     exact odo_nonneg 1 (2 * M) (fun _ => 2) t _
 
@@ -355,7 +355,7 @@ theorem odo_corner_le_M (d M : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M) (t : ℕ) :
       exact_mod_cast hM
     have hyM : (fun _ : Fin 1 => (M : ℤ)) 0 ≤ (M : ℤ) := le_rfl
     rw [odoInf_one_eq M hM (fun _ => (M : ℤ)) hy1 hyM] at hle
-    have hnat := ENat.coe_le_coe.mp hle
+    have hnat := ENat.natCast_le_natCast.mp hle
     have hval : (((M : ℤ) * ((M : ℤ) + 1) - (M : ℤ) * ((M : ℤ) - 1)) / 2).toNat = M := by
       have hz : ((M : ℤ) * ((M : ℤ) + 1) - (M : ℤ) * ((M : ℤ) - 1))
           = 2 * (M : ℤ) := by ring
@@ -455,9 +455,9 @@ theorem odo_time_diff_mid_nbr (d M T : ℕ) (_hd : 1 ≤ d) (_hM : 1 ≤ M)
     rw [add_unit_apply]
     by_cases hmk : m = k
     · subst hmk
-      rw [if_pos rfl]
+      rw [ite_eq_left rfl]
       constructor <;> omega
-    · rw [if_neg hmk, add_zero]; exact hm
+    · rw [ite_eq_right hmk, add_zero]; exact hm
   refine nbrSum_sub_le_of_terms (odoUnif d (2 * M) (s + 1)) (odoUnif d (2 * M) s)
     x (unit k) (fun y => y k) hG ?_ ?_
   · intro l
@@ -487,9 +487,9 @@ theorem odo_time_diff_mid_nbr (d M T : ℕ) (_hd : 1 ≤ d) (_hM : 1 ≤ M)
         rw [sub_unit_apply]
         by_cases hml : m = l
         · subst hml
-          rw [if_pos rfl]
+          rw [ite_eq_left rfl]
           constructor <;> omega
-        · rw [if_neg hml, sub_zero]; exact hm
+        · rw [ite_eq_right hml, sub_zero]; exact hm
       have hIH' := hIH l (x - unit l) hpos'
       rw [hcomm, hval] at hIH' ⊢
       exact hIH'

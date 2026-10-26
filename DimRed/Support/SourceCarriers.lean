@@ -112,7 +112,7 @@ theorem maximum_eq_sup' (d M : ℕ) (hne : (simplex d M).Nonempty)
 /-- The old maximum agrees with `maximum` under the nonemptiness hypothesis `hne`. -/
 theorem maximum_eq_simplexMax (d M : ℕ) (hne : (simplex d M).Nonempty)
     (f : Site d → ℤ) : maximum d M hne f = simplexMax d M f := by
-  simp only [maximum, simplexMax, dif_pos hne]
+  simp only [maximum, simplexMax, dite_eq_left hne]
 
 theorem le_maximum (d M : ℕ) (hne : (simplex d M).Nonempty) (f : Site d → ℤ)
     (x : SimplexSite d M) : f x.val ≤ maximum d M hne f := by
@@ -138,7 +138,7 @@ theorem odoInfUnif_ne_top (d N : ℕ) (hd : 1 ≤ d) (y : Site d) :
   obtain ⟨T, hT⟩ := uniform_stabilizes d N hd
   change odoInf d N (fun _ => 2 * (d : ℤ)) y ≠ ⊤
   rw [odoInf_eq_of_stable d N (fun _ => 2 * (d : ℤ)) T hT y]
-  exact ENat.coe_ne_top _
+  exact ENat.natCast_ne_top _
 
 /-- After stabilization the literal terminal pile is the finite-time pile. -/
 theorem terminalPile_eventually (d N : ℕ) (hd : 1 ≤ d) (x : CubeSite d N) :
@@ -149,7 +149,7 @@ theorem terminalPile_eventually (d N : ℕ) (hd : 1 ≤ d) (x : CubeSite d N) :
       odo d N (fun _ => 2 * (d : ℤ)) T := by
     funext y
     change ((odoInf d N (fun _ => 2 * (d : ℤ)) y).toNat : ℤ) = _
-    rw [odoInf_eq_of_stable d N (fun _ => 2 * (d : ℤ)) T hT y, ENat.toNat_coe,
+    rw [odoInf_eq_of_stable d N (fun _ => 2 * (d : ℤ)) T hT y, ENat.toNat_natCast,
       Int.toNat_of_nonneg (odo_nonneg d N (fun _ => 2 * (d : ℤ)) T y)]
   refine ⟨T, fun t ht => ?_⟩
   have htT : odo d N (fun _ => 2 * (d : ℤ)) t =

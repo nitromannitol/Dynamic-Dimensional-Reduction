@@ -55,8 +55,8 @@ theorem foldPoint_mem (d M : ℕ) (x : Site d) (hx : inCube d (2 * M) x) (j : Fi
   rw [loCoord_two_mul, hiCoord_two_mul] at hj
   rw [foldPoint_apply, loCoord_two_mul, hiCoord_two_mul]
   by_cases h1 : 1 ≤ x j
-  · rw [if_pos h1]; exact ⟨h1, hj.2⟩
-  · rw [if_neg h1]; omega
+  · rw [ite_eq_left h1]; exact ⟨h1, hj.2⟩
+  · rw [ite_eq_right h1]; omega
 
 theorem inSimplex_toSimplexPoint (d M : ℕ) (x : Site d) (hx : inCube d (2 * M) x) :
     inSimplex d M (toSimplexPoint d M x) := by
@@ -81,15 +81,15 @@ theorem le_simplexMax (d M : ℕ) (f : Site d → ℤ) (z : Site d) (hz : inSimp
     f z ≤ simplexMax d M f := by
   have hz' : z ∈ simplex d M := (mem_simplex_iff d M z).2 hz
   have hne : (simplex d M).Nonempty := ⟨z, hz'⟩
-  simp only [simplexMax, dif_pos hne]
+  simp only [simplexMax, dite_eq_left hne]
   exact Finset.le_sup' f hz'
 
 theorem simplexMax_le (d M : ℕ) (f : Site d → ℤ) (c : ℤ) (hc : 0 ≤ c)
     (h : ∀ z, inSimplex d M z → f z ≤ c) : simplexMax d M f ≤ c := by
   by_cases hne : (simplex d M).Nonempty
-  · simp only [simplexMax, dif_pos hne]
+  · simp only [simplexMax, dite_eq_left hne]
     exact Finset.sup'_le hne f fun z hz => h z ((mem_simplex_iff d M z).1 hz)
-  · simp only [simplexMax, dif_neg hne]; exact hc
+  · simp only [simplexMax, dite_eq_right hne]; exact hc
 
 theorem nbrSum_add_const {d : ℕ} (f : Site d → ℤ) (c : ℤ) (x : Site d) :
     nbrSum (fun z => f z + c) x = nbrSum f x + 2 * (d : ℤ) * c := by
@@ -105,6 +105,6 @@ theorem simplexMax_nonneg (d M : ℕ) (f : Site d → ℤ) (h : ∀ z, 0 ≤ f z
   by_cases hne : (simplex d M).Nonempty
   · obtain ⟨z, hz⟩ := hne
     exact le_trans (h z) (le_simplexMax d M f z ((mem_simplex_iff d M z).1 hz))
-  · simp only [simplexMax, dif_neg hne]; exact le_refl 0
+  · simp only [simplexMax, dite_eq_right hne]; exact le_refl 0
 
 end DimRed

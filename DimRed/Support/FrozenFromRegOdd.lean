@@ -94,9 +94,9 @@ theorem odoUnif_odd_eq_even (d M : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
           funext k
           by_cases hk : k = i
           · subst hk
-            simp only [if_true, sub_unit_apply, add_unit_apply]
+            simp only [ite_true, sub_unit_apply, add_unit_apply]
             omega
-          · simp only [if_neg hk, sub_unit_apply, add_unit_apply]
+          · simp only [ite_eq_right hk, sub_unit_apply, add_unit_apply]
             omega
         rw [e] at h
         exact h.symm
@@ -196,13 +196,13 @@ theorem odoUnif_ones_succ (d N : ℕ) (hd : 1 ≤ d) (hN : N = 1 ∨ N = 2) (t :
       = if N = 1 then 0 else odoUnif d N t (fun _ => 1) := by
     intro i
     rcases hN with rfl | rfl
-    · rw [if_pos rfl]
+    · rw [ite_eq_left rfl]
       refine odo_eq_zero_outside d 1 _ t _ ?_
       intro h
       have h2 := (h i).1
       rw [sub_unit_apply] at h2
       simp [loCoord] at h2
-    · rw [if_neg (by norm_num)]
+    · rw [ite_eq_right (by norm_num)]
       have h := odo_sub_unit_of_one d 1 (2 * (d : ℤ)) t (fun _ => (1 : ℤ)) i rfl
       simp only [Nat.mul_one] at h
       exact h
@@ -215,11 +215,11 @@ theorem odoUnif_ones_succ (d N : ℕ) (hd : 1 ≤ d) (hN : N = 1 ∨ N = 2) (t :
   apply ediv_unique hdpos
   · rcases hN with rfl | rfl
     · simp
-    · simp only [show (2 : ℕ) ≠ 1 by norm_num, if_false]
+    · simp only [show (2 : ℕ) ≠ 1 by norm_num, ite_false]
       nlinarith
   · rcases hN with rfl | rfl
     · simp; linarith
-    · simp only [show (2 : ℕ) ≠ 1 by norm_num, if_false]
+    · simp only [show (2 : ℕ) ≠ 1 by norm_num, ite_false]
       nlinarith
 
 theorem odoUnif_ones_le (d N : ℕ) (hd : 1 ≤ d) (hN : N = 1 ∨ N = 2) :

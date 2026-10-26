@@ -95,9 +95,9 @@ theorem topple_limit (d M : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M) (s₀ : Site d �
           rw [odo_succ_eq d (2 * M) s₀ (t₀ + n + j) y hy,
             odo_succ_eq d (2 * M) s₀ (t₀ + n) y hy]
           by_cases ha : 2 * (d : ℤ) ≤ sandp d (2 * M) s₀ (t₀ + n + j) y
-          · rw [if_pos ha, if_pos (le_trans ha hsand)]
+          · rw [ite_eq_left ha, ite_eq_left (le_trans ha hsand)]
             omega
-          · rw [if_neg ha]
+          · rw [ite_eq_right ha]
             split <;> omega
       · rw [odo_eq_zero_outside d (2 * M) s₀ ((t₀ + n + j) + 1) y hy,
           odo_eq_zero_outside d (2 * M) s₀ ((t₀ + n) + 1) y hy, sub_self]
@@ -122,14 +122,14 @@ private theorem signedPile_symmetric : CubeSymmetric 1 4 signedPile := by
   intro π ε y hy
   have hπ : π 0 = 0 := Subsingleton.elim _ _
   have hcube := (cubeSym_inCube 1 4 π ε y).2 hy
-  simp only [signedPile, if_pos hy, if_pos hcube]
+  simp only [signedPile, ite_eq_left hy, ite_eq_left hcube]
   have heval : cubeSym 1 4 π ε y 0 = if ε 0 then y 0 else 1 - y 0 := by
     simp only [cubeSym, hπ]
     norm_num [loCoord, hiCoord, sideHalf]
   rw [heval]
   cases hε : ε 0 with
   | false =>
-    simp only [Bool.false_eq_true, if_false]
+    simp only [Bool.false_eq_true, ite_false]
     have he : (1 - y 0 = 0 ∨ 1 - y 0 = 1) ↔ (y 0 = 0 ∨ y 0 = 1) := by omega
     simp only [he]
   | true => rfl
@@ -140,7 +140,7 @@ example : signedPile (fun _ => 1) = 4 ∧ signedPile (fun _ => 2) = -1 ∧
     odo 1 4 signedPile 1 (fun _ => 2) = 0 := by
   have h1 : inCube 1 4 (fun _ => 1) := by decide
   have h2 : inCube 1 4 (fun _ => 2) := by decide
-  norm_num [signedPile, if_pos h1, if_pos h2, odo, lap, DimRed.nbrSum]
+  norm_num [signedPile, ite_eq_left h1, ite_eq_left h2, odo, lap, DimRed.nbrSum]
 
 example :
     maximum 1 2 (simplexNonempty 1 2 (by decide))
@@ -169,7 +169,7 @@ example : maximum 1 2 (simplexNonempty 1 2 (by decide))
     have hcube : inCube 1 4 (fun _ => 1) := by decide
     have hfire : odo 1 4 signedPile 1 (fun _ => 1) -
         odo 1 4 signedPile 0 (fun _ => 1) = 1 := by
-      norm_num [odo, signedPile, if_pos hcube, lap, DimRed.nbrSum]
+      norm_num [odo, signedPile, ite_eq_left hcube, lap, DimRed.nbrSum]
     change odo 1 4 signedPile 1 (fun _ => 1) - odo 1 4 signedPile 0 (fun _ => 1) ≤ _ at h
     rw [hfire] at h
     exact h

@@ -36,7 +36,7 @@ theorem nbrSum_selfsim_step (d m t : ℕ) (_hd : 2 ≤ d) (hm : 3 ≤ m)
     rw [toSimplexPoint]
     have hfold2 : 2 ≤ foldPoint d (2 * m) z
         (Tuple.sort (fun i => -(foldPoint d (2 * m) z i)) k) := by
-      rw [foldPoint_apply, if_pos (by have := hz2 (Tuple.sort (fun i => -(foldPoint d (2 * m) z i)) k); omega)]
+      rw [foldPoint_apply, ite_eq_left (by have := hz2 (Tuple.sort (fun i => -(foldPoint d (2 * m) z i)) k); omega)]
       exact hz2 _
     exact hfold2
   have hb : ∀ i k : Fin d, 2 ≤ (y + unit i) k ∧ 2 ≤ (y - unit i) k := by

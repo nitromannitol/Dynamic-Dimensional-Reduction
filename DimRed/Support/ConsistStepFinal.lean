@@ -142,7 +142,7 @@ theorem consist_step_dim_one (M t : ℕ) (hM : 2 ≤ M)
           odoUnif (0 + 1 + 0) (2 * (K - 1)) s
             (facetPoint (fun _ : Fin 0 => (1 : ℤ)) 2 0) + 1 := by
         rw [facetPoint_zero_head', facetPoint_zero_head']
-        simp only [Fin.eq_zero, if_true]
+        simp only [Fin.eq_zero, ite_true]
         exact hz
       have hx2 : ∀ a : Fin 0, 2 ≤ (fun _ : Fin 0 => (1 : ℤ)) a :=
         fun a => absurd a.2 (by omega)
@@ -153,7 +153,7 @@ theorem consist_step_dim_one (M t : ℕ) (hM : 2 ≤ M)
         · intro i
           have hi : i = (0 : Fin 1) := Fin.eq_zero i
           subst hi
-          simp only [Fin.eq_zero, if_true]
+          simp only [Fin.eq_zero, ite_true]
           omega
         · intro i j _
           have hi : i = (0 : Fin 1) := Fin.eq_zero i
@@ -161,7 +161,7 @@ theorem consist_step_dim_one (M t : ℕ) (hM : 2 ≤ M)
           rw [hi, hj]
       have hres := h 0 0 rfl (fun _ : Fin 0 => (1 : ℤ)) hx2 hsimp hreg' htopp
       rw [facetPoint_zero_head', facetPoint_zero_head'] at hres
-      simp only [Fin.eq_zero, if_true] at hres
+      simp only [Fin.eq_zero, ite_true] at hres
       exact hres
 
 /-- The reflecting-boundary identity `eq:reflecting_boundaries`,
@@ -190,13 +190,13 @@ theorem odo_gap_zero (e m s : ℕ) (he : 1 ≤ e) (hm : 2 ≤ m)
     · subst hik
       by_cases hkl : i = Fin.last e
       · subst hkl; simp
-      · simp only [if_true, if_neg hkl, if_neg (Ne.symm hkl)]
+      · simp only [ite_true, ite_eq_right hkl, ite_eq_right (Ne.symm hkl)]
         omega
     · by_cases hil : i = Fin.last e
       · subst hil
-        simp only [if_neg hik, if_true]
+        simp only [ite_eq_right hik, ite_true]
         omega
-      · simp only [if_neg hik, if_neg hil]
+      · simp only [ite_eq_right hik, ite_eq_right hil]
   have h1 : odoUnif (e + 1) (2 * m) s (y - unit k)
       = odoUnif (e + 1) (2 * m) s (y - unit (Fin.last e)) := by
     rw [← hswap]
@@ -263,7 +263,7 @@ theorem nbrSum_selfsim_gen (d m t : ℕ) (hm : 2 ≤ m)
     rw [toSimplexPoint]
     have hfold2 : 2 ≤ foldPoint d (2 * m) z
         (Tuple.sort (fun i => -(foldPoint d (2 * m) z i)) k) := by
-      rw [foldPoint_apply, if_pos (by
+      rw [foldPoint_apply, ite_eq_left (by
         have := hz2 (Tuple.sort (fun i => -(foldPoint d (2 * m) z i)) k); omega)]
       exact hz2 _
     exact hfold2

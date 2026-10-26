@@ -61,8 +61,8 @@ theorem odo_one_strong_facet (M t : ℕ) (hM : 2 ≤ M) (y : Site 1) (hy : y 0 =
     linarith [hlap_yplus]
   constructor
   · rw [odo_succ_eq 1 (2 * M) (fun _ => 2) t y hycube]
-    simp only [if_neg hnot_y, add_zero]
+    simp only [ite_eq_right hnot_y, add_zero]
   · rw [odo_succ_eq 1 (2 * M) (fun _ => 2) t (y + unit 0) hypluscube,
-      if_pos hfire_yplus]
+      ite_eq_left hfire_yplus]
 
 end DimRed

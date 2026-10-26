@@ -20,11 +20,11 @@ theorem symStep_apply (d : ℕ) (π : Equiv.Perm (Fin d)) (ε : Fin d → Bool) 
     symStep π ε i (π j) = (if j = i then (if ε i then (1 : ℤ) else -1) else 0) := by
   have hpi : j ≠ i → π j ≠ π i := fun hj h => hj (π.injective h)
   by_cases he : ε i
-  · simp only [symStep, if_pos he, unit]
+  · simp only [symStep, ite_eq_left he, unit]
     by_cases hj : j = i
     · subst hj; simp
     · simp [hpi hj, hj]
-  · simp only [symStep, if_neg he, Pi.neg_apply, unit]
+  · simp only [symStep, ite_eq_right he, Pi.neg_apply, unit]
     by_cases hj : j = i
     · subst hj; simp
     · simp [hpi hj, hj]
@@ -59,12 +59,12 @@ theorem cubeSym_inCube (d N : ℕ) (π : Equiv.Perm (Fin d)) (ε : Fin d → Boo
   · intro h i
     have hj := h (π.symm i)
     simp only [cubeSym, Equiv.apply_symm_apply] at hj
-    by_cases he : ε (π.symm i) <;> simp only [he, if_true] at hj <;>
+    by_cases he : ε (π.symm i) <;> simp only [he, ite_true] at hj <;>
       omega
   · intro h j
     simp only [cubeSym]
     have hj := h (π j)
-    by_cases he : ε j <;> simp only [he, if_true] <;> omega
+    by_cases he : ε j <;> simp only [he, ite_true] <;> omega
 
 theorem nbrSum_cubeSym (d N : ℕ) (π : Equiv.Perm (Fin d)) (ε : Fin d → Bool)
     (u : Site d → ℤ) (hu : ∀ y, u (cubeSym d N π ε y) = u y) (x : Site d) :

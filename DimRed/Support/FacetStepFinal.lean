@@ -87,7 +87,7 @@ theorem lap_nonneg_of_topple {d : ℕ} (M t : ℕ) (ht : 1 ≤ t) (p : Site d)
       simp only [sandp]
       rw [odoUnif_fun_eq] at hneg
       omega
-    rw [if_neg hlt] at h
+    rw [ite_eq_right hlt] at h
     omega
   · have h1 := odo_eq_zero_outside d (2 * M) (fun _ => 2 * (d : ℤ)) t p hp
     have h2 := odo_eq_zero_outside d (2 * M) (fun _ => 2 * (d : ℤ)) (t - 1) p hp
@@ -103,7 +103,7 @@ theorem topple_of_lap_nonneg {d : ℕ} (M t : ℕ) (p : Site d) (hp : inCube d (
     simp only [sandp]
     rw [odoUnif_fun_eq] at hlap
     omega
-  rw [if_pos hle] at h
+  rw [ite_eq_left hle] at h
   simp only [odoUnif]
   exact h
 
@@ -397,7 +397,7 @@ theorem nbrSum_selfsim_two (D m s : ℕ) (hm : 2 ≤ m) (y : Site D) (hy : inSim
     intro z hz hz2
     refine ⟨inSimplex_toSimplexPoint D m z hz, fun k => ?_⟩
     rw [toSimplexPoint]
-    rw [foldPoint_apply, if_pos (by
+    rw [foldPoint_apply, ite_eq_left (by
       have := hz2 (Tuple.sort (fun i => -(foldPoint D (2 * m) z i)) k); omega)]
     have := hz2 (Tuple.sort (fun i => -(foldPoint D (2 * m) z i)) k)
     omega

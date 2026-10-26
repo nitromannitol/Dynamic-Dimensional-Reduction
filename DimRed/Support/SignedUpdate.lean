@@ -34,11 +34,11 @@ theorem sandp_le_upper_bound (d N : ℕ) (s₀ : Site d → ℤ)
       have hfire := odo_succ_sub_eq d N s₀ t x hx
       rw [lap] at hstep
       by_cases hf : 2 * (d : ℤ) ≤ sandp d N s₀ t x
-      · rw [if_pos hf] at hfire
+      · rw [ite_eq_left hf] at hfire
         rw [hstep, hfire]
         nlinarith [ih, hnb.2]
       · have hstable : sandp d N s₀ t x < 2 * (d : ℤ) := by omega
-        rw [if_neg hf] at hfire
+        rw [ite_eq_right hf] at hfire
         rw [hstep, hfire]
         nlinarith [hstable, hnb.2]
 
@@ -70,7 +70,7 @@ theorem odo_succ_eq_max_quotient (d N : ℕ) (hd : 1 ≤ d) (s₀ : Site d → �
         nlinarith [hupper]
     calc
       odo d N s₀ (t + 1) x = odo d N s₀ t x + 1 := by
-        rw [odo_succ_eq d N s₀ t x hx, if_pos hf]
+        rw [odo_succ_eq d N s₀ t x hx, ite_eq_left hf]
       _ = max (odo d N s₀ t x)
           ((s₀ x + nbrSum (odo d N s₀ t) x) / (2 * (d : ℤ))) := by
         rw [hquot, max_eq_right (by omega)]
@@ -88,7 +88,7 @@ theorem odo_succ_eq_max_quotient (d N : ℕ) (hd : 1 ≤ d) (s₀ : Site d → �
       omega
     calc
       odo d N s₀ (t + 1) x = odo d N s₀ t x := by
-        rw [odo_succ_eq d N s₀ t x hx, if_neg hf]
+        rw [odo_succ_eq d N s₀ t x hx, ite_eq_right hf]
         simp
       _ = max (odo d N s₀ t x)
           ((s₀ x + nbrSum (odo d N s₀ t) x) / (2 * (d : ℤ))) := by

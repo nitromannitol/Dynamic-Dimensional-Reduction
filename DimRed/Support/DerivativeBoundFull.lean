@@ -51,8 +51,8 @@ private theorem odo_le_of_positive_le (d M : ℕ) (c : ℤ) (t : ℕ) :
       have hkey : ∀ l, z l - y l = (x l - y l) - (if l = i then 1 else 0) := by
         intro l
         by_cases hl : l = i
-        · rw [hl, hzi, if_pos rfl]; ring
-        · rw [hzl l hl, if_neg hl]; ring
+        · rw [hl, hzi, ite_eq_left rfl]; ring
+        · rw [hzl l hl, ite_eq_right hl]; ring
       have hsum : (∑ l, (z l - y l)) = (∑ l, (x l - y l)) - 1 := by
         rw [Finset.sum_congr rfl (fun l _ => hkey l), Finset.sum_sub_distrib]
         congr 1
@@ -83,7 +83,7 @@ private theorem odo_le_corner (d M : ℕ) (hd : 1 ≤ d) (c : ℤ) (t : ℕ)
   have hzero : (0 : ℕ) < d := hd
   set i0 : Fin d := ⟨0, hzero⟩ with hi0
   have hfold : foldPoint d (2 * M) x j = (M : ℤ) := by
-    rw [foldPoint_apply, if_pos (by omega : (1 : ℤ) ≤ x j), hxj]
+    rw [foldPoint_apply, ite_eq_left (by omega : (1 : ℤ) ≤ x j), hxj]
   obtain ⟨m, hm⟩ := (Tuple.sort (fun i => -(foldPoint d (2 * M) x i))).surjective j
   have hym : y m = (M : ℤ) := by rw [hy, toSimplexPoint, hm, hfold]
   have hy0 : (M : ℤ) ≤ y i0 := by
@@ -93,10 +93,10 @@ private theorem odo_le_corner (d M : ℕ) (hd : 1 ≤ d) (c : ℤ) (t : ℕ)
     intro l
     rw [cornerPoint]
     by_cases hl : (l : ℕ) = 0
-    · rw [if_pos hl]
+    · rw [ite_eq_left hl]
       have : l = i0 := by ext; simpa [hi0] using hl
       rw [this]; exact hy0
-    · rw [if_neg hl]; exact (hyS.1 l).1
+    · rw [ite_eq_right hl]; exact (hyS.1 l).1
   rw [← hyx]
   exact odo_le_of_positive_le d M c t _ y (cornerPoint d M)
     (by intro l; rw [cornerPoint]; split <;> omega) hle rfl
@@ -216,7 +216,7 @@ theorem derivative_bound (d M : ℕ) (hd : 1 ≤ d) (c : ℤ)
         (fun n : ℕ => ((odo d (2 * M) (fun _ => c) n (cornerPoint d M)).toNat : ℕ∞)) s)
         hcorner
     have hle' : (odo d (2 * M) (fun _ => c) s (cornerPoint d M)).toNat ≤ k * M :=
-      ENat.coe_le_coe.mp hle
+      ENat.natCast_le_natCast.mp hle
     have hz := Int.toNat_le.mp hle'
     push_cast at hz
     exact hz
@@ -237,7 +237,7 @@ private theorem uniform_corner_cap (d M : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M) :
   apply iSup_le
   intro t
   have h := case2_odo_le_M_at_face d M t hd hM i (cornerPoint d M) hx hxi
-  exact ENat.coe_le_coe.mpr (Int.toNat_le.mpr h)
+  exact ENat.natCast_le_natCast.mpr (Int.toNat_le.mpr h)
 
 -- The source's k = 1 first-difference consumer, with its premise proved above.
 example (d M : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ M) (j : Fin d) (t : ℕ)

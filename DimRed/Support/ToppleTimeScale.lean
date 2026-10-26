@@ -101,15 +101,15 @@ theorem nbrSum_extend_le (d m t : ℕ) (y : Site d) :
   have h1 : (if inCube d (2 * m) (y + unit i) then odoUnif d (2 * m) t (y + unit i) else 0)
       ≤ odo d (2 * m) (fun _ => 2 * (d : ℤ)) t (y + unit i) := by
     by_cases hh : inCube d (2 * m) (y + unit i)
-    · simp only [hh, if_true, odoUnif, le_refl]
-    · simp only [hh, if_false]
+    · simp only [hh, ite_true, odoUnif, le_refl]
+    · simp only [hh, ite_false]
       have hnn := odo_nonneg d (2 * m) (fun _ => 2 * (d : ℤ)) t (y + unit i)
       simpa [odoUnif] using hnn
   have h2 : (if inCube d (2 * m) (y - unit i) then odoUnif d (2 * m) t (y - unit i) else 0)
       ≤ odo d (2 * m) (fun _ => 2 * (d : ℤ)) t (y - unit i) := by
     by_cases hh : inCube d (2 * m) (y - unit i)
-    · simp only [hh, if_true, odoUnif, le_refl]
-    · simp only [hh, if_false]
+    · simp only [hh, ite_true, odoUnif, le_refl]
+    · simp only [hh, ite_false]
       have hnn := odo_nonneg d (2 * m) (fun _ => 2 * (d : ℤ)) t (y - unit i)
       simpa [odoUnif] using hnn
   linarith
@@ -125,16 +125,16 @@ theorem nbrSum_extend_nonneg (d m t : ℕ) (y : Site d) :
   intro i _
   have h1 : (0 : ℤ) ≤ (if inCube d (2 * m) (y + unit i) then odoUnif d (2 * m) t (y + unit i) else 0) := by
     by_cases hh : inCube d (2 * m) (y + unit i)
-    · simp only [hh, if_true]
+    · simp only [hh, ite_true]
       have hnn := odo_nonneg d (2 * m) (fun _ => 2 * (d : ℤ)) t (y + unit i)
       simpa [odoUnif] using hnn
-    · simp only [hh, if_false, le_refl]
+    · simp only [hh, ite_false, le_refl]
   have h2 : (0 : ℤ) ≤ (if inCube d (2 * m) (y - unit i) then odoUnif d (2 * m) t (y - unit i) else 0) := by
     by_cases hh : inCube d (2 * m) (y - unit i)
-    · simp only [hh, if_true]
+    · simp only [hh, ite_true]
       have hnn := odo_nonneg d (2 * m) (fun _ => 2 * (d : ℤ)) t (y - unit i)
       simpa [odoUnif] using hnn
-    · simp only [hh, if_false, le_refl]
+    · simp only [hh, ite_false, le_refl]
   linarith
 
 
@@ -172,9 +172,9 @@ theorem foldPoint_sub_one (d m : ℕ) (z : Site d) (hz : ∀ k : Fin d, 1 < z k)
   funext k
   rw [foldPoint_apply, foldPoint_apply]
   have hz1 : 1 ≤ z k := by have := hz k; omega
-  rw [if_pos hz1]
+  rw [ite_eq_left hz1]
   have hz1' : 1 ≤ z k - 1 := by have := hz k; omega
-  rw [if_pos hz1']
+  rw [ite_eq_left hz1']
 
 
 
@@ -283,7 +283,7 @@ theorem gt_one_toSimplexPoint_of_gt_one (d m : ℕ) (z : Site d)
   -- `foldPoint` of a point above two is the point itself
   rw [foldPoint_apply]
   have hzi : (1 : ℤ) ≤ z i := by have := hz i; omega
-  rw [if_pos hzi]
+  rw [ite_eq_left hzi]
   have := hz i
   omega
 
@@ -495,7 +495,7 @@ theorem toppleTime_mono_scale_dim2 (d a b : ℕ) (hd : 1 ≤ d) (ha : 1 ≤ a) (
   have hbT : (b : ℤ) ≤ odoUnif d (2 * b) T (cornerPoint d b) := by
     have h := (toppleTime_le_iff d b hd hb1 hhitb (T : ℕ∞)).mp hTle
     obtain ⟨n, hn, hn1, hnval⟩ := h
-    have hnT : n ≤ T := ENat.coe_le_coe.mp hn
+    have hnT : n ≤ T := ENat.natCast_le_natCast.mp hn
     have hmono' : odoUnif d (2 * b) n (cornerPoint d b)
         ≤ odoUnif d (2 * b) T (cornerPoint d b) :=
       odo_mono d (2 * b) (fun _ => 2 * (d : ℤ)) hnT _
@@ -515,7 +515,7 @@ theorem toppleTime_mono_scale_dim2 (d a b : ℕ) (hd : 1 ≤ d) (ha : 1 ≤ a) (
   have hT1 : 1 ≤ T := by
     have h1 : (1 : ℕ∞) ≤ toppleTime d b := one_le_toppleTime d b
     have h2 : (1 : ℕ∞) ≤ (T : ℕ∞) := le_trans h1 hTle
-    exact ENat.coe_le_coe.mp h2
+    exact ENat.natCast_le_natCast.mp h2
   have hle := (toppleTime_le_iff d a hd ha hhita (T : ℕ∞)).mpr
   exact absurd (hle ⟨T, le_rfl, ⟨hT1, haT⟩⟩) (not_le.mpr hTlt)
 
@@ -540,7 +540,7 @@ theorem toppleTime_mono_scale_succ (d c : ℕ) (hd : 1 ≤ d) (hc : 1 ≤ c)
   have hbT : ((c + 1 : ℕ) : ℤ) ≤ odoUnif d (2 * (c + 1)) T (cornerPoint d (c + 1)) := by
     have h := (toppleTime_le_iff d (c + 1) hd (by omega) hhitc1 (T : ℕ∞)).mp hTle
     obtain ⟨n, hn, hn1, hnval⟩ := h
-    have hnT : n ≤ T := ENat.coe_le_coe.mp hn
+    have hnT : n ≤ T := ENat.natCast_le_natCast.mp hn
     have hmono' := odo_mono d (2 * (c + 1)) (fun _ => 2 * (d : ℤ)) hnT (cornerPoint d (c + 1))
     simp only [odoUnif] at hmono' hnval ⊢
     linarith
@@ -551,7 +551,7 @@ theorem toppleTime_mono_scale_succ (d c : ℕ) (hd : 1 ≤ d) (hc : 1 ≤ c)
     linarith
   have hT1 : 1 ≤ T := by
     have h1 : (1 : ℕ∞) ≤ toppleTime d (c + 1) := one_le_toppleTime d (c + 1)
-    exact ENat.coe_le_coe.mp (le_trans h1 hTle)
+    exact ENat.natCast_le_natCast.mp (le_trans h1 hTle)
   have hle := (toppleTime_le_iff d c hd hc hhitc (T : ℕ∞)).mpr
   exact absurd (hle ⟨T, le_rfl, ⟨hT1, hcT⟩⟩) (not_le.mpr hTlt)
 

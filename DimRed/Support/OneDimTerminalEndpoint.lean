@@ -22,7 +22,7 @@ theorem DimRed.Corrected.one_terminal_derivative (M : ℕ) (hM : 1 ≤ M)
   · exact odoInf_one_deriv M hM x hx1 hlt
   · have heq : x 0 = (M : ℤ) := by omega
     have hA : (odoInfUnif 1 (2 * M) x).toNat = M := by
-      rw [odoInf_one_eq M hM x hx1 hxM, ENat.toNat_coe]
+      rw [odoInf_one_eq M hM x hx1 hxM, ENat.toNat_natCast]
       have hpoly : (M : ℤ) * ((M : ℤ) + 1) - x 0 * (x 0 - 1) = 2 * (M : ℤ) := by
         rw [heq]
         ring

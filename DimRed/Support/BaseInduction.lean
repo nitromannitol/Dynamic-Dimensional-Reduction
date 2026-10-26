@@ -73,7 +73,7 @@ theorem block_eq (d : ℕ) (hd : 1 ≤ d) :
       have hfire := sandp_block_ge d (m + 1) x hd hn1 hx hle hAn hA1 hA0
       have hstep := odo_succ_eq d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (m + 1) (radial d x)
         (inCube_radial d x)
-      rw [if_pos hfire] at hstep
+      rw [ite_eq_left hfire] at hstep
       rw [hstep, hAn]
       push_cast; ring
 
@@ -101,7 +101,7 @@ theorem beyond_block_eq (d : ℕ) (hd : 1 ≤ d) :
           sandp d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x) := by
         rw [sandp, lap_radial d (2 * (d : ℤ) + ((d : ℤ) - 1)) t x hx, hvx, hvxm1, hxd']
         nlinarith [ht]
-      rw [hstep, if_neg hnf, hvx]; ring
+      rw [hstep, ite_eq_right hnf, hvx]; ring
     · by_cases hxb : (x : ℤ) = blockEdge d t
       · have hxlt : x < d := by omega
         have ht2 : 2 ≤ t := by
@@ -133,7 +133,7 @@ theorem beyond_block_eq (d : ℕ) (hd : 1 ≤ d) :
             sandp d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x) := by
           rw [sandp, lap_radial d (2 * (d : ℤ) + ((d : ℤ) - 1)) t x hx, hvx, hvxm1, hvxp1]
           nlinarith [ht, Int.natCast_nonneg x]
-        rw [hstep, if_neg hnf, hvx]; ring
+        rw [hstep, ite_eq_right hnf, hvx]; ring
       · have hxlt2 : (x : ℤ) < blockEdge d t := lt_of_le_of_ne h2 hxb
         have hvxp1 : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x + 1)) = (t : ℤ) := by
           refine block_eq d hd t (x + 1) (by omega) ?_
@@ -157,7 +157,7 @@ theorem beyond_block_eq (d : ℕ) (hd : 1 ≤ d) :
             sandp d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x) := by
           rw [sandp, lap_radial d (2 * (d : ℤ) + ((d : ℤ) - 1)) t x hx, hvx, hvxm1, hvxp1]
           nlinarith [htx]
-        rw [hstep, if_neg hnf, hvx]; ring
+        rw [hstep, ite_eq_right hnf, hvx]; ring
 
 /-- Inside a window of length at least `2`, the front times the position
 exceeds `d - 1`; this is the bound from the proof of the statement labelled `prop:base_case` in `dimred-corrected-arxiv.tex`, applied at
@@ -504,7 +504,7 @@ theorem ripple_shift (d : ℕ) (hd : 1 ≤ d) :
             have h0 : odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2) + 1) (radial d x)
                 = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) (radial d x) := by
               rw [odo_succ_eq d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) (radial d x)
-                (inCube_radial d x), if_neg hnf]
+                (inCube_radial d x), ite_eq_right hnf]
               ring
             rw [h0, hB]
             have hyle : ((x - (n + 2) : ℕ) : ℤ) ≤ blockEdge d (s + 1) := by
@@ -551,7 +551,7 @@ theorem ripple_shift (d : ℕ) (hd : 1 ≤ d) :
                   = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + 1) (radial d (x - (n + 2))) := by
               intro hnf
               rw [odo_succ_eq d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) (radial d x)
-                (inCube_radial d x), if_neg hnf, hB, htarget_boundary]
+                (inCube_radial d x), ite_eq_right hnf, hB, htarget_boundary]
               ring
             have hzstrict : blockEdge d (s + 1 + 1) < blockEdge d (s + 1) :=
               blockEdge_strict d (s + 1) hd (by omega)
@@ -614,7 +614,7 @@ theorem ripple_shift (d : ℕ) (hd : 1 ≤ d) :
                   = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + 1) (radial d (x - (n + 2))) := by
               intro Bval Tval hBval hTval heq hnf
               rw [odo_succ_eq d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) (radial d x)
-                (inCube_radial d x), if_neg hnf, hBval, hTval, heq]
+                (inCube_radial d x), ite_eq_right hnf, hBval, hTval, heq]
               ring
             have closeFire : ∀ Bval Tval : ℤ,
                 odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) (radial d x) = Bval →
@@ -627,7 +627,7 @@ theorem ripple_shift (d : ℕ) (hd : 1 ≤ d) :
                   = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + 1) (radial d (x - (n + 2))) := by
               intro Bval Tval hBval hTval heq hfire
               rw [odo_succ_eq d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (s + (n + 2)) (radial d x)
-                (inCube_radial d x), if_pos hfire, hBval, hTval]
+                (inCube_radial d x), ite_eq_left hfire, hBval, hTval]
               omega
             rcases keyval (x - 1) (by omega) (by omega) hgt (by omega) with
               ⟨hAcond, hAval⟩ | ⟨hAcond, hAval⟩

@@ -74,7 +74,7 @@ theorem topple_general (d M : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
       calc
         (1 : ℕ∞) ≤ toppleTime (d + 1) (M - 1) := htop
         _ = (T : ℕ∞) := hT
-    exact ENat.coe_le_coe.mp htop'
+    exact ENat.natCast_le_natCast.mp htop'
   have hlowerT := (hlower_time T hT).1
   have hlowerTpred := (hlower_time T hT).2
   have hno1 : ∀ y : Site d, inSimplex d M y →

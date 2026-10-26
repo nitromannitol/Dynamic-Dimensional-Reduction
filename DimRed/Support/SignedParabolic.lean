@@ -51,12 +51,12 @@ private theorem sandp_nonneg_of_odo_pos (d N : ℕ) (s₀ : Site d → ℤ)
         by_cases hfire : 2 * (d : ℤ) ≤ sandp d N s₀ t x
         · have hdelta :
               odo d N s₀ (t + 1) x - odo d N s₀ t x = 1 := by
-            rw [htop, if_pos hfire]
+            rw [htop, ite_eq_left hfire]
           rw [hdelta] at hupdate
           nlinarith [hupdate, hneighbors]
         · have hdelta :
               odo d N s₀ (t + 1) x - odo d N s₀ t x = 0 := by
-            rw [htop, if_neg hfire]
+            rw [htop, ite_eq_right hfire]
           have hprev : 0 < odo d N s₀ t x := by
             have heq : odo d N s₀ (t + 1) x = odo d N s₀ t x :=
               sub_eq_zero.mp hdelta

@@ -86,7 +86,7 @@ theorem blockEdge_of_le (d m : ℕ) (hm : 2 ≤ m) (h : m ≤ tCrit d) :
     | 1 => omega
     | (n + 2) =>
       rw [blockEdge]
-      rw [if_pos (by omega : n + 2 ≤ tCrit d)]
+      rw [ite_eq_left (by omega : n + 2 ≤ tCrit d)]
       have hcast : ((n + 2 : ℕ) : ℤ) - 1 = (n : ℤ) + 1 := by push_cast; ring
       rw [hcast]
 
@@ -99,7 +99,7 @@ theorem blockEdge_of_gt (d m : ℕ) (hm : tCrit d < m) :
     | 1 => exact absurd hm (by have := tCrit_pos d; omega)
     | (n + 2) =>
       rw [blockEdge]
-      rw [if_neg (by omega : ¬ n + 2 ≤ tCrit d)]
+      rw [ite_eq_right (by omega : ¬ n + 2 ≤ tCrit d)]
       rcases Nat.eq_or_lt_of_le (by omega : tCrit d ≤ n + 1) with he | hlt
       · have he' : n + 1 = tCrit d := he.symm
         have hcast : ((n + 2 : ℕ) : ℤ) - ((tCrit d : ℕ) : ℤ) = 1 := by
@@ -118,7 +118,7 @@ theorem blockEdge_of_gt (d m : ℕ) (hm : tCrit d < m) :
 
 theorem tCrit_eq (d : ℕ) (hd : 2 ≤ d) : tCrit d = (d - 2).sqrt + 2 := by
   rw [tCrit, ceilSqrt]
-  rw [if_neg (by omega : ¬ (d - 1 = 0))]
+  rw [ite_eq_right (by omega : ¬ (d - 1 = 0))]
   have h : d - 1 - 1 = d - 2 := by omega
   rw [h]
 
@@ -436,7 +436,7 @@ theorem ripple_step_ge (d t x : ℕ) (_hd : 1 ≤ d) (_hx : x ≤ d)
     odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (t + 1) (radial d x)
       = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x - 1)) := by
   rw [odo_succ_eq d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x) (inCube_radial d x)]
-  rw [if_pos h]
+  rw [ite_eq_left h]
   omega
 
 /-- The ripple step when the site does not fire: `v_{t+1}(x) = v_t(x-1)` follows
@@ -448,7 +448,7 @@ theorem ripple_step_lt (d t x : ℕ) (_hd : 1 ≤ d) (_hx : x ≤ d)
     odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) (t + 1) (radial d x)
       = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x - 1)) := by
   rw [odo_succ_eq d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x) (inCube_radial d x)]
-  rw [if_neg h]
+  rw [ite_eq_right h]
   omega
 
 /-- The ripple step, split on whether the site fires, the proof of the statement labelled `prop:base_case` in `dimred-corrected-arxiv.tex`. -/
@@ -463,9 +463,9 @@ theorem ripple_window_step (d t x : ℕ) (_hd : 1 ≤ d) (_hx : x ≤ d)
       = odo d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d (x - 1)) := by
   rw [odo_succ_eq d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x) (inCube_radial d x)]
   by_cases h : 2 * (d : ℤ) ≤ sandp d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) t (radial d x)
-  · rw [if_pos h]
+  · rw [ite_eq_left h]
     omega
-  · rw [if_neg h]
+  · rw [ite_eq_right h]
     omega
 
 /-- The paper's first displayed chain of Step 2, the proof of the statement labelled `prop:base_case` in `dimred-corrected-arxiv.tex`: if the

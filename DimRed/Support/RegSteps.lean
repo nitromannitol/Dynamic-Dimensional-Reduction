@@ -128,7 +128,7 @@ theorem dimred_step_of_earlier (d M t : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
         subst hc0
         have h1 : (1 : ℕ∞) ≤ toppleTime i (M - 1) := one_le_toppleTime i (M - 1)
         have h2 : (1 : ℕ∞) ≤ ((0 + 1 - 2 : ℕ) : ℕ∞) := le_trans h1 hs
-        have h3 : (1 : ℕ) ≤ 0 + 1 - 2 := ENat.coe_le_coe.mp h2
+        have h3 : (1 : ℕ) ≤ 0 + 1 - 2 := ENat.natCast_le_natCast.mp h2
         omega
       have hq2 : q + 1 - 2 = q - 1 := by omega
       rw [hq2]

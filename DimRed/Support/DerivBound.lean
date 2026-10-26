@@ -104,8 +104,8 @@ theorem odo_le_of_le (hd : 1 ≤ d) (c : ℤ) (hc0 : 0 ≤ c)
     have hkey : ∀ l, z l - y l = (x l - y l) - (if l = i then 1 else 0) := by
       intro l
       by_cases hl : l = i
-      · rw [hl, hzi, if_pos rfl]; ring
-      · rw [hzl l hl, if_neg hl]; ring
+      · rw [hl, hzi, ite_eq_left rfl]; ring
+      · rw [hzl l hl, ite_eq_right hl]; ring
     have hsum : (∑ l, (z l - y l)) = (∑ l, (x l - y l)) - 1 := by
       rw [Finset.sum_congr rfl (fun l _ => hkey l), Finset.sum_sub_distrib]
       congr 1
@@ -132,8 +132,8 @@ theorem odo_sub_unit_of_one (c : ℤ) (t : ℕ) (x : Site d) (j : Fin d) (h1 : x
   have e : (fun l => if l = j then 1 - (x - unit j) j else (x - unit j) l) = x := by
     funext l
     by_cases hl : l = j
-    · rw [if_pos hl, hl, sub_unit_self, h1]; norm_num
-    · rw [if_neg hl, sub_unit_other _ _ _ _ hl]
+    · rw [ite_eq_left hl, hl, sub_unit_self, h1]; norm_num
+    · rw [ite_eq_right hl, sub_unit_other _ _ _ _ hl]
   rw [e] at hrefl
   exact hrefl.symm
 
@@ -158,7 +158,7 @@ theorem odo_le_corner (hd : 1 ≤ d) (c : ℤ) (hc0 : 0 ≤ c)
   have hzero : (0 : ℕ) < d := hd
   set i0 : Fin d := ⟨0, hzero⟩ with hi0
   have hfold : foldPoint d (2 * M) x j = (M : ℤ) := by
-    rw [foldPoint_apply, if_pos (by omega : (1 : ℤ) ≤ x j), hxj]
+    rw [foldPoint_apply, ite_eq_left (by omega : (1 : ℤ) ≤ x j), hxj]
   obtain ⟨m, hm⟩ := (Tuple.sort (fun i => -(foldPoint d (2 * M) x i))).surjective j
   have hym : y m = (M : ℤ) := by rw [hy, toSimplexPoint, hm, hfold]
   have hy0 : (M : ℤ) ≤ y i0 := by
@@ -174,10 +174,10 @@ theorem odo_le_corner (hd : 1 ≤ d) (c : ℤ) (hc0 : 0 ≤ c)
     intro l
     rw [cornerPoint]
     by_cases hl : (l : ℕ) = 0
-    · rw [if_pos hl]
+    · rw [ite_eq_left hl]
       have : l = i0 := by ext; simpa [hi0] using hl
       rw [this]; exact hy0
-    · rw [if_neg hl]; exact (hyS.1 l).1
+    · rw [ite_eq_right hl]; exact (hyS.1 l).1
   rw [← hyx]
   exact odo_le_of_le d M hd c hc0 hc1 t _ y (cornerPoint d M) hyS hcorner hle rfl
 

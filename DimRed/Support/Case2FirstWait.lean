@@ -205,9 +205,9 @@ private theorem case2_first_wait_layer (d M r : ℕ) (hd : 1 ≤ d) (hM : 1 ≤ 
                     funext j
                     by_cases hji : j = i
                     · subst j
-                      rw [if_pos rfl, sub_unit_self, hi1]
+                      rw [ite_eq_left rfl, sub_unit_self, hi1]
                       norm_num
-                    · rw [if_neg hji, sub_unit_other d z i j hji]
+                    · rw [ite_eq_right hji, sub_unit_other d z i j hji]
                   have hsym := odo_reflect_coord d M (2 * (d : ℤ)) n (z - unit i) i
                   rw [heq] at hsym
                   exact hsym.symm.trans (ihn z hz (by
@@ -572,9 +572,9 @@ private theorem case2_reflect_minus_at_one (d M t : ℕ) (x : Site d) (i : Fin d
     funext j
     by_cases hji : j = i
     · subst j
-      rw [if_pos rfl, sub_unit_self, hi]
+      rw [ite_eq_left rfl, sub_unit_self, hi]
       norm_num
-    · rw [if_neg hji, sub_unit_other d x i j hji]
+    · rw [ite_eq_right hji, sub_unit_other d x i j hji]
   have h := odo_reflect_coord d M (2 * (d : ℤ)) t (x - unit i) i
   rw [heq] at h
   exact h.symm
@@ -620,14 +620,14 @@ theorem case2_no_later_consecutive_firing (d M : ℕ) (hd : 1 ≤ d) (hM : 2 ≤
         have hI := case2_fire_indicator d M (t - 1) x hcubex
         rw [hprev] at hI
         by_contra hge
-        rw [if_pos (le_of_not_gt hge)] at hI
+        rw [ite_eq_left (le_of_not_gt hge)] at hI
         omega
       have hnextge : 2 * (d : ℤ) ≤ sandpUnif d (2 * M) (t + 1) x := by
         have hI := case2_fire_indicator d M (t + 1) x hcubex
         rw [hboth.2] at hI
         by_contra hlt
         have hnot : ¬ 2 * (d : ℤ) ≤ sandpUnif d (2 * M) (t + 1) x := by omega
-        rw [if_neg hnot] at hI
+        rw [ite_eq_right hnot] at hI
         omega
       have hconsPrev : sandpUnif d (2 * M) t x =
           sandpUnif d (2 * M) (t - 1) x + lap (case2Fire d M (t - 1)) x := by

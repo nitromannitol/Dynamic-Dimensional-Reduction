@@ -43,7 +43,7 @@ theorem facetTailRaise_eq_mid {i : ℕ} (x : Fin i → ℤ) (j : ℕ) (hj : j = 
   have h : ¬ (i + 1 ≤ (l : ℕ)) := by
     have := l.isLt
     omega
-  rw [if_neg h]
+  rw [ite_eq_right h]
 
 theorem facetTailRaise_head {i : ℕ} (x : Fin i → ℤ) (j : ℕ) (a : Fin i) :
     facetTailRaise x j (Fin.castAdd j (Fin.castSucc a))
@@ -52,7 +52,7 @@ theorem facetTailRaise_head {i : ℕ} (x : Fin i → ℤ) (j : ℕ) (a : Fin i) 
   have h : ¬ (i + 1 ≤ ((Fin.castAdd j (Fin.castSucc a) : Fin (i + 1 + j)) : ℕ)) := by
     simp only [Fin.val_castAdd, Fin.val_castSucc]
     omega
-  rw [if_neg h]
+  rw [ite_eq_right h]
 
 theorem facetTailRaise_mid {i : ℕ} (x : Fin i → ℤ) (j : ℕ) :
     facetTailRaise x j (Fin.castAdd j (Fin.last i))
@@ -61,7 +61,7 @@ theorem facetTailRaise_mid {i : ℕ} (x : Fin i → ℤ) (j : ℕ) :
   have h : ¬ (i + 1 ≤ ((Fin.castAdd j (Fin.last i) : Fin (i + 1 + j)) : ℕ)) := by
     simp only [Fin.val_castAdd, Fin.val_last]
     omega
-  rw [if_neg h]
+  rw [ite_eq_right h]
 
 theorem facetTailRaise_tail {i : ℕ} (x : Fin i → ℤ) (j : ℕ) (b : Fin j) :
     facetTailRaise x j (Fin.natAdd (i + 1) b)
@@ -72,10 +72,10 @@ theorem facetTailRaise_tail {i : ℕ} (x : Fin i → ℤ) (j : ℕ) (b : Fin j) 
   have hlt : i + 1 ≤ ((Fin.natAdd (i + 1) b : Fin (i + 1 + j)) : ℕ) := by
     rw [hval]
     omega
-  rw [if_pos hlt]
+  rw [ite_eq_left hlt]
   by_cases hb : (b : ℕ) = 0
-  · rw [if_pos (by rw [hval, hb]), if_pos hb]
-  · rw [if_neg (by rw [hval]; omega), if_neg hb]
+  · rw [ite_eq_left (by rw [hval, hb]), ite_eq_left hb]
+  · rw [ite_eq_right (by rw [hval]; omega), ite_eq_right hb]
 
 theorem facetPoint_add_head {i j : ℕ} (x : Fin i → ℤ) (a : Fin i) :
     facetPoint x 1 j + unit (Fin.castAdd j (Fin.castSucc a))
@@ -157,9 +157,9 @@ theorem reflect_sub_of_one {d : ℕ} (u : Site d) (q : Fin d) (hu : u q = 1) :
   funext k
   by_cases hk : k = q
   · subst hk
-    rw [if_pos rfl, sub_unit_self, hu]
+    rw [ite_eq_left rfl, sub_unit_self, hu]
     norm_num
-  · rw [if_neg hk, sub_unit_other _ _ _ _ hk]
+  · rw [ite_eq_right hk, sub_unit_other _ _ _ _ hk]
 
 theorem swap_add_eq_add {d : ℕ} (u : Site d) (i j : Fin d) (hij : i ≠ j)
     (he : u i = u j) :
@@ -252,8 +252,8 @@ theorem odo_facetPoint_two_sub_tail {i j M : ℕ} (t : ℕ) (x : Fin i → ℤ) 
     funext k
     by_cases hk : k = Fin.natAdd (i + 1) b
     · subst hk
-      rw [if_pos rfl, hu, sub_unit_self, hu]
-    · rw [if_neg hk, sub_unit_apply, if_neg hk]
+      rw [ite_eq_left rfl, hu, sub_unit_self, hu]
+    · rw [ite_eq_right hk, sub_unit_apply, ite_eq_right hk]
       norm_num
   have hfun : (fun k => if k = Fin.natAdd (i + 1) b then 1 - (facetPoint x 2 j) k
       else (facetPoint x 2 j) k)
@@ -262,7 +262,7 @@ theorem odo_facetPoint_two_sub_tail {i j M : ℕ} (t : ℕ) (x : Fin i → ℤ) 
     funext k
     by_cases hk : k = Fin.natAdd (i + 1) b
     · subst hk; rfl
-    · rw [if_neg hk, if_neg hk]
+    · rw [ite_eq_right hk, ite_eq_right hk]
   rw [← hfun] at h
   rw [e] at h
   exact h
@@ -285,10 +285,10 @@ theorem odo_facetPoint_two_add_tail {i j M : ℕ} (t : ℕ) (x : Fin i → ℤ) 
     funext k
     by_cases hk : k = Fin.natAdd (i + 1) b
     · subst hk
-      rw [if_pos rfl, hu]
+      rw [ite_eq_left rfl, hu]
       rw [sub_unit_self, sub_unit_self, facetPoint_tail x 2 b]
       norm_num
-    · rw [if_neg hk, sub_unit_apply, if_neg hk, sub_unit_apply, if_neg hk]
+    · rw [ite_eq_right hk, sub_unit_apply, ite_eq_right hk, sub_unit_apply, ite_eq_right hk]
       rw [add_unit_other _ _ _ _ hk]
       norm_num
   have hfun : (fun k => if k = Fin.natAdd (i + 1) b then
@@ -300,7 +300,7 @@ theorem odo_facetPoint_two_add_tail {i j M : ℕ} (t : ℕ) (x : Fin i → ℤ) 
     funext k
     by_cases hk : k = Fin.natAdd (i + 1) b
     · subst hk; rfl
-    · rw [if_neg hk, if_neg hk]
+    · rw [ite_eq_right hk, ite_eq_right hk]
   rw [← hfun] at h
   rw [e] at h
   exact h.symm
@@ -418,11 +418,11 @@ theorem facetPoint_two_add_head {j : ℕ} (c : ℤ) :
         have hv := congrArg Fin.val hh
         simp only [Fin.val_castAdd, Fin.val_castSucc, Fin.val_last] at hv
         omega
-      rw [unit, Pi.single_apply, if_neg hne, add_zero]
+      rw [unit, Pi.single_apply, ite_eq_right hne, add_zero]
     · rw [Pi.add_apply, facetPoint_head, facetPoint_head]
       have hb : (b : ℕ) < 1 := b.isLt
       have hba : b = (0 : Fin 1) := Fin.ext (by omega)
-      rw [hba, unit, Pi.single_apply, if_pos rfl]
+      rw [hba, unit, Pi.single_apply, ite_eq_left rfl]
       norm_num
   · intro b
     rw [Pi.add_apply, facetPoint_tail, facetPoint_tail]
@@ -431,7 +431,7 @@ theorem facetPoint_two_add_head {j : ℕ} (c : ℤ) :
       intro hh
       have hv := congrArg Fin.val hh
       simp [Fin.castAdd, Fin.natAdd] at hv
-    rw [unit, Pi.single_apply, if_neg hne]
+    rw [unit, Pi.single_apply, ite_eq_right hne]
     norm_num
 theorem facetPoint_two_sub_head {j : ℕ} (c : ℤ) :
     facetPoint ((fun _ : Fin 1 => (2 : ℤ)) - unit (0 : Fin 1)) c j
@@ -448,11 +448,11 @@ theorem facetPoint_two_sub_head {j : ℕ} (c : ℤ) :
         have hv := congrArg Fin.val hh
         simp only [Fin.val_castAdd, Fin.val_castSucc, Fin.val_last] at hv
         omega
-      rw [unit, Pi.single_apply, if_neg hne, sub_zero]
+      rw [unit, Pi.single_apply, ite_eq_right hne, sub_zero]
     · rw [Pi.sub_apply, facetPoint_head, facetPoint_head]
       have hb : (b : ℕ) < 1 := b.isLt
       have hba : b = (0 : Fin 1) := Fin.ext (by omega)
-      rw [hba, unit, Pi.single_apply, if_pos rfl]
+      rw [hba, unit, Pi.single_apply, ite_eq_left rfl]
       norm_num
   · intro b
     rw [Pi.sub_apply, facetPoint_tail, facetPoint_tail]
@@ -461,7 +461,7 @@ theorem facetPoint_two_sub_head {j : ℕ} (c : ℤ) :
       intro hh
       have hv := congrArg Fin.val hh
       simp [Fin.castAdd, Fin.natAdd] at hv
-    rw [unit, Pi.single_apply, if_neg hne, sub_zero]
+    rw [unit, Pi.single_apply, ite_eq_right hne, sub_zero]
 
 theorem facetPoint_one_add_head {j : ℕ} :
     facetPoint (fun _ : Fin 1 => (1 : ℤ)) 1 j

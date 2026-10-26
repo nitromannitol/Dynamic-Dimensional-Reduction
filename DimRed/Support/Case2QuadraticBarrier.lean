@@ -86,7 +86,7 @@ private theorem case2_barrier_add_axis (d M : ℕ) (k : Fin d) (x : Site d)
     case2QuadraticBarrier d M k (x + unit k) =
       oneProfile M (oneSite (x k + 1)) := by
   by_cases hplus : inCube d (2 * M) (x + unit k)
-  · simp only [case2QuadraticBarrier, if_pos hplus]
+  · simp only [case2QuadraticBarrier, ite_eq_left hplus]
     rw [add_unit_self]
   · have hprofile : ¬ inCube 1 (2 * M) (oneSite (x k + 1)) := by
       intro h
@@ -108,7 +108,7 @@ private theorem case2_barrier_sub_axis (d M : ℕ) (k : Fin d) (x : Site d)
     case2QuadraticBarrier d M k (x - unit k) =
       oneProfile M (oneSite (x k - 1)) := by
   by_cases hminus : inCube d (2 * M) (x - unit k)
-  · simp only [case2QuadraticBarrier, if_pos hminus]
+  · simp only [case2QuadraticBarrier, ite_eq_left hminus]
     rw [sub_unit_self]
   · have hprofile : ¬ inCube 1 (2 * M) (oneSite (x k - 1)) := by
       intro h
@@ -133,7 +133,7 @@ private theorem case2_barrier_transverse_add_le (d M : ℕ) (k i : Fin d)
   · rw [case2_barrier_eq_profile d M k _ hneighbor,
       case2_barrier_eq_profile d M k x hx]
     rw [add_unit_other d x i k (Ne.symm hik)]
-  · rw [case2QuadraticBarrier, if_neg hneighbor,
+  · rw [case2QuadraticBarrier, ite_eq_right hneighbor,
       case2_barrier_eq_profile d M k x hx]
     exact oneProfile_nonneg M (oneSite (x k))
 
@@ -146,7 +146,7 @@ private theorem case2_barrier_transverse_sub_le (d M : ℕ) (k i : Fin d)
   · rw [case2_barrier_eq_profile d M k _ hneighbor,
       case2_barrier_eq_profile d M k x hx]
     rw [sub_unit_other d x i k (Ne.symm hik)]
-  · rw [case2QuadraticBarrier, if_neg hneighbor,
+  · rw [case2QuadraticBarrier, ite_eq_right hneighbor,
       case2_barrier_eq_profile d M k x hx]
     exact oneProfile_nonneg M (oneSite (x k))
 
@@ -179,9 +179,9 @@ private theorem case2_barrier_pair_le (d M : ℕ) (k i : Fin d) (x : Site d)
       2 * case2QuadraticBarrier d M k x - (if i = k then 1 else 0) := by
   by_cases hik : i = k
   · subst i
-    rw [if_pos rfl]
+    rw [ite_eq_left rfl]
     exact le_of_eq (case2_barrier_axis_sum d M k x hx)
-  · rw [if_neg hik]
+  · rw [ite_eq_right hik]
     have hp := case2_barrier_transverse_add_le d M k i x hx hik
     have hm := case2_barrier_transverse_sub_le d M k i x hx hik
     linarith

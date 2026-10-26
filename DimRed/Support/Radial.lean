@@ -83,17 +83,17 @@ theorem radial_sub_unit_ge (d k : ℕ) (i : Fin d) (hi : k ≤ (i : ℕ)) :
     Pi.sub_apply, radial_apply, unit_apply']
   by_cases hji : j = i
   · subst hji
-    simp only [if_neg (by simp : ¬ (j ≠ j))]
+    simp only [ite_eq_right (by simp : ¬ (j ≠ j))]
     split_ifs <;> omega
   · have hne1 : (j : ℕ) ≠ (i : ℕ) := fun h => hji (Fin.ext h)
-    simp only [if_pos hji]
+    simp only [ite_eq_left hji]
     split_ifs <;> omega
 
 theorem radial_add_unit_out (d k : ℕ) (i : Fin d) (hi : (i : ℕ) < k) :
     ¬ inCube d 4 (radial d k + unit i) := by
   intro h
   have h2 := (h i).2
-  rw [hiCoord_four, Pi.add_apply, radial_apply, unit_apply', if_pos rfl, if_pos hi] at h2
+  rw [hiCoord_four, Pi.add_apply, radial_apply, unit_apply', ite_eq_left rfl, ite_eq_left hi] at h2
   omega
 
 theorem isSymmetricPile_const (d N : ℕ) (c : ℤ) : IsSymmetricPile d N (fun _ => c) :=
@@ -111,13 +111,13 @@ theorem nbrSum_radial (d : ℕ) (c : ℤ) (t k : ℕ) (hk : k ≤ d) :
         else (v (radial d (k + 1)) + v (radial d k)) := by
     intro i
     by_cases hi : (i : ℕ) < k
-    · rw [if_pos hi]
+    · rw [ite_eq_left hi]
       have hout := radial_add_unit_out d k i hi
       have hb : k - 1 < d := by omega
       rw [hv, odo_eq_zero_outside d 4 (fun _ => c) t _ hout,
         radial_sub_unit_lt d k i hi hb, odo_comp_perm d 4 (fun _ => c) hsym t _ _]
       ring
-    · rw [if_neg hi]
+    · rw [ite_eq_right hi]
       rw [not_lt] at hi
       have hb : k < d := by omega
       rw [hv, radial_add_unit_ge d k i hi hb, odo_comp_perm d 4 (fun _ => c) hsym t _ _,

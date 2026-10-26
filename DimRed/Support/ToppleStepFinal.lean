@@ -65,10 +65,10 @@ theorem odoUnif_succ_shift_of_nbrSum {d M s : ℕ} (hM : 2 ≤ M) (y : Site d) (
   simp only [odoUnif] at h0 ⊢
   simp only [odo, lap]
   by_cases hin : inCube d (2 * M) y
-  · rw [if_pos hin, if_pos (hc.mp hin)]
+  · rw [ite_eq_left hin, ite_eq_left (hc.mp hin)]
     simp only [h0, hn']
     rfl
-  · rw [if_neg hin, if_neg (fun h => hin (hc.mpr h))]
+  · rw [ite_eq_right hin, ite_eq_right (fun h => hin (hc.mpr h))]
 
 /-- The self-similarity identity at scale `M` against `M - 1`, on every point of
 `ℤ^d` with all coordinates at least two, from its form on the sorted domain. -/
@@ -163,7 +163,7 @@ theorem odoUnif_dim_one_zero_eq_one (M s : ℕ) :
   have he : (fun k : Fin 1 => if k = 0 then 1 - (fun _ : Fin 1 => (1 : ℤ)) 0
       else (fun _ : Fin 1 => (1 : ℤ)) k) = fun _ => (0 : ℤ) := by
     funext k
-    rw [if_pos (Fin.eq_zero k)]
+    rw [ite_eq_left (Fin.eq_zero k)]
     norm_num
   rw [he] at h
   exact h
@@ -477,14 +477,14 @@ theorem odoUnif_snoc_one_le (e N s : ℕ) (he : 1 ≤ e) (x : Site e) :
     · exact le_refl _
   have hu1 : ∀ t y, ¬ inCube (e + 1) N y → u t y = 0 := by
     intro t y hy
-    simp only [u, if_neg hy]
+    simp only [u, ite_eq_right hy]
   have hu_snoc : ∀ t (z : Site e) (c : ℤ), loCoord N ≤ c → c ≤ hiCoord N →
       u t (Fin.snoc z c) = odoUnif e N t z := by
     intro t z c h0 h1
     simp only [u]
     by_cases hz : inCube e N z
-    · rw [if_pos ((inCube_snoc z c).mpr ⟨hz, h0, h1⟩), Fin.init_snoc]
-    · rw [if_neg (fun h => hz ((inCube_snoc z c).mp h).1)]
+    · rw [ite_eq_left ((inCube_snoc z c).mpr ⟨hz, h0, h1⟩), Fin.init_snoc]
+    · rw [ite_eq_right (fun h => hz ((inCube_snoc z c).mp h).1)]
       exact (odo_eq_zero_outside _ _ _ _ _ hz).symm
   have hu_le : ∀ t (z : Site e) (c : ℤ), u t (Fin.snoc z c) ≤ odoUnif e N t z := by
     intro t z c
@@ -774,7 +774,7 @@ theorem topple_step_of_earlier (d M t : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
   have hTpos : 1 ≤ T := by
     have htop := one_le_toppleTime d (M - 1)
     rw [hT] at htop
-    exact ENat.coe_le_coe.mp htop
+    exact ENat.natCast_le_natCast.mp htop
   have hconsAt : ∀ s, s ≤ t → RegConsist d M s := by
     intro s hs
     rcases Nat.lt_or_ge s t with h | h
@@ -789,7 +789,7 @@ theorem topple_step_of_earlier (d M t : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
       odoUnif d (2 * M) s y = odoUnif d (2 * (M - 1)) s (fun i => y i - 1) := by
     intro s hs
     exact selfsim_shift_of_simplex hM (selfsim_shift_simplex_of_regConsist hM (hconsAt s (le_trans hs hTt))
-      (by rw [hT]; exact ENat.coe_le_coe.mpr hs))
+      (by rw [hT]; exact ENat.natCast_le_natCast.mpr hs))
   have hbase : simplexMax d M (fun x =>
       odoUnif d (2 * M) (T + 2) x - odoUnif d (2 * M) T x) ≤ 1 := by
     rcases (show d = 1 ∨ 2 ≤ d by omega) with hd1 | hd2
@@ -810,7 +810,7 @@ theorem topple_step_of_earlier (d M t : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
             fun _ _ _ => le_refl _⟩
         have hgap := one_dim_tau_gap M t hM3 ht hconsist (fun q' hq' => by
           have hq'T : (q' : ℕ∞) ≤ (T : ℕ∞) := by rw [← hT]; exact le_trans hq' hmono
-          have hC := hconsAt q' (le_trans (ENat.coe_le_coe.mp hq'T) hTt)
+          have hC := hconsAt q' (le_trans (ENat.natCast_le_natCast.mp hq'T) hTt)
           constructor
           · have h := hC (M - 1) (by omega) (by omega) (le_trans hq' hmono)
               (fun _ => (M : ℤ)) hxM (fun _ => by rw [hc1]; omega)
@@ -830,16 +830,16 @@ theorem topple_step_of_earlier (d M t : ℕ) (hd : 1 ≤ d) (hM : 2 ≤ M)
         have hfin : toppleTime 1 (M - 2) ≠ ⊤ := by
           intro h
           rw [h, top_add] at hgap
-          exact ENat.coe_ne_top T (top_le_iff.mp hgap)
+          exact ENat.natCast_ne_top T (top_le_iff.mp hgap)
         obtain ⟨n, hn⟩ := WithTop.ne_top_iff_exists.mp hfin
         replace hn : (n : ℕ∞) = toppleTime 1 (M - 2) := hn
         rw [← hn] at hgap
         have hnT : n + 2 ≤ T := by
           have h2 : ((n + 2 : ℕ) : ℕ∞) ≤ (T : ℕ∞) := by push_cast; exact hgap
-          exact ENat.coe_le_coe.mp h2
+          exact ENat.natCast_le_natCast.mp h2
         have hlow : toppleTime 1 (M - 1 - 1) ≤ ((T - 1 : ℕ) : ℕ∞) := by
           rw [show M - 1 - 1 = M - 2 by omega, ← hn]
-          exact ENat.coe_le_coe.mpr (by omega)
+          exact ENat.natCast_le_natCast.mpr (by omega)
         have htop := (hprior 1 (M - 1) (T - 1) (Or.inr (Or.inl ⟨rfl, by omega⟩)) le_rfl
           (by omega)).1.2.2.2.2 hlow
         rw [show T - 1 + 2 = T + 1 by omega] at htop

@@ -282,7 +282,7 @@ theorem odo_succ_facetPoint_zero {j M : ℕ} (x : Fin 0 → ℤ) (t : ℕ)
       dsimp only [sandp]
       rw [hlap']
       omega
-    rw [hs, if_neg hnot, add_zero]
+    rw [hs, ite_eq_right hnot, add_zero]
   · change odo (0 + 1 + j) (2 * M)
       (fun _ => 2 * ((0 + 1 + j : ℕ) : ℤ)) (t + 1) (facetPoint x 1 j) =
       odo (0 + 1 + j) (2 * M)

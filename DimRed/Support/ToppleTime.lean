@@ -155,7 +155,7 @@ theorem toppleTime_le_iff (d j : ℕ) (hd : 1 ≤ d) (hj : 1 ≤ j)
     rcases hhit with ⟨n, hn, hval⟩
     exact ⟨n, hn, hval⟩
   rw [toppleTime_eq_corner d j hd hj]
-  simpa only [Set.mem_setOf_eq] using sInf_nat_image_le_iff _ hs m
+  simpa only [Set.mem_ofPred_eq] using sInf_nat_image_le_iff _ hs m
 
 theorem one_le_toppleTime (d j : ℕ) : 1 ≤ toppleTime d j := by
   refine le_sInf ?_

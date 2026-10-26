@@ -20,6 +20,6 @@ theorem odo_radial_one (d : ℕ) (hd : 1 ≤ d) (x : ℕ) (_hx : x ≤ d) :
   rw [odo_succ_eq d 4 (fun _ => 2 * (d : ℤ) + ((d : ℤ) - 1)) 0 (radial d x)
     (inCube_radial d x)]
   simp only [odo, sandp, lap, nbrSum, Finset.sum_const_zero, mul_zero, add_zero]
-  rw [if_pos (by omega)]
+  rw [ite_eq_left (by omega)]
 
 end DimRed

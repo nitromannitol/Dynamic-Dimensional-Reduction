@@ -37,7 +37,7 @@ theorem odoInf_cube2_critical (d₀ : ℕ) (hd₀ : 2 ≤ d₀) :
   have hstable : odo d₀ 2 (fun _ => c₀) (1 + 1) = odo d₀ 2 (fun _ => c₀) 1 := by
     funext y; rw [show (1 : ℕ) + 1 = 2 from rfl, h2 y, h1 y]
   intro x hx
-  rw [odoInf_eq_of_stable d₀ 2 (fun _ => c₀) 1 hstable x, h1 x, if_pos hx]
+  rw [odoInf_eq_of_stable d₀ 2 (fun _ => c₀) 1 hstable x, h1 x, ite_eq_left hx]
   rfl
 
 /-- One dimension below the critical dimension the terminal odometer is `2`. -/
@@ -74,7 +74,7 @@ theorem odoInf_cube2_subcritical (d₀ : ℕ) (hd₀ : 2 ≤ d₀) :
   have hstable : odo d 2 (fun _ => c₀) (2 + 1) = odo d 2 (fun _ => c₀) 2 := by
     funext y; rw [show (2 : ℕ) + 1 = 3 from rfl, h3 y, h2 y]
   intro x hx
-  rw [odoInf_eq_of_stable d 2 (fun _ => c₀) 2 hstable x, h2 x, if_pos hx]
+  rw [odoInf_eq_of_stable d 2 (fun _ => c₀) 2 hstable x, h2 x, ite_eq_left hx]
   rfl
 
 end DimRed

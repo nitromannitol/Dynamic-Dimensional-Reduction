@@ -25,11 +25,11 @@ theorem odoUnif_sub_unit_shift_eq (d m t : ℕ) (y : Site d) (k : Fin d)
     funext j
     by_cases hj : j = k
     · subst hj
-      rw [if_pos rfl, sub_unit_self]
+      rw [ite_eq_left rfl, sub_unit_self]
       have h : y j = 2 := hk
       rw [h]
       norm_num
-    · rw [if_neg hj, sub_unit_other _ _ _ _ hj]
+    · rw [ite_eq_right hj, sub_unit_other _ _ _ _ hj]
   rw [← hrefl]
   simp only [odoUnif]
   exact odo_reflect_coord d (m - 1) (2 * (d : ℤ)) t (fun j => y j - 1) k

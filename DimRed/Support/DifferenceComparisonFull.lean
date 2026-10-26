@@ -38,9 +38,9 @@ private theorem difference_threshold_step (d N : ℕ) (c a : ℤ) (t : ℕ)
     rw [odo_succ_eq d N (fun _ => c) t x hx,
       odo_succ_eq d N (fun _ => c) t y hy]
     by_cases hfire : 2 * (d : ℤ) ≤ sandp d N (fun _ => c) t x
-    · rw [if_pos hfire, if_pos (le_trans hfire hsand)]
+    · rw [ite_eq_left hfire, ite_eq_left (le_trans hfire hsand)]
       omega
-    · rw [if_neg hfire]
+    · rw [ite_eq_right hfire]
       split_ifs <;> omega
 
 /-- Simultaneous difference comparison on the sorted domain, for every

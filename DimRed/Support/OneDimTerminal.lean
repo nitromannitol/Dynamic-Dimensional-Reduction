@@ -61,11 +61,11 @@ lemma oneProfile_reflect (M : ℕ) (y : Site 1) :
   by_cases h : inCube 1 (2 * M) y
   · have h' : inCube 1 (2 * M) (fun _ => 1 - y 0) :=
       (inCube_one_reflect M y).2 h
-    rw [oneProfile, if_pos h', oneProfile, if_pos h]
+    rw [oneProfile, ite_eq_left h', oneProfile, ite_eq_left h]
     rw [oneFold_reflect]
   · have h' : ¬ inCube 1 (2 * M) (fun _ => 1 - y 0) :=
       fun hh => h ((inCube_one_reflect M y).1 hh)
-    rw [oneProfile, if_neg h', oneProfile, if_neg h]
+    rw [oneProfile, ite_eq_right h', oneProfile, ite_eq_right h]
 
 lemma oneFold_bounds (M : ℕ) (y : Site 1) (hy : inCube 1 (2 * M) y) :
     1 ≤ oneFold (y 0) ∧ oneFold (y 0) ≤ (M : ℤ) := by
@@ -103,7 +103,7 @@ lemma oneProfile_nonneg (M : ℕ) (y : Site 1) : 0 ≤ oneProfile M y := by
 
 lemma oneProfile_two_mul (M : ℕ) (y : Site 1) (hy : inCube 1 (2 * M) y) :
     2 * oneProfile M y = onePoly M (oneFold (y 0)) := by
-  rw [oneProfile, if_pos hy]
+  rw [oneProfile, ite_eq_left hy]
   exact onePoly_two_mul_ediv M
 
 lemma oneProfile_lap_reflect (M : ℕ) (y : Site 1) :
@@ -183,7 +183,7 @@ lemma oneProfile_lap_pos (M : ℕ) (y : Site 1) (hy : inCube 1 (2 * M) y)
       simp [oneFold, hpos', hlt]
     · have hout : ¬ inCube 1 (2 * M) (y + (unit (0 : Fin 1) : Site 1)) :=
         fun h => hlt (hplus.1 h)
-      rw [oneProfile, if_neg hout]
+      rw [oneProfile, ite_eq_right hout]
       simp [hlt]
   simp only [lap, nbrSum, Fin.sum_univ_one]
   norm_num only [Nat.cast_one, mul_one]
@@ -210,9 +210,9 @@ lemma oneProfile_lap_pos (M : ℕ) (y : Site 1) (hy : inCube 1 (2 * M) y)
       linarith
   · have hx2 : 1 < y 0 := by omega
     by_cases hxM' : y 0 = (M : ℤ)
-    · rw [hxM', if_neg (by omega : ¬ (M : ℤ) < (M : ℤ))] at hwp
+    · rw [hxM', ite_eq_right (by omega : ¬ (M : ℤ) < (M : ℤ))] at hwp
       rw [hxM'] at hw
-      rw [if_neg hx1] at hwm
+      rw [ite_eq_right hx1] at hwm
       have hpoly : -2 * onePoly M (M : ℤ) + onePoly M ((M : ℤ) - 1) = -2 := by
         dsimp [onePoly]
         ring
@@ -229,8 +229,8 @@ lemma oneProfile_lap_pos (M : ℕ) (y : Site 1) (hy : inCube 1 (2 * M) y)
           _ = -2 := hpoly
       linarith
     · have hxlt : y 0 < (M : ℤ) := by omega
-      rw [if_pos hxlt] at hwp
-      rw [if_neg hx1] at hwm
+      rw [ite_eq_left hxlt] at hwp
+      rw [ite_eq_right hx1] at hwm
       have hpoly : -2 * onePoly M (y 0) + onePoly M (y 0 + 1) +
           onePoly M (y 0 - 1) = -2 := by
         dsimp [onePoly]
@@ -301,7 +301,7 @@ lemma one_profile_comparison (M : ℕ) :
   have hu1 : ∀ (t : ℕ) (y : Site 1), ¬ inCube 1 (2 * M) y →
       oneProfile M y = 0 := by
     intro t y hy
-    rw [oneProfile, if_neg hy]
+    rw [oneProfile, ite_eq_right hy]
   have hcon : ∀ (t : ℕ) (y : Site 1), inCube 1 (2 * M) y →
       (-(2 : ℤ) * oneProfile M y + nbrSum (oneProfile M) y) + 2 ≤ 1 := by
     intro t y hy
@@ -438,7 +438,7 @@ lemma one_stable_lower (M T : ℕ)
       intro hc
       have hc' : 2 * ((1 : ℕ) : ℤ) ≤ sandp 1 (2 * M) (fun _ => 2) T y := by
         simpa only [sandp, Nat.cast_one, mul_one] using hc
-      rw [if_pos hc'] at hrec
+      rw [ite_eq_left hc'] at hrec
       omega
     omega
   have hqlap : ∀ y, inCube 1 (2 * M) y → lap q y ≤ 0 := by
@@ -479,7 +479,7 @@ lemma one_stable_lower (M T : ℕ)
       omega
     dsimp [q]
     rw [odo_eq_zero_outside 1 (2 * M) (fun _ => 2) T _ hout,
-      oneProfile, if_neg hout]
+      oneProfile, ite_eq_right hout]
     rfl
   have hsite_cube : ∀ n : ℕ, 1 ≤ n → (n : ℤ) ≤ (M : ℤ) →
       inCube 1 (2 * M) (oneSite (n : ℤ)) := by
@@ -594,7 +594,7 @@ lemma one_stable_lower (M T : ℕ)
 lemma oneProfile_formula (M : ℕ) (y : Site 1) (hy : inCube 1 (2 * M) y)
     (hpos : 1 ≤ y 0) :
     oneProfile M y = onePoly M (y 0) / 2 := by
-  rw [oneProfile, if_pos hy]
+  rw [oneProfile, ite_eq_left hy]
   simp [oneFold, hpos]
 
 theorem odoInf_one_eq (M : ℕ) (hM : 1 ≤ M) (y : Site 1)
@@ -634,7 +634,7 @@ theorem odoInf_one_deriv (M : ℕ) (hM : 1 ≤ M) (x : Site 1)
   rw [one_coord_add] at heq2
   have h1nat := congrArg ENat.toNat heq1
   have h2nat := congrArg ENat.toNat heq2
-  simp only [ENat.toNat_coe] at h1nat h2nat
+  simp only [ENat.toNat_natCast] at h1nat h2nat
   have h1 := congrArg (fun n : ℕ => (n : ℤ)) h1nat
   have h2 := congrArg (fun n : ℕ => (n : ℤ)) h2nat
   have hpoly1 := onePoly_two_mul_ediv (M := M) (x := x 0)
