@@ -72,12 +72,12 @@ public import DimRed.Meta.AxiomsAudit
 #print axioms DimRed.Corrected.terminalPile
 #print DimRed.Corrected.maximum
 #print axioms DimRed.Corrected.maximum
-#print DimRed.foldedLift
-#print axioms DimRed.foldedLift
-#print DimRed.foldedNbrSum
-#print axioms DimRed.foldedNbrSum
-#print DimRed.foldedOdo
-#print axioms DimRed.foldedOdo
+#print DimRed.Corrected.foldedLift
+#print axioms DimRed.Corrected.foldedLift
+#print DimRed.Corrected.foldedNbrSum
+#print axioms DimRed.Corrected.foldedNbrSum
+#print DimRed.Corrected.foldedOdo
+#print axioms DimRed.Corrected.foldedOdo
 #print DimRed.odoInfUnif
 #print axioms DimRed.odoInfUnif
 #print DimRed.Corrected.odoInfUnif_ne_top
