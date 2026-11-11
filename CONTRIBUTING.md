@@ -25,30 +25,40 @@ each checked against its completed `Solution.lean` by `leanprover/comparator`; s
 repository root for every check (`--skip-lake` for the pure-Python ones), or
 `cd tools/leanform && python3 -m leanform_tools.<check> ../..` for one.
 
-A few practical notes for working with this development:
+## The main results and the axiom audit
 
-- **Never run `lake clean`.**  It wipes the `mathlib` and `Lattice-Probability` oleans and
-  forces a multi-hour rebuild from source.  To force a project-only rebuild, remove the
-  project build artifacts under `.lake/build/lib/lean/DimRed` (and the corresponding
-  `.lake/build/ir/DimRed`) and re-run `lake build`.
+The main results are in `DimRed/MainTheorems.lean`. Their axiom reports are printed by
+`DimRed/Meta/AxiomsAudit.lean`, which is built only as an explicit target:
 
-- **Per-file rebuilds.**  Lake invalidates by content hash, not mtime, so `touch` does
-  nothing; delete the specific `.olean` under `.lake/build/lib/lean/` and rebuild the module.
+```bash
+lake build DimRed.Meta.AxiomsAudit 2>&1 | tee axioms-audit.log
+python3 scripts/check_axioms.py axioms-audit.log
+```
 
+`DimRed/Meta/AxiomsAudit.lean` is not imported by the root module, because a `#print axioms`
+command runs again whenever its module is rebuilt. `scripts/check_axioms.py` checks the log against
+an explicit list of theorems: each must depend on exactly `propext`, `Classical.choice` and
+`Quot.sound`, and a missing, unexpected or repeated report fails. `python3 tools/verify.py` runs
+every checker.
+
+## Conventions for Lean files
+
+- No `sorry`, `admit`, `native_decide` or new `axiom` in the library. Avoid
+  `set_option maxHeartbeats`; the two existing uses are in `DimRed/Support/RegSteps.lean` and
+  `DimRed/Support/BaseInduction.lean`.
 - **Frozen statements.**  The text between `-- FROZEN-STATEMENT-BEGIN` and
   `-- FROZEN-STATEMENT-END` in `DimRed/Frozen/` is pinned by the SHA-256 recorded in
   `ledger/manifest.yaml`.  A change there is reported by the `check_manifest` check and must
   be recorded in the manifest; the proofs after the end marker may be changed freely.
-
-- **The main results** are in `DimRed/MainTheorems.lean`.  The axiom report is
-  `lake build DimRed.Meta.AxiomsAudit`; `python3 tools/verify.py` runs every checker.
-
-- **The comparator surface** under `DimRedAudit/` is deliberately not a default target.  Run
-  `bash DimRedAudit/check_standalone.sh --vocabulary` after editing a challenge or its
-  `SolutionBasic.lean`; the vocabulary block must stay byte-identical in each challenge and in
-  the `SolutionBasic.lean` of the same pair.  `lake env lean` does not read the options of
-  `lakefile.lean`, so `DimRedAudit/check_standalone.sh` passes them explicitly; elaborate a
-  single file standalone with `-DautoImplicit=false` in the same way.
+- Statements stay faithful to the corrected edition. Apart from the manifest and the headers of
+  `DimRed/Frozen/`, comments cite the edition by LaTeX label, not by line number. New declarations
+  go under `DimRed/`; the dependencies under `.lake/packages/` are read-only.
+- **Never run `lake clean`.**  It wipes the `mathlib` and `Lattice-Probability` oleans and
+  forces a multi-hour rebuild from source.  To force a project-only rebuild, remove the
+  project build artifacts under `.lake/build/lib/lean/DimRed` (and the corresponding
+  `.lake/build/ir/DimRed`) and re-run `lake build`.
+- **Per-file rebuilds.**  Lake invalidates by content hash, not mtime, so `touch` does
+  nothing; delete the specific `.olean` under `.lake/build/lib/lean/` and rebuild the module.
 
 ## Elaboration policy for new files
 
@@ -84,21 +94,27 @@ Python 3.10 or newer and PyYAML (`python3 -m pip install -r tools/requirements.t
 | `sync_docs` | the generated status block of `README.md` and the statement table of `CORRESPONDENCE.md` agree with the manifest (`--write` regenerates them) |
 | `assumptions`, `certificate` | `ASSUMPTIONS.md` and `CERTIFICATE.md` are current (`--check`) |
 
-`scripts/check_axioms.py` checks the output of `lake build DimRed.Meta.AxiomsAudit` against an
-explicit list of theorems: each must depend on exactly `propext`, `Classical.choice` and
-`Quot.sound`, and a missing, unexpected or repeated report fails.
-
 ## Comparators
 
 Each pair under `DimRedAudit/` has a Mathlib-only `Challenge.lean`, a `SolutionBasic.lean` with
 its vocabulary, a `Solution.lean` that proves the same statements from the library, and a
-`comparator.json` that permits exactly `propext`, `Classical.choice` and `Quot.sound`. Do not
-change a challenge without checking it against the paper's statement. Run the comparator as
-described in the README; a missing pair, a missing tool or a failed kernel check is a failure.
+`comparator.json` that permits exactly `propext`, `Classical.choice` and `Quot.sound`. Do not add a
+declaration to a challenge that the statement does not need, and do not change a challenge without
+checking it against the paper's statement. Run the comparator as described in the README; a missing
+pair, a missing tool or a failed kernel check is a failure.
+
+The comparator surface under `DimRedAudit/` is deliberately not a default target.  Run
+`bash DimRedAudit/check_standalone.sh --vocabulary` after editing a challenge or its
+`SolutionBasic.lean`; the vocabulary block must stay byte-identical in each challenge and in
+the `SolutionBasic.lean` of the same pair.  `lake env lean` does not read the options of
+`lakefile.lean`, so `DimRedAudit/check_standalone.sh` passes them explicitly; elaborate a
+single file standalone with `-DautoImplicit=false` in the same way.
 
 ## Continuous integration
 
-`.github/workflows/build.yml` runs on pushes to `main` that change code or build configuration,
-and on manual dispatch: it builds the library with zero warnings, checks the axiom report
-against the explicit list and runs `tools/verify.py`. `.github/workflows/comparator.yml` runs
-the four comparator pairs on manual dispatch.
+- **CI** (`.github/workflows/build.yml`) runs on pushes to `main` that change more than
+  documentation, the paper, `formalization.yaml` or `CITATION.cff`, and on manual dispatch: it
+  builds the library with zero warnings, checks the axiom report against the explicit list and
+  runs `tools/verify.py`.
+- **Comparator audit** (`.github/workflows/comparator.yml`) runs the four comparator pairs on
+  manual dispatch.

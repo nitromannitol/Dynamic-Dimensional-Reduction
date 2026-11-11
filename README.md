@@ -3,7 +3,8 @@
 A machine-checked **Lean 4** formalization of the paper
 
 > Ahmed Bou-Rabee, *Dynamic dimensional reduction in the Abelian sandpile*,
-> Communications in Mathematical Physics 390 (2022), 933–958; arXiv:2009.05968.
+> Communications in Mathematical Physics 390 (2022), 933–958;
+> [arXiv:2009.05968](https://arxiv.org/abs/2009.05968).
 
 The formalized text is a corrected edition of the arXiv source (v2), in
 [`paper/corrected-arxiv/`](paper/corrected-arxiv/). The main results, Theorem 1.1 and
@@ -13,6 +14,10 @@ leaves unstated. The other changes are surgical corrections of lemmas, corollari
 propositions (3.2 and 4.1), definitions and proofs; each is listed below and in the section "Corrections to
 the published version" of the corrected edition. The unmodified arXiv source is
 [`paper/dimred-arxiv.tex`](paper/dimred-arxiv.tex).
+
+The development is built on [mathlib](https://github.com/leanprover-community/mathlib4) and on the
+public library [Lattice-Probability](https://github.com/nitromannitol/Lattice-Probability), a library
+of lattice probability and potential theory.
 
 [![CI](https://github.com/nitromannitol/Dynamic-Dimensional-Reduction/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/nitromannitol/Dynamic-Dimensional-Reduction/actions/workflows/build.yml)
 [![Comparator audit](https://github.com/nitromannitol/Dynamic-Dimensional-Reduction/actions/workflows/comparator.yml/badge.svg?branch=main)](https://github.com/nitromannitol/Dynamic-Dimensional-Reduction/actions/workflows/comparator.yml)
@@ -51,7 +56,7 @@ Every result is stated in [`DimRed/MainTheorems.lean`](DimRed/MainTheorems.lean)
 
 Nothing from the literature is assumed.
 
-### Corrections to the published version
+## Corrections to the published version
 
 Each change from arXiv v2 is listed with the published text, the corrected text and the reason;
 "Where" gives the line in [`paper/dimred-arxiv.tex`](paper/dimred-arxiv.tex). Changes marked
@@ -87,20 +92,27 @@ Each change from arXiv v2 is listed with the published text, the corrected text 
 
 ## Standing assumptions and scope
 
-- The cube of side `N` is the box `[1 − ⌊N/2⌋, ⌈N/2⌉]^d`, the paper's embedding for both
-  parities; outside it every function is `0` (dissipating boundary).
-- The odometer is `v_0 = 0`, `v_{t+1} = v_t + 1{s_0 + Δv_t ≥ 2d}`, and the sandpile is
-  `s_t = s_0 + Δv_t`. In Theorem 1.1, Corollary 1.1 and Proposition 4.1 the initial condition
-  in dimension `d` is `s_0 ≡ 2d`. The lemmas of Section 2 are stated for integer initial piles
-  that are bounded by `4d − 1`, symmetric, or constant, as each lemma requires. Section 3 uses
-  `s_0 ≡ 2d + (d − 1)` (and `2d + (d_0 − 1)`).
-- `v_∞` is the supremum of `v_t` in `ℕ∞`; it is finite (`DimRed.terminal_odometer_finite`), so
-  reading it through `ENat.toNat` in Corollary 1.1(i) and Lemma 4.1 loses nothing. `τ_j` is an
-  infimum in `ℕ∞`.
-- In Theorem 1.1(i) and Corollary 1.1(i) the dimension is written `d + 1`.
-- As in the paper, Sections 2.5–5 work on even cubes `N = 2M`; Theorem 1.1 and Corollary 1.1
-  are proved for every `N ≥ 1`.
-- Not formalized: the open problems of Section 1 and the figures.
+1. **The cube.** The cube of side `N` is the box `[1 − ⌊N/2⌋, ⌈N/2⌉]^d`, the paper's embedding for
+   both parities; outside it every function is `0` (dissipating boundary). As in the paper,
+   Sections 2.5–5 work on even cubes `N = 2M`; Theorem 1.1 and Corollary 1.1 are proved for every
+   `N ≥ 1`.
+2. **Axioms and incomplete proofs.** The library contains no `sorry`, no `admit`, no
+   `native_decide` and no new `axiom`. The axiom report of each theorem of the explicit list in
+   [`scripts/check_axioms.py`](scripts/check_axioms.py), which covers the results of
+   [`DimRed/MainTheorems.lean`](DimRed/MainTheorems.lean), consists of exactly `propext`,
+   `Classical.choice` and `Quot.sound`. Nothing from the literature is assumed
+   ([`ASSUMPTIONS.md`](ASSUMPTIONS.md)).
+3. **The odometer and the initial condition.** The odometer is `v_0 = 0`,
+   `v_{t+1} = v_t + 1{s_0 + Δv_t ≥ 2d}`, and the sandpile is `s_t = s_0 + Δv_t`. In Theorem 1.1,
+   Corollary 1.1 and Proposition 4.1 the initial condition in dimension `d` is `s_0 ≡ 2d`. The
+   lemmas of Section 2 are stated for integer initial piles that are bounded by `4d − 1`,
+   symmetric, or constant, as each lemma requires. Section 3 uses `s_0 ≡ 2d + (d − 1)` (and
+   `2d + (d_0 − 1)`).
+4. **Suprema in `ℕ∞`.** `v_∞` is the supremum of `v_t` in `ℕ∞`; it is finite
+   (`DimRed.terminal_odometer_finite`), so reading it through `ENat.toNat` in Corollary 1.1(i) and
+   Lemma 4.1 loses nothing. `τ_j` is an infimum in `ℕ∞`.
+5. **The dimension.** In Theorem 1.1(i) and Corollary 1.1(i) the dimension is written `d + 1`.
+6. **Not formalized.** The open problems of Section 1 and the figures.
 
 ## Guarantees
 
@@ -117,19 +129,15 @@ counts are generated from `ledger/manifest.yaml` by
 
 <!-- STATUS-END -->
 
-- **No `sorry`** in `DimRed/`, and the build emits no warning. The four comparator challenges
-  under [`DimRedAudit/`](DimRedAudit/) carry ten intentional statement-level `sorry`s, one per
-  challenge theorem, which the corresponding solutions prove.
+- **No `sorry`.** The library `DimRed/` has none, and the build emits no warning. The four
+  comparator challenges under [`DimRedAudit/`](DimRedAudit/) carry ten intentional statement-level
+  `sorry`s, one per challenge theorem, which the corresponding solutions prove.
 - **Standard axioms only.** [`DimRed/Meta/AxiomsAudit.lean`](DimRed/Meta/AxiomsAudit.lean)
   prints the axiom report of every result of `DimRed/MainTheorems.lean` and of the six
   definitional statements, and [`scripts/check_axioms.py`](scripts/check_axioms.py) requires
   exactly `propext`, `Classical.choice` and `Quot.sound` for each theorem of its explicit list.
   [`CERTIFICATE.md`](CERTIFICATE.md) records the axiom closures and the statement hashes.
-- **Statement hashes.** The text of every statement in `DimRed/Frozen/` is fixed by its
-  SHA-256 in [`ledger/manifest.yaml`](ledger/manifest.yaml), together with the hash of the
-  corrected edition; `python3 tools/verify.py` checks them, the paper correspondence and the
-  axiom closures.
-- **Independent check of the main statements.** Theorem 1.1, Corollary 1.1 and the five
+- **Independent check of the statements.** Theorem 1.1, Corollary 1.1 and the five
   clauses of Proposition 4.1 are restated in [`DimRedAudit/`](DimRedAudit/) over definitions
   rebuilt from Mathlib alone, in four challenge/solution pairs; the solutions prove the
   restatements from the library, and
@@ -139,13 +147,25 @@ counts are generated from `ledger/manifest.yaml` by
 - **Pinned toolchain and dependencies.** Lean `v4.32.0`, Mathlib
   `81a5d257c8e410db227a6665ed08f64fea08e997` and Lattice-Probability
   `bbe0b90a7cf0517db0578139aaab7f152edbc45e`, recorded in
-  [`lake-manifest.json`](lake-manifest.json).
+  [`lake-manifest.json`](lake-manifest.json) (see [Building](#building)).
+- **The paper is part of the repository.** The statement map refers to the corrected edition in
+  [`paper/corrected-arxiv/`](paper/corrected-arxiv/), whose source
+  `dimred-corrected-arxiv.tex` is pinned by its SHA-256
+  `806f174363fddf146ada5a571b93c02b95b9983dc294d00dac2e0db8c3b917eb` in
+  [`ledger/manifest.yaml`](ledger/manifest.yaml). The unmodified arXiv source
+  [`paper/dimred-arxiv.tex`](paper/dimred-arxiv.tex) has SHA-256
+  `7b47485ebc0b16b08be0ed91b360ec9b1b06f5a9bba6ffca93ededeaa09d9823`.
+- **Statement hashes.** The text of every statement in `DimRed/Frozen/` is fixed by its
+  SHA-256 in [`ledger/manifest.yaml`](ledger/manifest.yaml), together with the hash of the
+  corrected edition; `python3 tools/verify.py` checks them, the paper correspondence and the
+  axiom closures.
 
 ## Size
 
-`DimRed/` and `DimRed.lean`: 112 Lean files with 21,312 lines (17,871 lines of code once
-comments and blank lines are removed). The comparator surface `DimRedAudit/` is counted
-separately: 16 files with 1,601 lines.
+The library contains 112 Lean files with 21,312 physical lines (`DimRed.lean` and `DimRed/`), of
+which 17,871 lines remain once comments and blank lines are removed, on top of mathlib and
+Lattice-Probability. The comparator sources under `DimRedAudit/` are counted separately: 16 files
+with 1,601 physical lines.
 
 ## Building
 
@@ -158,6 +178,14 @@ lake build                           # the library
 lake build DimRed.Meta.AxiomsAudit   # print the axioms of every result
 lake build DimRedAudit               # the comparator challenges and solutions
 ```
+
+Lattice-Probability has no prebuilt cache, so the first build compiles it as well as the library.
+It is a public repository, pinned in [`lake-manifest.json`](lake-manifest.json):
+
+- Lattice-Probability: `https://github.com/nitromannitol/Lattice-Probability` at
+  `bbe0b90a7cf0517db0578139aaab7f152edbc45e`.
+
+`import DimRed` loads the main theorems and what they use.
 
 `python3 tools/verify.py` runs the repository's checks (statement hashes, paper
 correspondence, axiom closures, warning census); it needs Python 3.10 or newer and PyYAML
@@ -183,6 +211,14 @@ which prints `Your solution is okay!`. The [comparator workflow](.github/workflo
 runs all four pairs on manual dispatch; [`DimRedAudit/README.md`](DimRedAudit/README.md)
 describes the pairs.
 
+There are two continuous-integration workflows: **CI** builds the library with zero warnings,
+checks the axiom report against the explicit list and runs `tools/verify.py`; **Comparator audit**
+checks the four challenge/solution pairs. CI runs on pushes to `main` that change more than
+documentation, the paper, `formalization.yaml` or `CITATION.cff`; the comparator audit runs when it
+is started manually. Both workflows can be started manually from the
+[Actions page](https://github.com/nitromannitol/Dynamic-Dimensional-Reduction/actions). See
+[`CONTRIBUTING.md`](CONTRIBUTING.md) for build conventions.
+
 ## Repository layout
 
 ```text
@@ -203,6 +239,9 @@ ledger/               the statement manifest (manifest.yaml), the clause and exp
                       check (holes.json, empty)
 CORRESPONDENCE.md     paper ↔ Lean: vocabulary, standing hypotheses, statement table
 ASSUMPTIONS.md        the cited results assumed (none; generated)
+CONTRIBUTING.md       build conventions and the repository's checks
+LICENSE, CITATION.cff, formalization.yaml
+                      licence, citation metadata, disclosure of models and tooling
 CERTIFICATE.md        the axiom closures and statement hashes (generated)
 scripts/              the explicit-list axiom check
 tools/                verify.py and the vendored checker package tools/leanform/
