@@ -27,32 +27,77 @@ of lattice probability and potential theory.
 Start with `2d` chips at every site of the cube `C_N^{(d)} ⊂ ℤ^d` and topple in parallel: at
 each step every site with at least `2d` chips sends one chip to each neighbour, and chips
 leaving the cube are lost. The odometer `v_t^{(d,N)}(x)` counts the topplings at `x` up to
-time `t`. On the sorted fundamental domain `S_M^{(d)} = {M ≥ x_1 ≥ ⋯ ≥ x_d ≥ 1}`,
-`M = ⌈N/2⌉`, Theorem 1.1 says that the centre slice of the `d`-dimensional process is the
+time `t`, `v_∞^{(d,N)}` is its terminal value, and the sandpile is `s_t = s_0 + Δv_t`. The
+process is invariant under the symmetries of the cube, so it is determined by its values on the
+sorted fundamental domain `S_M^{(d)} = {M ≥ x_1 ≥ ⋯ ≥ x_d ≥ 1}`, `M = ⌈N/2⌉`.
+
+Theorem 1.1 says that the centre slice of the `d`-dimensional process is the
 `(d−1)`-dimensional process at every time, that the terminal odometers agree one layer further
 in, and that cubes of different sizes agree near their corners up to the first time a boundary
 site has toppled `j` times. Corollary 1.1 gives the same statements for the sandpile. The proof
 is one induction over dimension, side length and time, carrying the regularity estimates of
-Proposition 4.1.
+Proposition 4.1. The model is stated precisely in
+[Standing assumptions and scope](#standing-assumptions-and-scope).
 
-Every result is stated in [`DimRed/MainTheorems.lean`](DimRed/MainTheorems.lean).
+The two main results, formalized as stated in the introduction of the paper, are collected in
+[`DimRed/MainTheorems.lean`](DimRed/MainTheorems.lean), together with the results of
+Sections 2–5 that their proof uses. Numbers and labels refer to the corrected edition; each
+change is listed under
+[Corrections to the published version](#corrections-to-the-published-version).
 
-| Paper | Lean | Relation to the published statement |
-|---|---|---|
-| Theorem 1.1(i), both displays | `DimRed.dimensional_reduction`, `DimRed.terminal_dimensional_reduction` | as published |
-| Theorem 1.1(ii) | `DimRed.self_similarity` | as published, with `τ_j` the first time some inner boundary site has toppled `j` times (C01) |
-| Corollary 1.1 | `DimRed.sandpile_dimensional_reduction`, `DimRed.sandpile_self_similarity` | as published |
-| Lemma 2.1 | `DimRed.pt_ind_lemma` | corrected (C02) |
-| Lemma 2.2 | `DimRed.parabolic_comparison` | as published |
-| Lemma 2.3 | `DimRed.symmetry_lemma` | corrected definition of the process $v^{\mathcal S}$ (C04) |
-| Lemma 2.4 | `DimRed.general_difference_comparison` | corrected (C06) |
-| Corollary 2.1 | `DimRed.axis_monotonicity` | corrected: elementary moves (C08) |
-| Corollary 2.2, Lemma 2.5 | `DimRed.derivative_bound`, `DimRed.topple_limit` | as published |
-| Proposition 3.1, Lemma 3.1 | `DimRed.no_reduction_at_critical_dimension`, `DimRed.radial_laplacian` | as published |
-| Proposition 3.2 | `DimRed.base_case` | corrected ripple clause (C12, C13) |
-| Proposition 4.1, five clauses | `DimRed.base_dimension_consistency`, `DimRed.base_dimension_weak_compatibility`, `DimRed.base_dimension_strong_derivative`, `DimRed.base_dimension_strong_compatibility`, `DimRed.base_dimension_strong_topple` | weak facet (C15), strong derivative (C16) and strong facet (C17) corrected |
-| Lemma 4.1 (a remark of the published paper) | `DimRed.one_terminal_profile`, `DimRed.one_terminal_derivative` | proved here; the published paper cites it from the literature |
-| Lemma 5.1 (new) | `DimRed.strict_head_facet` | used in the proof of Proposition 4.1 |
+| Paper | Lean declaration | Content |
+| --- | --- | --- |
+| Theorem 1.1(i) (label `the_theorem`) | `DimRed.dimensional_reduction`, `DimRed.terminal_dimensional_reduction` | The centre slice of the `d`-dimensional odometer is the `(d−1)`-dimensional odometer at every time, and the terminal odometers agree on the next layer; as published. |
+| Theorem 1.1(ii) (label `the_theorem`) | `DimRed.self_similarity` | Near a corner, the odometer on the cube of side `N` equals the odometer on the cube of side `2j` up to the time `τ_j`; as published, with the quantifier in `τ_j` made explicit (C01). |
+| Corollary 1.1 (label `sandpile_corollary`) | `DimRed.sandpile_dimensional_reduction`, `DimRed.sandpile_self_similarity` | The same two statements for the terminal sandpile and for the sandpile up to the time `τ_j`; as published. |
+| Lemma 2.1 (label `pt_ind_lemma`) | `DimRed.pt_ind_lemma` | The parallel toppling recursion `v_{t+1}(x) = max(0, ⌊(s_0(x) + Σ_{y∼x} v_t(y))/2d⌋)`; corrected (C02). |
+| Lemma 2.2 (label `parabolic_comparison`) | `DimRed.parabolic_comparison` | Parabolic least action principle: the odometer lies below every nonnegative function that vanishes off the cube and satisfies the parabolic inequality; as published. |
+| Lemma 2.3 (label `symmetry_lemma`) | `DimRed.symmetry_lemma` | For a symmetric initial sandpile the odometer is invariant under the symmetries of the cube and equals the process `v^S` on the fundamental domain; corrected definition of `v^S` (C04). |
+| Lemma 2.4 (label `general_difference_comparison`) | `DimRed.general_difference_comparison` | A bound on differences of the odometer that holds initially and on the boundary holds at every later time; corrected (C06). |
+| Corollary 2.1 (label `axis_monotonicity`) | `DimRed.axis_monotonicity` | The odometer of a constant initial sandpile does not increase along elementary axis moves; corrected to elementary moves (C08). |
+| Corollary 2.2 (label `cor:derivative_bound`), Lemma 2.5 (label `topple_limit`) | `DimRed.derivative_bound`, `DimRed.topple_limit` | A discrete derivative bound from a bound at the corner, and the largest increase of the odometer over `j` steps does not grow with time; as published. |
+| Proposition 3.1 (label `no_reduction`), Lemma 3.1 (label `radial_laplacian`) | `DimRed.no_reduction_at_critical_dimension`, `DimRed.radial_laplacian` | Dimensional reduction fails at the critical dimension for `s_0 ≡ 2d + (d_0 − 1)`, and the Laplacian in the radial coordinate on the cube of side `4`; as published. |
+| Proposition 3.2 (label `prop:base_case`) | `DimRed.base_case` | The explicit odometer on the cube of side `4` for `s_0 ≡ 2d + (d − 1)`: the firing block and the ripple; corrected ripple clause (C12, C13). |
+| Proposition 4.1 (label `base_dimension`), five clauses | `DimRed.base_dimension_consistency`, `DimRed.base_dimension_weak_compatibility`, `DimRed.base_dimension_strong_derivative`, `DimRed.base_dimension_strong_compatibility`, `DimRed.base_dimension_strong_topple` | Self-similarity, weak facet compatibility, the strong derivative bound, strong facet compatibility and strong topple control; the weak facet (C15), strong derivative (C16) and strong facet (C17) clauses corrected. |
+| Lemma 4.1 (label `lem:one-terminal-profile`) | `DimRed.one_terminal_profile`, `DimRed.one_terminal_derivative` | The one-dimensional terminal profile `v_∞(x) = (M(M+1) − x(x−1))/2` and its difference `v_∞(x) − v_∞(x+1) = x`; a remark of the published paper, which cites it from the literature, proved here (C21). |
+| Lemma 5.1 (label `lem:strict-head-facet`) | `DimRed.strict_head_facet` | On `{1,…,M}^d` with `s_0 ≡ 2d`, `v_t(x) − v_t(x + 2e_k) ≤ 2x_k` when `x_k` is not the largest coordinate, and the firing conclusion at a head coordinate `x_k = 1`; new in the corrected edition and used in the proof of Proposition 4.1. |
+
+**Theorem 1.1 (dimensional reduction and self-similarity, `the_theorem`).** Let `N ≥ 1`,
+`d ≥ 2` and `M = ⌈N/2⌉`, and let `v_t^{(d,N)}` be the odometer of `s_0 ≡ 2d` on the cube of
+side `N`.
+
+1. *Dimensional reduction.* For every `t ≥ 1` and every `x_{d−1} ∈ S_M^{(d−1)}`,
+   `v_t^{(d,N)}(x_{d−1}, 1) = v_t^{(d−1,N)}(x_{d−1})`. If moreover every coordinate of
+   `x_{d−1}` is at least `2`, then `v_∞^{(d,N)}(x_{d−1}, 2) = v_∞^{(d−1,N)}(x_{d−1})`.
+2. *Self-similarity.* For every `j < M`, every `t ≤ τ_j` and every `x ∈ S_M^{(d)}` whose
+   coordinates all exceed `M − j`, `v_t^{(d,N)}(x) = v_t^{(d,2j)}(x − (M − j))`, where `M − j`
+   is subtracted from every coordinate. Here `τ_j` is the first time `t ≥ 1` at which
+   `v_t^{(d,2j)}(y) ≥ j` for some site `y` of the inner boundary of `C_{2j}^{(d)}`, and
+   `τ_j = ∞` if there is no such time.
+
+In Lean, the three displays are `DimRed.dimensional_reduction`,
+`DimRed.terminal_dimensional_reduction` and `DimRed.self_similarity`. The odometer is
+`DimRed.odoUnif d N t`, a function on all of `ℤ^d` that vanishes off the cube, and the
+fundamental domain is `DimRed.inSimplex d (DimRed.sideHalf N)`. In part 1 the dimension is
+written `d + 1` with `d ≥ 1`, and the point `(x_{d−1}, 1)` is `Fin.snoc x 1`. The terminal
+odometer `DimRed.odoInfUnif` is the supremum of `v_t` in `ℕ∞`, and `τ_j` is the infimum
+`DimRed.toppleTime d j` in `ℕ∞`; the words "for some site" in `τ_j` are the reading C01 of the
+published definition. The cube of side `N` is `[1 − ⌊N/2⌋, ⌈N/2⌉]^d`, so the statements cover
+odd and even `N`.
+
+**Corollary 1.1 (the sandpile, `sandpile_corollary`).** In the setting of Theorem 1.1, let
+`s_t^{(d,N)} = 2d + Δv_t^{(d,N)}` be the sandpile and `s_∞^{(d,N)}` the terminal sandpile.
+
+1. *Dimensional reduction.* For every `x_{d−1} ∈ S_M^{(d−1)}` whose coordinates are all at
+   least `2`, `s_∞^{(d,N)}(x_{d−1}, 1) = s_∞^{(d−1,N)}(x_{d−1}) + 2`.
+2. *Self-similarity.* For every `j < M`, every `t ≤ τ_j` and every `x ∈ S_M^{(d)}` whose
+   coordinates all exceed `M − j + 1`, `s_t^{(d,N)}(x) = s_t^{(d,2j)}(x − (M − j))`.
+
+In Lean, the two parts are `DimRed.sandpile_dimensional_reduction` and
+`DimRed.sandpile_self_similarity`. The sandpiles `DimRed.Corrected.pile` and
+`DimRed.Corrected.terminalPile` are functions on the sites of the cube, and the terminal
+sandpile reads `v_∞` through `ENat.toNat`; this loses nothing, because the terminal odometer
+is finite at every site (`DimRed.terminal_odometer_finite`).
 
 Nothing from the literature is assumed.
 
